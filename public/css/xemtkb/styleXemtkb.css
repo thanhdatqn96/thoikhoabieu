@@ -1,0 +1,324 @@
+/*hover tkb trường cả buổi, sáng, chiều , gv, lơp*/
+
+#tablexemtkbtruong tbody tr td.classorongtruong:hover {
+  background-color: yellow;
+}
+#tablexemtkbtruongsang tbody tr td.classorongtruong:hover {
+  background-color: yellow;
+}
+#tablexemtkbtruongchieu tbody tr td.classorongtruong:hover {
+  background-color: yellow;
+}
+#tablexemtkbgiaovien tbody tr td.classoronggiaovien:hover {
+  background-color: yellow;
+}
+#tablexemtkblop tbody tr td.classoronglop:hover {
+  background-color: yellow;
+}
+
+/*css cột bảng màu giáo viên*/
+tr.active {
+  background:#ccc;
+}
+
+/*fixed header and column tkb trường cả buổi*/
+#tablexemtkbtruong thead tr th{ 
+  background-color: #28386c;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+#tablexemtkbtruong .stickyThu{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px;
+}
+#tablexemtkbtruong .stickyTiet{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;
+}
+#tablexemtkbtruong .sticky-col {
+  position: sticky;
+  position: -webkit-sticky;    
+  background-color: #FAFAD2;
+  z-index: 5;
+}
+
+#tablexemtkbtruong .first-col {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px; 
+}
+
+#tablexemtkbtruong .second-col {
+  width: 100;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;    
+}
+
+
+/*fixed header and column tkb trường cả sáng*/
+#tablexemtkbtruongsang thead tr th { 
+  background-color: #28386c;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+#tablexemtkbtruongsang .stickyThu{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px;
+}
+#tablexemtkbtruongsang .stickyTiet{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;
+}
+#tablexemtkbtruongsang .sticky-col {
+  position: sticky;
+  position: -webkit-sticky;    
+  background-color: #FAFAD2;
+  z-index: 5;
+}
+
+#tablexemtkbtruongsang .first-col {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px; 
+}
+
+#tablexemtkbtruongsang .second-col {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;    
+}
+
+
+/*fixed header and column tkb trường cả chiều*/
+#tablexemtkbtruongchieu thead tr th { 
+	background-color: #28386c;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+#tablexemtkbtruongchieu .stickyThu{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px;
+}
+#tablexemtkbtruongchieu .stickyTiet{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;
+}
+#tablexemtkbtruongchieu .sticky-col {
+  position: sticky;
+  position: -webkit-sticky;    
+  background-color: #FAFAD2;
+  z-index: 5;
+}
+
+#tablexemtkbtruongchieu .first-col {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px; 
+}
+
+#tablexemtkbtruongchieu .second-col {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;    
+}
+
+/*fixed header and column tkb giáo viên*/
+#tablexemtkbgiaovien thead tr th { 
+  background-color: #28386c;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+#tablexemtkbgiaovien .stickyThu{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px;
+}
+#tablexemtkbgiaovien .stickyTiet{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;
+}
+#tablexemtkbgiaovien .sticky-col {
+  position: sticky;
+  position: -webkit-sticky;    
+  background-color: #FAFAD2;
+  z-index: 5;
+}
+
+#tablexemtkbgiaovien .first-col {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px; 
+}
+
+#tablexemtkbgiaovien .second-col {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;    
+}
+
+/*fixed header and column tkb lớp*/
+#tablexemtkblop thead tr th { 
+  background-color: #28386c;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+#tablexemtkblop .stickyThu{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px;
+}
+#tablexemtkblop .stickyTiet{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;
+}
+#tablexemtkblop .sticky-col {
+  position: sticky;
+  position: -webkit-sticky;    
+  background-color: #FAFAD2;
+  z-index: 5;
+}
+
+#tablexemtkblop .first-col {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px; 
+}
+
+#tablexemtkblop .second-col {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;    
+}
+
+/*fixed header and column tkb phòng học*/
+#tablexemtkbphong thead tr th { 
+  background-color: #28386c;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+#tablexemtkbphong .stickyThu{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px;
+}
+#tablexemtkbphong .stickyTiet{ 
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;
+}
+#tablexemtkbphong .sticky-col {
+  position: sticky;
+  position: -webkit-sticky;    
+  background-color: #FAFAD2;
+  z-index: 5;
+}
+
+#tablexemtkbphong .first-col {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 0px; 
+}
+
+#tablexemtkbphong .second-col {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  left: 100px;    
+}
+
+/*phân trang biến động tkb giáo viên theo năm*/
+#paginationgv {
+  display: inline-block;
+}
+
+#paginationgv a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+#paginationgv a.active {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+}
+
+#paginationgv a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+/*phân trang biến động tkb lớp theo năm*/
+#paginationlop {
+  display: inline-block;
+}
+
+#paginationlop a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+#paginationlop a.active {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+}
+
+#paginationlop a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+
