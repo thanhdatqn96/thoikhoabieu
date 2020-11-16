@@ -14,13 +14,18 @@ use App\User;
 use Auth;
 use DB;
 use stdClass;
+use App\thongbao;
 
 class exportkbController extends Controller
 {
 	public function index()
 	{
 		\Assets::addScripts(['js-macdinh','js-custom','js-dev'])->addStyles(['style-macdinh','style-dev'])->removeStyles(['style-datatable'])->removeScripts(['js-datatable']);
-		return view('exportkb.index');
+		
+				$matruong = Session::get('matruong');
+		$thongbao = thongbao::where('truong_id',$matruong)->get();
+		$thongbaocount = thongbao::where('trangthai',0)->where('truong_id',$matruong)->count();
+		return view('exportkb.index',compact('thongbao', 'thongbaocount'));
 	}
 
 
@@ -119,9 +124,6 @@ class exportkbController extends Controller
 		}
 		return json_encode($success, JSON_UNESCAPED_UNICODE);
 	}
-
-
-
 
 	//lấy danh sách báo cáo
 	public function getdsbaocao(){
@@ -255,5 +257,7 @@ class exportkbController extends Controller
 		$success = 1;
 		return json_encode($success);
 	}
+
+
 
 }

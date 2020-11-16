@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-	return $request->user();
+    return $request->user();
 });
 
 Route::get('phanconggiaovien/all', 'khaibao\PhanconggiaovienDayController@all');
@@ -29,12 +29,13 @@ Route::post('phanconggiaovien/xoaPhancongchuyenmonTaimon', 'khaibao\Phanconggiao
 
 Route::get('phanconggiaovien/xuatBangphancong', 'khaibao\PhanconggiaovienDayController@xuatBangphancong');
 
-
+Route::get('phanconggiaovien/listAssignment/{id}', 'khaibao\PhanconggiaovienDayController@getListAssignmnet');
 
 # so tiet trong ngay
 Route::get('sotietngay/getdata', 'rangbuoc\rangbuocController@getData');
 Route::post('sotietngay/savedata', 'rangbuoc\rangbuocController@saveData');
 # so tiet trong buoi
+
 Route::get('sotietbuoi/getdata', 'rangbuoc\rangbuocController@getDataBuoi');
 Route::post('sotietbuoi/savedata', 'rangbuoc\rangbuocController@saveDataBuoi');
 
@@ -50,4 +51,3 @@ Route::get('xuattkb/listClass', 'export\exportExcelController@listClass');
 
 Route::get('xuattkb/listRoom', 'export\exportExcelController@listRoom');
 Route::get('xuattkb/listLocation', 'export\exportExcelController@listLocation');
-
