@@ -356,5 +356,6 @@ Route::group(['middleware' => 'auth'], function(){
 		//Thu hồi thông báo
 		Route::post('thuhoithongbao','tonghop\tonghopController@thuhoithongbao');
 
+
 });
 
