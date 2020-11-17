@@ -5,6 +5,8 @@ import { getFistDay, getLastDay } from "../ultils/Ultils.js";
 //xuất tkb
 var progressExportTruongSC,
 	progressExportGV,
+	progressExportLop,
+	progressExportPhong,
 	idGV,
 	idLop,
 	idPhong,
@@ -16,13 +18,17 @@ var progressExportTruongSC,
     xuatTKBGV,
     xuatTKBPhong,
     btnxuatTKBTruong,
-    btnxuatTKBGV;
+    btnxuatTKBGV,
+    btnxuatTKBLop,
+    btnxuatTKBPhong;
 
 var arrFile = [];
 
 function initControl() {
 	progressExportTruongSC = document.getElementById("progressExportTruongSC");
 	progressExportGV = document.getElementById("progressExportGV");
+	progressExportLop = document.getElementById("progressExportLop");
+	progressExportPhong = document.getElementById("progressExportPhong");
 	idGV = document.getElementById("idselectgv");
 	idLop = document.getElementById("idselectlop");
 	idPhong = document.getElementById("idselectphong");
@@ -35,6 +41,8 @@ function initControl() {
     xuatTKBTruongC = $(".httkbc");
     btnxuatTKBTruong = document.getElementById("btnxuatTKBTruong");
     btnxuatTKBGV = document.getElementById("btnxuatTKBGV");
+    btnxuatTKBLop = document.getElementById("btnxuatTKBLop");
+    btnxuatTKBPhong = document.getElementById("btnxuatTKBPhong");
 }
 
 
@@ -45,6 +53,14 @@ function initEvent() {
     };
 
     btnxuatTKBGV.onclick = function (e) {
+        downLoadTKBEvent();
+    };
+
+    btnxuatTKBLop.onclick = function (e) {
+        downLoadTKBEvent();
+    };
+
+    btnxuatTKBPhong.onclick = function (e) {
         downLoadTKBEvent();
     };
 }
@@ -75,24 +91,6 @@ async function exportExcel() {
 
         arrFile.push("tkblophoc");
 
-        weekSelect = $("#selecttuanlop").val();
-        monthSelect = $("#datepickerthangtuanlop").val();
-
-        monthSelect = monthSelect.split("/");
-
-        firstDay = new Date(
-            Number(monthSelect[1]),
-            Number(monthSelect[0]) - 1,
-            1
-        );
-        lastDay = new Date(
-            Number(monthSelect[1]),
-            Number(monthSelect[0]),
-            0
-        );
-
-        firstDay = moment(firstDay).format("YYYY/MM/DD");
-        lastDay = moment(lastDay).format("YYYY/MM/DD");
     }
     if (xuatTKBGV.checked == true) {
 
@@ -183,12 +181,12 @@ async function exportExcel() {
 
 	        monthSelect = monthSelect.split("/");
 
-	        firstDay = new Date(
+	        let firstDay = new Date(
 	            Number(monthSelect[1]),
 	            Number(monthSelect[0]) - 1,
 	            1
 	        );
-	        lastDay = new Date(
+	        let lastDay = new Date(
 	            Number(monthSelect[1]),
 	            Number(monthSelect[0]),
 	            0
@@ -235,9 +233,146 @@ async function exportExcel() {
     }
 
     //xuất TKB lớp
+    if (xuatTKBLop.checked == true) {
+    	try {
 
+	        progressExportLop.classList.remove("hidden");
+
+	        let arrSelect = [];
+	        let weekSelect = $("#selecttuanlop").val();
+        	let monthSelect = $("#datepickerthangtuanlop").val();
+	        let tenLop = $('#idselectlop option:selected').text();
+
+	        arrSelect.push({ id: idLop.value, name: tenLop });
+
+	        monthSelect = monthSelect.split("/");
+
+	        let firstDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]) - 1,
+	            1
+	        );
+	        let lastDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]),
+	            0
+	        );
+
+	        firstDay = moment(firstDay).format("YYYY/MM/DD");
+	        lastDay = moment(lastDay).format("YYYY/MM/DD");
+
+	        if (firstDay == "Invalid date" && lastDay == "Invalid date") {
+	            progressExportGV.setAttribute("aria-valuenow", "100");
+	            progressExportGV.classList.add("hidden");
+	            Swal.fire(
+	                "Xin vui lòng chọn thời gian muốn xuất",
+	                "Chọn thời gian xuất",
+	                "warning"
+	            );
+	        } else {
+	            let result = await xuattkbapi.export(
+	                JSON.stringify({
+	                    tkbtruong: tkbtruong,
+	                    tkblop: tkblop,
+	                    tkbGV: tkbGV,
+	                    tkbphong: tkbphong,
+	                    tkbdiemtruong: tkbdiemtruong,
+	                    tkbphancongcm: tkbphancongcm,
+	                    arrSelect: JSON.stringify(arrSelect),
+	                    // exportAll: selectAll.checked,
+	                    tendaydu: true,
+	                    tenviettat: false,
+	                    startMonth: firstDay,
+	                    endMonth: lastDay,
+	                    week: weekSelect,
+	                })
+	            );
+	            progressExportLop.setAttribute("aria-valuenow", "100");
+	            progressExportLop.classList.add("hidden");
+	        }
+	    } catch (error) {
+	        console.log(error);
+	        progressExportLop.setAttribute("aria-valuenow", "100");
+	        progressExportLop.classList.add("hidden");
+	        Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+	    }
+    }
 
     //xuất TKB phòng
+    if (xuatTKBPhong.checked) {
+    	try {
+
+	        progressExportPhong.classList.remove("hidden");
+
+	        let arrSelect = [];
+	        let weekSelect = $("#selecttuanphong").val();
+        	let monthSelect = $("#datepickerthangtuanphong").val();
+	        let tenPhong = $('#idselectphong option:selected').text();
+
+	        arrSelect.push({ id: idPhong.value, name: tenPhong });
+
+	        monthSelect = monthSelect.split("/");
+
+	        let firstDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]) - 1,
+	            1
+	        );
+	        let lastDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]),
+	            0
+	        );
+
+	        firstDay = moment(firstDay).format("YYYY/MM/DD");
+	        lastDay = moment(lastDay).format("YYYY/MM/DD");
+
+	        if (firstDay == "Invalid date" && lastDay == "Invalid date") {
+	            progressExportGV.setAttribute("aria-valuenow", "100");
+	            progressExportGV.classList.add("hidden");
+	            Swal.fire(
+	                "Xin vui lòng chọn thời gian muốn xuất",
+	                "Chọn thời gian xuất",
+	                "warning"
+	            );
+	        } else {
+	            let result = await xuattkbapi.export(
+	                JSON.stringify({
+	                    tkbtruong: tkbtruong,
+	                    tkblop: tkblop,
+	                    tkbGV: tkbGV,
+	                    tkbphong: tkbphong,
+	                    tkbdiemtruong: tkbdiemtruong,
+	                    tkbphancongcm: tkbphancongcm,
+	                    arrSelect: JSON.stringify(arrSelect),
+	                    // exportAll: selectAll.checked,
+	                    tendaydu: true,
+	                    tenviettat: false,
+	                    startMonth: firstDay,
+	                    endMonth: lastDay,
+	                    week: weekSelect,
+	                })
+	            );
+	            if (xuatTKBPhong.checked == true) {
+	                arrFile.length = 0;
+
+	                result.data.forEach((item) => {
+	                    let isset = arrFile.findIndex((x) => x == item);
+	                    if (isset == -1) {
+	                        arrFile.push(item);
+	                    }
+	                });
+	            }
+	            progressExportPhong.setAttribute("aria-valuenow", "100");
+	            progressExportPhong.classList.add("hidden");
+	        }
+	    } catch (error) {
+	        console.log(error);
+	        progressExportPhong.setAttribute("aria-valuenow", "100");
+	        progressExportPhong.classList.add("hidden");
+	        Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+	    }
+    }
 
 }
 
@@ -1570,7 +1705,7 @@ function loadbanggiaovien(matruong){
 				var demdsgv = dsgv.length;
 
 		        for (var j = 0; j < demdsgv; j++) {
-		            tr = document.createElement("tr");
+		            let tr = document.createElement("tr");
 		            tr.appendChild(document.createElement('td'));
 			        tr.appendChild(document.createElement('td'));
 			        tr.appendChild(document.createElement('td'));
