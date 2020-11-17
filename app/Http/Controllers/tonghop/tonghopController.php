@@ -322,12 +322,45 @@ class tonghopController extends Controller
 
 	//get thời khoá biểu trường
 	public function getthoikhoabieutruong(){
+
+		$mahuyen = Auth::user()->mahuyen;
+
+		$truong = DB::table('truong')
+		->where('mahuyen',$mahuyen)
+		->get();
+
 	 	$thoikhoabieu = DB::table('thoikhoabieu')
 	 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
 	 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.tuan','thoikhoabieu.created_at')
 	 	->get();
+
+	 	$dataLoc = [];
+
+	 	foreach($truong as $t){
+	 		foreach($thoikhoabieu as $tkb){
+	 			if($t->matruong == $tkb->matruong){
+	 				$tkbLoc = new stdClass();
+	 				$tkbLoc->bidanh = $tkb->bidanh;
+	 				$tkbLoc->tenlop = $tkb->tenlop;
+	 				$tkbLoc->tenmonhoc = $tkb->tenmonhoc;
+	 				$tkbLoc->magiaovien = $tkb->magiaovien;
+	 				$tkbLoc->malop = $tkb->malop;
+	 				$tkbLoc->mamonhoc = $tkb->mamonhoc;
+	 				$tkbLoc->buoi = $tkb->buoi;
+	 				$tkbLoc->thu = $tkb->thu;
+	 				$tkbLoc->tiet = $tkb->tiet;
+	 				$tkbLoc->maphong = $tkb->maphong;
+	 				$tkbLoc->matruong = $tkb->matruong;
+	 				$tkbLoc->tuan = $tkb->tuan;
+	 				$tkbLoc->created_at = $tkb->created_at;
+		 			array_push($dataLoc,$tkbLoc);
+	 			}
+	 			
+	 		}
+	 		
+	 	}
 
 	 	$buoithu = array(
 	 		array(
@@ -393,7 +426,7 @@ class tonghopController extends Controller
 	 	);
 
 	 	$databt= array();
-		foreach($thoikhoabieu as $t){
+		foreach($dataLoc as $t){
 			foreach($buoithu as $b){
 				if($t->buoi == $b['idbuoi'] && $t->thu == $b['idthu']){
 					$bt = $b['idbuoi'].','.$b['idthu'];
@@ -470,9 +503,35 @@ class tonghopController extends Controller
 
 	//get danh sách lớp tkb trường
 	public function getdsloptruong(){
+
+		$mahuyen = Auth::user()->mahuyen;
+
+		$truong = DB::table('truong')
+		->where('mahuyen',$mahuyen)
+		->get();
+
 		$danhsachlophoc = danhsachlophoc::orderBy('tenlop', 'ASC')->get();
+
+	 	$dataLoc = [];
+
+	 	foreach($truong as $t){
+	 		foreach($danhsachlophoc as $dslh){
+	 			if($t->matruong == $dslh->matruong){
+	 				$lopLoc = new stdClass();
+	 				$lopLoc->id = $dslh->id;
+	 				$lopLoc->tenlop = $dslh->tenlop;
+	 				$lopLoc->khoi = $dslh->khoi;
+	 				$lopLoc->thutuhienthi = $dslh->thutuhienthi;
+	 				$lopLoc->matruong = $dslh->matruong;
+		 			array_push($dataLoc,$lopLoc);
+	 			}
+	 			
+	 		}
+	 		
+	 	}
+
 		$datadslop = [];
-		foreach($danhsachlophoc as $d){
+		foreach($dataLoc as $d){
 			array_push($datadslop,array('matruong'=>$d->matruong,'malop'=>$d->id,'tenlop'=>$d->tenlop));
 		}
 		foreach($datadslop as $d){
@@ -714,13 +773,48 @@ class tonghopController extends Controller
 
 	//get thời khoá phòng học
 	public function getthoikhoabieuphong(){
+
+		$mahuyen = Auth::user()->mahuyen;
+
+		$truong = DB::table('truong')
+		->where('mahuyen',$mahuyen)
+		->get();
+
 	 	$thoikhoabieu = DB::table('thoikhoabieu')
 	 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
+	 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
 	 	->leftjoin('phonghoc','phonghoc.id','thoikhoabieu.maphong')
 	 	->where('thoikhoabieu.maphong','!=',0)
-	 	->select('danhsachgv.bidanh','monhoc.tenmonhoc','phonghoc.tenphong','thoikhoabieu.magiaovien','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
+	 	->select('danhsachgv.bidanh','monhoc.tenmonhoc','phonghoc.tenphong','thoikhoabieu.magiaovien','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan','thoikhoabieu.malop','danhsachlophoc.tenlop')
 	 	->get();
+
+	 	$dataLoc = [];
+
+	 	foreach($truong as $t){
+	 		foreach($thoikhoabieu as $tkb){
+	 			if($t->matruong == $tkb->matruong){
+	 				$tkbLoc = new stdClass();
+	 				$tkbLoc->bidanh = $tkb->bidanh;
+	 				$tkbLoc->tenmonhoc = $tkb->tenmonhoc;
+	 				$tkbLoc->tenphong = $tkb->tenphong;
+	 				$tkbLoc->magiaovien = $tkb->magiaovien;
+	 				$tkbLoc->mamonhoc = $tkb->mamonhoc;
+	 				$tkbLoc->buoi = $tkb->buoi;
+	 				$tkbLoc->thu = $tkb->thu;
+	 				$tkbLoc->tiet = $tkb->tiet;
+	 				$tkbLoc->maphong = $tkb->maphong;
+	 				$tkbLoc->matruong = $tkb->matruong;
+	 				$tkbLoc->tuan = $tkb->tuan;
+	 				$tkbLoc->created_at = $tkb->created_at;
+	 				$tkbLoc->malop = $tkb->malop;
+	 				$tkbLoc->tenlop = $tkb->tenlop;
+		 			array_push($dataLoc,$tkbLoc);
+	 			}
+	 			
+	 		}
+	 		
+	 	}
 
 	 	$buoi = array(
 	 		array(
@@ -761,14 +855,14 @@ class tonghopController extends Controller
 	 	);
 
 	 	$databt= array();
-		foreach($thoikhoabieu as $t){
+		foreach($dataLoc as $t){
 			foreach($buoi as $b){
 				foreach($thu as $k){
 					if($t->buoi == $b['idbuoi'] && $t->thu == $k['idthu']){
 						$datetime = date_parse_from_format('Y-m-d', $t->created_at);
 						$thang = $datetime['month'];
 						$nam = $datetime['year'];
-						array_push($databt,array('matruong'=>$t->matruong,'magiaovien'=>$t->magiaovien,'mamonhoc'=>$t->mamonhoc,'maphong'=>$t->maphong,'mabuoi'=>$b['idbuoi'],'mathu'=>$k['idthu'],'bidanh'=>$t->bidanh,'tenmonhoc'=>$t->tenmonhoc,'tenphong'=>$t->tenphong,'tiet'=>$t->tiet,'tenbuoi'=>$b['tenbuoi'],'tenthu'=>$k['tenthu'],'nam'=>$nam,'thang'=>$thang,'tuan'=>$t->tuan));
+						array_push($databt,array('matruong'=>$t->matruong,'magiaovien'=>$t->magiaovien,'mamonhoc'=>$t->mamonhoc,'maphong'=>$t->maphong,'mabuoi'=>$b['idbuoi'],'mathu'=>$k['idthu'],'bidanh'=>$t->bidanh,'tenmonhoc'=>$t->tenmonhoc,'tenphong'=>$t->tenphong,'tiet'=>$t->tiet,'tenbuoi'=>$b['tenbuoi'],'tenthu'=>$k['tenthu'],'nam'=>$nam,'thang'=>$thang,'tuan'=>$t->tuan,'malop'=>$t->malop,'tenlop'=>$t->tenlop));
 					}
 				}
 				
@@ -786,7 +880,8 @@ class tonghopController extends Controller
 			$mathu = $d['mathu'];
 			$mamonhoc = $d['mamonhoc'];
 			$magiaovien = $d['magiaovien'];
-			$grouped[$matruong][$maphong][$nam][$thang][$tuan][$mabuoi][$tiet][$mathu][$mamonhoc][$magiaovien][] = $d;
+			$malop = $d['malop'];
+			$grouped[$matruong][$maphong][$nam][$thang][$tuan][$mabuoi][$tiet][$mathu][$magiaovien][$malop][] = $d;
 		}
 		
 		foreach($grouped as $k=>$v){
@@ -806,22 +901,23 @@ class tonghopController extends Controller
 								foreach($v5 as $k6=>$v6){
 									$datathu = [];
 									foreach($v6 as $k7=>$v7){
-										$datamh = [];
+										$datagv = [];
 										$tenthu;
 										foreach($v7 as $k8=>$v8){
-											$datagv = [];
-											$tenmonhoc;
+											$datalop = [];
+											$bidanh;
 											foreach($v8 as $k9=>$v9){
 												$bidanh = $v9[0]['bidanh'];
 												$tenbuoi= $v9[0]['tenbuoi'];
 												$tenthu= $v9[0]['tenthu'];
 												$tenmonhoc= $v9[0]['tenmonhoc'];
 												$tenphong= $v9[0]['tenphong'];
-												array_push($datagv,array('magiaovien' => $k9,'bidanh' => $bidanh));
+												$tenlop = $v9[0]['tenlop'];
+												array_push($datalop,array('malop' => $k9,'tenlop' => $tenlop));
 											}
-											array_push($datamh,array('mamonhoc' => $k8,'tenmonhoc'=>$tenmonhoc,'dsgiaovien'=>$datagv));
+											array_push($datagv,array('magiaovien' => $k8,'bidanh'=>$bidanh,'dslop'=>$datalop));
 										}
-										array_push($datathu,array('mathu' => $k7,'tenthu'=>$tenthu,'dsmonhoc'=>$datamh));
+										array_push($datathu,array('mathu' => $k7,'tenthu'=>$tenthu,'dsgiaovien'=>$datagv));
 									}
 									array_push($datatiet,array('tiet' => $k6,'dsthu'=>$datathu));
 								}
@@ -853,12 +949,45 @@ class tonghopController extends Controller
 
 	//lấy thời khoá biểu giáo viên theo thời gian
 	public function getthoikhoabieugvtime(){
+
+		$mahuyen = Auth::user()->mahuyen;
+
+		$truong = DB::table('truong')
+		->where('mahuyen',$mahuyen)
+		->get();
+
 	 	$thoikhoabieu = DB::table('thoikhoabieu')
 	 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
 	 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
 	 	->get();
+
+	 	$dataLoc = [];
+
+	 	foreach($truong as $t){
+	 		foreach($thoikhoabieu as $tkb){
+	 			if($t->matruong == $tkb->matruong){
+	 				$tkbLoc = new stdClass();
+	 				$tkbLoc->bidanh = $tkb->bidanh;
+	 				$tkbLoc->tenlop = $tkb->tenlop;
+	 				$tkbLoc->tenmonhoc = $tkb->tenmonhoc;
+	 				$tkbLoc->magiaovien = $tkb->magiaovien;
+	 				$tkbLoc->malop = $tkb->malop;
+	 				$tkbLoc->mamonhoc = $tkb->mamonhoc;
+	 				$tkbLoc->buoi = $tkb->buoi;
+	 				$tkbLoc->thu = $tkb->thu;
+	 				$tkbLoc->tiet = $tkb->tiet;
+	 				$tkbLoc->maphong = $tkb->maphong;
+	 				$tkbLoc->matruong = $tkb->matruong;
+	 				$tkbLoc->tuan = $tkb->tuan;
+	 				$tkbLoc->created_at = $tkb->created_at;
+		 			array_push($dataLoc,$tkbLoc);
+	 			}
+	 			
+	 		}
+	 		
+	 	}
 
 	 	$buoi = array(
 	 		array(
@@ -899,7 +1028,7 @@ class tonghopController extends Controller
 	 	);
 
 	 	$databt= array();
-		foreach($thoikhoabieu as $t){
+		foreach($dataLoc as $t){
 			foreach($buoi as $b){
 				foreach($thu as $k){
 					if($t->buoi == $b['idbuoi'] && $t->thu == $k['idthu']){
@@ -980,12 +1109,45 @@ class tonghopController extends Controller
 
 	//lấy thời khoá biểu lớp theo thời gian
 	public function getthoikhoabieuloptime(){
+
+		$mahuyen = Auth::user()->mahuyen;
+
+		$truong = DB::table('truong')
+		->where('mahuyen',$mahuyen)
+		->get();
+
 	 	$thoikhoabieu = DB::table('thoikhoabieu')
 	 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
 	 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
 	 	->get();
+
+	 	$dataLoc = [];
+
+	 	foreach($truong as $t){
+	 		foreach($thoikhoabieu as $tkb){
+	 			if($t->matruong == $tkb->matruong){
+	 				$tkbLoc = new stdClass();
+	 				$tkbLoc->bidanh = $tkb->bidanh;
+	 				$tkbLoc->tenlop = $tkb->tenlop;
+	 				$tkbLoc->tenmonhoc = $tkb->tenmonhoc;
+	 				$tkbLoc->magiaovien = $tkb->magiaovien;
+	 				$tkbLoc->malop = $tkb->malop;
+	 				$tkbLoc->mamonhoc = $tkb->mamonhoc;
+	 				$tkbLoc->buoi = $tkb->buoi;
+	 				$tkbLoc->thu = $tkb->thu;
+	 				$tkbLoc->tiet = $tkb->tiet;
+	 				$tkbLoc->maphong = $tkb->maphong;
+	 				$tkbLoc->matruong = $tkb->matruong;
+	 				$tkbLoc->tuan = $tkb->tuan;
+	 				$tkbLoc->created_at = $tkb->created_at;
+		 			array_push($dataLoc,$tkbLoc);
+	 			}
+	 			
+	 		}
+	 		
+	 	}
 
 	 	$buoi = array(
 	 		array(
@@ -1026,7 +1188,7 @@ class tonghopController extends Controller
 	 	);
 
 	 	$databt= array();
-		foreach($thoikhoabieu as $t){
+		foreach($dataLoc as $t){
 			foreach($buoi as $b){
 				foreach($thu as $k){
 					if($t->buoi == $b['idbuoi'] && $t->thu == $k['idthu']){

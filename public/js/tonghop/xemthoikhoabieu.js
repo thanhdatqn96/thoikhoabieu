@@ -1,3 +1,265 @@
+import { baseURl } from "../api/api.js";
+import xuattkbapi from "../api/xuattkbapi.js";
+import { getFistDay, getLastDay } from "../ultils/Ultils.js";
+
+//xuất tkb
+var progressExportTruongSC,
+	progressExportGV,
+	idGV,
+	idLop,
+	idPhong,
+	xuatTKBTruong,
+    xuatTKBTruongSC,
+    xuatTKBTruongS,
+    xuatTKBTruongC,
+    xuatTKBLop,
+    xuatTKBGV,
+    xuatTKBPhong,
+    btnxuatTKBTruong,
+    btnxuatTKBGV;
+
+var arrFile = [];
+
+function initControl() {
+	progressExportTruongSC = document.getElementById("progressExportTruongSC");
+	progressExportGV = document.getElementById("progressExportGV");
+	idGV = document.getElementById("idselectgv");
+	idLop = document.getElementById("idselectlop");
+	idPhong = document.getElementById("idselectphong");
+    xuatTKBTruong = document.getElementById("xemtkbtruong");
+    xuatTKBGV = document.getElementById("xemtkbgiaovien");
+    xuatTKBLop = document.getElementById("xemtkblop");
+    xuatTKBPhong = document.getElementById("xemtkbphong");
+    xuatTKBTruongSC = $(".httkbsc");
+    xuatTKBTruongS = $(".httkbs");
+    xuatTKBTruongC = $(".httkbc");
+    btnxuatTKBTruong = document.getElementById("btnxuatTKBTruong");
+    btnxuatTKBGV = document.getElementById("btnxuatTKBGV");
+}
+
+
+function initEvent() {
+    
+    btnxuatTKBTruong.onclick = function (e) {
+        downLoadTKBEvent();
+    };
+
+    btnxuatTKBGV.onclick = function (e) {
+        downLoadTKBEvent();
+    };
+}
+
+async function downLoadTKBEvent() {
+    await exportExcel();
+    await downloadTkb();
+}
+
+async function exportExcel() {
+    let tkbtruong = 0,
+        tkblop = 0,
+        tkbGV = 0,
+        tkbphong = 0,
+        tkbdiemtruong = 0,
+        tkbphancongcm = 0;
+
+    if (xuatTKBTruong.checked == true && xuatTKBTruongSC.prop("checked")) {
+
+        tkbtruong = 1;
+
+        arrFile.push("thoikhoabieutruong");
+
+    }
+    if (xuatTKBLop.checked == true) {
+
+        tkblop = 1;
+
+        arrFile.push("tkblophoc");
+
+        weekSelect = $("#selecttuanlop").val();
+        monthSelect = $("#datepickerthangtuanlop").val();
+
+        monthSelect = monthSelect.split("/");
+
+        firstDay = new Date(
+            Number(monthSelect[1]),
+            Number(monthSelect[0]) - 1,
+            1
+        );
+        lastDay = new Date(
+            Number(monthSelect[1]),
+            Number(monthSelect[0]),
+            0
+        );
+
+        firstDay = moment(firstDay).format("YYYY/MM/DD");
+        lastDay = moment(lastDay).format("YYYY/MM/DD");
+    }
+    if (xuatTKBGV.checked == true) {
+
+        tkbGV = 1;
+
+        arrFile.push("tkbgiaovien");
+
+    }
+    if (xuatTKBPhong.checked) {
+
+        tkbphong = 1;
+    }
+
+    //xuất TKB trường sáng, chiều
+    if (xuatTKBTruong.checked == true && xuatTKBTruongSC.prop("checked")) {
+    	try {
+
+	        progressExportTruongSC.classList.remove("hidden");
+	        
+	        let weekSelect = $("#selecttuantruong").val();
+        	let monthSelect = $("#datepickerthangtuantruong").val();
+
+	        monthSelect = monthSelect.split("/");
+
+	        let firstDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]) - 1,
+	            1
+	        );
+	        let lastDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]),
+	            0
+	        );
+
+	        firstDay = moment(firstDay).format("YYYY/MM/DD");
+	        lastDay = moment(lastDay).format("YYYY/MM/DD");
+
+	        if (firstDay == "Invalid date" && lastDay == "Invalid date") {
+	            progressExportTruongSC.setAttribute("aria-valuenow", "100");
+	            progressExportTruongSC.classList.add("hidden");
+	            Swal.fire(
+	                "Xin vui lòng chọn thời gian muốn xuất",
+	                "Chọn thời gian xuất",
+	                "warning"
+	            );
+	        } else {
+	            let result = await xuattkbapi.export(
+	                JSON.stringify({
+	                    tkbtruong: tkbtruong,
+	                    tkblop: tkblop,
+	                    tkbGV: tkbGV,
+	                    tkbphong: tkbphong,
+	                    tkbdiemtruong: tkbdiemtruong,
+	                    tkbphancongcm: tkbphancongcm,
+	                    // arrSelect: JSON.stringify(arrSelect),
+	                    // exportAll: selectAll.checked,
+	                    tendaydu: true,
+	                    tenviettat: false,
+	                    startMonth: firstDay,
+	                    endMonth: lastDay,
+	                    week: weekSelect,
+	                })
+	            );
+	            progressExportTruongSC.setAttribute("aria-valuenow", "100");
+	            progressExportTruongSC.classList.add("hidden");
+	        }
+	    } catch (error) {
+	        console.log(error);
+	        progressExportTruongSC.setAttribute("aria-valuenow", "100");
+	        progressExportTruongSC.classList.add("hidden");
+	        Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+	    }
+    }
+    
+    //xuất TKB giáo viên
+    if (xuatTKBGV.checked == true) {
+    	try {
+
+	        progressExportGV.classList.remove("hidden");
+
+	        let arrSelect = [];
+	        let weekSelect = $("#selecttuangv").val();
+	        let monthSelect = $("#datepickerthangtuangv").val();
+	        let tenGV = $('#idselectgv option:selected').text();
+
+	        arrSelect.push({ id: idGV.value, name: tenGV });
+
+	        monthSelect = monthSelect.split("/");
+
+	        firstDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]) - 1,
+	            1
+	        );
+	        lastDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]),
+	            0
+	        );
+
+	        firstDay = moment(firstDay).format("YYYY/MM/DD");
+	        lastDay = moment(lastDay).format("YYYY/MM/DD");
+
+	        if (firstDay == "Invalid date" && lastDay == "Invalid date") {
+	            progressExportGV.setAttribute("aria-valuenow", "100");
+	            progressExportGV.classList.add("hidden");
+	            Swal.fire(
+	                "Xin vui lòng chọn thời gian muốn xuất",
+	                "Chọn thời gian xuất",
+	                "warning"
+	            );
+	        } else {
+	            let result = await xuattkbapi.export(
+	                JSON.stringify({
+	                    tkbtruong: tkbtruong,
+	                    tkblop: tkblop,
+	                    tkbGV: tkbGV,
+	                    tkbphong: tkbphong,
+	                    tkbdiemtruong: tkbdiemtruong,
+	                    tkbphancongcm: tkbphancongcm,
+	                    arrSelect: JSON.stringify(arrSelect),
+	                    // exportAll: selectAll.checked,
+	                    tendaydu: true,
+	                    tenviettat: false,
+	                    startMonth: firstDay,
+	                    endMonth: lastDay,
+	                    week: weekSelect,
+	                })
+	            );
+	            progressExportGV.setAttribute("aria-valuenow", "100");
+	            progressExportGV.classList.add("hidden");
+	        }
+	    } catch (error) {
+	        console.log(error);
+	        progressExportGV.setAttribute("aria-valuenow", "100");
+	        progressExportGV.classList.add("hidden");
+	        Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+	    }
+    }
+
+    //xuất TKB lớp
+
+
+    //xuất TKB phòng
+
+}
+
+function downloadTkb() {
+    arrFile.forEach((file) => {
+        window.open(`${baseURl}xuattkb/export/${file}.xlsx`);
+    });
+    arrFile.length = 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//xem tkb
 function loaddanhsachtruong() {
 	var data = axios.get('getdstruong').then(function (response) {
 		var data1 = response.data;
@@ -1265,7 +1527,7 @@ function loaddanhsachphong(datadsphong) {
 							        				var matiet = tbodycotrong[m].dataset.matiet;
 							        				var mathu = tbodycotrong[m].dataset.mathu;
 							        				if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
-							        					tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
+							        					tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsgiaovien[0].bidanh+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsgiaovien[0].dslop[0].tenlop+')'+"</span>";
 							        				}
 							        			}
 							        		}
@@ -1393,13 +1655,18 @@ function xulythemmau(){
 }
 
 window.onload = function() {
-
+	//call xuất tkb
+	initControl();
+    // initData();
+    initEvent();
+	//
 	loaddanhsachtruong();
 	$("#bangdstruong").on('show.bs.collapse', function(){
     	document.getElementById("formxemtkb").style.display = "none";
     	$('#idselectgv').find('option').remove();
     	$('#idselectlop').find('option').remove();
     	$('#idselectkhoi').find('option').remove();
+    	$('#idselectphong').find('option').remove();
     	$('#xemtkbtruong').prop('checked', false);
   		$('#xemtkbgiaovien').prop('checked', false);
   		$('#xemtkblop').prop('checked', false);
@@ -1412,6 +1679,18 @@ window.onload = function() {
   		document.getElementById("cardxeptkblop").style.display = "none";
   		document.getElementById("cardselectgv").style.display = "none";
   		document.getElementById("cardselectlop").style.display = "none";
+  		document.getElementById("cardselectthoigiantruong").style.display = "none";
+  		$('#datepickerthangtuantruong').val('');
+    	$('#selecttuantruong').val('none');
+    	$('#datepickerthangtuangv').val('');
+    	$('#selecttuangv').val('none');
+    	$('#datepickerthangtuanlop').val('');
+    	$('#selecttuanlop').val('none');
+    	$('#datepickerthangtuanphong').val('');
+    	$('#selecttuanphong').val('none');
+    	document.getElementById("cardxeptkbphong").style.display = "none";
+    	document.getElementById("cardselectphong").style.display = "none";
+    	$('#xemtkbphong').prop('checked', false);
   	});
 
   	$('#datepickerthangtuantruong').datepicker({
@@ -1608,3 +1887,4 @@ window.onload = function() {
 	});
 
 }
+

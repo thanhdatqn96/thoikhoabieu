@@ -246,6 +246,17 @@
 													<tbody id="phanthantabletruong"></tbody>
 														
 												</table>
+												<button type="button" class="btn btn-success btn-sm" id="btnxuatTKBTruong">Xuất thời khóa biểu</button>
+												<br>
+												<br>
+												<div class="form-group">
+													<div id="progressExportTruongSC" class="progress hidden">
+														<div class="progress-bar progress-bar-striped progress-bar-animated"
+															role="progressbar" aria-valuenow="75" aria-valuemin="0"
+															aria-valuemax="100" style="width: 65%">Đang xuất thời khóa biểu vui
+															lòng chờ</div>
+													</div>
+												</div>
 											</div>
 										</div>
 									</section>
@@ -330,6 +341,17 @@
 												</thead>
 												<tbody id="phanthantablegiaovien"></tbody>
 											</table>
+											<button type="button" class="btn btn-success btn-sm" id="btnxuatTKBGV">Xuất thời khóa biểu</button>
+											<br>
+											<br>
+											<div class="form-group">
+												<div id="progressExportGV" class="progress hidden">
+													<div class="progress-bar progress-bar-striped progress-bar-animated"
+														role="progressbar" aria-valuenow="75" aria-valuemin="0"
+														aria-valuemax="100" style="width: 65%">Đang xuất thời khóa biểu vui
+														lòng chờ</div>
+												</div>
+											</div>
 										</div>
 									</section>
 
@@ -602,5 +624,7 @@
 </script>
 
 <link rel="stylesheet" href="{{asset('css/xemtkb/styleXemtkb.css')}}">
-<script type="text/javascript" src="{{asset('js/tonghop/xemthoikhoabieu.js')}}"></script>
+<script type="module" src="{{asset('js/tonghop/xemthoikhoabieu.js')}}"></script>
+<script type="text/javascript" src='dx/js/jszip/dist/xlsx.full.min.js'></script>
+
 @endsection

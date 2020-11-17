@@ -484,9 +484,10 @@ class xemtkbController extends Controller
 	 	$thoikhoabieu = DB::table('thoikhoabieu')
 	 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
+	 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
 	 	->leftjoin('phonghoc','phonghoc.id','thoikhoabieu.maphong')
 	 	->where('thoikhoabieu.maphong','!=',0)
-	 	->select('danhsachgv.bidanh','monhoc.tenmonhoc','phonghoc.tenphong','thoikhoabieu.magiaovien','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
+	 	->select('danhsachgv.bidanh','monhoc.tenmonhoc','phonghoc.tenphong','thoikhoabieu.magiaovien','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan','thoikhoabieu.malop','danhsachlophoc.tenlop')
 	 	->where('thoikhoabieu.matruong',$matruong)
 	 	->get();
 
@@ -536,7 +537,7 @@ class xemtkbController extends Controller
 						$datetime = date_parse_from_format('Y-m-d', $t->created_at);
 						$thang = $datetime['month'];
 						$nam = $datetime['year'];
-						array_push($databt,array('matruong'=>$t->matruong,'magiaovien'=>$t->magiaovien,'mamonhoc'=>$t->mamonhoc,'maphong'=>$t->maphong,'mabuoi'=>$b['idbuoi'],'mathu'=>$k['idthu'],'bidanh'=>$t->bidanh,'tenmonhoc'=>$t->tenmonhoc,'tenphong'=>$t->tenphong,'tiet'=>$t->tiet,'tenbuoi'=>$b['tenbuoi'],'tenthu'=>$k['tenthu'],'nam'=>$nam,'thang'=>$thang,'tuan'=>$t->tuan));
+						array_push($databt,array('matruong'=>$t->matruong,'magiaovien'=>$t->magiaovien,'mamonhoc'=>$t->mamonhoc,'maphong'=>$t->maphong,'mabuoi'=>$b['idbuoi'],'mathu'=>$k['idthu'],'bidanh'=>$t->bidanh,'tenmonhoc'=>$t->tenmonhoc,'tenphong'=>$t->tenphong,'tiet'=>$t->tiet,'tenbuoi'=>$b['tenbuoi'],'tenthu'=>$k['tenthu'],'nam'=>$nam,'thang'=>$thang,'tuan'=>$t->tuan,'malop'=>$t->malop,'tenlop'=>$t->tenlop));
 					}
 				}
 				
@@ -554,7 +555,8 @@ class xemtkbController extends Controller
 			$mathu = $d['mathu'];
 			$mamonhoc = $d['mamonhoc'];
 			$magiaovien = $d['magiaovien'];
-			$grouped[$matruong][$maphong][$nam][$thang][$tuan][$mabuoi][$tiet][$mathu][$mamonhoc][$magiaovien][] = $d;
+			$malop = $d['malop'];
+			$grouped[$matruong][$maphong][$nam][$thang][$tuan][$mabuoi][$tiet][$mathu][$magiaovien][$malop][] = $d;
 		}
 		
 		foreach($grouped as $k=>$v){
@@ -574,22 +576,23 @@ class xemtkbController extends Controller
 								foreach($v5 as $k6=>$v6){
 									$datathu = [];
 									foreach($v6 as $k7=>$v7){
-										$datamh = [];
+										$datagv = [];
 										$tenthu;
 										foreach($v7 as $k8=>$v8){
-											$datagv = [];
-											$tenmonhoc;
+											$datalop = [];
+											$bidanh;
 											foreach($v8 as $k9=>$v9){
 												$bidanh = $v9[0]['bidanh'];
 												$tenbuoi= $v9[0]['tenbuoi'];
 												$tenthu= $v9[0]['tenthu'];
 												$tenmonhoc= $v9[0]['tenmonhoc'];
 												$tenphong= $v9[0]['tenphong'];
-												array_push($datagv,array('magiaovien' => $k9,'bidanh' => $bidanh));
+												$tenlop = $v9[0]['tenlop'];
+												array_push($datalop,array('malop' => $k9,'tenlop' => $tenlop));
 											}
-											array_push($datamh,array('mamonhoc' => $k8,'tenmonhoc'=>$tenmonhoc,'dsgiaovien'=>$datagv));
+											array_push($datagv,array('magiaovien' => $k8,'bidanh'=>$bidanh,'dslop'=>$datalop));
 										}
-										array_push($datathu,array('mathu' => $k7,'tenthu'=>$tenthu,'dsmonhoc'=>$datamh));
+										array_push($datathu,array('mathu' => $k7,'tenthu'=>$tenthu,'dsgiaovien'=>$datagv));
 									}
 									array_push($datatiet,array('tiet' => $k6,'dsthu'=>$datathu));
 								}
