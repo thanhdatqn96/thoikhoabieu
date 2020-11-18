@@ -181,11 +181,14 @@ class rangbuocController extends Controller
 			}
 		}
 		
+		$grouped = [];
 		foreach($databt as $d){
 			$mamonhoc = $d['mamonhoc'];
 			$mabuoithu = $d['mabuoithutiet'];
 			$grouped[$mamonhoc][$mabuoithu][] = $d;
 		}
+		// dd($grouped);
+		$new_data_rbtcd = [];
 		foreach($grouped as $k=>$v){
 			$databuoithu = [];
 			$tenmonhoc;
@@ -214,7 +217,6 @@ class rangbuocController extends Controller
 			}
 			$new_data_rbtcd[] = array('mamonhoc' => $k,'tenmonhoc'=>$tenmonhoc ,'dsbuoithu'=> $databuoithu);
 		}
-
 		return json_encode($new_data_rbtcd, JSON_UNESCAPED_UNICODE);
 	}
 

@@ -74,13 +74,15 @@ class exportExcelController extends Controller
         $startMonth = $param->startMonth;
         $endMonth = $param->endMonth;
         $week = $param->week;
+        $idTruong = $param->idTruong;
+
         if ($param->tkbtruong == 1) {
             // TKB trường
             $sheet = $this->loadSheetExcel('mautkbtruong.xlsx');
             $sheet->setActiveSheetIndex(0);
             $sheetTKBSchool = $sheet->getActiveSheet();
             $fullname = $param->tendaydu;
-            $this->exportTKBSchoolTwoColumn($sheetTKBSchool, $sheet, $fullname, $startMonth, $endMonth, $week);
+            $this->exportTKBSchoolTwoColumn($sheetTKBSchool, $sheet, $fullname, $startMonth, $endMonth, $week, $idTruong);
             array_push($fileExport, "thoikhoabieutruong");
         }
         if ($param->tkblop == 1) {
@@ -1494,11 +1496,17 @@ class exportExcelController extends Controller
     }
 
 
-    private function exportTKBSchoolTwoColumn($sheetTKBSchool, $sheet, $fullname, $startMonth, $endMonth, $week)
+    private function exportTKBSchoolTwoColumn($sheetTKBSchool, $sheet, $fullname, $startMonth, $endMonth, $week, $idTruong)
     {
         $rowTitle = 5;
         $columnTitle = 3;
-        $matruong = $this->sessionInfo->getSchoolId();
+        $matruong;
+        if($idTruong !=0 ){
+            $matruong = $idTruong;
+        }else{
+            $matruong = $this->sessionInfo->getSchoolId();
+        }
+        
         $listClassRoom = danhsachlophoc::where('matruong', $matruong)->orderBy('tenlop', 'ASC')->get();
         // Render Class at header
         foreach ($listClassRoom as $class) {

@@ -76,7 +76,8 @@ async function exportExcel() {
         tkbGV = 0,
         tkbphong = 0,
         tkbdiemtruong = 0,
-        tkbphancongcm = 0;
+        tkbphancongcm = 0,
+        idTruong=0;
 
     if (xuatTKBTruong.checked == true && xuatTKBTruongSC.prop("checked")) {
 
@@ -109,6 +110,8 @@ async function exportExcel() {
     	try {
 
 	        progressExportTruongSC.classList.remove("hidden");
+
+	        idTruong = $('#idtruong').val();
 	        
 	        let weekSelect = $("#selecttuantruong").val();
         	let monthSelect = $("#datepickerthangtuantruong").val();
@@ -153,6 +156,7 @@ async function exportExcel() {
 	                    startMonth: firstDay,
 	                    endMonth: lastDay,
 	                    week: weekSelect,
+	                    idTruong: idTruong,
 	                })
 	            );
 	            progressExportTruongSC.setAttribute("aria-valuenow", "100");
@@ -219,6 +223,7 @@ async function exportExcel() {
 	                    startMonth: firstDay,
 	                    endMonth: lastDay,
 	                    week: weekSelect,
+	                    idTruong: idTruong,
 	                })
 	            );
 	            progressExportGV.setAttribute("aria-valuenow", "100");
@@ -285,6 +290,7 @@ async function exportExcel() {
 	                    startMonth: firstDay,
 	                    endMonth: lastDay,
 	                    week: weekSelect,
+	                    idTruong: idTruong,
 	                })
 	            );
 	            progressExportLop.setAttribute("aria-valuenow", "100");
@@ -351,6 +357,7 @@ async function exportExcel() {
 	                    startMonth: firstDay,
 	                    endMonth: lastDay,
 	                    week: weekSelect,
+	                    idTruong: idTruong,
 	                })
 	            );
 	            if (xuatTKBPhong.checked == true) {
@@ -485,6 +492,7 @@ function loaddanhsachtruong() {
                         	$("#idtentruonggv").text(options.data.tentruong);
                         	$("#idtentruonglop").text(options.data.tentruong);
                         	$("#idtentruongphong").text(options.data.tentruong);
+                        	$('#idtruong').val(options.data.matruong);
                         	$('#idtruonggv').val(options.data.matruong);
                         	$('#idtruonglop').val(options.data.matruong);
                         	$('#idtruongphong').val(options.data.matruong);

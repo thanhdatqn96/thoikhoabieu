@@ -25,6 +25,6 @@ class monhoc extends Model
 	public function danhsachlophocrb(){
 		return $this->belongsToMany('App\danhsachlophoc','rangbuoctietcodinh','mamonhoc','malop');
 
-	// protected $hidden = ['pivot'];
 	}
+	protected $hidden = ['pivot'];
 }

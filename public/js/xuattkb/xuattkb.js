@@ -245,7 +245,8 @@ async function exportExcel() {
         tkbGV = 0,
         tkbphong = 0,
         tkbdiemtruong = 0,
-        tkbphancongcm = 0;
+        tkbphancongcm = 0,
+        idTruong = 0;
 
     if (xuattkbtongquat.checked == true) {
         tkbtruong = 1;
@@ -329,6 +330,7 @@ async function exportExcel() {
                     startMonth: firstDay,
                     endMonth: lastDay,
                     week: selectweek.value,
+                    idTruong: idTruong,
                 })
             );
 

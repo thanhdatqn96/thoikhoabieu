@@ -168,8 +168,8 @@
 				<!-- select thời gian trường -->
 				<div class="card" id="cardselectthoigiantruong" style="display: none;">
 					<div class="card-header" style="padding: 10px">
-						<!-- <h4 class="card-title" id="titletkbgv">Trường: <b><span id="idtentruonggv" style="color: blue;"></span></b></h4>
-						<input type="hidden" id="idtruonggv"> -->
+						<!-- <h4 class="card-title" id="titletkbgv">Trường: <b><span id="idtentruonggv" style="color: blue;"></span></b></h4> -->
+						<input type="hidden" id="idtruong">
 					</div>
 					<div class="card-content collpase show">
 						<div class="card-body">
