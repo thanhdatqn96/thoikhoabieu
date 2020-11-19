@@ -94,7 +94,7 @@
 												</div>							
 											</div>
 
-											<div class="card box-shadow-0 border-info bg-transparent" id="cardsangchieu">
+											<div class="card box-shadow-0 border-info bg-transparent" id="cardsangchieu" style="display: none;">
 												<div class="card-header bg-transparent" style="padding: 10px">
 													<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
 													<div class="heading-elements">
@@ -228,6 +228,17 @@
 													<tbody id="phanthantabletruongsang"></tbody>
 														
 												</table>
+												<button type="button" class="btn btn-success btn-sm" id="btnxuatTKBTruongS">Xuất thời khóa biểu</button>
+												<br>
+												<br>
+												<div class="form-group">
+													<div id="progressExportTruongS" class="progress hidden">
+														<div class="progress-bar progress-bar-striped progress-bar-animated"
+															role="progressbar" aria-valuenow="75" aria-valuemin="0"
+															aria-valuemax="100" style="width: 65%">Đang xuất thời khóa biểu vui
+															lòng chờ</div>
+													</div>
+												</div>
 											</div>
 											<div id="bangchieu">
 												<table id="tablexemtkbtruongchieu" class="table table-striped table-bordered dataex-key-basic table-responsive display nowrap" style="overflow-y: auto; height: 600px;width: 100%;border-collapse: separate;">
@@ -237,6 +248,17 @@
 													<tbody id="phanthantabletruongchieu"></tbody>
 														
 												</table>
+												<button type="button" class="btn btn-success btn-sm" id="btnxuatTKBTruongC">Xuất thời khóa biểu</button>
+												<br>
+												<br>
+												<div class="form-group">
+													<div id="progressExportTruongC" class="progress hidden">
+														<div class="progress-bar progress-bar-striped progress-bar-animated"
+															role="progressbar" aria-valuenow="75" aria-valuemin="0"
+															aria-valuemax="100" style="width: 65%">Đang xuất thời khóa biểu vui
+															lòng chờ</div>
+													</div>
+												</div>
 											</div>
 											<div id="bangsangchieu">
 												<table id="tablexemtkbtruong" class="table table-striped table-bordered dataex-key-basic table-responsive display nowrap" style="overflow-y: auto; height: 600px;width: 100%;border-collapse: separate;">
@@ -246,7 +268,7 @@
 													<tbody id="phanthantabletruong"></tbody>
 														
 												</table>
-												<button type="button" class="btn btn-success btn-sm" id="btnxuatTKBTruong">Xuất thời khóa biểu</button>
+												<button type="button" class="btn btn-success btn-sm" id="btnxuatTKBTruongSC">Xuất thời khóa biểu</button>
 												<br>
 												<br>
 												<div class="form-group">

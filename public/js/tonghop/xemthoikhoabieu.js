@@ -17,7 +17,9 @@ var progressExportTruongSC,
     xuatTKBLop,
     xuatTKBGV,
     xuatTKBPhong,
-    btnxuatTKBTruong,
+    btnxuatTKBTruongSC,
+    btnxuatTKBTruongS,
+    btnxuatTKBTruongC,
     btnxuatTKBGV,
     btnxuatTKBLop,
     btnxuatTKBPhong;
@@ -39,7 +41,9 @@ function initControl() {
     xuatTKBTruongSC = $(".httkbsc");
     xuatTKBTruongS = $(".httkbs");
     xuatTKBTruongC = $(".httkbc");
-    btnxuatTKBTruong = document.getElementById("btnxuatTKBTruong");
+    btnxuatTKBTruongSC = document.getElementById("btnxuatTKBTruongSC");
+    btnxuatTKBTruongS = document.getElementById("btnxuatTKBTruongS");
+    btnxuatTKBTruongC = document.getElementById("btnxuatTKBTruongC");
     btnxuatTKBGV = document.getElementById("btnxuatTKBGV");
     btnxuatTKBLop = document.getElementById("btnxuatTKBLop");
     btnxuatTKBPhong = document.getElementById("btnxuatTKBPhong");
@@ -48,7 +52,15 @@ function initControl() {
 
 function initEvent() {
     
-    btnxuatTKBTruong.onclick = function (e) {
+    btnxuatTKBTruongSC.onclick = function (e) {
+        downLoadTKBEvent();
+    };
+
+ 	btnxuatTKBTruongS.onclick = function (e) {
+        downLoadTKBEvent();
+    };
+
+    btnxuatTKBTruongC.onclick = function (e) {
         downLoadTKBEvent();
     };
 
@@ -77,13 +89,34 @@ async function exportExcel() {
         tkbphong = 0,
         tkbdiemtruong = 0,
         tkbphancongcm = 0,
+        buoi = 0,
         idTruong=0;
 
     if (xuatTKBTruong.checked == true && xuatTKBTruongSC.prop("checked")) {
 
         tkbtruong = 1;
 
+        buoi = 3;
+        
         arrFile.push("thoikhoabieutruong");
+
+    }
+    if (xuatTKBTruong.checked == true && xuatTKBTruongS.prop("checked")) {
+
+        tkbtruong = 1;
+
+        buoi = 1;
+        
+        arrFile.push("thoikhoabieutruongbuoisang");
+
+    }
+    if (xuatTKBTruong.checked == true && xuatTKBTruongC.prop("checked")) {
+
+        tkbtruong = 1;
+
+        buoi = 2;
+        
+        arrFile.push("thoikhoabieutruongbuoichieu");
 
     }
     if (xuatTKBLop.checked == true) {
@@ -157,6 +190,7 @@ async function exportExcel() {
 	                    endMonth: lastDay,
 	                    week: weekSelect,
 	                    idTruong: idTruong,
+	                    buoi: buoi
 	                })
 	            );
 	            progressExportTruongSC.setAttribute("aria-valuenow", "100");
@@ -170,6 +204,136 @@ async function exportExcel() {
 	    }
     }
     
+    //xuất TKB trường sáng
+    if (xuatTKBTruong.checked == true && xuatTKBTruongS.prop("checked")) {
+    	try {
+
+	        progressExportTruongS.classList.remove("hidden");
+
+	        idTruong = $('#idtruong').val();
+	        
+	        let weekSelect = $("#selecttuantruong").val();
+        	let monthSelect = $("#datepickerthangtuantruong").val();
+
+	        monthSelect = monthSelect.split("/");
+
+	        let firstDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]) - 1,
+	            1
+	        );
+	        let lastDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]),
+	            0
+	        );
+
+	        firstDay = moment(firstDay).format("YYYY/MM/DD");
+	        lastDay = moment(lastDay).format("YYYY/MM/DD");
+
+	        if (firstDay == "Invalid date" && lastDay == "Invalid date") {
+	            progressExportTruongS.setAttribute("aria-valuenow", "100");
+	            progressExportTruongS.classList.add("hidden");
+	            Swal.fire(
+	                "Xin vui lòng chọn thời gian muốn xuất",
+	                "Chọn thời gian xuất",
+	                "warning"
+	            );
+	        } else {
+	            let result = await xuattkbapi.export(
+	                JSON.stringify({
+	                    tkbtruong: tkbtruong,
+	                    tkblop: tkblop,
+	                    tkbGV: tkbGV,
+	                    tkbphong: tkbphong,
+	                    tkbdiemtruong: tkbdiemtruong,
+	                    tkbphancongcm: tkbphancongcm,
+	                    // arrSelect: JSON.stringify(arrSelect),
+	                    // exportAll: selectAll.checked,
+	                    tendaydu: true,
+	                    tenviettat: false,
+	                    startMonth: firstDay,
+	                    endMonth: lastDay,
+	                    week: weekSelect,
+	                    idTruong: idTruong,
+	                    buoi: buoi
+	                })
+	            );
+	            progressExportTruongS.setAttribute("aria-valuenow", "100");
+	            progressExportTruongS.classList.add("hidden");
+	        }
+	    } catch (error) {
+	        console.log(error);
+	        progressExportTruongS.setAttribute("aria-valuenow", "100");
+	        progressExportTruongS.classList.add("hidden");
+	        Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+	    }
+    }
+    //xuất TKB trường chiều
+    if (xuatTKBTruong.checked == true && xuatTKBTruongC.prop("checked")) {
+    	try {
+
+	        progressExportTruongC.classList.remove("hidden");
+
+	        idTruong = $('#idtruong').val();
+	        
+	        let weekSelect = $("#selecttuantruong").val();
+        	let monthSelect = $("#datepickerthangtuantruong").val();
+
+	        monthSelect = monthSelect.split("/");
+
+	        let firstDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]) - 1,
+	            1
+	        );
+	        let lastDay = new Date(
+	            Number(monthSelect[1]),
+	            Number(monthSelect[0]),
+	            0
+	        );
+
+	        firstDay = moment(firstDay).format("YYYY/MM/DD");
+	        lastDay = moment(lastDay).format("YYYY/MM/DD");
+
+	        if (firstDay == "Invalid date" && lastDay == "Invalid date") {
+	            progressExportTruongC.setAttribute("aria-valuenow", "100");
+	            progressExportTruongC.classList.add("hidden");
+	            Swal.fire(
+	                "Xin vui lòng chọn thời gian muốn xuất",
+	                "Chọn thời gian xuất",
+	                "warning"
+	            );
+	        } else {
+	            let result = await xuattkbapi.export(
+	                JSON.stringify({
+	                    tkbtruong: tkbtruong,
+	                    tkblop: tkblop,
+	                    tkbGV: tkbGV,
+	                    tkbphong: tkbphong,
+	                    tkbdiemtruong: tkbdiemtruong,
+	                    tkbphancongcm: tkbphancongcm,
+	                    // arrSelect: JSON.stringify(arrSelect),
+	                    // exportAll: selectAll.checked,
+	                    tendaydu: true,
+	                    tenviettat: false,
+	                    startMonth: firstDay,
+	                    endMonth: lastDay,
+	                    week: weekSelect,
+	                    idTruong: idTruong,
+	                    buoi: buoi
+	                })
+	            );
+	            progressExportTruongC.setAttribute("aria-valuenow", "100");
+	            progressExportTruongC.classList.add("hidden");
+	        }
+	    } catch (error) {
+	        console.log(error);
+	        progressExportTruongC.setAttribute("aria-valuenow", "100");
+	        progressExportTruongC.classList.add("hidden");
+	        Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+	    }
+    }
     //xuất TKB giáo viên
     if (xuatTKBGV.checked == true) {
     	try {
@@ -224,6 +388,7 @@ async function exportExcel() {
 	                    endMonth: lastDay,
 	                    week: weekSelect,
 	                    idTruong: idTruong,
+	                    buoi: buoi
 	                })
 	            );
 	            progressExportGV.setAttribute("aria-valuenow", "100");
@@ -291,6 +456,7 @@ async function exportExcel() {
 	                    endMonth: lastDay,
 	                    week: weekSelect,
 	                    idTruong: idTruong,
+	                    buoi: buoi
 	                })
 	            );
 	            progressExportLop.setAttribute("aria-valuenow", "100");
@@ -458,6 +624,8 @@ function loaddanhsachtruong() {
 					tencap = "Trung học cơ sở";
 				}else if(dulieucap == 3){
 					tencap = "Trung học phổ thông";
+				}else if(dulieucap == 4){
+					tencap = "Tiểu học & Trung học cơ sở";
 				}
 				$("<div>")
                 .appendTo(element)
@@ -540,6 +708,10 @@ function loadthoikhoabieutruong(matruong){
         const nam = date.format('YYYY');
 
         let tuan = $(this).val();
+
+        if(tuan == null) {
+        	return false;
+        }
 
         if (tuan != '' && thangnamtuan != '') {
             $('#idthangtuantruong').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
@@ -732,7 +904,13 @@ function loadthoikhoabieutruong(matruong){
 				if($(".httkbsc").prop("checked")){
 					var tbodysangchieusc = $("#tablexemtkbtruong tbody#phanthantabletruong");
 					if(tbodysangchieusc.children().length == 0){
+						Swal.fire(
+						  'Thông báo',
+						  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+						  'info'
+						)
 						document.getElementById("bangsangchieu").style.display = "none";
+						document.getElementById("cardxeptkbtruong").style.display = "none";
 					}else{
 						document.getElementById("bangsangchieu").style.display = "block";
 						document.getElementById("cardxeptkbtruong").style.display = "block";
@@ -766,6 +944,10 @@ function loadthoikhoabieutruongsang(matruong){
         const nam = date.format('YYYY');
 
         let tuan = $(this).val();
+
+        if(tuan == null) {
+        	return false;
+        }
 
         if (tuan != '' && thangnamtuan != '') {
             $('#idthangtuantruong').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
@@ -962,7 +1144,13 @@ function loadthoikhoabieutruongsang(matruong){
 				if($(".httkbs").prop("checked") == true){
 					var tbodysangs = $("#tablexemtkbtruongsang tbody#phanthantabletruongsang");
 					if(tbodysangs.children().length == 0){
+						Swal.fire(
+						  'Thông báo',
+						  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+						  'info'
+						)
 						document.getElementById("bangsang").style.display = "none";
+						document.getElementById("cardxeptkbtruong").style.display = "none";
 					}else{
 						document.getElementById("bangsang").style.display = "block";
 						document.getElementById("cardxeptkbtruong").style.display = "block";
@@ -996,6 +1184,10 @@ function loadthoikhoabieutruongchieu(matruong){
         const nam = date.format('YYYY');
 
         let tuan = $(this).val();
+
+        if(tuan == null) {
+        	return false;
+        }
 
         if (tuan != '' && thangnamtuan != '') {
             $('#idthangtuantruong').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
@@ -1193,7 +1385,13 @@ function loadthoikhoabieutruongchieu(matruong){
 				if($(".httkbc").prop("checked")){
 					var tbodychieuc = $("#tablexemtkbtruongchieu tbody#phanthantabletruongchieu");
 					if(tbodychieuc.children().length == 0){
+						Swal.fire(
+						  'Thông báo',
+						  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+						  'info'
+						)
 						document.getElementById("bangchieu").style.display = "none";
+						document.getElementById("cardxeptkbtruong").style.display = "none";
 					}else{
 						document.getElementById("bangchieu").style.display = "block";
 						document.getElementById("cardxeptkbtruong").style.display = "block";
@@ -1350,15 +1548,20 @@ function loaddanhsachgv(datadsgv) {
                     
                 }
                 
-            }   
+            }
+
+            var tbodygv = $("#tablexemtkbgiaovien tbody#phanthantablegiaovien");
+			if(tbodygv.children().length == 0){
+				Swal.fire(
+				  'Thông báo',
+				  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+				  'info'
+				)
+				document.getElementById("cardxeptkbgiaovien").style.display = "none";
+			}   
                 
         });
                 
-        var tbodygv = $("#tablexemtkbgiaovien tbody#phanthantablegiaovien");
-		if(tbodygv.children().length == 0){
-			document.getElementById("cardxeptkbgiaovien").style.display = "none";
-		}
-
     });
 
 
@@ -1531,15 +1734,19 @@ function loaddanhsachkhoilop(datadskhoi,datadslop){
                     
                 }
                 
-            }   
-                
-        });
+            }
 
-		var tbodylop = $("#tablexemtkblop tbody#phanthantablelop");
-		if(tbodylop.children().length == 0){
-			document.getElementById("cardxeptkblop").style.display = "none";
-		}
-  		
+            var tbodylop = $("#tablexemtkblop tbody#phanthantablelop");
+			if(tbodylop.children().length == 0){
+				Swal.fire(
+				  'Thông báo',
+				  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+				  'info'
+				)
+				document.getElementById("cardxeptkblop").style.display = "none";
+			}   
+                
+        });	
   	});
 
 }
@@ -1687,15 +1894,20 @@ function loaddanhsachphong(datadsphong) {
                     
                 }
                 
-            }   	
+            }
+
+            var tbodyphong = $("#tablexemtkbphong tbody#phanthantablephong");
+			if(tbodyphong.children().length == 0){
+				Swal.fire(
+				  'Thông báo',
+				  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+				  'info'
+				)
+				document.getElementById("cardxeptkbphong").style.display = "none";
+			}   	
 				
 		});
 
-		var tbodyphong = $("#tablexemtkbphong tbody#phanthantablephong");
-		if(tbodyphong.children().length == 0){
-			document.getElementById("cardxeptkbphong").style.display = "none";
-		}
-  		
   	});
 
 }
@@ -1915,37 +2127,84 @@ window.onload = function() {
 	$("input[type='checkbox']").change(function () {
 		//sáng
 		if($(".httkbs").prop("checked")){
+			var layThangTruong = $('#datepickerthangtuantruong').val();
+			var layTuanTruong = $('#selecttuantruong').val();
 			var tbodysang = $("#tablexemtkbtruongsang tbody#phanthantabletruongsang");
-			if(tbodysang.children().length == 0){
-				document.getElementById("bangsang").style.display = "none";
+
+			if(layThangTruong == '' || layTuanTruong == null){
+				alert('Vui lòng chọn thời gian');
+				$('.httkbs').prop('checked',false);
 			}else{
-				document.getElementById("bangsang").style.display = "block";
-			}			
+				if(tbodysang.children().length == 0){
+					Swal.fire(
+					  'Thông báo',
+					  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+					  'info'
+					)
+					document.getElementById("bangsang").style.display = "none";
+					document.getElementById("cardxeptkbtruong").style.display = "none";
+				}else{
+					document.getElementById("bangsang").style.display = "block";
+					document.getElementById("cardxeptkbtruong").style.display = "block";
+				}	
+			}
+					
 		}else{
 			document.getElementById("bangsang").style.display = "none";
 		}
 
 		//chiều
 		if($(".httkbc").prop("checked")){
+			var layThangTruong = $('#datepickerthangtuantruong').val();
+			var layTuanTruong = $('#selecttuantruong').val();
 			var tbodychieu = $("#tablexemtkbtruongchieu tbody#phanthantabletruongchieu");
-			if(tbodychieu.children().length == 0){
-				document.getElementById("bangchieu").style.display = "none";
+
+			if(layThangTruong == '' && layTuanTruong == null){
+				alert('Vui lòng chọn thời gian');
+				$('.httkbc').prop('checked',false);
 			}else{
-				document.getElementById("bangchieu").style.display = "block";
+				if(tbodychieu.children().length == 0){
+					Swal.fire(
+					  'Thông báo',
+					  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+					  'info'
+					)
+					document.getElementById("bangchieu").style.display = "none";
+					document.getElementById("cardxeptkbtruong").style.display = "none";
+				}else{
+					document.getElementById("bangchieu").style.display = "block";
+					document.getElementById("cardxeptkbtruong").style.display = "block";
+				}
 			}
+			
 		}else{
 			document.getElementById("bangchieu").style.display = "none";
 		}
 
 		//sáng và chiều
 		if($(".httkbsc").prop("checked")){
+			var layThangTruong = $('#datepickerthangtuantruong').val();
+			var layTuanTruong = $('#selecttuantruong').val();
 			var tbodysangchieu = $("#tablexemtkbtruong tbody#phanthantabletruong");
-			if(tbodysangchieu.children().length == 0){
-				document.getElementById("bangsangchieu").style.display = "none";
+
+			if(layThangTruong == '' || layTuanTruong == null){
+				alert('Vui lòng chọn thời gian');
+				$('.httkbsc').prop('checked',false);
 			}else{
-				document.getElementById("bangsangchieu").style.display = "block";
-				document.getElementById("cardxeptkbtruong").style.display = "block";
+				if(tbodysangchieu.children().length == 0){
+					Swal.fire(
+					  'Thông báo',
+					  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+					  'info'
+					)
+					document.getElementById("bangsangchieu").style.display = "none";
+					document.getElementById("cardxeptkbtruong").style.display = "none";
+				}else{
+					document.getElementById("bangsangchieu").style.display = "block";
+					document.getElementById("cardxeptkbtruong").style.display = "block";
+				}
 			}
+			
 		}else{
 			document.getElementById("bangsangchieu").style.display = "none";
 		}

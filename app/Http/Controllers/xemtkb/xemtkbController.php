@@ -134,6 +134,8 @@ class xemtkbController extends Controller
 			}
 		}
 
+		$grouped = [];
+
 		foreach($databt as $d){
 			$matruong = $d['matruong'];
 			$nam = $d['nam'];
@@ -147,7 +149,8 @@ class xemtkbController extends Controller
 			$grouped[$matruong][$nam][$thang][$tuan][$mabuoithu][$tiet][$malop][$mamonhoc][$magiaovien][] = $d;
 		}
 
-		// dd($grouped);
+		$new_data_tkb = [];
+
 		foreach($grouped as $k=>$v){
 			$datanam = [];
 			foreach ($v as $k1 => $v1) {
@@ -283,6 +286,8 @@ class xemtkbController extends Controller
 			}
 		}
 
+		$grouped = [];
+
 		foreach($databt as $d){
 			$matruong = $d['matruong'];
 			$magiaovien = $d['magiaovien'];
@@ -296,6 +301,8 @@ class xemtkbController extends Controller
 			$tuan = $d['tuan'];
 			$grouped[$matruong][$magiaovien][$nam][$thang][$tuan][$mabuoi][$tiet][$mathu][$mamonhoc][$malop][] = $d;
 		}
+
+		$new_data_tkb_gv_thoigian = [];
 
 		foreach ($grouped as $k=>$v){
 			$datagv = [];
@@ -412,6 +419,8 @@ class xemtkbController extends Controller
 			}
 		}
 
+		$grouped = [];
+
 		foreach($databt as $d){
 			$matruong = $d['matruong'];
 			$malop = $d['malop'];
@@ -425,6 +434,8 @@ class xemtkbController extends Controller
 			$tuan = $d['tuan'];
 			$grouped[$matruong][$malop][$nam][$thang][$tuan][$mabuoi][$tiet][$mathu][$mamonhoc][$magiaovien][] = $d;
 		}
+
+		$new_data_tkb_lop_thoigian = [];
 
 		foreach ($grouped as $k=>$v){
 			$datalop = [];
@@ -544,6 +555,8 @@ class xemtkbController extends Controller
 			}
 		}
 
+		$grouped = [];
+
 		foreach($databt as $d){
 			$matruong = $d['matruong'];
 			$maphong = $d['maphong'];
@@ -559,6 +572,8 @@ class xemtkbController extends Controller
 			$grouped[$matruong][$maphong][$nam][$thang][$tuan][$mabuoi][$tiet][$mathu][$magiaovien][$malop][] = $d;
 		}
 		
+		$new_data_tkb_phong = [];
+
 		foreach($grouped as $k=>$v){
 			$dataphong = [];
 			foreach($v as $k1=>$v1){

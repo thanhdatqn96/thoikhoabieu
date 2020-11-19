@@ -18,6 +18,10 @@ function loadthoikhoabieutruong(){
 
         let tuan = $(this).val();
 
+        if(tuan == null) {
+        	return false;
+        }
+
         if (tuan != '' && thangnamtuan != '') {
             $('#idthangtuantruong').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
         } else {
@@ -209,7 +213,13 @@ function loadthoikhoabieutruong(){
 				if($(".httkbsc").prop("checked")){
 					var tbodysangchieusc = $("#tablexemtkbtruong tbody#phanthantabletruong");
 					if(tbodysangchieusc.children().length == 0){
+						Swal.fire(
+						  'Thông báo',
+						  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+						  'info'
+						)
 						document.getElementById("bangsangchieu").style.display = "none";
+						document.getElementById("cardxeptkbtruong").style.display = "none";
 					}else{
 						document.getElementById("bangsangchieu").style.display = "block";
 						document.getElementById("cardxeptkbtruong").style.display = "block";
@@ -244,6 +254,10 @@ function loadthoikhoabieutruongsang(){
         const nam = date.format('YYYY');
 
         let tuan = $(this).val();
+
+        if(tuan == null) {
+        	return false;
+        }
 
         if (tuan != '' && thangnamtuan != '') {
             $('#idthangtuantruong').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
@@ -440,7 +454,13 @@ function loadthoikhoabieutruongsang(){
 				if($(".httkbs").prop("checked") == true){
 					var tbodysangs = $("#tablexemtkbtruongsang tbody#phanthantabletruongsang");
 					if(tbodysangs.children().length == 0){
+						Swal.fire(
+						  'Thông báo',
+						  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+						  'info'
+						)
 						document.getElementById("bangsang").style.display = "none";
+						document.getElementById("cardxeptkbtruong").style.display = "none";
 					}else{
 						document.getElementById("bangsang").style.display = "block";
 						document.getElementById("cardxeptkbtruong").style.display = "block";
@@ -473,6 +493,10 @@ function loadthoikhoabieutruongchieu(){
         const nam = date.format('YYYY');
 
         let tuan = $(this).val();
+
+        if(tuan == null) {
+        	return false;
+        }
 
         if (tuan != '' && thangnamtuan != '') {
             $('#idthangtuantruong').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
@@ -670,7 +694,13 @@ function loadthoikhoabieutruongchieu(){
 				if($(".httkbc").prop("checked")){
 					var tbodychieuc = $("#tablexemtkbtruongchieu tbody#phanthantabletruongchieu");
 					if(tbodychieuc.children().length == 0){
+						Swal.fire(
+						  'Thông báo',
+						  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+						  'info'
+						)
 						document.getElementById("bangchieu").style.display = "none";
+						document.getElementById("cardxeptkbtruong").style.display = "none";
 					}else{
 						document.getElementById("bangchieu").style.display = "block";
 						document.getElementById("cardxeptkbtruong").style.display = "block";
@@ -828,15 +858,19 @@ function loaddanhsachgv() {
 	                    
 	                }
 	                
-	            }   
+	            }
+
+	            var tbodygv = $("#tablexemtkbgiaovien tbody#phanthantablegiaovien");
+				if(tbodygv.children().length == 0){
+					Swal.fire(
+					  'Thông báo',
+					  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+					  'info'
+					)
+					document.getElementById("cardxeptkbgiaovien").style.display = "none";
+				}     
 	                
 	        });
-	                
-	        var tbodygv = $("#tablexemtkbgiaovien tbody#phanthantablegiaovien");
-			if(tbodygv.children().length == 0){
-				document.getElementById("cardxeptkbgiaovien").style.display = "none";
-			}
-
 	    });
 	});
 
@@ -1010,15 +1044,20 @@ function loaddanhsachkhoilop(){
 	                    
 	                }
 	                
-	            }   
+	            }
+
+	            var tbodylop = $("#tablexemtkblop tbody#phanthantablelop");
+				if(tbodylop.children().length == 0){
+					Swal.fire(
+					  'Thông báo',
+					  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+					  'info'
+					)
+					document.getElementById("cardxeptkblop").style.display = "none";
+				}     
 	                
 	        });
-
-			var tbodylop = $("#tablexemtkblop tbody#phanthantablelop");
-			if(tbodylop.children().length == 0){
-				document.getElementById("cardxeptkblop").style.display = "none";
-			}
-	  		
+  		
 	  	});
 	});
 
@@ -1169,15 +1208,20 @@ function loadthoikhoabieuphong() {
                     
                 }
                 
-            }   	
+            }
+
+            var tbodyphong = $("#tablexemtkbphong tbody#phanthantablephong");
+			if(tbodyphong.children().length == 0){
+				Swal.fire(
+				  'Thông báo',
+				  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+				  'info'
+				)
+				document.getElementById("cardxeptkbphong").style.display = "none";
+			}     	
 				
 		});
-
-		var tbodyphong = $("#tablexemtkbphong tbody#phanthantablephong");
-		if(tbodyphong.children().length == 0){
-			document.getElementById("cardxeptkbphong").style.display = "none";
-		}
-  		
+ 		
   	});
 }
 
@@ -1364,40 +1408,84 @@ window.onload = function() {
 	$("input[type='checkbox']").change(function () {
 		//sáng
 		if($(".httkbs").prop("checked")){
+			var layThangTruong = $('#datepickerthangtuantruong').val();
+			var layTuanTruong = $('#selecttuantruong').val();
 			var tbodysang = $("#tablexemtkbtruongsang tbody#phanthantabletruongsang");
-			if(tbodysang.children().length == 0){
-				document.getElementById("bangsang").style.display = "none";
+
+			if(layThangTruong == '' || layTuanTruong == null){
+				alert('Vui lòng chọn thời gian');
+				$('.httkbs').prop('checked',false);
 			}else{
-				document.getElementById("bangsang").style.display = "block";
-				document.getElementById("cardxeptkbtruong").style.display = "block";
-			}			
+				if(tbodysang.children().length == 0){
+					Swal.fire(
+					  'Thông báo',
+					  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+					  'info'
+					)
+					document.getElementById("bangsang").style.display = "none";
+					document.getElementById("cardxeptkbtruong").style.display = "none";
+				}else{
+					document.getElementById("bangsang").style.display = "block";
+					document.getElementById("cardxeptkbtruong").style.display = "block";
+				}	
+			}
+					
 		}else{
 			document.getElementById("bangsang").style.display = "none";
 		}
 
 		//chiều
 		if($(".httkbc").prop("checked")){
+			var layThangTruong = $('#datepickerthangtuantruong').val();
+			var layTuanTruong = $('#selecttuantruong').val();
 			var tbodychieu = $("#tablexemtkbtruongchieu tbody#phanthantabletruongchieu");
-			if(tbodychieu.children().length == 0){
-				document.getElementById("bangchieu").style.display = "none";
-			}else{
-				document.getElementById("bangchieu").style.display = "block";
-				document.getElementById("cardxeptkbtruong").style.display = "block";
 
+			if(layThangTruong == '' && layTuanTruong == null){
+				alert('Vui lòng chọn thời gian');
+				$('.httkbc').prop('checked',false);
+			}else{
+				if(tbodychieu.children().length == 0){
+					Swal.fire(
+					  'Thông báo',
+					  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+					  'info'
+					)
+					document.getElementById("bangchieu").style.display = "none";
+					document.getElementById("cardxeptkbtruong").style.display = "none";
+				}else{
+					document.getElementById("bangchieu").style.display = "block";
+					document.getElementById("cardxeptkbtruong").style.display = "block";
+				}
 			}
+			
 		}else{
 			document.getElementById("bangchieu").style.display = "none";
 		}
 
 		//sáng và chiều
 		if($(".httkbsc").prop("checked")){
+			var layThangTruong = $('#datepickerthangtuantruong').val();
+			var layTuanTruong = $('#selecttuantruong').val();
 			var tbodysangchieu = $("#tablexemtkbtruong tbody#phanthantabletruong");
-			if(tbodysangchieu.children().length == 0){
-				document.getElementById("bangsangchieu").style.display = "none";
+
+			if(layThangTruong == '' || layTuanTruong == null){
+				alert('Vui lòng chọn thời gian');
+				$('.httkbsc').prop('checked',false);
 			}else{
-				document.getElementById("bangsangchieu").style.display = "block";
-				document.getElementById("cardxeptkbtruong").style.display = "block";
+				if(tbodysangchieu.children().length == 0){
+					Swal.fire(
+					  'Thông báo',
+					  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+					  'info'
+					)
+					document.getElementById("bangsangchieu").style.display = "none";
+					document.getElementById("cardxeptkbtruong").style.display = "none";
+				}else{
+					document.getElementById("bangsangchieu").style.display = "block";
+					document.getElementById("cardxeptkbtruong").style.display = "block";
+				}
 			}
+			
 		}else{
 			document.getElementById("bangsangchieu").style.display = "none";
 		}

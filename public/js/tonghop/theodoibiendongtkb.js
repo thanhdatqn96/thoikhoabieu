@@ -56,6 +56,8 @@ function loaddanhsachtruong() {
                         tencap = "Trung học cơ sở";
                     } else if (dulieucap == 3) {
                         tencap = "Trung học phổ thông";
+                    }else if(dulieucap == 4){
+                        tencap = "Tiểu học & Trung học cơ sở";
                     }
                     $("<div>")
                         .appendTo(element)

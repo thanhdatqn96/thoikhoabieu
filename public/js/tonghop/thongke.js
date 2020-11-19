@@ -16,45 +16,52 @@ function loadthongkesoluongtietday() {
 				phonghoc: items.phonghoc
 
 			});
-			datagv.filter(function(items1,label){
-				var stt = label + 1;
-				if(matruong == items1.matruong){
-					var data3 = [];
-					var datamonhoc = items1.monhoc;
-					var magv = items1.id;
-					data2.push({
-						stt: stt.toString(),
-						id: items1.id,
-						hovaten: items1.hovaten,
-						bidanh: items1.bidanh,
-						monhoc: data3
-					});
-					datamonhoc.filter(function(items2){
-						if(magv == items2.magiaovien){
-							var data4= [];
-							var malop = items2.malop;
-							var sotiet = items2.sotiet;
-							var datalop = items2.danhsachlophoc;
-							var mamonhoc = items2.mamonhoc;
-							data3.push({
-								id: items2.id,
-								tenmonhoc: items2.tenmonhoc,
-								danhsachlophoc: data4,
-								magiaovien: magv
+			if(datagv != null){
+				datagv.filter(function(items1,label){
+					var stt = label + 1;
+					if(matruong == items1.matruong){
+						var data3 = [];
+						var datamonhoc = items1.monhoc;
+						var magv = items1.id;
+						data2.push({
+							stt: stt.toString(),
+							id: items1.id,
+							hovaten: items1.hovaten,
+							bidanh: items1.bidanh,
+							monhoc: data3
+						});
+						if(datamonhoc != null){
+							datamonhoc.filter(function(items2){
+								if(magv == items2.magiaovien){
+									var data4= [];
+									var malop = items2.malop;
+									var sotiet = items2.sotiet;
+									var datalop = items2.danhsachlophoc;
+									var mamonhoc = items2.mamonhoc;
+									data3.push({
+										id: items2.id,
+										tenmonhoc: items2.tenmonhoc,
+										danhsachlophoc: data4,
+										magiaovien: magv
 
+									});
+									if(datalop != null){
+										if(malop == datalop.id){
+											data4.push({
+												id: datalop.id,
+												tenlop: datalop.tenlop,
+												sotiet: sotiet,
+												mamonhoc: mamonhoc
+											});
+										}
+									}								
+								}
 							});
-							if(malop == datalop.id){
-								data4.push({
-									id: datalop.id,
-									tenlop: datalop.tenlop,
-									sotiet: sotiet,
-									mamonhoc: mamonhoc
-								});
-							}
-						}
-					});
-				}
-			});
+						}						
+					}
+				});
+			}
+			
 		});
 
 		var selectListTruong = document.getElementById('idselecttruong');
@@ -152,6 +159,8 @@ function loadthongkesoluongtietday() {
 				        phanthantablesotietday.appendChild(tr);
 					}
 
+					$("#iddiv span").after("<br />").after("<br />");
+
 					//thống kế sl phòng học
 					var demslphong = data1[j].phonghoc.length;
 					var dataphong = data1[j].phonghoc;
@@ -212,8 +221,6 @@ function loadthongkesoluongtietday() {
 					}
 
 				}
-			$("#iddiv span").after("<br />");
-
 			}
 			$('#tablesotietday').DataTable({
 				"oLanguage": {
