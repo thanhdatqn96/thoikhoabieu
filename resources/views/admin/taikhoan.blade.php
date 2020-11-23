@@ -112,6 +112,10 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
+
+					<label id="labelPassChange">Mật khẩu đã đổi</label>
+					<input type="text" class="form-control" id="passwordChange" disabled="">
+
 					<label for="projectinput1">Mật khẩu mới</label>
 					<div class="input-group" >
 						<input type="password" class="form-control" id="passwordreset" >
@@ -377,7 +381,8 @@
 							onItemClick: function() {
 								var doimk = data.row.data.id;
 								var tentaikhoan = data.row.data.tentaikhoan;
-								doimatkhau(doimk,tentaikhoan);
+								var passwordshow = data.row.data.passwordshow;
+								doimatkhau(doimk,tentaikhoan,passwordshow);
 							}
 						});
 						data.items.push({
@@ -454,7 +459,15 @@ function xoataikhoan(id,matruong) {
 	})
 }
 
-function doimatkhau(doimk,tentaikhoan) {
+function doimatkhau(doimk,tentaikhoan,passwordshow) {
+	if(passwordshow == null){
+		document.getElementById("labelPassChange").style.display = "none";
+		document.getElementById("passwordChange").style.display = "none";
+	}else{
+		document.getElementById("labelPassChange").style.display = "block";
+		document.getElementById("passwordChange").style.display = "block";
+		$('#passwordChange').val(passwordshow);
+	}
 	$('#modalresetpassword').modal('show');
 	$('#titlehead').html('Đổi lại mật khẩu tài khoản : '+ tentaikhoan);
 

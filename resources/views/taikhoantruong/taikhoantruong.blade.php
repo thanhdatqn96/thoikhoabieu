@@ -39,6 +39,7 @@
 					<label for="projectinput1">Mật khẩu mới</label>
 					<div class="input-group" >
 						<input type="password" class="form-control" id="passwordreset" >
+						<input type="text" class="form-control" id="passwordshow"  style="display: none;">
 						<div class="input-group-append" >
 							<span class="input-group-text" id="showpass"><i class="fa fa-eye-slash"></i></span>
 							<span class="input-group-text" id="hiddenpass" style="display:none;"><i class="fa fa-eye"></i></span>
@@ -57,17 +58,11 @@
 
 <script type="text/javascript">
 
-	function loadtaikhoan() {
-		var data = axios.get('getlisttaikhoantruong').then(function (response) {
-			var data1 = response.data[0].data;
-			var huyen = response.data[0].huyen;
-			var xa = response.data[0].xa;
-			var truong = response.data[0].truong;
-			var quyen = response.data[0].quyen;
-			var gvcount = response.data[0].gvcount;
-			var lopcount = response.data[0].lopcount;
+function loadtaikhoan() {
+	var data = axios.get('getlisttaikhoantruong').then(function (response) {
+			var data = response.data;
 
-			var datas = data1.map(function(value, label) {
+			var datas = data.map(function(value, label) {
 				let data = value;
 				let stt = label + 1;
 				var datas = Object.assign(data, {
@@ -120,14 +115,6 @@
 				},{
 					caption: "Email",
 					dataField: "email",
-				},{
-					caption: "Trường",
-					dataField: "matruong",
-					lookup: {
-						dataSource: truong,
-						valueExpr: "matruong",
-						displayExpr: "tentruong"
-					},
 				}],
 
 				onContextMenuPreparing: function(data) { 
@@ -150,7 +137,7 @@
 
 			});
 
-});
+	});
 };
 
 // function resetdata(datamatruong) {
@@ -170,6 +157,7 @@ function doimatkhau(doimk,tentaikhoan) {
 	$('#luumk').click(function (){
 		var id = doimk;
 		var password = $('#passwordreset').val();
+		var passwordshow = $('#passwordshow').val();
 		if(password.length < 6){
 			Swal.fire({
 				icon: 'error',
@@ -177,7 +165,7 @@ function doimatkhau(doimk,tentaikhoan) {
 				text: 'Mật khẩu phải chứa ít nhất 6 ký tự',
 			});
 		}else{
-			var data = axios.post('updatepasswordtruong',{id:id,password:password}).then(function (response) {
+			var data = axios.post('updatepasswordtruong',{id:id,password:password,passwordshow:passwordshow}).then(function (response) {
 				var data1 = response.data;
 				Swal.fire({
 					title: 'Lưu',
@@ -185,9 +173,7 @@ function doimatkhau(doimk,tentaikhoan) {
 					icon: 'success',
 					confirmButtonText: 'OK'
 				});
-				loadtaikhoan();
-				var dataGrid = $("#getlisttaikhoantruong").dxDataGrid("instance");
-				dataGrid.refresh();			
+				loadtaikhoan();			
 			});
 			$('#modalresetpassword').modal('toggle');
 		}
@@ -195,6 +181,9 @@ function doimatkhau(doimk,tentaikhoan) {
 	
 }
 
+$('#passwordreset').on('change',function(){
+	$('#passwordshow').val($(this).val());
+});
 
 $("#showpass").click(function(){
 	document.getElementById("showpass").style.display = "none";
@@ -209,16 +198,6 @@ $("#hiddenpass").click(function(){
 
 
 window.onload = function() {
-	$('#truong').select2({width: '100%'});
-	axios.get("getlisttruong").then(function(response) {
-		let data = response.data;
-		if (data != null) {
-			let htmltruong = data.map(function(item) {
-				return ('<option value="' +item.matruong +'">' +item.tentruong +"</option>");
-			});
-			$("#truong").html('<option value=""></option>' + htmltruong);
-		}
-	});
 	loadtaikhoan();
 	
 };

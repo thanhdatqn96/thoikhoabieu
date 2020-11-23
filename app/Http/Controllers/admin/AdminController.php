@@ -22,6 +22,7 @@ use Hash;
 use App\roles;
 use stdClass;
 use Session; 
+use Crypt;
 
 class AdminController extends Controller
 {
@@ -147,8 +148,8 @@ class AdminController extends Controller
 		return json_encode($success);
 	}
 
-	//
 	public function getlisttaikhoan(){
+
 		$matruong = Session::get('matruong');
 		if($matruong == null){
 			$data =  DB::table('tbl_admin')->get();

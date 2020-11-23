@@ -792,7 +792,7 @@ class khaibaoController extends Controller
 		$matruong = Session::get('matruong');
 		$data =  danhsachlophoc::where('matruong',$matruong)->with(['monhoc'=>function($author) use($matruong){
 			$author->where('monhoc.matruong',$matruong);
-			$author->select('sotietmonhoc.id','monhoc.id as mamonhoc','monhoc.tenmonhoc','sotietmonhoc.sotiet','sotietmonhoc.malop');
+			$author->select('sotietmonhoc.id','monhoc.id as mamonhoc','monhoc.tenmonhoc','sotietmonhoc.sotiet','sotietmonhoc.malop','sotietmonhoc.matruong');
 		}])
 		->orderBy('danhsachlophoc.tenlop', 'ASC')->select('id','tenlop')
 		->get();

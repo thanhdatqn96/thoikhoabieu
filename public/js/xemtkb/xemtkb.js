@@ -1,5 +1,45 @@
-//sáng và chiều
+async function loadDataTkbTruong() {
+    let result = await axios.get("gettkbtruong").then(res => {
+        return res.data;
+    });
+    return result;
+}
+
+async function loadDataLopTruong() {
+    let result = await axios.get("getdslt").then(res => {
+        return res.data;
+    });
+    return result;
+}
+
+async function loadDataTkbGv() {
+    let result = await axios.get("gettkbgv").then(res => {
+        return res.data;
+    });
+    return result;
+}
+
+async function loadDataTkbLop() {
+    let result = await axios.get("gettkblop").then(res => {
+        return res.data;
+    });
+    return result;
+}
+
+async function loadDataTkbPhong() {
+    let result = await axios.get("gettkbphong").then(res => {
+        return res.data;
+    });
+    return result;
+}
+
+//tkb trường
 function loadthoikhoabieutruong(){
+
+	$('.httkbs').prop('disabled', true);
+	$('.httkbc').prop('disabled', true);
+	$('.httkbsc').prop('disabled', true);
+
 	$('#selecttuantruong').on('change',function(){
 		let valdateThang = $('#datepickerthangtuantruong').val();
 		if(valdateThang == ''){
@@ -8,6 +48,15 @@ function loadthoikhoabieutruong(){
             return;
         }
 
+        //sáng
+        $('#phandautabletruongsang').empty();
+		$('#phanthantabletruongsang').empty();
+
+		//chiều
+		$('#phandautabletruongchieu').empty();
+		$('#phanthantabletruongchieu').empty();
+
+		//sáng,chiều
         $('#phandautabletruong').empty();
 		$('#phanthantabletruong').empty();
 
@@ -28,691 +77,616 @@ function loadthoikhoabieutruong(){
             $('#idthangtuantruong').text('');
         }
 
-        axios.get('gettkbtruong').then(function (response) {
-			var datatkb = response.data;
-			axios.get('getdslt').then(function (response1) {
-				var dataloptruong = response1.data;
-				for(let i =0;i<datatkb.length;i++){
-					let demnam = datatkb[i].dsnam.length;
-					for(let j=0;j<demnam;j++){
-						let demthang = datatkb[i].dsnam[j].dsthang.length;
-						for(let k=0;k<demthang;k++){
-							let demtuan = datatkb[i].dsnam[j].dsthang[k].dstuan.length;
-							for(let m=0;m<demtuan;m++){
-								for(let n=0;n<dataloptruong.length;n++){
-									if(datatkb[i].dsnam[j].nam == nam && datatkb[i].dsnam[j].dsthang[k].thang == thang && datatkb[i].dsnam[j].dsthang[k].dstuan[m].tuan == tuan){
-										var datalop = dataloptruong[n].dslop;
-										var phandautabletruong = document.getElementById("phandautabletruong");
-										var phanthantabletruong = document.getElementById("phanthantabletruong");
+        //sáng
+        for(let i =0;i<layDataTkbTruong.length;i++){
+			let demnam = layDataTkbTruong[i].dsnam.length;
+			for(let j=0;j<demnam;j++){
+				let demthang = layDataTkbTruong[i].dsnam[j].dsthang.length;
+				for(let k=0;k<demthang;k++){
+					let demtuan = layDataTkbTruong[i].dsnam[j].dsthang[k].dstuan.length;
+					for(let m=0;m<demtuan;m++){
+						for(let n=0;n<layDataLopTruong.length;n++){
+							if(layDataTkbTruong[i].dsnam[j].nam == nam && layDataTkbTruong[i].dsnam[j].dsthang[k].thang == thang && layDataTkbTruong[i].dsnam[j].dsthang[k].dstuan[m].tuan == tuan){
+								var datalop = layDataLopTruong[n].dslop;
+								var phandautabletruong = document.getElementById("phandautabletruongsang");
+								var phanthantabletruong = document.getElementById("phanthantabletruongsang");
 
-										var ththu = document.createElement("th");
-										ththu.setAttribute("class","stickyThu");
-										ththu.appendChild(document.createTextNode('Thứ'));
-										phandautabletruong.appendChild(ththu);
+								var ththu = document.createElement("th");
+								ththu.setAttribute("class","stickyThu");
+								ththu.appendChild(document.createTextNode('Thứ'));
+								phandautabletruong.appendChild(ththu);
 
-										var thtiet = document.createElement("th");
-										thtiet.setAttribute("class","stickyTiet");
-										thtiet.appendChild(document.createTextNode('Tiết'));
-										phandautabletruong.appendChild(thtiet);
+								var thtiet = document.createElement("th");
+								thtiet.setAttribute("class","stickyTiet");
+								thtiet.appendChild(document.createTextNode('Tiết'));
+								phandautabletruong.appendChild(thtiet);
 
-										for(let x=0;x<datalop.length;x++){
-											var th = document.createElement("th");
-											var tenlop = document.createTextNode(' ' + datalop[x].tenlop);
-										    th.setAttribute("id",+datalop[x].malop);
-										    th.setAttribute("class","classlop")
-										    th.appendChild(tenlop);
-										    phandautabletruong.appendChild(th);
-										}
-
-										var dsbuoithu = datatkb[i].dsnam[j].dsthang[k].dstuan[m].dsbuoithu;
-
-								  		var noidungbang = "";
-
-								  		var databuoithu = [
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":2,
-								  				"mabuoithu":"0,2",
-								  				"tenbuoithu":"Sáng thứ 2"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":2,
-								  				"mabuoithu":"1,2",
-								  				"tenbuoithu":"Chiều thứ 2"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":3,
-								  				"mabuoithu":"0,3",
-								  				"tenbuoithu":"Sáng thứ 3"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":3,
-								  				"mabuoithu":"1,3",
-								  				"tenbuoithu":"Chiều thứ 3"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":4,
-								  				"mabuoithu":"0,4",
-								  				"tenbuoithu":"Sáng thứ 4"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":4,
-								  				"mabuoithu":"1,4",
-								  				"tenbuoithu":"Chiều thứ 4"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":5,
-								  				"mabuoithu":"0,5",
-								  				"tenbuoithu":"Sáng thứ 5"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":5,
-								  				"mabuoithu":"1,5",
-								  				"tenbuoithu":"Chiều thứ 5"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":6,
-								  				"mabuoithu":"0,6",
-								  				"tenbuoithu":"Sáng thứ 6"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":6,
-								  				"mabuoithu":"1,6",
-								  				"tenbuoithu":"Chiều thứ 6"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":7,
-								  				"mabuoithu":"0,7",
-								  				"tenbuoithu":"Sáng thứ 7"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":7,
-								  				"mabuoithu":"1,7",
-								  				"tenbuoithu":"Chiều thứ 7"
-								  			},
-								  		];
-								  		var datatiet = [
-								  			{
-								  				"tiet":1
-								  			},
-								  			{
-								  				"tiet":2
-								  			},
-								  			{
-								  				"tiet":3
-								  			},
-								  			{
-								  				"tiet":4
-								  			},
-								  			{
-								  				"tiet":5
-								  			},
-								  		];
-								  		for (let i = 0; i < databuoithu.length; i++) {
-								            var rowspan = 0;
-								            var demdatatiet = datatiet.length;
-								            rowspan += demdatatiet;
-								            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoithu[i].tenbuoithu + "</td></tr>";
-								            for (let j = 0; j < demdatatiet; j++) {
-
-											  	var cotrong = '';
-											  	var theadlop = document.querySelectorAll('#tablexemtkbtruong thead tr .classlop');
-						                    	for(var x=0;x<theadlop.length;x++){
-						                    		var idlop = theadlop[x].id;
-										            cotrong += "<td rowspan=" + 1 + " data-mabuoithu = "+databuoithu[i].mabuoithu+" data-matiet="+datatiet[j].tiet+" data-malop="+idlop+" class='classorongtruong'></td>";
-											  	}
-				  		                    	
-							                    noidungbang += "<tr>"
-							                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
-							                    +cotrong
-							                    +"</tr>";
-
-								            }
-
-								        }
-								        $("tbody#phanthantabletruong").append(noidungbang);
-
-								        var tbodycotrong = document.querySelectorAll('#tablexemtkbtruong tbody tr td.classorongtruong');
-
-								        for(let i=0;i<dsbuoithu.length;i++){
-								        	var demtiet = dsbuoithu[i].dstiet.length;
-								        	for(let j=0;j<demtiet;j++){
-								        		var demlop = dsbuoithu[i].dstiet[j].dslop.length;
-								        		for(let k=0;k<demlop;k++){
-								        			for(let m=0;m<tbodycotrong.length;m++){
-								        				var mabuoithu =tbodycotrong[m].dataset.mabuoithu; 
-								        				var matiet = tbodycotrong[m].dataset.matiet;
-								        				var malop = tbodycotrong[m].dataset.malop;
-								        				if(dsbuoithu[i].mabuoithu == mabuoithu && dsbuoithu[i].dstiet[j].tiet == matiet && dsbuoithu[i].dstiet[j].dslop[k].malop == malop){
-								        					var magiaovien = dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].magiaovien;
-								        					tbodycotrong[m].innerHTML = "<span data-magiaovien="+magiaovien+" style='white-space: nowrap;'>"+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
-								        				}
-								        			}
-								        		}
-								        	}
-								        }								        				        	
-									}
-
+								for(let x=0;x<datalop.length;x++){
+									var th = document.createElement("th");
+									var tenlop = document.createTextNode(' ' + datalop[x].tenlop);
+								    th.setAttribute("id",+datalop[x].malop);
+								    th.setAttribute("class","classlop")
+								    th.appendChild(tenlop);
+								    phandautabletruong.appendChild(th);
 								}
+
+								var dsbuoithu = layDataTkbTruong[i].dsnam[j].dsthang[k].dstuan[m].dsbuoithu;
+
+						  		var noidungbang = "";
+
+						  		var databuoithu = [
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":2,
+						  				"mabuoithu":"0,2",
+						  				"tenbuoithu":"Sáng thứ 2"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":2,
+						  				"mabuoithu":"1,2",
+						  				"tenbuoithu":"Chiều thứ 2"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":3,
+						  				"mabuoithu":"0,3",
+						  				"tenbuoithu":"Sáng thứ 3"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":3,
+						  				"mabuoithu":"1,3",
+						  				"tenbuoithu":"Chiều thứ 3"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":4,
+						  				"mabuoithu":"0,4",
+						  				"tenbuoithu":"Sáng thứ 4"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":4,
+						  				"mabuoithu":"1,4",
+						  				"tenbuoithu":"Chiều thứ 4"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":5,
+						  				"mabuoithu":"0,5",
+						  				"tenbuoithu":"Sáng thứ 5"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":5,
+						  				"mabuoithu":"1,5",
+						  				"tenbuoithu":"Chiều thứ 5"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":6,
+						  				"mabuoithu":"0,6",
+						  				"tenbuoithu":"Sáng thứ 6"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":6,
+						  				"mabuoithu":"1,6",
+						  				"tenbuoithu":"Chiều thứ 6"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":7,
+						  				"mabuoithu":"0,7",
+						  				"tenbuoithu":"Sáng thứ 7"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":7,
+						  				"mabuoithu":"1,7",
+						  				"tenbuoithu":"Chiều thứ 7"
+						  			},
+						  		];
+						  		var datatiet = [
+						  			{
+						  				"tiet":1
+						  			},
+						  			{
+						  				"tiet":2
+						  			},
+						  			{
+						  				"tiet":3
+						  			},
+						  			{
+						  				"tiet":4
+						  			},
+						  			{
+						  				"tiet":5
+						  			},
+						  		];
+						  		for (let i = 0; i < databuoithu.length; i++) {
+						  			
+						  			if(databuoithu[i].mabuoi == 0) {
+
+						  				var rowspan = 0;
+							            var demdatatiet = datatiet.length;
+							            rowspan += demdatatiet;
+							            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoithu[i].tenbuoithu + "</td></tr>";
+							            for (let j = 0; j < demdatatiet; j++) {
+
+										  	var cotrong = '';
+										  	var theadlop = document.querySelectorAll('#tablexemtkbtruongsang thead tr .classlop');
+					                    	for(var x=0;x<theadlop.length;x++){
+					                    		var idlop = theadlop[x].id;
+									            cotrong += "<td rowspan=" + 1 + " data-mabuoithu = "+databuoithu[i].mabuoithu+" data-matiet="+datatiet[j].tiet+" data-malop="+idlop+" class='classorongtruong'></td>";
+										  	}
+			  		                    	
+						                    noidungbang += "<tr>"
+						                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
+						                    +cotrong
+						                    +"</tr>";
+
+							            }
+						  			}
+						            
+						        }
+						        $("tbody#phanthantabletruongsang").append(noidungbang);
+
+						        var tbodycotrong = document.querySelectorAll('#tablexemtkbtruongsang tbody tr td.classorongtruong');
+
+						        for(let i=0;i<dsbuoithu.length;i++){
+						        	var demtiet = dsbuoithu[i].dstiet.length;
+						        	for(let j=0;j<demtiet;j++){
+						        		var demlop = dsbuoithu[i].dstiet[j].dslop.length;
+						        		for(let k=0;k<demlop;k++){
+						        			for(let m=0;m<tbodycotrong.length;m++){
+						        				var mabuoithu =tbodycotrong[m].dataset.mabuoithu; 
+						        				var matiet = tbodycotrong[m].dataset.matiet;
+						        				var malop = tbodycotrong[m].dataset.malop;
+						        				if(dsbuoithu[i].mabuoithu == mabuoithu && dsbuoithu[i].dstiet[j].tiet == matiet && dsbuoithu[i].dstiet[j].dslop[k].malop == malop){
+						        					var magiaovien = dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].magiaovien;
+						        					tbodycotrong[m].innerHTML = "<span data-magiaovien="+magiaovien+" style='white-space: nowrap;'>"+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
+						        				}
+						        			}
+						        		}
+						        	}
+						        }
+						        	
 							}
 						}
 					}
 				}
-				//sáng và chiều
-				if($(".httkbsc").prop("checked")){
-					var tbodysangchieusc = $("#tablexemtkbtruong tbody#phanthantabletruong");
-					if(tbodysangchieusc.children().length == 0){
-						Swal.fire(
-						  'Thông báo',
-						  'Không có thời khoá biểu nào phù hợp trong thời gian này',
-						  'info'
-						)
-						document.getElementById("bangsangchieu").style.display = "none";
-						document.getElementById("cardxeptkbtruong").style.display = "none";
-					}else{
-						document.getElementById("bangsangchieu").style.display = "block";
-						document.getElementById("cardxeptkbtruong").style.display = "block";
+			}
+		}
+
+		//chiều
+		for(let i =0;i<layDataTkbTruong.length;i++){
+			let demnam = layDataTkbTruong[i].dsnam.length;
+			for(let j=0;j<demnam;j++){
+				let demthang = layDataTkbTruong[i].dsnam[j].dsthang.length;
+				for(let k=0;k<demthang;k++){
+					let demtuan = layDataTkbTruong[i].dsnam[j].dsthang[k].dstuan.length;
+					for(let m=0;m<demtuan;m++){
+						for(let n=0;n<layDataLopTruong.length;n++){
+							if(layDataTkbTruong[i].dsnam[j].nam == nam && layDataTkbTruong[i].dsnam[j].dsthang[k].thang == thang && layDataTkbTruong[i].dsnam[j].dsthang[k].dstuan[m].tuan == tuan){
+								var datalop = layDataLopTruong[n].dslop;
+								var phandautabletruong = document.getElementById("phandautabletruongchieu");
+								var phanthantabletruong = document.getElementById("phanthantabletruongchieu");
+
+								var ththu = document.createElement("th");
+								ththu.setAttribute("class","stickyThu");
+								ththu.appendChild(document.createTextNode('Thứ'));
+								phandautabletruong.appendChild(ththu);
+
+								var thtiet = document.createElement("th");
+								thtiet.setAttribute("class","stickyTiet");
+								thtiet.appendChild(document.createTextNode('Tiết'));
+								phandautabletruong.appendChild(thtiet);
+
+								for(let x=0;x<datalop.length;x++){
+									var th = document.createElement("th");
+									var tenlop = document.createTextNode(' ' + datalop[x].tenlop);
+								    th.setAttribute("id",+datalop[x].malop);
+								    th.setAttribute("class","classlop")
+								    th.appendChild(tenlop);
+								    phandautabletruong.appendChild(th);
+								}
+
+								var dsbuoithu = layDataTkbTruong[i].dsnam[j].dsthang[k].dstuan[m].dsbuoithu;
+
+						  		var noidungbang = "";
+
+						  		var databuoithu = [
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":2,
+						  				"mabuoithu":"0,2",
+						  				"tenbuoithu":"Sáng thứ 2"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":2,
+						  				"mabuoithu":"1,2",
+						  				"tenbuoithu":"Chiều thứ 2"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":3,
+						  				"mabuoithu":"0,3",
+						  				"tenbuoithu":"Sáng thứ 3"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":3,
+						  				"mabuoithu":"1,3",
+						  				"tenbuoithu":"Chiều thứ 3"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":4,
+						  				"mabuoithu":"0,4",
+						  				"tenbuoithu":"Sáng thứ 4"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":4,
+						  				"mabuoithu":"1,4",
+						  				"tenbuoithu":"Chiều thứ 4"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":5,
+						  				"mabuoithu":"0,5",
+						  				"tenbuoithu":"Sáng thứ 5"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":5,
+						  				"mabuoithu":"1,5",
+						  				"tenbuoithu":"Chiều thứ 5"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":6,
+						  				"mabuoithu":"0,6",
+						  				"tenbuoithu":"Sáng thứ 6"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":6,
+						  				"mabuoithu":"1,6",
+						  				"tenbuoithu":"Chiều thứ 6"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":7,
+						  				"mabuoithu":"0,7",
+						  				"tenbuoithu":"Sáng thứ 7"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":7,
+						  				"mabuoithu":"1,7",
+						  				"tenbuoithu":"Chiều thứ 7"
+						  			},
+						  		];
+						  		var datatiet = [
+						  			{
+						  				"tiet":1
+						  			},
+						  			{
+						  				"tiet":2
+						  			},
+						  			{
+						  				"tiet":3
+						  			},
+						  			{
+						  				"tiet":4
+						  			},
+						  			{
+						  				"tiet":5
+						  			},
+						  		];
+						  		for (let i = 0; i < databuoithu.length; i++) {
+						  			
+						  			if(databuoithu[i].mabuoi == 1) {
+
+						  				var rowspan = 0;
+							            var demdatatiet = datatiet.length;
+							            rowspan += demdatatiet;
+							            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoithu[i].tenbuoithu + "</td></tr>";
+							            for (let j = 0; j < demdatatiet; j++) {
+
+										  	var cotrong = '';
+										  	var theadlop = document.querySelectorAll('#tablexemtkbtruongchieu thead tr .classlop');
+					                    	for(var x=0;x<theadlop.length;x++){
+					                    		var idlop = theadlop[x].id;
+									            cotrong += "<td rowspan=" + 1 + " data-mabuoithu = "+databuoithu[i].mabuoithu+" data-matiet="+datatiet[j].tiet+" data-malop="+idlop+" class='classorongtruong'></td>";
+										  	}
+			  		                    	
+						                    noidungbang += "<tr>"
+						                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
+						                    +cotrong
+						                    +"</tr>";
+
+							            }
+						  			}
+						            
+						        }
+						        $("tbody#phanthantabletruongchieu").append(noidungbang);
+
+						        var tbodycotrong = document.querySelectorAll('#tablexemtkbtruongchieu tbody tr td.classorongtruong');
+
+						        for(let i=0;i<dsbuoithu.length;i++){
+						        	var demtiet = dsbuoithu[i].dstiet.length;
+						        	for(let j=0;j<demtiet;j++){
+						        		var demlop = dsbuoithu[i].dstiet[j].dslop.length;
+						        		for(let k=0;k<demlop;k++){
+						        			for(let m=0;m<tbodycotrong.length;m++){
+						        				var mabuoithu =tbodycotrong[m].dataset.mabuoithu; 
+						        				var matiet = tbodycotrong[m].dataset.matiet;
+						        				var malop = tbodycotrong[m].dataset.malop;
+						        				if(dsbuoithu[i].mabuoithu == mabuoithu && dsbuoithu[i].dstiet[j].tiet == matiet && dsbuoithu[i].dstiet[j].dslop[k].malop == malop){
+						        					var magiaovien = dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].magiaovien;
+						        					tbodycotrong[m].innerHTML = "<span data-magiaovien="+magiaovien+" style='white-space: nowrap;'>"+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
+						        				}
+						        			}
+						        		}
+						        	}
+						        }
+						        	
+							}
+
+						}
 					}
-				}else{
-					document.getElementById("bangsangchieu").style.display = "none";
 				}
-			});
-		});
+			}
+		}
+
+		//sáng, chiều
+		for(let i =0;i<layDataTkbTruong.length;i++){
+			let demnam = layDataTkbTruong[i].dsnam.length;
+			for(let j=0;j<demnam;j++){
+				let demthang = layDataTkbTruong[i].dsnam[j].dsthang.length;
+				for(let k=0;k<demthang;k++){
+					let demtuan = layDataTkbTruong[i].dsnam[j].dsthang[k].dstuan.length;
+					for(let m=0;m<demtuan;m++){
+						for(let n=0;n<layDataLopTruong.length;n++){
+							if(layDataTkbTruong[i].dsnam[j].nam == nam && layDataTkbTruong[i].dsnam[j].dsthang[k].thang == thang && layDataTkbTruong[i].dsnam[j].dsthang[k].dstuan[m].tuan == tuan){
+								var datalop = layDataLopTruong[n].dslop;
+								var phandautabletruong = document.getElementById("phandautabletruong");
+								var phanthantabletruong = document.getElementById("phanthantabletruong");
+
+								var ththu = document.createElement("th");
+								ththu.setAttribute("class","stickyThu");
+								ththu.appendChild(document.createTextNode('Thứ'));
+								phandautabletruong.appendChild(ththu);
+
+								var thtiet = document.createElement("th");
+								thtiet.setAttribute("class","stickyTiet");
+								thtiet.appendChild(document.createTextNode('Tiết'));
+								phandautabletruong.appendChild(thtiet);
+
+								for(let x=0;x<datalop.length;x++){
+									var th = document.createElement("th");
+									var tenlop = document.createTextNode(' ' + datalop[x].tenlop);
+								    th.setAttribute("id",+datalop[x].malop);
+								    th.setAttribute("class","classlop")
+								    th.appendChild(tenlop);
+								    phandautabletruong.appendChild(th);
+								}
+
+								var dsbuoithu = layDataTkbTruong[i].dsnam[j].dsthang[k].dstuan[m].dsbuoithu;
+
+						  		var noidungbang = "";
+
+						  		var databuoithu = [
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":2,
+						  				"mabuoithu":"0,2",
+						  				"tenbuoithu":"Sáng thứ 2"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":2,
+						  				"mabuoithu":"1,2",
+						  				"tenbuoithu":"Chiều thứ 2"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":3,
+						  				"mabuoithu":"0,3",
+						  				"tenbuoithu":"Sáng thứ 3"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":3,
+						  				"mabuoithu":"1,3",
+						  				"tenbuoithu":"Chiều thứ 3"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":4,
+						  				"mabuoithu":"0,4",
+						  				"tenbuoithu":"Sáng thứ 4"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":4,
+						  				"mabuoithu":"1,4",
+						  				"tenbuoithu":"Chiều thứ 4"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":5,
+						  				"mabuoithu":"0,5",
+						  				"tenbuoithu":"Sáng thứ 5"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":5,
+						  				"mabuoithu":"1,5",
+						  				"tenbuoithu":"Chiều thứ 5"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":6,
+						  				"mabuoithu":"0,6",
+						  				"tenbuoithu":"Sáng thứ 6"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":6,
+						  				"mabuoithu":"1,6",
+						  				"tenbuoithu":"Chiều thứ 6"
+						  			},
+						  			{
+						  				"mabuoi":0,
+						  				"mathu":7,
+						  				"mabuoithu":"0,7",
+						  				"tenbuoithu":"Sáng thứ 7"
+						  			},
+						  			{
+						  				"mabuoi":1,
+						  				"mathu":7,
+						  				"mabuoithu":"1,7",
+						  				"tenbuoithu":"Chiều thứ 7"
+						  			},
+						  		];
+						  		var datatiet = [
+						  			{
+						  				"tiet":1
+						  			},
+						  			{
+						  				"tiet":2
+						  			},
+						  			{
+						  				"tiet":3
+						  			},
+						  			{
+						  				"tiet":4
+						  			},
+						  			{
+						  				"tiet":5
+						  			},
+						  		];
+						  		for (let i = 0; i < databuoithu.length; i++) {
+						            var rowspan = 0;
+						            var demdatatiet = datatiet.length;
+						            rowspan += demdatatiet;
+						            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoithu[i].tenbuoithu + "</td></tr>";
+						            for (let j = 0; j < demdatatiet; j++) {
+
+									  	var cotrong = '';
+									  	var theadlop = document.querySelectorAll('#tablexemtkbtruong thead tr .classlop');
+				                    	for(var x=0;x<theadlop.length;x++){
+				                    		var idlop = theadlop[x].id;
+								            cotrong += "<td rowspan=" + 1 + " data-mabuoithu = "+databuoithu[i].mabuoithu+" data-matiet="+datatiet[j].tiet+" data-malop="+idlop+" class='classorongtruong'></td>";
+									  	}
+		  		                    	
+					                    noidungbang += "<tr>"
+					                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
+					                    +cotrong
+					                    +"</tr>";
+
+						            }
+
+						        }
+						        $("tbody#phanthantabletruong").append(noidungbang);
+
+						        var tbodycotrong = document.querySelectorAll('#tablexemtkbtruong tbody tr td.classorongtruong');
+
+						        for(let i=0;i<dsbuoithu.length;i++){
+						        	var demtiet = dsbuoithu[i].dstiet.length;
+						        	for(let j=0;j<demtiet;j++){
+						        		var demlop = dsbuoithu[i].dstiet[j].dslop.length;
+						        		for(let k=0;k<demlop;k++){
+						        			for(let m=0;m<tbodycotrong.length;m++){
+						        				var mabuoithu =tbodycotrong[m].dataset.mabuoithu; 
+						        				var matiet = tbodycotrong[m].dataset.matiet;
+						        				var malop = tbodycotrong[m].dataset.malop;
+						        				if(dsbuoithu[i].mabuoithu == mabuoithu && dsbuoithu[i].dstiet[j].tiet == matiet && dsbuoithu[i].dstiet[j].dslop[k].malop == malop){
+						        					var magiaovien = dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].magiaovien;
+						        					tbodycotrong[m].innerHTML = "<span data-magiaovien="+magiaovien+" style='white-space: nowrap;'>"+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
+						        				}
+						        			}
+						        		}
+						        	}
+						        }								        				        	
+							}
+
+						}
+					}
+				}
+			}
+		}
+
+		//sáng
+		if($(".httkbs").prop("checked") == true){
+			var tbodysangs = $("#tablexemtkbtruongsang tbody#phanthantabletruongsang");
+			if(tbodysangs.children().length == 0){
+				Swal.fire(
+				  'Thông báo',
+				  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+				  'info'
+				)
+				document.getElementById("bangsang").style.display = "none";
+				document.getElementById("cardxeptkbtruong").style.display = "none";
+			}else{
+				document.getElementById("bangsang").style.display = "block";
+				document.getElementById("cardxeptkbtruong").style.display = "block";
+			}			
+		}else{
+			document.getElementById("bangsang").style.display = "none";
+		}
+
+		//chiều
+		if($(".httkbc").prop("checked")){
+			var tbodychieuc = $("#tablexemtkbtruongchieu tbody#phanthantabletruongchieu");
+			if(tbodychieuc.children().length == 0){
+				Swal.fire(
+				  'Thông báo',
+				  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+				  'info'
+				)
+				document.getElementById("bangchieu").style.display = "none";
+				document.getElementById("cardxeptkbtruong").style.display = "none";
+			}else{
+				document.getElementById("bangchieu").style.display = "block";
+				document.getElementById("cardxeptkbtruong").style.display = "block";
+
+			}
+		}else{
+			document.getElementById("bangchieu").style.display = "none";
+		}
+
+		//sáng, chiều
+		if($(".httkbsc").prop("checked")){
+			var tbodysangchieusc = $("#tablexemtkbtruong tbody#phanthantabletruong");
+			if(tbodysangchieusc.children().length == 0){
+				Swal.fire(
+				  'Thông báo',
+				  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+				  'info'
+				)
+				document.getElementById("bangsangchieu").style.display = "none";
+				document.getElementById("cardxeptkbtruong").style.display = "none";
+			}else{
+				document.getElementById("bangsangchieu").style.display = "block";
+				document.getElementById("cardxeptkbtruong").style.display = "block";
+			}
+		}else{
+			document.getElementById("bangsangchieu").style.display = "none";
+		}
+
+		$('.httkbs').prop('disabled', false);
+		$('.httkbc').prop('disabled', false);
+		$('.httkbsc').prop('disabled', false);
 		
 	});
-
 	
-}
-
-//sáng
-function loadthoikhoabieutruongsang(){
-	$('#selecttuantruong').on('change',function(){
-		let valdateThang = $('#datepickerthangtuantruong').val();
-		if(valdateThang == ''){
-            alert('Vui lòng chọn tháng');
-            $(this).val('none');
-            return;
-        }
-
-        $('#phandautabletruongsang').empty();
-		$('#phanthantabletruongsang').empty();
-
-        const thangnamtuan = $('#datepickerthangtuantruong').val();
-        const date = moment(thangnamtuan, 'MM/YYYY');
-        const thang = date.format('M');
-        const nam = date.format('YYYY');
-
-        let tuan = $(this).val();
-
-        if(tuan == null) {
-        	return false;
-        }
-
-        if (tuan != '' && thangnamtuan != '') {
-            $('#idthangtuantruong').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
-        } else {
-            $('#idthangtuantruong').text('');
-        }
-
-        axios.get('gettkbtruong').then(function (response) {
-			var datatkb = response.data;
-			axios.get('getdslt').then(function (response1) {
-				var dataloptruong = response1.data;
-				for(let i =0;i<datatkb.length;i++){
-					let demnam = datatkb[i].dsnam.length;
-					for(let j=0;j<demnam;j++){
-						let demthang = datatkb[i].dsnam[j].dsthang.length;
-						for(let k=0;k<demthang;k++){
-							let demtuan = datatkb[i].dsnam[j].dsthang[k].dstuan.length;
-							for(let m=0;m<demtuan;m++){
-								for(let n=0;n<dataloptruong.length;n++){
-									if(datatkb[i].dsnam[j].nam == nam && datatkb[i].dsnam[j].dsthang[k].thang == thang && datatkb[i].dsnam[j].dsthang[k].dstuan[m].tuan == tuan){
-										var datalop = dataloptruong[n].dslop;
-										var phandautabletruong = document.getElementById("phandautabletruongsang");
-										var phanthantabletruong = document.getElementById("phanthantabletruongsang");
-
-										var ththu = document.createElement("th");
-										ththu.setAttribute("class","stickyThu");
-										ththu.appendChild(document.createTextNode('Thứ'));
-										phandautabletruong.appendChild(ththu);
-
-										var thtiet = document.createElement("th");
-										thtiet.setAttribute("class","stickyTiet");
-										thtiet.appendChild(document.createTextNode('Tiết'));
-										phandautabletruong.appendChild(thtiet);
-
-										for(let x=0;x<datalop.length;x++){
-											var th = document.createElement("th");
-											var tenlop = document.createTextNode(' ' + datalop[x].tenlop);
-										    th.setAttribute("id",+datalop[x].malop);
-										    th.setAttribute("class","classlop")
-										    th.appendChild(tenlop);
-										    phandautabletruong.appendChild(th);
-										}
-
-										var dsbuoithu = datatkb[i].dsnam[j].dsthang[k].dstuan[m].dsbuoithu;
-
-								  		var noidungbang = "";
-
-								  		var databuoithu = [
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":2,
-								  				"mabuoithu":"0,2",
-								  				"tenbuoithu":"Sáng thứ 2"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":2,
-								  				"mabuoithu":"1,2",
-								  				"tenbuoithu":"Chiều thứ 2"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":3,
-								  				"mabuoithu":"0,3",
-								  				"tenbuoithu":"Sáng thứ 3"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":3,
-								  				"mabuoithu":"1,3",
-								  				"tenbuoithu":"Chiều thứ 3"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":4,
-								  				"mabuoithu":"0,4",
-								  				"tenbuoithu":"Sáng thứ 4"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":4,
-								  				"mabuoithu":"1,4",
-								  				"tenbuoithu":"Chiều thứ 4"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":5,
-								  				"mabuoithu":"0,5",
-								  				"tenbuoithu":"Sáng thứ 5"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":5,
-								  				"mabuoithu":"1,5",
-								  				"tenbuoithu":"Chiều thứ 5"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":6,
-								  				"mabuoithu":"0,6",
-								  				"tenbuoithu":"Sáng thứ 6"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":6,
-								  				"mabuoithu":"1,6",
-								  				"tenbuoithu":"Chiều thứ 6"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":7,
-								  				"mabuoithu":"0,7",
-								  				"tenbuoithu":"Sáng thứ 7"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":7,
-								  				"mabuoithu":"1,7",
-								  				"tenbuoithu":"Chiều thứ 7"
-								  			},
-								  		];
-								  		var datatiet = [
-								  			{
-								  				"tiet":1
-								  			},
-								  			{
-								  				"tiet":2
-								  			},
-								  			{
-								  				"tiet":3
-								  			},
-								  			{
-								  				"tiet":4
-								  			},
-								  			{
-								  				"tiet":5
-								  			},
-								  		];
-								  		for (let i = 0; i < databuoithu.length; i++) {
-								  			
-								  			if(databuoithu[i].mabuoi == 0) {
-
-								  				var rowspan = 0;
-									            var demdatatiet = datatiet.length;
-									            rowspan += demdatatiet;
-									            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoithu[i].tenbuoithu + "</td></tr>";
-									            for (let j = 0; j < demdatatiet; j++) {
-
-												  	var cotrong = '';
-												  	var theadlop = document.querySelectorAll('#tablexemtkbtruongsang thead tr .classlop');
-							                    	for(var x=0;x<theadlop.length;x++){
-							                    		var idlop = theadlop[x].id;
-											            cotrong += "<td rowspan=" + 1 + " data-mabuoithu = "+databuoithu[i].mabuoithu+" data-matiet="+datatiet[j].tiet+" data-malop="+idlop+" class='classorongtruong'></td>";
-												  	}
-					  		                    	
-								                    noidungbang += "<tr>"
-								                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
-								                    +cotrong
-								                    +"</tr>";
-
-									            }
-								  			}
-								            
-								        }
-								        $("tbody#phanthantabletruongsang").append(noidungbang);
-
-								        var tbodycotrong = document.querySelectorAll('#tablexemtkbtruongsang tbody tr td.classorongtruong');
-
-								        for(let i=0;i<dsbuoithu.length;i++){
-								        	var demtiet = dsbuoithu[i].dstiet.length;
-								        	for(let j=0;j<demtiet;j++){
-								        		var demlop = dsbuoithu[i].dstiet[j].dslop.length;
-								        		for(let k=0;k<demlop;k++){
-								        			for(let m=0;m<tbodycotrong.length;m++){
-								        				var mabuoithu =tbodycotrong[m].dataset.mabuoithu; 
-								        				var matiet = tbodycotrong[m].dataset.matiet;
-								        				var malop = tbodycotrong[m].dataset.malop;
-								        				if(dsbuoithu[i].mabuoithu == mabuoithu && dsbuoithu[i].dstiet[j].tiet == matiet && dsbuoithu[i].dstiet[j].dslop[k].malop == malop){
-								        					var magiaovien = dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].magiaovien;
-								        					tbodycotrong[m].innerHTML = "<span data-magiaovien="+magiaovien+" style='white-space: nowrap;'>"+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
-								        				}
-								        			}
-								        		}
-								        	}
-								        }
-								        	
-									}
-								}
-							}
-						}
-					}
-				}
-				//sáng
-				if($(".httkbs").prop("checked") == true){
-					var tbodysangs = $("#tablexemtkbtruongsang tbody#phanthantabletruongsang");
-					if(tbodysangs.children().length == 0){
-						Swal.fire(
-						  'Thông báo',
-						  'Không có thời khoá biểu nào phù hợp trong thời gian này',
-						  'info'
-						)
-						document.getElementById("bangsang").style.display = "none";
-						document.getElementById("cardxeptkbtruong").style.display = "none";
-					}else{
-						document.getElementById("bangsang").style.display = "block";
-						document.getElementById("cardxeptkbtruong").style.display = "block";
-					}			
-				}else{
-					document.getElementById("bangsang").style.display = "none";
-				}
-			});
-		});
-
-	});
-}
-
-//chiều
-function loadthoikhoabieutruongchieu(){
-	$('#selecttuantruong').on('change',function(){
-		let valdateThang = $('#datepickerthangtuantruong').val();
-		if(valdateThang == ''){
-            alert('Vui lòng chọn tháng');
-            $(this).val('none');
-            return;
-        }
-
-        $('#phandautabletruongchieu').empty();
-		$('#phanthantabletruongchieu').empty();
-
-        const thangnamtuan = $('#datepickerthangtuantruong').val();
-        const date = moment(thangnamtuan, 'MM/YYYY');
-        const thang = date.format('M');
-        const nam = date.format('YYYY');
-
-        let tuan = $(this).val();
-
-        if(tuan == null) {
-        	return false;
-        }
-
-        if (tuan != '' && thangnamtuan != '') {
-            $('#idthangtuantruong').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
-        } else {
-            $('#idthangtuantruong').text('');
-        }
-
-        axios.get('gettkbtruong').then(function (response) {
-			var datatkb = response.data;
-			axios.get('getdslt').then(function (response1) {
-				var dataloptruong = response1.data;
-				for(let i =0;i<datatkb.length;i++){
-					let demnam = datatkb[i].dsnam.length;
-					for(let j=0;j<demnam;j++){
-						let demthang = datatkb[i].dsnam[j].dsthang.length;
-						for(let k=0;k<demthang;k++){
-							let demtuan = datatkb[i].dsnam[j].dsthang[k].dstuan.length;
-							for(let m=0;m<demtuan;m++){
-								for(let n=0;n<dataloptruong.length;n++){
-									if(datatkb[i].dsnam[j].nam == nam && datatkb[i].dsnam[j].dsthang[k].thang == thang && datatkb[i].dsnam[j].dsthang[k].dstuan[m].tuan == tuan){
-										var datalop = dataloptruong[n].dslop;
-										var phandautabletruong = document.getElementById("phandautabletruongchieu");
-										var phanthantabletruong = document.getElementById("phanthantabletruongchieu");
-
-										var ththu = document.createElement("th");
-										ththu.setAttribute("class","stickyThu");
-										ththu.appendChild(document.createTextNode('Thứ'));
-										phandautabletruong.appendChild(ththu);
-
-										var thtiet = document.createElement("th");
-										thtiet.setAttribute("class","stickyTiet");
-										thtiet.appendChild(document.createTextNode('Tiết'));
-										phandautabletruong.appendChild(thtiet);
-
-										for(let x=0;x<datalop.length;x++){
-											var th = document.createElement("th");
-											var tenlop = document.createTextNode(' ' + datalop[x].tenlop);
-										    th.setAttribute("id",+datalop[x].malop);
-										    th.setAttribute("class","classlop")
-										    th.appendChild(tenlop);
-										    phandautabletruong.appendChild(th);
-										}
-
-										var dsbuoithu = datatkb[i].dsnam[j].dsthang[k].dstuan[m].dsbuoithu;
-
-								  		var noidungbang = "";
-
-								  		var databuoithu = [
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":2,
-								  				"mabuoithu":"0,2",
-								  				"tenbuoithu":"Sáng thứ 2"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":2,
-								  				"mabuoithu":"1,2",
-								  				"tenbuoithu":"Chiều thứ 2"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":3,
-								  				"mabuoithu":"0,3",
-								  				"tenbuoithu":"Sáng thứ 3"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":3,
-								  				"mabuoithu":"1,3",
-								  				"tenbuoithu":"Chiều thứ 3"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":4,
-								  				"mabuoithu":"0,4",
-								  				"tenbuoithu":"Sáng thứ 4"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":4,
-								  				"mabuoithu":"1,4",
-								  				"tenbuoithu":"Chiều thứ 4"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":5,
-								  				"mabuoithu":"0,5",
-								  				"tenbuoithu":"Sáng thứ 5"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":5,
-								  				"mabuoithu":"1,5",
-								  				"tenbuoithu":"Chiều thứ 5"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":6,
-								  				"mabuoithu":"0,6",
-								  				"tenbuoithu":"Sáng thứ 6"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":6,
-								  				"mabuoithu":"1,6",
-								  				"tenbuoithu":"Chiều thứ 6"
-								  			},
-								  			{
-								  				"mabuoi":0,
-								  				"mathu":7,
-								  				"mabuoithu":"0,7",
-								  				"tenbuoithu":"Sáng thứ 7"
-								  			},
-								  			{
-								  				"mabuoi":1,
-								  				"mathu":7,
-								  				"mabuoithu":"1,7",
-								  				"tenbuoithu":"Chiều thứ 7"
-								  			},
-								  		];
-								  		var datatiet = [
-								  			{
-								  				"tiet":1
-								  			},
-								  			{
-								  				"tiet":2
-								  			},
-								  			{
-								  				"tiet":3
-								  			},
-								  			{
-								  				"tiet":4
-								  			},
-								  			{
-								  				"tiet":5
-								  			},
-								  		];
-								  		for (let i = 0; i < databuoithu.length; i++) {
-								  			
-								  			if(databuoithu[i].mabuoi == 1) {
-
-								  				var rowspan = 0;
-									            var demdatatiet = datatiet.length;
-									            rowspan += demdatatiet;
-									            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoithu[i].tenbuoithu + "</td></tr>";
-									            for (let j = 0; j < demdatatiet; j++) {
-
-												  	var cotrong = '';
-												  	var theadlop = document.querySelectorAll('#tablexemtkbtruongchieu thead tr .classlop');
-							                    	for(var x=0;x<theadlop.length;x++){
-							                    		var idlop = theadlop[x].id;
-											            cotrong += "<td rowspan=" + 1 + " data-mabuoithu = "+databuoithu[i].mabuoithu+" data-matiet="+datatiet[j].tiet+" data-malop="+idlop+" class='classorongtruong'></td>";
-												  	}
-					  		                    	
-								                    noidungbang += "<tr>"
-								                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
-								                    +cotrong
-								                    +"</tr>";
-
-									            }
-								  			}
-								            
-								        }
-								        $("tbody#phanthantabletruongchieu").append(noidungbang);
-
-								        var tbodycotrong = document.querySelectorAll('#tablexemtkbtruongchieu tbody tr td.classorongtruong');
-
-								        for(let i=0;i<dsbuoithu.length;i++){
-								        	var demtiet = dsbuoithu[i].dstiet.length;
-								        	for(let j=0;j<demtiet;j++){
-								        		var demlop = dsbuoithu[i].dstiet[j].dslop.length;
-								        		for(let k=0;k<demlop;k++){
-								        			for(let m=0;m<tbodycotrong.length;m++){
-								        				var mabuoithu =tbodycotrong[m].dataset.mabuoithu; 
-								        				var matiet = tbodycotrong[m].dataset.matiet;
-								        				var malop = tbodycotrong[m].dataset.malop;
-								        				if(dsbuoithu[i].mabuoithu == mabuoithu && dsbuoithu[i].dstiet[j].tiet == matiet && dsbuoithu[i].dstiet[j].dslop[k].malop == malop){
-								        					var magiaovien = dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].magiaovien;
-								        					tbodycotrong[m].innerHTML = "<span data-magiaovien="+magiaovien+" style='white-space: nowrap;'>"+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoithu[i].dstiet[j].dslop[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
-								        				}
-								        			}
-								        		}
-								        	}
-								        }
-								        	
-									}
-
-								}
-							}
-						}
-					}
-				}
-				//chiều
-				if($(".httkbc").prop("checked")){
-					var tbodychieuc = $("#tablexemtkbtruongchieu tbody#phanthantabletruongchieu");
-					if(tbodychieuc.children().length == 0){
-						Swal.fire(
-						  'Thông báo',
-						  'Không có thời khoá biểu nào phù hợp trong thời gian này',
-						  'info'
-						)
-						document.getElementById("bangchieu").style.display = "none";
-						document.getElementById("cardxeptkbtruong").style.display = "none";
-					}else{
-						document.getElementById("bangchieu").style.display = "block";
-						document.getElementById("cardxeptkbtruong").style.display = "block";
-
-					}
-				}else{
-					document.getElementById("bangchieu").style.display = "none";
-				}
-			});
-		});
-
-	});
 }
 
 function loaddanhsachgv() {
@@ -762,115 +736,112 @@ function loaddanhsachgv() {
 	        $('#idtengv').text(text);
 
 	        $('#phanthantablegiaovien').empty();
-	        axios.get('gettkbgv').then(function (response) {
-	            let datatkbgv = response.data;
-	            for(let i =0;i<datatkbgv.length;i++){
-	                let demdsgv = datatkbgv[i].dsgiaovien.length;
-	                for(let j=0;j<demdsgv;j++){
-	                    let demnam = datatkbgv[i].dsgiaovien[j].dsnam.length;
-	                    for(let k=0;k<demnam;k++){
-	                        let demthang = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang.length;
-	                        for(let m=0;m<demthang;m++){
-	                            let demtuan = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan.length;
-	                            for(let n=0;n<demtuan;n++){
-	                                if(datatkbgv[i].dsgiaovien[j].magiaovien == idgv && datatkbgv[i].dsgiaovien[j].dsnam[k].nam == nam && datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang == thang && datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
-	                                    var phanthantablegiaovien = document.getElementById("phanthantablegiaovien");
 
-										var dsbuoi = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
+	        for(let i =0;i<layDataTkbGv.length;i++){
+                let demdsgv = layDataTkbGv[i].dsgiaovien.length;
+                for(let j=0;j<demdsgv;j++){
+                    let demnam = layDataTkbGv[i].dsgiaovien[j].dsnam.length;
+                    for(let k=0;k<demnam;k++){
+                        let demthang = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang.length;
+                        for(let m=0;m<demthang;m++){
+                            let demtuan = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan.length;
+                            for(let n=0;n<demtuan;n++){
+                                if(layDataTkbGv[i].dsgiaovien[j].magiaovien == idgv && layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam == nam && layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang == thang && layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
+                                    var phanthantablegiaovien = document.getElementById("phanthantablegiaovien");
 
-										var databuoi = [
-											{
-												"mabuoi":0,
-												"tenbuoi":"Sáng"
-											},{
-												"mabuoi":1,
-												"tenbuoi":"Chiều"
-											},
-										];
-										var datatiet = [
-								  			{
-								  				"tiet":1
-								  			},
-								  			{
-								  				"tiet":2
-								  			},
-								  			{
-								  				"tiet":3
-								  			},
-								  			{
-								  				"tiet":4
-								  			},
-								  			{
-								  				"tiet":5
-								  			},
-								  		];
-										var noidungbang = "";
-								        for (let i = 0; i < databuoi.length; i++) {
-								            var rowspan = 0;
-								            var demdatatiet = datatiet.length;
-								            rowspan += demdatatiet;
-								            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
-								            for (let j = 0; j < demdatatiet; j++) {
+									var dsbuoi = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
 
-											  	var cotrong = '';
-											  	var theadthu = document.querySelectorAll('#tablexemtkbgiaovien thead tr .classthu');
-						                    	for(var x=0;x<theadthu.length;x++){
-						                    		var mathu = theadthu[x].id;
-										            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronggiaovien'></td>";
-											  	}
-							                    	
-							                    noidungbang += "<tr>"
-							                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
-							                    +cotrong
-							                    +"</tr>";
+									var databuoi = [
+										{
+											"mabuoi":0,
+											"tenbuoi":"Sáng"
+										},{
+											"mabuoi":1,
+											"tenbuoi":"Chiều"
+										},
+									];
+									var datatiet = [
+							  			{
+							  				"tiet":1
+							  			},
+							  			{
+							  				"tiet":2
+							  			},
+							  			{
+							  				"tiet":3
+							  			},
+							  			{
+							  				"tiet":4
+							  			},
+							  			{
+							  				"tiet":5
+							  			},
+							  		];
+									var noidungbang = "";
+							        for (let i = 0; i < databuoi.length; i++) {
+							            var rowspan = 0;
+							            var demdatatiet = datatiet.length;
+							            rowspan += demdatatiet;
+							            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
+							            for (let j = 0; j < demdatatiet; j++) {
 
-								            }
-								        }
-								        $("tbody#phanthantablegiaovien").append(noidungbang);
+										  	var cotrong = '';
+										  	var theadthu = document.querySelectorAll('#tablexemtkbgiaovien thead tr .classthu');
+					                    	for(var x=0;x<theadthu.length;x++){
+					                    		var mathu = theadthu[x].id;
+									            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronggiaovien'></td>";
+										  	}
+						                    	
+						                    noidungbang += "<tr>"
+						                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
+						                    +cotrong
+						                    +"</tr>";
 
-								        var tbodycotrong = document.querySelectorAll('#tablexemtkbgiaovien tbody tr td.classoronggiaovien');
+							            }
+							        }
+							        $("tbody#phanthantablegiaovien").append(noidungbang);
 
-								        for(let i=0;i<dsbuoi.length;i++){
-								        	var demtiet = dsbuoi[i].dstiet.length;
-								        	for(let j=0;j<demtiet;j++){
-								        		var demthu = dsbuoi[i].dstiet[j].dsthu.length;
-								        		for(let k=0;k<demthu;k++){
-								        			for(let m=0;m<tbodycotrong.length;m++){
-								        				var mabuoi =tbodycotrong[m].dataset.mabuoi; 
-								        				var matiet = tbodycotrong[m].dataset.matiet;
-								        				var mathu = tbodycotrong[m].dataset.mathu;
-								        				if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
-								        					tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dslop[0].tenlop+')'+"</span>";
-								        				}
-								        			}
-								        		}
-								        	}
-								        }
+							        var tbodycotrong = document.querySelectorAll('#tablexemtkbgiaovien tbody tr td.classoronggiaovien');
 
-								        document.getElementById("cardxeptkbgiaovien").style.display = "block";
-	                                          
-	                                }
+							        for(let i=0;i<dsbuoi.length;i++){
+							        	var demtiet = dsbuoi[i].dstiet.length;
+							        	for(let j=0;j<demtiet;j++){
+							        		var demthu = dsbuoi[i].dstiet[j].dsthu.length;
+							        		for(let k=0;k<demthu;k++){
+							        			for(let m=0;m<tbodycotrong.length;m++){
+							        				var mabuoi =tbodycotrong[m].dataset.mabuoi; 
+							        				var matiet = tbodycotrong[m].dataset.matiet;
+							        				var mathu = tbodycotrong[m].dataset.mathu;
+							        				if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
+							        					tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dslop[0].tenlop+')'+"</span>";
+							        				}
+							        			}
+							        		}
+							        	}
+							        }
 
-	                            }
-	                        }
-	                    }
-	                    
-	                    
-	                }
-	                
-	            }
+							        document.getElementById("cardxeptkbgiaovien").style.display = "block";
+                                          
+                                }
 
-	            var tbodygv = $("#tablexemtkbgiaovien tbody#phanthantablegiaovien");
-				if(tbodygv.children().length == 0){
-					Swal.fire(
-					  'Thông báo',
-					  'Không có thời khoá biểu nào phù hợp trong thời gian này',
-					  'info'
-					)
-					document.getElementById("cardxeptkbgiaovien").style.display = "none";
-				}     
-	                
-	        });
+                            }
+                        }
+                    }
+                    
+                    
+                }
+                
+            }
+
+            var tbodygv = $("#tablexemtkbgiaovien tbody#phanthantablegiaovien");
+			if(tbodygv.children().length == 0){
+				Swal.fire(
+				  'Thông báo',
+				  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+				  'info'
+				)
+				document.getElementById("cardxeptkbgiaovien").style.display = "none";
+			}
 	    });
 	});
 
@@ -948,115 +919,112 @@ function loaddanhsachkhoilop(){
 	  		$('#idtenlop').text(text);
 
 	  		$('#phanthantablelop').empty();
-	  		axios.get('gettkblop').then(function (response) {
-	            let datatkblop = response.data;
-	            for(let i =0;i<datatkblop.length;i++){
-	                let demdslop = datatkblop[i].dslop.length;
-	                for(let j=0;j<demdslop;j++){
-	                    let demnam = datatkblop[i].dslop[j].dsnam.length;
-	                    for(let k=0;k<demnam;k++){
-	                        let demthang = datatkblop[i].dslop[j].dsnam[k].dsthang.length;
-	                        for(let m=0;m<demthang;m++){
-	                            let demtuan = datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan.length;
-	                            for(let n=0;n<demtuan;n++){
-	                                if(datatkblop[i].dslop[j].malop == idlop && datatkblop[i].dslop[j].dsnam[k].nam == nam && datatkblop[i].dslop[j].dsnam[k].dsthang[m].thang == thang && datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
-	                                    var phanthantablelop = document.getElementById("phanthantablelop");
+	  		
+	  		for(let i =0;i<layDataTkbLop.length;i++){
+                let demdslop = layDataTkbLop[i].dslop.length;
+                for(let j=0;j<demdslop;j++){
+                    let demnam = layDataTkbLop[i].dslop[j].dsnam.length;
+                    for(let k=0;k<demnam;k++){
+                        let demthang = layDataTkbLop[i].dslop[j].dsnam[k].dsthang.length;
+                        for(let m=0;m<demthang;m++){
+                            let demtuan = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan.length;
+                            for(let n=0;n<demtuan;n++){
+                                if(layDataTkbLop[i].dslop[j].malop == idlop && layDataTkbLop[i].dslop[j].dsnam[k].nam == nam && layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].thang == thang && layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
+                                    var phanthantablelop = document.getElementById("phanthantablelop");
 
-										var dsbuoi = datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
+									var dsbuoi = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
 
-										var databuoi = [
-											{
-												"mabuoi":0,
-												"tenbuoi":"Sáng"
-											},{
-												"mabuoi":1,
-												"tenbuoi":"Chiều"
-											},
-										];
-										var datatiet = [
-								  			{
-								  				"tiet":1
-								  			},
-								  			{
-								  				"tiet":2
-								  			},
-								  			{
-								  				"tiet":3
-								  			},
-								  			{
-								  				"tiet":4
-								  			},
-								  			{
-								  				"tiet":5
-								  			},
-								  		];
+									var databuoi = [
+										{
+											"mabuoi":0,
+											"tenbuoi":"Sáng"
+										},{
+											"mabuoi":1,
+											"tenbuoi":"Chiều"
+										},
+									];
+									var datatiet = [
+							  			{
+							  				"tiet":1
+							  			},
+							  			{
+							  				"tiet":2
+							  			},
+							  			{
+							  				"tiet":3
+							  			},
+							  			{
+							  				"tiet":4
+							  			},
+							  			{
+							  				"tiet":5
+							  			},
+							  		];
 
-										var noidungbang = "";
-								        for (let i = 0; i < databuoi.length; i++) {
-								            var rowspan = 0;
-								            var demdatatiet = datatiet.length;
-								            rowspan += demdatatiet;
-								            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
-								            for (let j = 0; j < demdatatiet; j++) {
+									var noidungbang = "";
+							        for (let i = 0; i < databuoi.length; i++) {
+							            var rowspan = 0;
+							            var demdatatiet = datatiet.length;
+							            rowspan += demdatatiet;
+							            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
+							            for (let j = 0; j < demdatatiet; j++) {
 
-											  	var cotrong = '';
-											  	var theadthu = document.querySelectorAll('#tablexemtkblop thead tr .classthu');
-						                    	for(var x=0;x<theadthu.length;x++){
-						                    		var mathu = theadthu[x].id;
-										            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronglop'></td>";
-											  	}
-							                    	
-							                    noidungbang += "<tr>"
-							                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
-							                    +cotrong
-							                    +"</tr>";
+										  	var cotrong = '';
+										  	var theadthu = document.querySelectorAll('#tablexemtkblop thead tr .classthu');
+					                    	for(var x=0;x<theadthu.length;x++){
+					                    		var mathu = theadthu[x].id;
+									            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronglop'></td>";
+										  	}
+						                    	
+						                    noidungbang += "<tr>"
+						                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
+						                    +cotrong
+						                    +"</tr>";
 
-								            }
-								        }
-								        $("tbody#phanthantablelop").append(noidungbang);
+							            }
+							        }
+							        $("tbody#phanthantablelop").append(noidungbang);
 
-								        var tbodycotrong = document.querySelectorAll('#tablexemtkblop tbody tr td.classoronglop');
+							        var tbodycotrong = document.querySelectorAll('#tablexemtkblop tbody tr td.classoronglop');
 
-								        for(let i=0;i<dsbuoi.length;i++){
-								        	var demtiet = dsbuoi[i].dstiet.length;
-								        	for(let j=0;j<demtiet;j++){
-								        		var demthu = dsbuoi[i].dstiet[j].dsthu.length;
-								        		for(let k=0;k<demthu;k++){
-								        			for(let m=0;m<tbodycotrong.length;m++){
-								        				var mabuoi =tbodycotrong[m].dataset.mabuoi; 
-								        				var matiet = tbodycotrong[m].dataset.matiet;
-								        				var mathu = tbodycotrong[m].dataset.mathu;
-								        				if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
-								        					tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
-								        				}
-								        			}
-								        		}
-								        	}
-								        }
-								        document.getElementById("cardxeptkblop").style.display = "block";
-	                                          
-	                                }
+							        for(let i=0;i<dsbuoi.length;i++){
+							        	var demtiet = dsbuoi[i].dstiet.length;
+							        	for(let j=0;j<demtiet;j++){
+							        		var demthu = dsbuoi[i].dstiet[j].dsthu.length;
+							        		for(let k=0;k<demthu;k++){
+							        			for(let m=0;m<tbodycotrong.length;m++){
+							        				var mabuoi =tbodycotrong[m].dataset.mabuoi; 
+							        				var matiet = tbodycotrong[m].dataset.matiet;
+							        				var mathu = tbodycotrong[m].dataset.mathu;
+							        				if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
+							        					tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
+							        				}
+							        			}
+							        		}
+							        	}
+							        }
+							        document.getElementById("cardxeptkblop").style.display = "block";
+                                          
+                                }
 
-	                            }
-	                        }
-	                    }
-	                    
-	                    
-	                }
-	                
-	            }
+                            }
+                        }
+                    }
+                    
+                    
+                }
+                
+            }
 
-	            var tbodylop = $("#tablexemtkblop tbody#phanthantablelop");
-				if(tbodylop.children().length == 0){
-					Swal.fire(
-					  'Thông báo',
-					  'Không có thời khoá biểu nào phù hợp trong thời gian này',
-					  'info'
-					)
-					document.getElementById("cardxeptkblop").style.display = "none";
-				}     
-	                
-	        });
+            var tbodylop = $("#tablexemtkblop tbody#phanthantablelop");
+			if(tbodylop.children().length == 0){
+				Swal.fire(
+				  'Thông báo',
+				  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+				  'info'
+				)
+				document.getElementById("cardxeptkblop").style.display = "none";
+			}    
   		
 	  	});
 	});
@@ -1112,115 +1080,112 @@ function loadthoikhoabieuphong() {
   		$('#idtenphong').text(text);
 
 		$('#phanthantablephong').empty();
-  		axios.get('getthoikhoabieuphong').then(function (response) {
-			let datatkbphong = response.data;
-            for(let i =0;i<datatkbphong.length;i++){
-                let demdsphong = datatkbphong[i].dsphong.length;
-                for(let j=0;j<demdsphong;j++){
-                    let demnam = datatkbphong[i].dsphong[j].dsnam.length;
-                    for(let k=0;k<demnam;k++){
-                        let demthang = datatkbphong[i].dsphong[j].dsnam[k].dsthang.length;
-                        for(let m=0;m<demthang;m++){
-                            let demtuan = datatkbphong[i].dsphong[j].dsnam[k].dsthang[m].dstuan.length;
-                            for(let n=0;n<demtuan;n++){
-                                if(datatkbphong[i].dsphong[j].maphong == idphong && datatkbphong[i].dsphong[j].dsnam[k].nam == nam && datatkbphong[i].dsphong[j].dsnam[k].dsthang[m].thang == thang && datatkbphong[i].dsphong[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
-                                    var phanthantablelop = document.getElementById("phanthantablephong");
+  		
+  		for(let i =0;i<layDataTkbPhong.length;i++){
+            let demdsphong = layDataTkbPhong[i].dsphong.length;
+            for(let j=0;j<demdsphong;j++){
+                let demnam = layDataTkbPhong[i].dsphong[j].dsnam.length;
+                for(let k=0;k<demnam;k++){
+                    let demthang = layDataTkbPhong[i].dsphong[j].dsnam[k].dsthang.length;
+                    for(let m=0;m<demthang;m++){
+                        let demtuan = layDataTkbPhong[i].dsphong[j].dsnam[k].dsthang[m].dstuan.length;
+                        for(let n=0;n<demtuan;n++){
+                            if(layDataTkbPhong[i].dsphong[j].maphong == idphong && layDataTkbPhong[i].dsphong[j].dsnam[k].nam == nam && layDataTkbPhong[i].dsphong[j].dsnam[k].dsthang[m].thang == thang && layDataTkbPhong[i].dsphong[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
+                                var phanthantablelop = document.getElementById("phanthantablephong");
 
-									var dsbuoi = datatkbphong[i].dsphong[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
+								var dsbuoi = layDataTkbPhong[i].dsphong[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
 
-									var databuoi = [
-										{
-											"mabuoi":0,
-											"tenbuoi":"Sáng"
-										},{
-											"mabuoi":1,
-											"tenbuoi":"Chiều"
-										},
-									];
-									var datatiet = [
-							  			{
-							  				"tiet":1
-							  			},
-							  			{
-							  				"tiet":2
-							  			},
-							  			{
-							  				"tiet":3
-							  			},
-							  			{
-							  				"tiet":4
-							  			},
-							  			{
-							  				"tiet":5
-							  			},
-							  		];
+								var databuoi = [
+									{
+										"mabuoi":0,
+										"tenbuoi":"Sáng"
+									},{
+										"mabuoi":1,
+										"tenbuoi":"Chiều"
+									},
+								];
+								var datatiet = [
+						  			{
+						  				"tiet":1
+						  			},
+						  			{
+						  				"tiet":2
+						  			},
+						  			{
+						  				"tiet":3
+						  			},
+						  			{
+						  				"tiet":4
+						  			},
+						  			{
+						  				"tiet":5
+						  			},
+						  		];
 
-									var noidungbang = "";
-							        for (let i = 0; i < databuoi.length; i++) {
-							            var rowspan = 0;
-							            var demdatatiet = datatiet.length;
-							            rowspan += demdatatiet;
-							            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
-							            for (let j = 0; j < demdatatiet; j++) {
+								var noidungbang = "";
+						        for (let i = 0; i < databuoi.length; i++) {
+						            var rowspan = 0;
+						            var demdatatiet = datatiet.length;
+						            rowspan += demdatatiet;
+						            noidungbang += "<tr><td class='sticky-col first-col' style='color: red;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
+						            for (let j = 0; j < demdatatiet; j++) {
 
-										  	var cotrong = '';
-										  	var theadthu = document.querySelectorAll('#tablexemtkbphong thead tr .classthu');
-					                    	for(var x=0;x<theadthu.length;x++){
-					                    		var mathu = theadthu[x].id;
-									            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronglop'></td>";
-										  	}
-						                    	
-						                    noidungbang += "<tr>"
-						                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
-						                    +cotrong
-						                    +"</tr>";
+									  	var cotrong = '';
+									  	var theadthu = document.querySelectorAll('#tablexemtkbphong thead tr .classthu');
+				                    	for(var x=0;x<theadthu.length;x++){
+				                    		var mathu = theadthu[x].id;
+								            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronglop'></td>";
+									  	}
+					                    	
+					                    noidungbang += "<tr>"
+					                    +"<td class='sticky-col second-col'>"+ datatiet[j].tiet + "</td>"
+					                    +cotrong
+					                    +"</tr>";
 
-							            }
-							        }
-							        $("tbody#phanthantablephong").append(noidungbang);
+						            }
+						        }
+						        $("tbody#phanthantablephong").append(noidungbang);
 
-							        var tbodycotrong = document.querySelectorAll('#tablexemtkbphong tbody tr td.classoronglop');
+						        var tbodycotrong = document.querySelectorAll('#tablexemtkbphong tbody tr td.classoronglop');
 
-							        for(let i=0;i<dsbuoi.length;i++){
-							        	var demtiet = dsbuoi[i].dstiet.length;
-							        	for(let j=0;j<demtiet;j++){
-							        		var demthu = dsbuoi[i].dstiet[j].dsthu.length;
-							        		for(let k=0;k<demthu;k++){
-							        			for(let m=0;m<tbodycotrong.length;m++){
-							        				var mabuoi =tbodycotrong[m].dataset.mabuoi; 
-							        				var matiet = tbodycotrong[m].dataset.matiet;
-							        				var mathu = tbodycotrong[m].dataset.mathu;
-							        				if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
-							        					tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsgiaovien[0].bidanh+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsgiaovien[0].dslop[0].tenlop+')'+"</span>";
-							        				}
-							        			}
-							        		}
-							        	}
-							        }
-							        document.getElementById("cardxeptkbphong").style.display = "block";
-                                          
-                                }
-
+						        for(let i=0;i<dsbuoi.length;i++){
+						        	var demtiet = dsbuoi[i].dstiet.length;
+						        	for(let j=0;j<demtiet;j++){
+						        		var demthu = dsbuoi[i].dstiet[j].dsthu.length;
+						        		for(let k=0;k<demthu;k++){
+						        			for(let m=0;m<tbodycotrong.length;m++){
+						        				var mabuoi =tbodycotrong[m].dataset.mabuoi; 
+						        				var matiet = tbodycotrong[m].dataset.matiet;
+						        				var mathu = tbodycotrong[m].dataset.mathu;
+						        				if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
+						        					tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsgiaovien[0].bidanh+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsgiaovien[0].dslop[0].tenlop+')'+"</span>";
+						        				}
+						        			}
+						        		}
+						        	}
+						        }
+						        document.getElementById("cardxeptkbphong").style.display = "block";
+                                      
                             }
+
                         }
                     }
-                    
-                    
                 }
                 
+                
             }
+            
+        }
 
-            var tbodyphong = $("#tablexemtkbphong tbody#phanthantablephong");
-			if(tbodyphong.children().length == 0){
-				Swal.fire(
-				  'Thông báo',
-				  'Không có thời khoá biểu nào phù hợp trong thời gian này',
-				  'info'
-				)
-				document.getElementById("cardxeptkbphong").style.display = "none";
-			}     	
-				
-		});
+        var tbodyphong = $("#tablexemtkbphong tbody#phanthantablephong");
+		if(tbodyphong.children().length == 0){
+			Swal.fire(
+			  'Thông báo',
+			  'Không có thời khoá biểu nào phù hợp trong thời gian này',
+			  'info'
+			)
+			document.getElementById("cardxeptkbphong").style.display = "none";
+		}
  		
   	});
 }
@@ -1321,9 +1286,16 @@ function xulythemmau(){
 }
 
 window.onload = function() {
+
+	(async() => {
+		layDataTkbTruong = await loadDataTkbTruong();
+		layDataLopTruong = await loadDataLopTruong();
+		layDataTkbGv = await loadDataTkbGv();
+		layDataTkbLop = await loadDataTkbLop();
+		layDataTkbPhong = await loadDataTkbPhong();
+	})();
+
 	loadthoikhoabieutruong();
-	loadthoikhoabieutruongsang();
-	loadthoikhoabieutruongchieu();
 	loaddanhsachgv();
 	loaddanhsachkhoilop();
 	loadbanggiaovien();

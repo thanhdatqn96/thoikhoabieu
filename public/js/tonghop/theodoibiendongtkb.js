@@ -1,116 +1,141 @@
-function loaddanhsachtruong() {
-    var data = axios.get('getdstruong').then(function(response) {
-        var data1 = response.data;
-        var datas = data1.map(function(value, label) {
-            let data = value;
-            let stt = label + 1;
-            var datas = Object.assign(data, {
-                stt: stt.toString()
-            });
-            return datas;
-        });
-        $("#girddstruong").dxDataGrid({
-            dataSource: datas,
-            showBorders: true,
-            paging: {
-                pageSize: 30
-            },
-            /* xap xep */
-            sorting: {
-                mode: "multiple"
-            },
-            /* loc du lieu */
-            // filterRow: {
-            //  visible: true,
-            //  applyFilter: "auto"
-            // },
-            searchPanel: {
-                visible: true,
-                width: 240,
-                placeholder: "Tìm kiếm..."
-            },
-            pager: {
-                showPageSizeSelector: true,
-                allowedPageSizes: [10, 20, 30],
-                showInfo: true
-            },
-            /* co dan cot */
-            allowColumnResizing: true,
-            columnResizingMode: "widget",
-            columns: [{
-                caption: "STT",
-                dataField: "stt",
-                width: 50,
-            }, {
-                caption: "Tên trường",
-                dataField: "tentruong",
-            }, {
-                caption: "Cấp học",
-                dataField: "caphoc",
-                cellTemplate: function(element, info) {
-                    var dulieucap = info.value;
-                    var tencap;
-                    if (dulieucap == 1) {
-                        tencap = "Tiểu học";
-                    } else if (dulieucap == 2) {
-                        tencap = "Trung học cơ sở";
-                    } else if (dulieucap == 3) {
-                        tencap = "Trung học phổ thông";
-                    }else if(dulieucap == 4){
-                        tencap = "Tiểu học & Trung học cơ sở";
-                    }
-                    $("<div>")
-                        .appendTo(element)
-                        .text(tencap);
-                }
-            }, {
-                caption: "Số lớp",
-                dataField: "demdslop"
-            }, {
-                caption: "Số giáo viên",
-                dataField: "demdsgv"
-            }, 
-            // {
-            //     caption: "Số học sinh",
-            //     dataField: "demdsgv"
-            // }, 
-            {
-                fixed: true,
-                fixedPosition: "right",
-                caption: "",
-                cellTemplate: function(container, options) {
-                    container.addClass("center");
-                    $("<div>")
-                        .dxButton({
-                            template: function(e) {
-                                return $('<i class="fa fa-eye"></i>');
-                            },
-                            onClick: function(e) {
-                                $("#bangdstruong").collapse('toggle');
-                                $("#hieuungcongtru").addClass("ft-plus").removeClass("ft-minus");;
-                                $("#idtentruong").text(options.data.tentruong);
-                                $("#idtentruonggv").text(options.data.tentruong);
-                                $("#idtentruonglop").text(options.data.tentruong);
-                                $('#idtruonggv').val(options.data.matruong);
-                                $('#idtruonglop').val(options.data.matruong);
-                                var datadsgv = options.data.danhsachgv;
-                                var datadslop = options.data.danhsachlop;
-                                var datadskhoi = options.data.danhsachkhoihoc;
-                                loaddanhsachgv(datadsgv);
-                                // loaddanhsachlop(datadslop);
-                                loaddanhsachkhoilop(datadskhoi, datadslop);
-                                document.getElementById("formxemtkb").style.display = "block";
-                            },
-                        })
-                        .css('background-color', 'info')
-                        .appendTo(container);
-                },
-                width: 50,
-            }],
-        });
+var layDataDsTruong,
+    layDataTkbGv,
+    layDataTkbLop;
+
+async function loadDataDsTruong() {
+    let result = await axios.get("getdstruong").then(res => {
+        return res.data;
     });
+    return result;
 }
 
+async function loadDataTkbGv() {
+    let result = await axios.get("getthoikhoabieugvtime").then(res => {
+        return res.data;
+    });
+    return result;
+}
+
+async function loadDataTkbLop() {
+    let result = await axios.get("getthoikhoabieuloptime").then(res => {
+        return res.data;
+    });
+    return result;
+}
+
+async function loaddanhsachtruong() {
+
+    layDataDsTruong = await loadDataDsTruong();
+    layDataTkbGv = await loadDataTkbGv();
+    layDataTkbLop = await loadDataTkbLop();
+
+    var datas = layDataDsTruong.map(function(value, label) {
+        let data = value;
+        let stt = label + 1;
+        var datas = Object.assign(data, {
+            stt: stt.toString()
+        });
+        return datas;
+    });
+    $("#girddstruong").dxDataGrid({
+        dataSource: datas,
+        showBorders: true,
+        paging: {
+            pageSize: 30
+        },
+        /* xap xep */
+        sorting: {
+            mode: "multiple"
+        },
+        /* loc du lieu */
+        // filterRow: {
+        //  visible: true,
+        //  applyFilter: "auto"
+        // },
+        searchPanel: {
+            visible: true,
+            width: 240,
+            placeholder: "Tìm kiếm..."
+        },
+        pager: {
+            showPageSizeSelector: true,
+            allowedPageSizes: [10, 20, 30],
+            showInfo: true
+        },
+        /* co dan cot */
+        allowColumnResizing: true,
+        columnResizingMode: "widget",
+        columns: [{
+            caption: "STT",
+            dataField: "stt",
+            width: 50,
+        }, {
+            caption: "Tên trường",
+            dataField: "tentruong",
+        }, {
+            caption: "Cấp học",
+            dataField: "caphoc",
+            cellTemplate: function(element, info) {
+                var dulieucap = info.value;
+                var tencap;
+                if (dulieucap == 1) {
+                    tencap = "Tiểu học";
+                } else if (dulieucap == 2) {
+                    tencap = "Trung học cơ sở";
+                } else if (dulieucap == 3) {
+                    tencap = "Trung học phổ thông";
+                }else if(dulieucap == 4){
+                    tencap = "Tiểu học & Trung học cơ sở";
+                }
+                $("<div>")
+                    .appendTo(element)
+                    .text(tencap);
+            }
+        }, {
+            caption: "Số lớp",
+            dataField: "demdslop"
+        }, {
+            caption: "Số giáo viên",
+            dataField: "demdsgv"
+        }, 
+        // {
+        //     caption: "Số học sinh",
+        //     dataField: "demdsgv"
+        // }, 
+        {
+            fixed: true,
+            fixedPosition: "right",
+            caption: "",
+            cellTemplate: function(container, options) {
+                container.addClass("center");
+                $("<div>")
+                    .dxButton({
+                        template: function(e) {
+                            return $('<i class="fa fa-eye"></i>');
+                        },
+                        onClick: function(e) {
+                            $("#bangdstruong").collapse('toggle');
+                            $("#hieuungcongtru").addClass("ft-plus").removeClass("ft-minus");;
+                            $("#idtentruong").text(options.data.tentruong);
+                            $("#idtentruonggv").text(options.data.tentruong);
+                            $("#idtentruonglop").text(options.data.tentruong);
+                            $('#idtruonggv').val(options.data.matruong);
+                            $('#idtruonglop').val(options.data.matruong);
+                            var datadsgv = options.data.danhsachgv;
+                            var datadslop = options.data.danhsachlop;
+                            var datadskhoi = options.data.danhsachkhoihoc;
+                            loaddanhsachgv(datadsgv);
+                            loaddanhsachkhoilop(datadskhoi, datadslop);
+                            document.getElementById("formxemtkb").style.display = "block";
+                        },
+                    })
+                    .css('background-color', 'info')
+                    .appendTo(container);
+            },
+            width: 50,
+        }],
+    });
+}
 
 function loaddanhsachgv(datadsgv) {
     var datadsgv = datadsgv;
@@ -263,6 +288,7 @@ function phantranglop(){
 }
 
 window.onload = function() {
+
     loaddanhsachtruong();
     $("#bangdstruong").on('show.bs.collapse', function() {
         document.getElementById("formxemtkb").style.display = "none";
@@ -298,19 +324,6 @@ window.onload = function() {
         document.getElementById("divnamlop").style.display = "none";
     });
 
-    // $('#idselectgv').on('change', function() {
-    //     var sel = document.getElementById("idselectgv");
-    //     var text = sel.options[sel.selectedIndex].text;
-    //     $('#idtengv').text(text);
-    //     document.getElementById("cardxeptkbgiaovien").style.display = "block";
-    // });
-
-    // $('#idselectlop').on('change', function() {
-    //     var sel = document.getElementById("idselectlop");
-    //     var text = sel.options[sel.selectedIndex].text;
-    //     $('#idtenlop').text(text);
-    //     document.getElementById("cardxeptkblop").style.display = "block";
-    // });
     $("#xemtkblop").change(function () {
 
         $('#idselectgv').val('none').trigger('change.select2');
@@ -396,182 +409,183 @@ window.onload = function() {
         var idgv = $('#idgv').val();
 
         // $('#phanthantablegiaovien').empty();
-        axios.get('getthoikhoabieugvtime').then(function (response) {
-            let datatkbgv = response.data;
-            for(let i =0;i<datatkbgv.length;i++){
-                let demdsgv = datatkbgv[i].dsgiaovien.length;
-                for(let j=0;j<demdsgv;j++){
-                    let demnam = datatkbgv[i].dsgiaovien[j].dsnam.length;
-                    for(let k=0;k<demnam;k++){
-                        let demthang = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang.length;
-                        for(let m=0;m<demthang;m++){
-                            let demtuan = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan.length;
-                            for(let n=0;n<demtuan;n++){
-                                if(datatkbgv[i].matruong == idtruonggv && datatkbgv[i].dsgiaovien[j].magiaovien == idgv && datatkbgv[i].dsgiaovien[j].dsnam[k].nam == nam && datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang == thang && datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
-                                    //tạo div
-                                    let taodiv = document.createElement("div");
-                                    taodiv.setAttribute("class","col-md-12");
-                                    //tạo bảng
-                                    let taobang = document.createElement("table");
-                                    taobang.setAttribute("id","tablexemtkbgiaovien"+n+"");
-                                    taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
-                                    taobang.setAttribute("style","overflow-y: auto;border-collapse: separate;"); 
-                                    //tạo phần đầu
-                                    let taothead = document.createElement("thead");
-                                    taothead.setAttribute("style","background-color: #28386c;color: white;"); 
+        for(let i =0;i<layDataTkbGv.length;i++){
+            let demdsgv = layDataTkbGv[i].dsgiaovien.length;
+            for(let j=0;j<demdsgv;j++){
+                let demnam = layDataTkbGv[i].dsgiaovien[j].dsnam.length;
+                for(let k=0;k<demnam;k++){
+                    let demthang = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang.length;
+                    for(let m=0;m<demthang;m++){
+                        let demtuan = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan.length;
+                        for(let n=0;n<demtuan;n++){
+                            if(layDataTkbGv[i].matruong == idtruonggv && layDataTkbGv[i].dsgiaovien[j].magiaovien == idgv && layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam == nam && layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang == thang && layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
+                                //tạo div
+                                let taodiv = document.createElement("div");
+                                taodiv.setAttribute("class","col-md-12");
+                                //tạo bảng
+                                let taobang = document.createElement("table");
+                                taobang.setAttribute("id","tablexemtkbgiaovien"+n+"");
+                                taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
+                                taobang.setAttribute("style","overflow-y: auto;border-collapse: separate;"); 
+                                //tạo phần đầu
+                                let taothead = document.createElement("thead");
+                                taothead.setAttribute("style","background-color: #28386c;color: white;"); 
 
-                                    let taorow = document.createElement("tr");
+                                let taorow = document.createElement("tr");
 
-                                    let thbuoi = document.createElement("th");
-                                    thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
-                                    thbuoi.appendChild(document.createTextNode('Buổi'));
-                                    taorow.appendChild(thbuoi);
+                                let thbuoi = document.createElement("th");
+                                thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
+                                thbuoi.appendChild(document.createTextNode('Buổi'));
+                                taorow.appendChild(thbuoi);
 
-                                    let thtiet = document.createElement("th");
-                                    thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
-                                    thtiet.appendChild(document.createTextNode('Tiết'));
-                                    taorow.appendChild(thtiet);
+                                let thtiet = document.createElement("th");
+                                thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
+                                thtiet.appendChild(document.createTextNode('Tiết'));
+                                taorow.appendChild(thtiet);
 
-                                    var thu= [
-                                        {
-                                            'idthu':2,
-                                            'tenthu':"Thứ 2"   
-                                        },
-                                        {
-                                            'idthu':3,
-                                            'tenthu':"Thứ 3"   
-                                        },
-                                        {
-                                            'idthu':4,
-                                            'tenthu':"Thứ 4"   
-                                        },
-                                        {
-                                            'idthu':5,
-                                            'tenthu':"Thứ 5"   
-                                        },
-                                        {
-                                            'idthu':6,
-                                            'tenthu':"Thứ 6"   
-                                        },
-                                        {
-                                            'idthu':7,
-                                            'tenthu':"Thứ 7"   
-                                        },
-                                    ];
-
-                                    for(let z=0;z<thu.length;z++){
-                                        let th = document.createElement("th");
-                                        let tenthu = document.createTextNode(' ' + thu[z].tenthu);
-                                        th.setAttribute("id",+thu[z].idthu);
-                                        th.setAttribute("class","classthu")
-                                        th.appendChild(tenthu);
-                                        taorow.appendChild(th);
-                                    }
-
-                                    taothead.append(taorow);
-
-                                    //tạo phần thân
-                                    let taotbody = document.createElement("tbody");
-                                    taotbody.setAttribute("id","phanthantablegiaovien"+n+"");
-
-                                    taobang.appendChild(taothead);
-                                    taobang.appendChild(taotbody);
-                                    
-                                    taodiv.appendChild(taobang);
-
-                                    $('#divResults').append(taodiv);
-                                    
-
-                                    var dsbuoi = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
-                                    var databuoi = [
+                                var thu= [
                                     {
-                                        "mabuoi":0,
-                                        "tenbuoi":"Sáng"
-                                    },{
-                                        "mabuoi":1,
-                                        "tenbuoi":"Chiều"
+                                        'idthu':2,
+                                        'tenthu':"Thứ 2"   
                                     },
-                                    ];
-                                    var datatiet = [
-                                        {
-                                            "tiet":1
-                                        },
-                                        {
-                                            "tiet":2
-                                        },
-                                        {
-                                            "tiet":3
-                                        },
-                                        {
-                                            "tiet":4
-                                        },
-                                        {
-                                            "tiet":5
-                                        },
-                                    ];
-                                    var noidungbang = "";
-                                    for (let i = 0; i < databuoi.length; i++) {
-                                        var rowspan = 0;
-                                        var demdatatiet = datatiet.length;
-                                        rowspan += demdatatiet;
-                                        noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
-                                        for (let j = 0; j < demdatatiet; j++) {
+                                    {
+                                        'idthu':3,
+                                        'tenthu':"Thứ 3"   
+                                    },
+                                    {
+                                        'idthu':4,
+                                        'tenthu':"Thứ 4"   
+                                    },
+                                    {
+                                        'idthu':5,
+                                        'tenthu':"Thứ 5"   
+                                    },
+                                    {
+                                        'idthu':6,
+                                        'tenthu':"Thứ 6"   
+                                    },
+                                    {
+                                        'idthu':7,
+                                        'tenthu':"Thứ 7"   
+                                    },
+                                ];
 
-                                            var cotrong = '';
-                                            var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+n+'';
-                                            var theadthu = document.querySelectorAll("table[id^="+tablexemtkbgiaovien+"] thead tr .classthu");
-                                            for(var x=0;x<theadthu.length;x++){
-                                                var mathu = theadthu[x].id;
-                                                cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronggiaovien'></td>";
-                                            }
-                                                
-                                            noidungbang += "<tr>"
-                                            +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;'>"+ datatiet[j].tiet + "</td>"
-                                            +cotrong
-                                            +"</tr>";
+                                for(let z=0;z<thu.length;z++){
+                                    let th = document.createElement("th");
+                                    let tenthu = document.createTextNode(' ' + thu[z].tenthu);
+                                    th.setAttribute("id",+thu[z].idthu);
+                                    th.setAttribute("class","classthu")
+                                    th.appendChild(tenthu);
+                                    taorow.appendChild(th);
+                                }
 
+                                taothead.append(taorow);
+
+                                //tạo phần thân
+                                let taotbody = document.createElement("tbody");
+                                taotbody.setAttribute("id","phanthantablegiaovien"+n+"");
+
+                                taobang.appendChild(taothead);
+                                taobang.appendChild(taotbody);
+                                
+                                taodiv.appendChild(taobang);
+
+                                $('#divResults').append(taodiv);
+                                
+
+                                var dsbuoi = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
+                                var databuoi = [
+                                {
+                                    "mabuoi":0,
+                                    "tenbuoi":"Sáng"
+                                },{
+                                    "mabuoi":1,
+                                    "tenbuoi":"Chiều"
+                                },
+                                ];
+                                var datatiet = [
+                                    {
+                                        "tiet":1
+                                    },
+                                    {
+                                        "tiet":2
+                                    },
+                                    {
+                                        "tiet":3
+                                    },
+                                    {
+                                        "tiet":4
+                                    },
+                                    {
+                                        "tiet":5
+                                    },
+                                ];
+                                var noidungbang = "";
+                                for (let i = 0; i < databuoi.length; i++) {
+                                    var rowspan = 0;
+                                    var demdatatiet = datatiet.length;
+                                    rowspan += demdatatiet;
+                                    noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
+                                    for (let j = 0; j < demdatatiet; j++) {
+
+                                        var cotrong = '';
+                                        var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+n+'';
+                                        var theadthu = document.querySelectorAll("table[id^="+tablexemtkbgiaovien+"] thead tr .classthu");
+                                        for(var x=0;x<theadthu.length;x++){
+                                            var mathu = theadthu[x].id;
+                                            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronggiaovien'></td>";
                                         }
+                                            
+                                        noidungbang += "<tr>"
+                                        +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;'>"+ datatiet[j].tiet + "</td>"
+                                        +cotrong
+                                        +"</tr>";
+
                                     }
+                                }
 
-                                    $('#phanthantablegiaovien'+n).append(noidungbang);
+                                $('#phanthantablegiaovien'+n).append(noidungbang);
 
-                                    var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+n;
+                                var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+n;
 
-                                    var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkbgiaovien'] tbody tr td.classoronggiaovien");
+                                var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkbgiaovien'] tbody tr td.classoronggiaovien");
 
-                                    for(let i=0;i<dsbuoi.length;i++){
-                                        var demtiet = dsbuoi[i].dstiet.length;
-                                        for(let j=0;j<demtiet;j++){
-                                            var demthu = dsbuoi[i].dstiet[j].dsthu.length;
-                                            for(let k=0;k<demthu;k++){
-                                                for(let m=0;m<tbodycotrong.length;m++){
-                                                    var mabuoi =tbodycotrong[m].dataset.mabuoi; 
-                                                    var matiet = tbodycotrong[m].dataset.matiet;
-                                                    var mathu = tbodycotrong[m].dataset.mathu;
-                                                    if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
-                                                        tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dslop[0].tenlop+')'+"</span>";
-                                                    }
+                                for(let i=0;i<dsbuoi.length;i++){
+                                    var demtiet = dsbuoi[i].dstiet.length;
+                                    for(let j=0;j<demtiet;j++){
+                                        var demthu = dsbuoi[i].dstiet[j].dsthu.length;
+                                        for(let k=0;k<demthu;k++){
+                                            for(let m=0;m<tbodycotrong.length;m++){
+                                                var mabuoi =tbodycotrong[m].dataset.mabuoi; 
+                                                var matiet = tbodycotrong[m].dataset.matiet;
+                                                var mathu = tbodycotrong[m].dataset.mathu;
+                                                if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
+                                                    tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dslop[0].tenlop+')'+"</span>";
                                                 }
                                             }
                                         }
                                     }
-
-                                    document.getElementById("cardxeptkbgiaovien").style.display = "block";
-                                          
                                 }
 
+                                document.getElementById("cardxeptkbgiaovien").style.display = "block";
+                                      
                             }
+
                         }
                     }
-                    
-                    
                 }
                 
-            }   
                 
-        });
+            }
+            
+        }
                 
         if($('#divResults').children('div').length == 0){
+            Swal.fire(
+              'Thông báo',
+              'Không có thời khoá biểu nào phù hợp trong thời gian này',
+              'info'
+            )
             document.getElementById("cardxeptkbgiaovien").style.display = "none";
         }
 
@@ -598,189 +612,190 @@ window.onload = function() {
         var idgv = $('#idgv').val();
 
         // $('#phanthantablegiaovien').empty();
-        axios.get('getthoikhoabieugvtime').then(function (response) {
-            let datatkbgv = response.data;
-            for(let i =0;i<datatkbgv.length;i++){
-                let demdsgv = datatkbgv[i].dsgiaovien.length;
-                for(let j=0;j<demdsgv;j++){
-                    let demnam = datatkbgv[i].dsgiaovien[j].dsnam.length;
-                    for(let k=0;k<demnam;k++){
-                        let demthang = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang.length;
-                        for(let m=0;m<demthang;m++){
-                            let demtuan = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan.length;
-                            for(let n=0;n<demtuan;n++){
-                                if(datatkbgv[i].matruong == idtruonggv && datatkbgv[i].dsgiaovien[j].magiaovien == idgv && datatkbgv[i].dsgiaovien[j].dsnam[k].nam == nam && datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang == thang){
-                                    let tuan = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan;
-                                    // $('#idthangtuan').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
-                                    //tạo div
-                                    let taodiv = document.createElement("div");
-                                    taodiv.setAttribute("class","col-md-6");
-                                    //tạo span                                   
-                                    let taospan = document.createElement("span");
-                                    taospan.setAttribute("style","color: #a12626; font-size: 15px;");
-                                    taospan.innerHTML = "Thời khoá biểu (Tháng: "+thangnam+" - "+"Tuần: "+tuan+")";
-                                    //tạo bảng
-                                    let taobang = document.createElement("table");
-                                    taobang.setAttribute("id","tablexemtkbgiaovien"+n+"");
-                                    taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
-                                    taobang.setAttribute("style","overflow-y: auto; height: 90%;width: 100%;border-collapse: separate;"); 
-                                    //tạo phần đầu
-                                    let taothead = document.createElement("thead");
-                                    taothead.setAttribute("style","background-color: #28386c;color: white;"); 
+        for(let i =0;i<layDataTkbGv.length;i++){
+            let demdsgv = layDataTkbGv[i].dsgiaovien.length;
+            for(let j=0;j<demdsgv;j++){
+                let demnam = layDataTkbGv[i].dsgiaovien[j].dsnam.length;
+                for(let k=0;k<demnam;k++){
+                    let demthang = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang.length;
+                    for(let m=0;m<demthang;m++){
+                        let demtuan = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan.length;
+                        for(let n=0;n<demtuan;n++){
+                            if(layDataTkbGv[i].matruong == idtruonggv && layDataTkbGv[i].dsgiaovien[j].magiaovien == idgv && layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam == nam && layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang == thang){
+                                let tuan = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan;
+                                // $('#idthangtuan').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
+                                //tạo div
+                                let taodiv = document.createElement("div");
+                                taodiv.setAttribute("class","col-md-6");
+                                //tạo span                                   
+                                let taospan = document.createElement("span");
+                                taospan.setAttribute("style","color: #a12626; font-size: 15px;");
+                                taospan.innerHTML = "Thời khoá biểu (Tháng: "+thangnam+" - "+"Tuần: "+tuan+")";
+                                //tạo bảng
+                                let taobang = document.createElement("table");
+                                taobang.setAttribute("id","tablexemtkbgiaovien"+n+"");
+                                taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
+                                taobang.setAttribute("style","overflow-y: auto; height: 90%;width: 100%;border-collapse: separate;"); 
+                                //tạo phần đầu
+                                let taothead = document.createElement("thead");
+                                taothead.setAttribute("style","background-color: #28386c;color: white;"); 
 
-                                    let taorow = document.createElement("tr");
+                                let taorow = document.createElement("tr");
 
-                                    let thbuoi = document.createElement("th");
-                                    thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
-                                    thbuoi.appendChild(document.createTextNode('Buổi'));
-                                    taorow.appendChild(thbuoi);
+                                let thbuoi = document.createElement("th");
+                                thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
+                                thbuoi.appendChild(document.createTextNode('Buổi'));
+                                taorow.appendChild(thbuoi);
 
-                                    let thtiet = document.createElement("th");
-                                    thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
-                                    thtiet.appendChild(document.createTextNode('Tiết'));
-                                    taorow.appendChild(thtiet);
+                                let thtiet = document.createElement("th");
+                                thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
+                                thtiet.appendChild(document.createTextNode('Tiết'));
+                                taorow.appendChild(thtiet);
 
-                                    var thu= [
-                                        {
-                                            'idthu':2,
-                                            'tenthu':"Thứ 2"   
-                                        },
-                                        {
-                                            'idthu':3,
-                                            'tenthu':"Thứ 3"   
-                                        },
-                                        {
-                                            'idthu':4,
-                                            'tenthu':"Thứ 4"   
-                                        },
-                                        {
-                                            'idthu':5,
-                                            'tenthu':"Thứ 5"   
-                                        },
-                                        {
-                                            'idthu':6,
-                                            'tenthu':"Thứ 6"   
-                                        },
-                                        {
-                                            'idthu':7,
-                                            'tenthu':"Thứ 7"   
-                                        },
-                                    ];
-
-                                    for(let z=0;z<thu.length;z++){
-                                        let th = document.createElement("th");
-                                        let tenthu = document.createTextNode(' ' + thu[z].tenthu);
-                                        th.setAttribute("id",+thu[z].idthu);
-                                        th.setAttribute("class","classthu")
-                                        th.appendChild(tenthu);
-                                        taorow.appendChild(th);
-                                    }
-
-                                    taothead.append(taorow);
-
-                                    //tạo phần thân
-                                    let taotbody = document.createElement("tbody");
-                                    taotbody.setAttribute("id","phanthantablegiaovien"+n+"");
-
-                                    taobang.appendChild(taothead);
-                                    taobang.appendChild(taotbody);
-                                    
-                                    taodiv.appendChild(taospan);
-                                    taodiv.appendChild(taobang);
-
-                                    // $('#divResults').append(taobang);
-                                    $('#divResults').append(taodiv);
-
-                                    var dsbuoi = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
-                                    var databuoi = [
+                                var thu= [
                                     {
-                                        "mabuoi":0,
-                                        "tenbuoi":"Sáng"
-                                    },{
-                                        "mabuoi":1,
-                                        "tenbuoi":"Chiều"
+                                        'idthu':2,
+                                        'tenthu':"Thứ 2"   
                                     },
-                                    ];
-                                    var datatiet = [
-                                        {
-                                            "tiet":1
-                                        },
-                                        {
-                                            "tiet":2
-                                        },
-                                        {
-                                            "tiet":3
-                                        },
-                                        {
-                                            "tiet":4
-                                        },
-                                        {
-                                            "tiet":5
-                                        },
-                                    ];
-                                    var noidungbang = "";
-                                    for (let i = 0; i < databuoi.length; i++) {
-                                        var rowspan = 0;
-                                        var demdatatiet = datatiet.length;
-                                        rowspan += demdatatiet;
-                                        noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
-                                        for (let j = 0; j < demdatatiet; j++) {
+                                    {
+                                        'idthu':3,
+                                        'tenthu':"Thứ 3"   
+                                    },
+                                    {
+                                        'idthu':4,
+                                        'tenthu':"Thứ 4"   
+                                    },
+                                    {
+                                        'idthu':5,
+                                        'tenthu':"Thứ 5"   
+                                    },
+                                    {
+                                        'idthu':6,
+                                        'tenthu':"Thứ 6"   
+                                    },
+                                    {
+                                        'idthu':7,
+                                        'tenthu':"Thứ 7"   
+                                    },
+                                ];
 
-                                            var cotrong = '';
-                                            var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+n+'';
-                                            var theadthu = document.querySelectorAll("table[id^="+tablexemtkbgiaovien+"] thead tr .classthu");
-                                            for(var x=0;x<theadthu.length;x++){
-                                                var mathu = theadthu[x].id;
-                                                cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronggiaovien'></td>";
-                                            }
-                                                
-                                            noidungbang += "<tr>"
-                                            +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;' >"+ datatiet[j].tiet + "</td>"
-                                            +cotrong
-                                            +"</tr>";
+                                for(let z=0;z<thu.length;z++){
+                                    let th = document.createElement("th");
+                                    let tenthu = document.createTextNode(' ' + thu[z].tenthu);
+                                    th.setAttribute("id",+thu[z].idthu);
+                                    th.setAttribute("class","classthu")
+                                    th.appendChild(tenthu);
+                                    taorow.appendChild(th);
+                                }
 
+                                taothead.append(taorow);
+
+                                //tạo phần thân
+                                let taotbody = document.createElement("tbody");
+                                taotbody.setAttribute("id","phanthantablegiaovien"+n+"");
+
+                                taobang.appendChild(taothead);
+                                taobang.appendChild(taotbody);
+                                
+                                taodiv.appendChild(taospan);
+                                taodiv.appendChild(taobang);
+
+                                // $('#divResults').append(taobang);
+                                $('#divResults').append(taodiv);
+
+                                var dsbuoi = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
+                                var databuoi = [
+                                {
+                                    "mabuoi":0,
+                                    "tenbuoi":"Sáng"
+                                },{
+                                    "mabuoi":1,
+                                    "tenbuoi":"Chiều"
+                                },
+                                ];
+                                var datatiet = [
+                                    {
+                                        "tiet":1
+                                    },
+                                    {
+                                        "tiet":2
+                                    },
+                                    {
+                                        "tiet":3
+                                    },
+                                    {
+                                        "tiet":4
+                                    },
+                                    {
+                                        "tiet":5
+                                    },
+                                ];
+                                var noidungbang = "";
+                                for (let i = 0; i < databuoi.length; i++) {
+                                    var rowspan = 0;
+                                    var demdatatiet = datatiet.length;
+                                    rowspan += demdatatiet;
+                                    noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
+                                    for (let j = 0; j < demdatatiet; j++) {
+
+                                        var cotrong = '';
+                                        var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+n+'';
+                                        var theadthu = document.querySelectorAll("table[id^="+tablexemtkbgiaovien+"] thead tr .classthu");
+                                        for(var x=0;x<theadthu.length;x++){
+                                            var mathu = theadthu[x].id;
+                                            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronggiaovien'></td>";
                                         }
+                                            
+                                        noidungbang += "<tr>"
+                                        +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;' >"+ datatiet[j].tiet + "</td>"
+                                        +cotrong
+                                        +"</tr>";
+
                                     }
+                                }
 
-                                    $('#phanthantablegiaovien'+n).append(noidungbang);
+                                $('#phanthantablegiaovien'+n).append(noidungbang);
 
-                                    var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+n;
+                                var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+n;
 
-                                    var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkbgiaovien'] tbody tr td.classoronggiaovien");
+                                var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkbgiaovien'] tbody tr td.classoronggiaovien");
 
-                                    for(let i=0;i<dsbuoi.length;i++){
-                                        var demtiet = dsbuoi[i].dstiet.length;
-                                        for(let j=0;j<demtiet;j++){
-                                            var demthu = dsbuoi[i].dstiet[j].dsthu.length;
-                                            for(let k=0;k<demthu;k++){
-                                                for(let m=0;m<tbodycotrong.length;m++){
-                                                    var mabuoi =tbodycotrong[m].dataset.mabuoi; 
-                                                    var matiet = tbodycotrong[m].dataset.matiet;
-                                                    var mathu = tbodycotrong[m].dataset.mathu;
-                                                    if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
-                                                        tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dslop[0].tenlop+')'+"</span>";
-                                                    }
+                                for(let i=0;i<dsbuoi.length;i++){
+                                    var demtiet = dsbuoi[i].dstiet.length;
+                                    for(let j=0;j<demtiet;j++){
+                                        var demthu = dsbuoi[i].dstiet[j].dsthu.length;
+                                        for(let k=0;k<demthu;k++){
+                                            for(let m=0;m<tbodycotrong.length;m++){
+                                                var mabuoi =tbodycotrong[m].dataset.mabuoi; 
+                                                var matiet = tbodycotrong[m].dataset.matiet;
+                                                var mathu = tbodycotrong[m].dataset.mathu;
+                                                if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
+                                                    tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dslop[0].tenlop+')'+"</span>";
                                                 }
                                             }
                                         }
                                     }
-
-                                    document.getElementById("cardxeptkbgiaovien").style.display = "block";
-                                          
                                 }
 
+                                document.getElementById("cardxeptkbgiaovien").style.display = "block";
+                                      
                             }
+
                         }
                     }
-                    
-                    
                 }
                 
-            }   
                 
-        });
+            }
+            
+        } 
                 
         if($('#divResults').children('div').length == 0){
+            Swal.fire(
+              'Thông báo',
+              'Không có thời khoá biểu nào phù hợp trong thời gian này',
+              'info'
+            )
             document.getElementById("cardxeptkbgiaovien").style.display = "none";
         }
 
@@ -818,194 +833,196 @@ window.onload = function() {
         var idgv = $('#idgv').val();
 
         // $('#phanthantablegiaovien').empty();
-        axios.get('getthoikhoabieugvtime').then(function (response) {
-            let datatkbgv = response.data;
-            for(let i =0;i<datatkbgv.length;i++){
-                let demdsgv = datatkbgv[i].dsgiaovien.length;
-                for(let j=0;j<demdsgv;j++){
-                    let demnam = datatkbgv[i].dsgiaovien[j].dsnam.length;
-                    for(let k=0;k<demnam;k++){
-                        let demthang = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang.length;
-                        for(let m=0;m<demthang;m++){
-                            let demtuan = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan.length;
-                            for(let n=0;n<demtuan;n++){
-                                if(datatkbgv[i].matruong == idtruonggv && datatkbgv[i].dsgiaovien[j].magiaovien == idgv && datatkbgv[i].dsgiaovien[j].dsnam[k].nam == nam ){
-                                    
-                                    let thangnam = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang+"/"+datatkbgv[i].dsgiaovien[j].dsnam[k].nam;
-                                    let tuan = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan;
-                                    let nam = datatkbgv[i].dsgiaovien[j].dsnam[k].nam;
-                                    let thang = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang;
-                                    let numbernamthangtuan = ""+nam+thang+tuan;
-                                    //tạo div
-                                    let taodiv = document.createElement("div");
-                                    taodiv.setAttribute("class","col-md-6");
-                                    taodiv.setAttribute("id","phantranggv");
-                                    //tạo span                                   
-                                    let taospan = document.createElement("span");
-                                    taospan.setAttribute("style","color: #a12626; font-size: 15px;");
-                                    taospan.innerHTML = "Thời khoá biểu (Tháng: "+thangnam+" - "+"Tuần: "+tuan+")";
-                                    //tạo bảng
-                                    let taobang = document.createElement("table");
-                                    taobang.setAttribute("id","tablexemtkbgiaovien"+numbernamthangtuan+"");
-                                    taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
-                                    taobang.setAttribute("style","overflow-y: auto; height: 90%;width: 100%;border-collapse: separate;"); 
-                                    //tạo phần đầu
-                                    let taothead = document.createElement("thead");
-                                    taothead.setAttribute("style","background-color: #28386c;color: white;"); 
-
-                                    let taorow = document.createElement("tr");
-
-                                    let thbuoi = document.createElement("th");
-                                    thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
-                                    thbuoi.appendChild(document.createTextNode('Buổi'));
-                                    taorow.appendChild(thbuoi);
-
-                                    let thtiet = document.createElement("th");
-                                    thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
-                                    thtiet.appendChild(document.createTextNode('Tiết'));
-                                    taorow.appendChild(thtiet);
-
-                                    var thu= [
-                                        {
-                                            'idthu':2,
-                                            'tenthu':"Thứ 2"   
-                                        },
-                                        {
-                                            'idthu':3,
-                                            'tenthu':"Thứ 3"   
-                                        },
-                                        {
-                                            'idthu':4,
-                                            'tenthu':"Thứ 4"   
-                                        },
-                                        {
-                                            'idthu':5,
-                                            'tenthu':"Thứ 5"   
-                                        },
-                                        {
-                                            'idthu':6,
-                                            'tenthu':"Thứ 6"   
-                                        },
-                                        {
-                                            'idthu':7,
-                                            'tenthu':"Thứ 7"   
-                                        },
-                                    ];
-
-                                    for(let z=0;z<thu.length;z++){
-                                        let th = document.createElement("th");
-                                        let tenthu = document.createTextNode(' ' + thu[z].tenthu);
-                                        th.setAttribute("id",+thu[z].idthu);
-                                        th.setAttribute("class","classthu")
-                                        th.appendChild(tenthu);
-                                        taorow.appendChild(th);
-                                    }
-
-                                    taothead.append(taorow);
-
-                                    //tạo phần thân
-                                    let taotbody = document.createElement("tbody");
-                                    taotbody.setAttribute("id","phanthantablegiaovien"+numbernamthangtuan+"");
-
-                                    taobang.appendChild(taothead);
-                                    taobang.appendChild(taotbody);
-
-                                    taodiv.appendChild(taospan);
-                                    taodiv.appendChild(taobang);
+        for(let i =0;i<layDataTkbGv.length;i++){
+            let demdsgv = layDataTkbGv[i].dsgiaovien.length;
+            for(let j=0;j<demdsgv;j++){
+                let demnam = layDataTkbGv[i].dsgiaovien[j].dsnam.length;
+                for(let k=0;k<demnam;k++){
+                    let demthang = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang.length;
+                    for(let m=0;m<demthang;m++){
+                        let demtuan = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan.length;
+                        for(let n=0;n<demtuan;n++){
+                            if(layDataTkbGv[i].matruong == idtruonggv && layDataTkbGv[i].dsgiaovien[j].magiaovien == idgv && layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam == nam ){
                                 
-                                    $('#divResults').append(taodiv);
-                                    
+                                let thangnam = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang+"/"+layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam;
+                                let tuan = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan;
+                                let nam = layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam;
+                                let thang = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang;
+                                let numbernamthangtuan = ""+nam+thang+tuan;
+                                //tạo div
+                                let taodiv = document.createElement("div");
+                                taodiv.setAttribute("class","col-md-6");
+                                taodiv.setAttribute("id","phantranggv");
+                                //tạo span                                   
+                                let taospan = document.createElement("span");
+                                taospan.setAttribute("style","color: #a12626; font-size: 15px;");
+                                taospan.innerHTML = "Thời khoá biểu (Tháng: "+thangnam+" - "+"Tuần: "+tuan+")";
+                                //tạo bảng
+                                let taobang = document.createElement("table");
+                                taobang.setAttribute("id","tablexemtkbgiaovien"+numbernamthangtuan+"");
+                                taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
+                                taobang.setAttribute("style","overflow-y: auto; height: 90%;width: 100%;border-collapse: separate;"); 
+                                //tạo phần đầu
+                                let taothead = document.createElement("thead");
+                                taothead.setAttribute("style","background-color: #28386c;color: white;"); 
 
-                                    var dsbuoi = datatkbgv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
-                                    var databuoi = [
+                                let taorow = document.createElement("tr");
+
+                                let thbuoi = document.createElement("th");
+                                thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
+                                thbuoi.appendChild(document.createTextNode('Buổi'));
+                                taorow.appendChild(thbuoi);
+
+                                let thtiet = document.createElement("th");
+                                thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
+                                thtiet.appendChild(document.createTextNode('Tiết'));
+                                taorow.appendChild(thtiet);
+
+                                var thu= [
                                     {
-                                        "mabuoi":0,
-                                        "tenbuoi":"Sáng"
-                                    },{
-                                        "mabuoi":1,
-                                        "tenbuoi":"Chiều"
+                                        'idthu':2,
+                                        'tenthu':"Thứ 2"   
                                     },
-                                    ];
-                                    var datatiet = [
-                                        {
-                                            "tiet":1
-                                        },
-                                        {
-                                            "tiet":2
-                                        },
-                                        {
-                                            "tiet":3
-                                        },
-                                        {
-                                            "tiet":4
-                                        },
-                                        {
-                                            "tiet":5
-                                        },
-                                    ];
-                                    var noidungbang = "";
-                                    for (let i = 0; i < databuoi.length; i++) {
-                                        var rowspan = 0;
-                                        var demdatatiet = datatiet.length;
-                                        rowspan += demdatatiet;
-                                        noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
-                                        for (let j = 0; j < demdatatiet; j++) {
+                                    {
+                                        'idthu':3,
+                                        'tenthu':"Thứ 3"   
+                                    },
+                                    {
+                                        'idthu':4,
+                                        'tenthu':"Thứ 4"   
+                                    },
+                                    {
+                                        'idthu':5,
+                                        'tenthu':"Thứ 5"   
+                                    },
+                                    {
+                                        'idthu':6,
+                                        'tenthu':"Thứ 6"   
+                                    },
+                                    {
+                                        'idthu':7,
+                                        'tenthu':"Thứ 7"   
+                                    },
+                                ];
 
-                                            var cotrong = '';
-                                            var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+numbernamthangtuan+'';
-                                            var theadthu = document.querySelectorAll("table[id^="+tablexemtkbgiaovien+"] thead tr .classthu");
-                                            for(var x=0;x<theadthu.length;x++){
-                                                var mathu = theadthu[x].id;
-                                                cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronggiaovien'></td>";
-                                            }
-                                                
-                                            noidungbang += "<tr>"
-                                            +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;'>"+ datatiet[j].tiet + "</td>"
-                                            +cotrong
-                                            +"</tr>";
+                                for(let z=0;z<thu.length;z++){
+                                    let th = document.createElement("th");
+                                    let tenthu = document.createTextNode(' ' + thu[z].tenthu);
+                                    th.setAttribute("id",+thu[z].idthu);
+                                    th.setAttribute("class","classthu")
+                                    th.appendChild(tenthu);
+                                    taorow.appendChild(th);
+                                }
 
+                                taothead.append(taorow);
+
+                                //tạo phần thân
+                                let taotbody = document.createElement("tbody");
+                                taotbody.setAttribute("id","phanthantablegiaovien"+numbernamthangtuan+"");
+
+                                taobang.appendChild(taothead);
+                                taobang.appendChild(taotbody);
+
+                                taodiv.appendChild(taospan);
+                                taodiv.appendChild(taobang);
+                            
+                                $('#divResults').append(taodiv);
+                                
+
+                                var dsbuoi = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
+                                var databuoi = [
+                                {
+                                    "mabuoi":0,
+                                    "tenbuoi":"Sáng"
+                                },{
+                                    "mabuoi":1,
+                                    "tenbuoi":"Chiều"
+                                },
+                                ];
+                                var datatiet = [
+                                    {
+                                        "tiet":1
+                                    },
+                                    {
+                                        "tiet":2
+                                    },
+                                    {
+                                        "tiet":3
+                                    },
+                                    {
+                                        "tiet":4
+                                    },
+                                    {
+                                        "tiet":5
+                                    },
+                                ];
+                                var noidungbang = "";
+                                for (let i = 0; i < databuoi.length; i++) {
+                                    var rowspan = 0;
+                                    var demdatatiet = datatiet.length;
+                                    rowspan += demdatatiet;
+                                    noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
+                                    for (let j = 0; j < demdatatiet; j++) {
+
+                                        var cotrong = '';
+                                        var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+numbernamthangtuan+'';
+                                        var theadthu = document.querySelectorAll("table[id^="+tablexemtkbgiaovien+"] thead tr .classthu");
+                                        for(var x=0;x<theadthu.length;x++){
+                                            var mathu = theadthu[x].id;
+                                            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronggiaovien'></td>";
                                         }
+                                            
+                                        noidungbang += "<tr>"
+                                        +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;'>"+ datatiet[j].tiet + "</td>"
+                                        +cotrong
+                                        +"</tr>";
+
                                     }
+                                }
 
-                                    $('#phanthantablegiaovien'+numbernamthangtuan).append(noidungbang);
+                                $('#phanthantablegiaovien'+numbernamthangtuan).append(noidungbang);
 
-                                    var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+numbernamthangtuan;
+                                var tablexemtkbgiaovien = 'tablexemtkbgiaovien'+numbernamthangtuan;
 
-                                    var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkbgiaovien'] tbody tr td.classoronggiaovien");
+                                var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkbgiaovien'] tbody tr td.classoronggiaovien");
 
-                                    for(let i=0;i<dsbuoi.length;i++){
-                                        var demtiet = dsbuoi[i].dstiet.length;
-                                        for(let j=0;j<demtiet;j++){
-                                            var demthu = dsbuoi[i].dstiet[j].dsthu.length;
-                                            for(let k=0;k<demthu;k++){
-                                                for(let m=0;m<tbodycotrong.length;m++){
-                                                    var mabuoi =tbodycotrong[m].dataset.mabuoi; 
-                                                    var matiet = tbodycotrong[m].dataset.matiet;
-                                                    var mathu = tbodycotrong[m].dataset.mathu;
-                                                    if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
-                                                        tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dslop[0].tenlop+')'+"</span>";
-                                                    }
+                                for(let i=0;i<dsbuoi.length;i++){
+                                    var demtiet = dsbuoi[i].dstiet.length;
+                                    for(let j=0;j<demtiet;j++){
+                                        var demthu = dsbuoi[i].dstiet[j].dsthu.length;
+                                        for(let k=0;k<demthu;k++){
+                                            for(let m=0;m<tbodycotrong.length;m++){
+                                                var mabuoi =tbodycotrong[m].dataset.mabuoi; 
+                                                var matiet = tbodycotrong[m].dataset.matiet;
+                                                var mathu = tbodycotrong[m].dataset.mathu;
+                                                if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
+                                                    tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dslop[0].tenlop+')'+"</span>";
                                                 }
                                             }
                                         }
                                     }
-
-                                    document.getElementById("cardxeptkbgiaovien").style.display = "block";
-                                          
                                 }
 
+                                document.getElementById("cardxeptkbgiaovien").style.display = "block";
+                                      
                             }
+
                         }
                     }
-                    
-                    
                 }
                 
-            }   
-            phantranggv();   
-        });
+                
+            }
+            
+        }   
+        phantranggv();
                 
         if($('#divResults').children('div').length == 0){
+            Swal.fire(
+              'Thông báo',
+              'Không có thời khoá biểu nào phù hợp trong thời gian này',
+              'info'
+            )
             document.getElementById("cardxeptkbgiaovien").style.display = "none";
         }
 
@@ -1103,182 +1120,183 @@ window.onload = function() {
         var idlop = $('#idlop').val();
 
         // $('#phanthantablelop').empty();
-        axios.get('getthoikhoabieuloptime').then(function (response) {
-            let datatkblop = response.data;
-            for(let i =0;i<datatkblop.length;i++){
-                let demdslop = datatkblop[i].dslop.length;
-                for(let j=0;j<demdslop;j++){
-                    let demnam = datatkblop[i].dslop[j].dsnam.length;
-                    for(let k=0;k<demnam;k++){
-                        let demthang = datatkblop[i].dslop[j].dsnam[k].dsthang.length;
-                        for(let m=0;m<demthang;m++){
-                            let demtuan = datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan.length;
-                            for(let n=0;n<demtuan;n++){
-                                if(datatkblop[i].matruong == idtruonglop && datatkblop[i].dslop[j].malop == idlop && datatkblop[i].dslop[j].dsnam[k].nam == nam && datatkblop[i].dslop[j].dsnam[k].dsthang[m].thang == thang && datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
-                                    let taodiv = document.createElement("div");
-                                    taodiv.setAttribute("class","col-md-12");
-                                    //tạo bảng
-                                    let taobang = document.createElement("table");
-                                    taobang.setAttribute("id","tablexemtkblop"+n+"");
-                                    taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
-                                    taobang.setAttribute("style","overflow-y: auto;border-collapse: separate;"); 
-                                    //tạo phần đầu
-                                    let taothead = document.createElement("thead");
-                                    taothead.setAttribute("style","background-color: #28386c;color: white;"); 
+        for(let i =0;i<layDataTkbLop.length;i++){
+            let demdslop = layDataTkbLop[i].dslop.length;
+            for(let j=0;j<demdslop;j++){
+                let demnam = layDataTkbLop[i].dslop[j].dsnam.length;
+                for(let k=0;k<demnam;k++){
+                    let demthang = layDataTkbLop[i].dslop[j].dsnam[k].dsthang.length;
+                    for(let m=0;m<demthang;m++){
+                        let demtuan = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan.length;
+                        for(let n=0;n<demtuan;n++){
+                            if(layDataTkbLop[i].matruong == idtruonglop && layDataTkbLop[i].dslop[j].malop == idlop && layDataTkbLop[i].dslop[j].dsnam[k].nam == nam && layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].thang == thang && layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
+                                let taodiv = document.createElement("div");
+                                taodiv.setAttribute("class","col-md-12");
+                                //tạo bảng
+                                let taobang = document.createElement("table");
+                                taobang.setAttribute("id","tablexemtkblop"+n+"");
+                                taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
+                                taobang.setAttribute("style","overflow-y: auto;border-collapse: separate;"); 
+                                //tạo phần đầu
+                                let taothead = document.createElement("thead");
+                                taothead.setAttribute("style","background-color: #28386c;color: white;"); 
 
-                                    let taorow = document.createElement("tr");
+                                let taorow = document.createElement("tr");
 
-                                    let thbuoi = document.createElement("th");
-                                    thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
-                                    thbuoi.appendChild(document.createTextNode('Buổi'));
-                                    taorow.appendChild(thbuoi);
+                                let thbuoi = document.createElement("th");
+                                thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
+                                thbuoi.appendChild(document.createTextNode('Buổi'));
+                                taorow.appendChild(thbuoi);
 
-                                    let thtiet = document.createElement("th");
-                                    thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
-                                    thtiet.appendChild(document.createTextNode('Tiết'));
-                                    taorow.appendChild(thtiet);
+                                let thtiet = document.createElement("th");
+                                thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
+                                thtiet.appendChild(document.createTextNode('Tiết'));
+                                taorow.appendChild(thtiet);
 
-                                    var thu= [
-                                        {
-                                            'idthu':2,
-                                            'tenthu':"Thứ 2"   
-                                        },
-                                        {
-                                            'idthu':3,
-                                            'tenthu':"Thứ 3"   
-                                        },
-                                        {
-                                            'idthu':4,
-                                            'tenthu':"Thứ 4"   
-                                        },
-                                        {
-                                            'idthu':5,
-                                            'tenthu':"Thứ 5"   
-                                        },
-                                        {
-                                            'idthu':6,
-                                            'tenthu':"Thứ 6"   
-                                        },
-                                        {
-                                            'idthu':7,
-                                            'tenthu':"Thứ 7"   
-                                        },
-                                    ];
-
-                                    for(let z=0;z<thu.length;z++){
-                                        let th = document.createElement("th");
-                                        let tenthu = document.createTextNode(' ' + thu[z].tenthu);
-                                        th.setAttribute("id",+thu[z].idthu);
-                                        th.setAttribute("class","classthu")
-                                        th.appendChild(tenthu);
-                                        taorow.appendChild(th);
-                                    }
-
-                                    taothead.append(taorow);
-
-                                    //tạo phần thân
-                                    let taotbody = document.createElement("tbody");
-                                    taotbody.setAttribute("id","phanthantablelop"+n+"");
-
-                                    taobang.appendChild(taothead);
-                                    taobang.appendChild(taotbody);
-                                    
-                                    taodiv.appendChild(taobang);
-
-                                    $('#divResultsLop').append(taodiv);
-                                    
-
-                                    var dsbuoi = datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
-                                    var databuoi = [
+                                var thu= [
                                     {
-                                        "mabuoi":0,
-                                        "tenbuoi":"Sáng"
-                                    },{
-                                        "mabuoi":1,
-                                        "tenbuoi":"Chiều"
+                                        'idthu':2,
+                                        'tenthu':"Thứ 2"   
                                     },
-                                    ];
-                                    var datatiet = [
-                                        {
-                                            "tiet":1
-                                        },
-                                        {
-                                            "tiet":2
-                                        },
-                                        {
-                                            "tiet":3
-                                        },
-                                        {
-                                            "tiet":4
-                                        },
-                                        {
-                                            "tiet":5
-                                        },
-                                    ];
+                                    {
+                                        'idthu':3,
+                                        'tenthu':"Thứ 3"   
+                                    },
+                                    {
+                                        'idthu':4,
+                                        'tenthu':"Thứ 4"   
+                                    },
+                                    {
+                                        'idthu':5,
+                                        'tenthu':"Thứ 5"   
+                                    },
+                                    {
+                                        'idthu':6,
+                                        'tenthu':"Thứ 6"   
+                                    },
+                                    {
+                                        'idthu':7,
+                                        'tenthu':"Thứ 7"   
+                                    },
+                                ];
 
-                                    var noidungbang = "";
-                                    for (let i = 0; i < databuoi.length; i++) {
-                                        var rowspan = 0;
-                                        var demdatatiet = datatiet.length;
-                                        rowspan += demdatatiet;
-                                        noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
-                                        for (let j = 0; j < demdatatiet; j++) {
+                                for(let z=0;z<thu.length;z++){
+                                    let th = document.createElement("th");
+                                    let tenthu = document.createTextNode(' ' + thu[z].tenthu);
+                                    th.setAttribute("id",+thu[z].idthu);
+                                    th.setAttribute("class","classthu")
+                                    th.appendChild(tenthu);
+                                    taorow.appendChild(th);
+                                }
 
-                                            var cotrong = '';
-                                            var tablexemtkblop = 'tablexemtkblop'+n+'';
-                                            var theadthu = document.querySelectorAll("table[id^="+tablexemtkblop+"] thead tr .classthu");
-                                            for(var x=0;x<theadthu.length;x++){
-                                                var mathu = theadthu[x].id;
-                                                cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronglop'></td>";
-                                            }
-                                                
-                                            noidungbang += "<tr>"
-                                            +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;'>"+ datatiet[j].tiet + "</td>"
-                                            +cotrong
-                                            +"</tr>";
+                                taothead.append(taorow);
 
+                                //tạo phần thân
+                                let taotbody = document.createElement("tbody");
+                                taotbody.setAttribute("id","phanthantablelop"+n+"");
+
+                                taobang.appendChild(taothead);
+                                taobang.appendChild(taotbody);
+                                
+                                taodiv.appendChild(taobang);
+
+                                $('#divResultsLop').append(taodiv);
+                                
+
+                                var dsbuoi = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
+                                var databuoi = [
+                                {
+                                    "mabuoi":0,
+                                    "tenbuoi":"Sáng"
+                                },{
+                                    "mabuoi":1,
+                                    "tenbuoi":"Chiều"
+                                },
+                                ];
+                                var datatiet = [
+                                    {
+                                        "tiet":1
+                                    },
+                                    {
+                                        "tiet":2
+                                    },
+                                    {
+                                        "tiet":3
+                                    },
+                                    {
+                                        "tiet":4
+                                    },
+                                    {
+                                        "tiet":5
+                                    },
+                                ];
+
+                                var noidungbang = "";
+                                for (let i = 0; i < databuoi.length; i++) {
+                                    var rowspan = 0;
+                                    var demdatatiet = datatiet.length;
+                                    rowspan += demdatatiet;
+                                    noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
+                                    for (let j = 0; j < demdatatiet; j++) {
+
+                                        var cotrong = '';
+                                        var tablexemtkblop = 'tablexemtkblop'+n+'';
+                                        var theadthu = document.querySelectorAll("table[id^="+tablexemtkblop+"] thead tr .classthu");
+                                        for(var x=0;x<theadthu.length;x++){
+                                            var mathu = theadthu[x].id;
+                                            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronglop'></td>";
                                         }
+                                            
+                                        noidungbang += "<tr>"
+                                        +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;'>"+ datatiet[j].tiet + "</td>"
+                                        +cotrong
+                                        +"</tr>";
+
                                     }
+                                }
 
-                                    $('#phanthantablelop'+n).append(noidungbang);
+                                $('#phanthantablelop'+n).append(noidungbang);
 
-                                    var tablexemtkblop = 'tablexemtkblop'+n;
+                                var tablexemtkblop = 'tablexemtkblop'+n;
 
-                                    var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkblop'] tbody tr td.classoronglop");
+                                var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkblop'] tbody tr td.classoronglop");
 
-                                    for(let i=0;i<dsbuoi.length;i++){
-                                        var demtiet = dsbuoi[i].dstiet.length;
-                                        for(let j=0;j<demtiet;j++){
-                                            var demthu = dsbuoi[i].dstiet[j].dsthu.length;
-                                            for(let k=0;k<demthu;k++){
-                                                for(let m=0;m<tbodycotrong.length;m++){
-                                                    var mabuoi =tbodycotrong[m].dataset.mabuoi; 
-                                                    var matiet = tbodycotrong[m].dataset.matiet;
-                                                    var mathu = tbodycotrong[m].dataset.mathu;
-                                                    if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
-                                                        tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
-                                                    }
+                                for(let i=0;i<dsbuoi.length;i++){
+                                    var demtiet = dsbuoi[i].dstiet.length;
+                                    for(let j=0;j<demtiet;j++){
+                                        var demthu = dsbuoi[i].dstiet[j].dsthu.length;
+                                        for(let k=0;k<demthu;k++){
+                                            for(let m=0;m<tbodycotrong.length;m++){
+                                                var mabuoi =tbodycotrong[m].dataset.mabuoi; 
+                                                var matiet = tbodycotrong[m].dataset.matiet;
+                                                var mathu = tbodycotrong[m].dataset.mathu;
+                                                if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
+                                                    tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
                                                 }
                                             }
                                         }
                                     }
-
-                                    document.getElementById("cardxeptkblop").style.display = "block";
-                                          
                                 }
 
+                                document.getElementById("cardxeptkblop").style.display = "block";
+                                      
                             }
+
                         }
                     }
-                    
-                    
                 }
                 
-            }   
                 
-        });
+            }
+            
+        } 
                 
         if($('#divResultsLop').children('div').length == 0){
+            Swal.fire(
+              'Thông báo',
+              'Không có thời khoá biểu nào phù hợp trong thời gian này',
+              'info'
+            )
             document.getElementById("cardxeptkblop").style.display = "none";
         }
 
@@ -1311,189 +1329,190 @@ window.onload = function() {
         var idlop = $('#idlop').val();
 
         // $('#phanthantablelop').empty();
-        axios.get('getthoikhoabieuloptime').then(function (response) {
-            let datatkblop = response.data;
-            for(let i =0;i<datatkblop.length;i++){
-                let demdslop = datatkblop[i].dslop.length;
-                for(let j=0;j<demdslop;j++){
-                    let demnam = datatkblop[i].dslop[j].dsnam.length;
-                    for(let k=0;k<demnam;k++){
-                        let demthang = datatkblop[i].dslop[j].dsnam[k].dsthang.length;
-                        for(let m=0;m<demthang;m++){
-                            let demtuan = datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan.length;
-                            for(let n=0;n<demtuan;n++){
-                                if(datatkblop[i].matruong == idtruonglop && datatkblop[i].dslop[j].malop == idlop && datatkblop[i].dslop[j].dsnam[k].nam == nam && datatkblop[i].dslop[j].dsnam[k].dsthang[m].thang == thang){
-                                    let tuan = datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan;
-                                    //tạo div
-                                    let taodiv = document.createElement("div");
-                                    taodiv.setAttribute("class","col-md-6");
-                                    //tạo span                                   
-                                    let taospan = document.createElement("span");
-                                    taospan.setAttribute("style","color: #a12626; font-size: 15px;");
-                                    taospan.innerHTML = "Thời khoá biểu (Tháng: "+thangnam+" - "+"Tuần: "+tuan+")";
-                                    //tạo bảng
-                                    let taobang = document.createElement("table");
-                                    taobang.setAttribute("id","tablexemtkblop"+n+"");
-                                    taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
-                                    taobang.setAttribute("style","overflow-y: auto; height: 90%;width: 100%;border-collapse: separate;"); 
-                                    //tạo phần đầu
-                                    let taothead = document.createElement("thead");
-                                    taothead.setAttribute("style","background-color: #28386c;color: white;"); 
+        for(let i =0;i<layDataTkbLop.length;i++){
+            let demdslop = layDataTkbLop[i].dslop.length;
+            for(let j=0;j<demdslop;j++){
+                let demnam = layDataTkbLop[i].dslop[j].dsnam.length;
+                for(let k=0;k<demnam;k++){
+                    let demthang = layDataTkbLop[i].dslop[j].dsnam[k].dsthang.length;
+                    for(let m=0;m<demthang;m++){
+                        let demtuan = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan.length;
+                        for(let n=0;n<demtuan;n++){
+                            if(layDataTkbLop[i].matruong == idtruonglop && layDataTkbLop[i].dslop[j].malop == idlop && layDataTkbLop[i].dslop[j].dsnam[k].nam == nam && layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].thang == thang){
+                                let tuan = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan;
+                                //tạo div
+                                let taodiv = document.createElement("div");
+                                taodiv.setAttribute("class","col-md-6");
+                                //tạo span                                   
+                                let taospan = document.createElement("span");
+                                taospan.setAttribute("style","color: #a12626; font-size: 15px;");
+                                taospan.innerHTML = "Thời khoá biểu (Tháng: "+thangnam+" - "+"Tuần: "+tuan+")";
+                                //tạo bảng
+                                let taobang = document.createElement("table");
+                                taobang.setAttribute("id","tablexemtkblop"+n+"");
+                                taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
+                                taobang.setAttribute("style","overflow-y: auto; height: 90%;width: 100%;border-collapse: separate;"); 
+                                //tạo phần đầu
+                                let taothead = document.createElement("thead");
+                                taothead.setAttribute("style","background-color: #28386c;color: white;"); 
 
-                                    let taorow = document.createElement("tr");
+                                let taorow = document.createElement("tr");
 
-                                    let thbuoi = document.createElement("th");
-                                    thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
-                                    thbuoi.appendChild(document.createTextNode('Buổi'));
-                                    taorow.appendChild(thbuoi);
+                                let thbuoi = document.createElement("th");
+                                thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
+                                thbuoi.appendChild(document.createTextNode('Buổi'));
+                                taorow.appendChild(thbuoi);
 
-                                    let thtiet = document.createElement("th");
-                                    thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
-                                    thtiet.appendChild(document.createTextNode('Tiết'));
-                                    taorow.appendChild(thtiet);
+                                let thtiet = document.createElement("th");
+                                thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
+                                thtiet.appendChild(document.createTextNode('Tiết'));
+                                taorow.appendChild(thtiet);
 
-                                    var thu= [
-                                        {
-                                            'idthu':2,
-                                            'tenthu':"Thứ 2"   
-                                        },
-                                        {
-                                            'idthu':3,
-                                            'tenthu':"Thứ 3"   
-                                        },
-                                        {
-                                            'idthu':4,
-                                            'tenthu':"Thứ 4"   
-                                        },
-                                        {
-                                            'idthu':5,
-                                            'tenthu':"Thứ 5"   
-                                        },
-                                        {
-                                            'idthu':6,
-                                            'tenthu':"Thứ 6"   
-                                        },
-                                        {
-                                            'idthu':7,
-                                            'tenthu':"Thứ 7"   
-                                        },
-                                    ];
-
-                                    for(let z=0;z<thu.length;z++){
-                                        let th = document.createElement("th");
-                                        let tenthu = document.createTextNode(' ' + thu[z].tenthu);
-                                        th.setAttribute("id",+thu[z].idthu);
-                                        th.setAttribute("class","classthu")
-                                        th.appendChild(tenthu);
-                                        taorow.appendChild(th);
-                                    }
-
-                                    taothead.append(taorow);
-
-                                    //tạo phần thân
-                                    let taotbody = document.createElement("tbody");
-                                    taotbody.setAttribute("id","phanthantablelop"+n+"");
-
-                                    taobang.appendChild(taothead);
-                                    taobang.appendChild(taotbody);
-                                    
-                                    taodiv.appendChild(taospan);
-                                    taodiv.appendChild(taobang);
-
-                                    $('#divResultsLop').append(taodiv);
-                                    
-
-                                    var dsbuoi = datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
-                                    var databuoi = [
+                                var thu= [
                                     {
-                                        "mabuoi":0,
-                                        "tenbuoi":"Sáng"
-                                    },{
-                                        "mabuoi":1,
-                                        "tenbuoi":"Chiều"
+                                        'idthu':2,
+                                        'tenthu':"Thứ 2"   
                                     },
-                                    ];
-                                    var datatiet = [
-                                        {
-                                            "tiet":1
-                                        },
-                                        {
-                                            "tiet":2
-                                        },
-                                        {
-                                            "tiet":3
-                                        },
-                                        {
-                                            "tiet":4
-                                        },
-                                        {
-                                            "tiet":5
-                                        },
-                                    ];
+                                    {
+                                        'idthu':3,
+                                        'tenthu':"Thứ 3"   
+                                    },
+                                    {
+                                        'idthu':4,
+                                        'tenthu':"Thứ 4"   
+                                    },
+                                    {
+                                        'idthu':5,
+                                        'tenthu':"Thứ 5"   
+                                    },
+                                    {
+                                        'idthu':6,
+                                        'tenthu':"Thứ 6"   
+                                    },
+                                    {
+                                        'idthu':7,
+                                        'tenthu':"Thứ 7"   
+                                    },
+                                ];
 
-                                    var noidungbang = "";
-                                    for (let i = 0; i < databuoi.length; i++) {
-                                        var rowspan = 0;
-                                        var demdatatiet = datatiet.length;
-                                        rowspan += demdatatiet;
-                                        noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
-                                        for (let j = 0; j < demdatatiet; j++) {
+                                for(let z=0;z<thu.length;z++){
+                                    let th = document.createElement("th");
+                                    let tenthu = document.createTextNode(' ' + thu[z].tenthu);
+                                    th.setAttribute("id",+thu[z].idthu);
+                                    th.setAttribute("class","classthu")
+                                    th.appendChild(tenthu);
+                                    taorow.appendChild(th);
+                                }
 
-                                            var cotrong = '';
-                                            var tablexemtkblop = 'tablexemtkblop'+n+'';
-                                            var theadthu = document.querySelectorAll("table[id^="+tablexemtkblop+"] thead tr .classthu");
-                                            for(var x=0;x<theadthu.length;x++){
-                                                var mathu = theadthu[x].id;
-                                                cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronglop'></td>";
-                                            }
-                                                
-                                            noidungbang += "<tr>"
-                                            +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;'>"+ datatiet[j].tiet + "</td>"
-                                            +cotrong
-                                            +"</tr>";
+                                taothead.append(taorow);
 
+                                //tạo phần thân
+                                let taotbody = document.createElement("tbody");
+                                taotbody.setAttribute("id","phanthantablelop"+n+"");
+
+                                taobang.appendChild(taothead);
+                                taobang.appendChild(taotbody);
+                                
+                                taodiv.appendChild(taospan);
+                                taodiv.appendChild(taobang);
+
+                                $('#divResultsLop').append(taodiv);
+                                
+
+                                var dsbuoi = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
+                                var databuoi = [
+                                {
+                                    "mabuoi":0,
+                                    "tenbuoi":"Sáng"
+                                },{
+                                    "mabuoi":1,
+                                    "tenbuoi":"Chiều"
+                                },
+                                ];
+                                var datatiet = [
+                                    {
+                                        "tiet":1
+                                    },
+                                    {
+                                        "tiet":2
+                                    },
+                                    {
+                                        "tiet":3
+                                    },
+                                    {
+                                        "tiet":4
+                                    },
+                                    {
+                                        "tiet":5
+                                    },
+                                ];
+
+                                var noidungbang = "";
+                                for (let i = 0; i < databuoi.length; i++) {
+                                    var rowspan = 0;
+                                    var demdatatiet = datatiet.length;
+                                    rowspan += demdatatiet;
+                                    noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
+                                    for (let j = 0; j < demdatatiet; j++) {
+
+                                        var cotrong = '';
+                                        var tablexemtkblop = 'tablexemtkblop'+n+'';
+                                        var theadthu = document.querySelectorAll("table[id^="+tablexemtkblop+"] thead tr .classthu");
+                                        for(var x=0;x<theadthu.length;x++){
+                                            var mathu = theadthu[x].id;
+                                            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronglop'></td>";
                                         }
+                                            
+                                        noidungbang += "<tr>"
+                                        +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;'>"+ datatiet[j].tiet + "</td>"
+                                        +cotrong
+                                        +"</tr>";
+
                                     }
+                                }
 
-                                    $('#phanthantablelop'+n).append(noidungbang);
+                                $('#phanthantablelop'+n).append(noidungbang);
 
-                                    var tablexemtkblop = 'tablexemtkblop'+n;
+                                var tablexemtkblop = 'tablexemtkblop'+n;
 
-                                    var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkblop'] tbody tr td.classoronglop");
+                                var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkblop'] tbody tr td.classoronglop");
 
-                                    for(let i=0;i<dsbuoi.length;i++){
-                                        var demtiet = dsbuoi[i].dstiet.length;
-                                        for(let j=0;j<demtiet;j++){
-                                            var demthu = dsbuoi[i].dstiet[j].dsthu.length;
-                                            for(let k=0;k<demthu;k++){
-                                                for(let m=0;m<tbodycotrong.length;m++){
-                                                    var mabuoi =tbodycotrong[m].dataset.mabuoi; 
-                                                    var matiet = tbodycotrong[m].dataset.matiet;
-                                                    var mathu = tbodycotrong[m].dataset.mathu;
-                                                    if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
-                                                        tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
-                                                    }
+                                for(let i=0;i<dsbuoi.length;i++){
+                                    var demtiet = dsbuoi[i].dstiet.length;
+                                    for(let j=0;j<demtiet;j++){
+                                        var demthu = dsbuoi[i].dstiet[j].dsthu.length;
+                                        for(let k=0;k<demthu;k++){
+                                            for(let m=0;m<tbodycotrong.length;m++){
+                                                var mabuoi =tbodycotrong[m].dataset.mabuoi; 
+                                                var matiet = tbodycotrong[m].dataset.matiet;
+                                                var mathu = tbodycotrong[m].dataset.mathu;
+                                                if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
+                                                    tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
                                                 }
                                             }
                                         }
                                     }
-
-                                    document.getElementById("cardxeptkblop").style.display = "block";
-                                          
                                 }
 
+                                document.getElementById("cardxeptkblop").style.display = "block";
+                                      
                             }
+
                         }
                     }
-                    
-                    
                 }
                 
-            }   
                 
-        });
+            }
+            
+        }
                 
         if($('#divResultsLop').children('div').length == 0){
+            Swal.fire(
+              'Thông báo',
+              'Không có thời khoá biểu nào phù hợp trong thời gian này',
+              'info'
+            )
             document.getElementById("cardxeptkblop").style.display = "none";
         }
 
@@ -1534,195 +1553,196 @@ window.onload = function() {
         var idlop = $('#idlop').val();
 
         // $('#phanthantablelop').empty();
-        axios.get('getthoikhoabieuloptime').then(function (response) {
-            let datatkblop = response.data;
-            for(let i =0;i<datatkblop.length;i++){
-                let demdslop = datatkblop[i].dslop.length;
-                for(let j=0;j<demdslop;j++){
-                    let demnam = datatkblop[i].dslop[j].dsnam.length;
-                    for(let k=0;k<demnam;k++){
-                        let demthang = datatkblop[i].dslop[j].dsnam[k].dsthang.length;
-                        for(let m=0;m<demthang;m++){
-                            let demtuan = datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan.length;
-                            for(let n=0;n<demtuan;n++){
-                                if(datatkblop[i].matruong == idtruonglop && datatkblop[i].dslop[j].malop == idlop && datatkblop[i].dslop[j].dsnam[k].nam == nam ){
-                                    
-                                    let thangnam = datatkblop[i].dslop[j].dsnam[k].dsthang[m].thang+"/"+datatkblop[i].dslop[j].dsnam[k].nam;
-                                    let tuan = datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan;
-                                    let nam = datatkblop[i].dslop[j].dsnam[k].nam;
-                                    let thang = datatkblop[i].dslop[j].dsnam[k].dsthang[m].thang;
-                                    let numbernamthangtuan = ""+nam+thang+tuan;
-                                    //tạo div
-                                    let taodiv = document.createElement("div");
-                                    taodiv.setAttribute("class","col-md-6");
-                                    taodiv.setAttribute("id","phantranglop");
-                                    //tạo span                                   
-                                    let taospan = document.createElement("span");
-                                    taospan.setAttribute("style","color: #a12626; font-size: 15px;");
-                                    taospan.innerHTML = "Thời khoá biểu (Tháng: "+thangnam+" - "+"Tuần: "+tuan+")";
-                                    //tạo bảng
-                                    let taobang = document.createElement("table");
-                                    taobang.setAttribute("id","tablexemtkblop"+numbernamthangtuan+"");
-                                    taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
-                                    taobang.setAttribute("style","overflow-y: auto; height: 90%;width: 100%;border-collapse: separate;"); 
-                                    //tạo phần đầu
-                                    let taothead = document.createElement("thead");
-                                    taothead.setAttribute("style","background-color: #28386c;color: white;"); 
-
-                                    let taorow = document.createElement("tr");
-
-                                    let thbuoi = document.createElement("th");
-                                    thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
-                                    thbuoi.appendChild(document.createTextNode('Buổi'));
-                                    taorow.appendChild(thbuoi);
-
-                                    let thtiet = document.createElement("th");
-                                    thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
-                                    thtiet.appendChild(document.createTextNode('Tiết'));
-                                    taorow.appendChild(thtiet);
-
-                                    var thu= [
-                                        {
-                                            'idthu':2,
-                                            'tenthu':"Thứ 2"   
-                                        },
-                                        {
-                                            'idthu':3,
-                                            'tenthu':"Thứ 3"   
-                                        },
-                                        {
-                                            'idthu':4,
-                                            'tenthu':"Thứ 4"   
-                                        },
-                                        {
-                                            'idthu':5,
-                                            'tenthu':"Thứ 5"   
-                                        },
-                                        {
-                                            'idthu':6,
-                                            'tenthu':"Thứ 6"   
-                                        },
-                                        {
-                                            'idthu':7,
-                                            'tenthu':"Thứ 7"   
-                                        },
-                                    ];
-
-                                    for(let z=0;z<thu.length;z++){
-                                        let th = document.createElement("th");
-                                        let tenthu = document.createTextNode(' ' + thu[z].tenthu);
-                                        th.setAttribute("id",+thu[z].idthu);
-                                        th.setAttribute("class","classthu")
-                                        th.appendChild(tenthu);
-                                        taorow.appendChild(th);
-                                    }
-
-                                    taothead.append(taorow);
-
-                                    //tạo phần thân
-                                    let taotbody = document.createElement("tbody");
-                                    taotbody.setAttribute("id","phanthantablelop"+numbernamthangtuan+"");
-
-                                    taobang.appendChild(taothead);
-                                    taobang.appendChild(taotbody);
-
-                                    taodiv.appendChild(taospan);
-                                    taodiv.appendChild(taobang);
+        for(let i =0;i<layDataTkbLop.length;i++){
+            let demdslop = layDataTkbLop[i].dslop.length;
+            for(let j=0;j<demdslop;j++){
+                let demnam = layDataTkbLop[i].dslop[j].dsnam.length;
+                for(let k=0;k<demnam;k++){
+                    let demthang = layDataTkbLop[i].dslop[j].dsnam[k].dsthang.length;
+                    for(let m=0;m<demthang;m++){
+                        let demtuan = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan.length;
+                        for(let n=0;n<demtuan;n++){
+                            if(layDataTkbLop[i].matruong == idtruonglop && layDataTkbLop[i].dslop[j].malop == idlop && layDataTkbLop[i].dslop[j].dsnam[k].nam == nam ){
                                 
-                                    $('#divResultsLop').append(taodiv);
-                                    
+                                let thangnam = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].thang+"/"+layDataTkbLop[i].dslop[j].dsnam[k].nam;
+                                let tuan = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan;
+                                let nam = layDataTkbLop[i].dslop[j].dsnam[k].nam;
+                                let thang = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].thang;
+                                let numbernamthangtuan = ""+nam+thang+tuan;
+                                //tạo div
+                                let taodiv = document.createElement("div");
+                                taodiv.setAttribute("class","col-md-6");
+                                taodiv.setAttribute("id","phantranglop");
+                                //tạo span                                   
+                                let taospan = document.createElement("span");
+                                taospan.setAttribute("style","color: #a12626; font-size: 15px;");
+                                taospan.innerHTML = "Thời khoá biểu (Tháng: "+thangnam+" - "+"Tuần: "+tuan+")";
+                                //tạo bảng
+                                let taobang = document.createElement("table");
+                                taobang.setAttribute("id","tablexemtkblop"+numbernamthangtuan+"");
+                                taobang.setAttribute("class","table table-striped table-bordered dataex-key-basic table-responsive display nowrap");
+                                taobang.setAttribute("style","overflow-y: auto; height: 90%;width: 100%;border-collapse: separate;"); 
+                                //tạo phần đầu
+                                let taothead = document.createElement("thead");
+                                taothead.setAttribute("style","background-color: #28386c;color: white;"); 
 
-                                    var dsbuoi = datatkblop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
-                                    var databuoi = [
+                                let taorow = document.createElement("tr");
+
+                                let thbuoi = document.createElement("th");
+                                thbuoi.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;");
+                                thbuoi.appendChild(document.createTextNode('Buổi'));
+                                taorow.appendChild(thbuoi);
+
+                                let thtiet = document.createElement("th");
+                                thtiet.setAttribute("style","position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100;min-width: 100;max-width: 100px;left: 100px;");
+                                thtiet.appendChild(document.createTextNode('Tiết'));
+                                taorow.appendChild(thtiet);
+
+                                var thu= [
                                     {
-                                        "mabuoi":0,
-                                        "tenbuoi":"Sáng"
-                                    },{
-                                        "mabuoi":1,
-                                        "tenbuoi":"Chiều"
+                                        'idthu':2,
+                                        'tenthu':"Thứ 2"   
                                     },
-                                    ];
-                                    var datatiet = [
-                                        {
-                                            "tiet":1
-                                        },
-                                        {
-                                            "tiet":2
-                                        },
-                                        {
-                                            "tiet":3
-                                        },
-                                        {
-                                            "tiet":4
-                                        },
-                                        {
-                                            "tiet":5
-                                        },
-                                    ];
-                                    var noidungbang = "";
-                                    for (let i = 0; i < databuoi.length; i++) {
-                                        var rowspan = 0;
-                                        var demdatatiet = datatiet.length;
-                                        rowspan += demdatatiet;
-                                        noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
-                                        for (let j = 0; j < demdatatiet; j++) {
+                                    {
+                                        'idthu':3,
+                                        'tenthu':"Thứ 3"   
+                                    },
+                                    {
+                                        'idthu':4,
+                                        'tenthu':"Thứ 4"   
+                                    },
+                                    {
+                                        'idthu':5,
+                                        'tenthu':"Thứ 5"   
+                                    },
+                                    {
+                                        'idthu':6,
+                                        'tenthu':"Thứ 6"   
+                                    },
+                                    {
+                                        'idthu':7,
+                                        'tenthu':"Thứ 7"   
+                                    },
+                                ];
 
-                                            var cotrong = '';
-                                            var tablexemtkblop = 'tablexemtkblop'+numbernamthangtuan+'';
-                                            var theadthu = document.querySelectorAll("table[id^="+tablexemtkblop+"] thead tr .classthu");
-                                            for(var x=0;x<theadthu.length;x++){
-                                                var mathu = theadthu[x].id;
-                                                cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronglop'></td>";
-                                            }
-                                                
-                                            noidungbang += "<tr>"
-                                            +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;'>"+ datatiet[j].tiet + "</td>"
-                                            +cotrong
-                                            +"</tr>";
+                                for(let z=0;z<thu.length;z++){
+                                    let th = document.createElement("th");
+                                    let tenthu = document.createTextNode(' ' + thu[z].tenthu);
+                                    th.setAttribute("id",+thu[z].idthu);
+                                    th.setAttribute("class","classthu")
+                                    th.appendChild(tenthu);
+                                    taorow.appendChild(th);
+                                }
 
+                                taothead.append(taorow);
+
+                                //tạo phần thân
+                                let taotbody = document.createElement("tbody");
+                                taotbody.setAttribute("id","phanthantablelop"+numbernamthangtuan+"");
+
+                                taobang.appendChild(taothead);
+                                taobang.appendChild(taotbody);
+
+                                taodiv.appendChild(taospan);
+                                taodiv.appendChild(taobang);
+                            
+                                $('#divResultsLop').append(taodiv);
+                                
+
+                                var dsbuoi = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].dsbuoi;
+                                var databuoi = [
+                                {
+                                    "mabuoi":0,
+                                    "tenbuoi":"Sáng"
+                                },{
+                                    "mabuoi":1,
+                                    "tenbuoi":"Chiều"
+                                },
+                                ];
+                                var datatiet = [
+                                    {
+                                        "tiet":1
+                                    },
+                                    {
+                                        "tiet":2
+                                    },
+                                    {
+                                        "tiet":3
+                                    },
+                                    {
+                                        "tiet":4
+                                    },
+                                    {
+                                        "tiet":5
+                                    },
+                                ];
+                                var noidungbang = "";
+                                for (let i = 0; i < databuoi.length; i++) {
+                                    var rowspan = 0;
+                                    var demdatatiet = datatiet.length;
+                                    rowspan += demdatatiet;
+                                    noidungbang += "<tr><td style='color: red;position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;' rowspan=" + parseInt(1 + rowspan) + ">" + databuoi[i].tenbuoi + "</td></tr>";
+                                    for (let j = 0; j < demdatatiet; j++) {
+
+                                        var cotrong = '';
+                                        var tablexemtkblop = 'tablexemtkblop'+numbernamthangtuan+'';
+                                        var theadthu = document.querySelectorAll("table[id^="+tablexemtkblop+"] thead tr .classthu");
+                                        for(var x=0;x<theadthu.length;x++){
+                                            var mathu = theadthu[x].id;
+                                            cotrong += "<td rowspan=" + 1 + " data-mabuoi= "+databuoi[i].mabuoi+" data-matiet="+datatiet[j].tiet+" data-mathu="+mathu+" class='classoronglop'></td>";
                                         }
+                                            
+                                        noidungbang += "<tr>"
+                                        +"<td style='position: sticky;position: -webkit-sticky;background-color: #FAFAD2;z-index: 100px;width: 100px;min-width: 100px;max-width: 100px;;left: 100px;'>"+ datatiet[j].tiet + "</td>"
+                                        +cotrong
+                                        +"</tr>";
+
                                     }
+                                }
 
-                                    $('#phanthantablelop'+numbernamthangtuan).append(noidungbang);
+                                $('#phanthantablelop'+numbernamthangtuan).append(noidungbang);
 
-                                    var tablexemtkbgiaovien = 'tablexemtkblop'+numbernamthangtuan;
+                                var tablexemtkbgiaovien = 'tablexemtkblop'+numbernamthangtuan;
 
-                                    var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkblop'] tbody tr td.classoronglop");
+                                var tbodycotrong = document.querySelectorAll("table[id^='tablexemtkblop'] tbody tr td.classoronglop");
 
-                                    for(let i=0;i<dsbuoi.length;i++){
-                                        var demtiet = dsbuoi[i].dstiet.length;
-                                        for(let j=0;j<demtiet;j++){
-                                            var demthu = dsbuoi[i].dstiet[j].dsthu.length;
-                                            for(let k=0;k<demthu;k++){
-                                                for(let m=0;m<tbodycotrong.length;m++){
-                                                    var mabuoi =tbodycotrong[m].dataset.mabuoi; 
-                                                    var matiet = tbodycotrong[m].dataset.matiet;
-                                                    var mathu = tbodycotrong[m].dataset.mathu;
-                                                    if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
-                                                        tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
-                                                    }
+                                for(let i=0;i<dsbuoi.length;i++){
+                                    var demtiet = dsbuoi[i].dstiet.length;
+                                    for(let j=0;j<demtiet;j++){
+                                        var demthu = dsbuoi[i].dstiet[j].dsthu.length;
+                                        for(let k=0;k<demthu;k++){
+                                            for(let m=0;m<tbodycotrong.length;m++){
+                                                var mabuoi =tbodycotrong[m].dataset.mabuoi; 
+                                                var matiet = tbodycotrong[m].dataset.matiet;
+                                                var mathu = tbodycotrong[m].dataset.mathu;
+                                                if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
+                                                    tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].tenmonhoc+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsmonhoc[0].dsgiaovien[0].bidanh+')'+"</span>";
                                                 }
                                             }
                                         }
                                     }
-
-                                    document.getElementById("cardxeptkblop").style.display = "block";
-                                          
                                 }
 
+                                document.getElementById("cardxeptkblop").style.display = "block";
+                                      
                             }
+
                         }
                     }
-                    
-                    
                 }
                 
-            }
-            phantranglop();    
                 
-        });
+            }
+            
+        }
+        phantranglop(); 
                 
         if($('#divResultsLop').children('div').length == 0){
+            Swal.fire(
+              'Thông báo',
+              'Không có thời khoá biểu nào phù hợp trong thời gian này',
+              'info'
+            )
             document.getElementById("cardxeptkblop").style.display = "none";
         }
         if (nam != '') {

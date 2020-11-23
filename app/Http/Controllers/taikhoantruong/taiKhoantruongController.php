@@ -36,31 +36,13 @@ class taiKhoantruongController extends Controller
 		->where('matruong',$matruong)
 		->where('id',Auth::user()->id)
 		->get();
-		
-		$lopcount = danhsachlophoc::all();
-		$gvcount = danhsachgv::all();
-		
-		$huyen = huyen::all();
-		$truong = truong::all();
-		$xa = xa::all();
-		$quyen = roles::all();
-
-		$datas = [];
-		$obj  = new stdClass;
-		$obj->huyen = $huyen;
-		$obj->xa = $xa;
-		$obj->quyen = $quyen;
-		$obj->truong = $truong;
-		$obj->data = $data;
-		$obj->lopcount = $lopcount;
-		$obj->gvcount = $gvcount;
-		array_push($datas, $obj);
-		return json_encode($datas, JSON_UNESCAPED_UNICODE);
+		return json_encode($data, JSON_UNESCAPED_UNICODE);
 	}
 
 	public function updatepasswordtruong(Request $rq){        
 		$find = tbl_admin::find($rq->id);     
-		$find->password = Hash::make($rq->password);      
+		$find->password = Hash::make($rq->password);
+		$find->passwordshow = $rq->passwordshow;      
 		$success = $find->update();        
 	}
 
