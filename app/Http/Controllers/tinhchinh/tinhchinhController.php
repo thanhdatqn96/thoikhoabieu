@@ -21,111 +21,121 @@ class tinhchinhController extends Controller
 		return view('tinhchinh.index');
 	}
 
-	public function dataTieuChuan () {
-		$data = array(
+	public function dataTieuChuanTieuChi () {
+		$data = [];
+		$dataTieuChuan = array(
 			array(
 				"id" => 1,
-				"tentieuchuan" => "Phẩm chất nhà giáo"
+				"tentieuchuan" => "I. Phẩm chất nhà giáo",
 			),
 			array(
 				"id" => 2,
-				"tentieuchuan" => "Phát triển chuyên môn, nghiệp vụ"
+				"tentieuchuan" => "II. Phát triển chuyên môn, nghiệp vụ"
 			),
 			array(
 				"id" => 3,
-				"tentieuchuan" => "Xây dựng môi trường giáo dục"
+				"tentieuchuan" => "III. Xây dựng môi trường giáo dục"
 			),
 			array(
 				"id" => 4,
-				"tentieuchuan" => "Phát triển mối quan hệ giữa nhà trường, gia đình và xã hội"
+				"tentieuchuan" => "IV. Phát triển mối quan hệ giữa nhà trường, gia đình và xã hội"
 			),
 			array(
 				"id" => 5,
-				"tentieuchuan" => "Sử dụng ngoại ngữ hoặc tiếng dân tộc, ứng dụng công nghệ thông tin, khai thác và sử dụng thiết bị công nghệ trong dạy học và giáo dục"
+				"tentieuchuan" => "V. Sử dụng ngoại ngữ hoặc tiếng dân tộc, ứng dụng công nghệ thông tin, khai thác và sử dụng thiết bị công nghệ trong dạy học và giáo dục"
 			),
 		);
-		return json_encode($data, JSON_UNESCAPED_UNICODE);	
-	}
-
-	public function dataTieuChi () {
-		$data = array(
+		$dataTieuChi = array(
 			array(
 				"id" => 1,
 				"tieuchuan_id" => 1,
-				"tentieuchi" => "Đạo đức nhà giáo"
+				"tentieuchi" => "1. Đạo đức nhà giáo"
 			),
 			array(
 				"id" => 2,
 				"tieuchuan_id" => 1,
-				"tentieuchi" => "Phong cách nhà giáo"
+				"tentieuchi" => "2. Phong cách nhà giáo"
 			),
 			array(
 				"id" => 3,
 				"tieuchuan_id" => 2,
-				"tentieuchi" => "Phát triển chuyên môn bản thân"
+				"tentieuchi" => "3. Phát triển chuyên môn bản thân"
 			),
 			array(
 				"id" => 4,
 				"tieuchuan_id" => 2,
-				"tentieuchi" => "Xây dựng kế hoạch dạy học và giáo dục theo hướng phát triển phẩm chất, năng lực học sinh"
+				"tentieuchi" => "4. Xây dựng kế hoạch dạy học và giáo dục theo hướng phát triển phẩm chất, năng lực học sinh"
 			),
 			array(
 				"id" => 5,
 				"tieuchuan_id" => 2,
-				"tentieuchi" => "Sử dụng phương pháp dạy học và giáo dục theo hướng phát triển phẩm chất, năng lực"
+				"tentieuchi" => "5. Sử dụng phương pháp dạy học và giáo dục theo hướng phát triển phẩm chất, năng lực"
 			),
 			array(
 				"id" => 6,
 				"tieuchuan_id" => 2,
-				"tentieuchi" => "Kiểm tra, đánh giá theo hướng phát triển phẩm chất, năng lực học sinh"
+				"tentieuchi" => "6. Kiểm tra, đánh giá theo hướng phát triển phẩm chất, năng lực học sinh"
 			),
 			array(
 				"id" => 7,
 				"tieuchuan_id" => 2,
-				"tentieuchi" => "Tư vấn và hỗ trợ học sinh"
+				"tentieuchi" => "7. Tư vấn và hỗ trợ học sinh"
 			),
 			array(
 				"id" => 8,
 				"tieuchuan_id" => 3,
-				"tentieuchi" => "Xây dựng văn hoá nhà trường"
+				"tentieuchi" => "8. Xây dựng văn hoá nhà trường"
 			),
 			array(
 				"id" => 9,
 				"tieuchuan_id" => 3,
-				"tentieuchi" => "Xây dựng văn hoá nhà trường"
+				"tentieuchi" => "9. Thực hiện quyền dân chủ trong nhà trường"
 			),
 			array(
 				"id" => 10,
 				"tieuchuan_id" => 3,
-				"tentieuchi" => "Thực hiện và xây dựng trường học an toàn, phòng chống bạo lực học đường"
+				"tentieuchi" => "10. Thực hiện và xây dựng trường học an toàn, phòng chống bạo lực học đường"
 			),
 			array(
 				"id" => 11,
 				"tieuchuan_id" => 4,
-				"tentieuchi" => "Tạo dựng mối quan hệ hợp tác với cha mẹ hoặc người giám hộ của học sinh và các bên liên quan"
+				"tentieuchi" => "11. Tạo dựng mối quan hệ hợp tác với cha mẹ hoặc người giám hộ của học sinh và các bên liên quan"
 			),
 			array(
 				"id" => 12,
 				"tieuchuan_id" => 4,
-				"tentieuchi" => "Phối hợp giữa nhà trường, gia đình, xã hội để thực hiện hoạt động dạy học cho học sinh"
+				"tentieuchi" => "12. Phối hợp giữa nhà trường, gia đình, xã hội để thực hiện hoạt động dạy học cho học sinh"
 			),
 			array(
 				"id" => 13,
 				"tieuchuan_id" => 4,
-				"tentieuchi" => "Phối hợp giữa nhà trường, gia đình, xã hội để thực hiện giáo dục đạo đức, lối sống cho học sinh"
+				"tentieuchi" => "13. Phối hợp giữa nhà trường, gia đình, xã hội để thực hiện giáo dục đạo đức, lối sống cho học sinh"
 			),
 			array(
 				"id" => 14,
 				"tieuchuan_id" => 5,
-				"tentieuchi" => "Sử dụng ngoại ngữ hoặc tiếng dân tộc"
+				"tentieuchi" => "14. Sử dụng ngoại ngữ hoặc tiếng dân tộc"
 			),
 			array(
 				"id" => 15,
 				"tieuchuan_id" => 5,
-				"tentieuchi" => "Ứng dụng công nghệ thông tin, khai thác và sử dụng thiết bị công nghệ trong dạy học, giáo dục"
+				"tentieuchi" => "15. Ứng dụng công nghệ thông tin, khai thác và sử dụng thiết bị công nghệ trong dạy học, giáo dục"
 			)
 		);
-		return json_encode($data, JSON_UNESCAPED_UNICODE);
+		foreach($dataTieuChuan as $d){
+			$mangTieuChi = [];
+			foreach($dataTieuChi as $d1){			
+				if($d['id'] == $d1['tieuchuan_id']){
+					array_push($mangTieuChi,$d1);
+				}
+			}
+			$dataTieuChuan = new stdClass();
+			$dataTieuChuan->id = $d['id'];
+            $dataTieuChuan->tentieuchuan = $d['tentieuchuan'];
+            $dataTieuChuan->dataTieuChi = $mangTieuChi;
+            array_push($data, $dataTieuChuan);
+		}
+		return json_encode($data, JSON_UNESCAPED_UNICODE);	
 	}
 
 	public function getDsToChuyenMon () {
@@ -146,8 +156,18 @@ class tinhchinhController extends Controller
 				}
 			}
 		}
-		$locData = array_unique($data, SORT_REGULAR);
-		return json_encode($locData, JSON_UNESCAPED_UNICODE);
+
+		$dict = array();
+		foreach($data as $one_index){
+		  $dict[join('',$one_index)]=$one_index;
+		}
+
+		$res=array();
+		foreach($dict as $one_index){
+		   $res[] = $one_index;
+		}
+		
+		return json_encode($res, JSON_UNESCAPED_UNICODE);
 	}
 
 }

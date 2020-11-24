@@ -530,7 +530,6 @@ class tonghopController extends Controller
 	 		}
 	 		
 	 	}
-
 		$datadslop = [];
 		foreach($dataLoc as $d){
 			array_push($datadslop,array('matruong'=>$d->matruong,'malop'=>$d->id,'tenlop'=>$d->tenlop));

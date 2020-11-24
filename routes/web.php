@@ -81,8 +81,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 //tinhchinh
 	Route::get('tinhchinh','tinhchinh\tinhchinhController@index');
-	Route::get('dataTieuChuan','tinhchinh\tinhchinhController@dataTieuChuan');
-	Route::get('dataTieuChi','tinhchinh\tinhchinhController@dataTieuChi');
+	Route::get('dataTieuChuanTieuChi','tinhchinh\tinhchinhController@dataTieuChuanTieuChi');
 	Route::get('getDsToChuyenMon','tinhchinh\tinhchinhController@getDsToChuyenMon');
 	Route::get('getDsGiaoVien','tinhchinh\tinhchinhController@getDsGiaoVien');
 
