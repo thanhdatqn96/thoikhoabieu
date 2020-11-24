@@ -81,10 +81,12 @@ Route::group(['middleware' => 'auth'], function(){
 
 //tinhchinh
 	Route::get('tinhchinh','tinhchinh\tinhchinhController@index');
-	Route::get('getdanhgiagv','tinhchinh\tinhchinhController@getdanhgiagv');
-	Route::post('adddanhgiagv','tinhchinh\tinhchinhController@adddanhgiagv');
-	Route::post('updatedanhgiagv','tinhchinh\tinhchinhController@updatedanhgiagv');
-	Route::post('delldanhgiagv','tinhchinh\tinhchinhController@delldanhgiagv');
+	Route::get('dataTieuChuan','tinhchinh\tinhchinhController@dataTieuChuan');
+	Route::get('dataTieuChi','tinhchinh\tinhchinhController@dataTieuChi');
+	Route::get('getDsToChuyenMon','tinhchinh\tinhchinhController@getDsToChuyenMon');
+	Route::get('getDsGiaoVien','tinhchinh\tinhchinhController@getDsGiaoVien');
+
+
 
 
 //xemtkb
@@ -335,7 +337,7 @@ Route::group(['middleware' => 'auth'], function(){
 		// đánh giá giáo viên
 		Route::get('theodoidanhgiagiaovien','tonghop\tonghopController@theodoidanhgiagiaovien');
 		//lấy danh sách đánh giá giáo viên
-		Route::get('getdanhgiagv','tonghop\tonghopController@getdanhgiagv');
+		Route::get('getdanhgiagvtonghop','tonghop\tonghopController@getdanhgiagv');
 		//lấy danh sách thời khoá biểu giáo viên theo thời gian
 		Route::get('getthoikhoabieugvtime','tonghop\tonghopController@getthoikhoabieugvtime');
 		//lấy danh sách thời khoá biểu lớp theo thời gian

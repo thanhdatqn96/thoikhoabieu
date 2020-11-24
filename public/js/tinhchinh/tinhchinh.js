@@ -1,141 +1,134 @@
-function danhsachgv(){
-	var data = axios.get('getdanhsachgv').then(function (response) {
-		var data1 = response.data;
-		var datas = data1.map(function (value, label) {
-			let data = value;
-			let stt = label + 1;
-			var datas = Object.assign(data, {stt: stt.toString()});
-			return datas;
-		});	
-		$("#girddsgv").dxDataGrid({
-			dataSource: datas,
-			showBorders: true,
-			scrolling: {
-				mode: "virtual",
-				rowRenderingMode: "virtual"
-			},
-			sorting: {
-				mode: "multiple"
-			},
-			filterRow: {
-				visible: true,
-				applyFilter: "auto"
-			},
-			searchPanel: {
-				visible: true,
-				width: 240,
-				placeholder: "Tìm kiếm..."
-			},
-			selection: {
-				mode: "multiple",
-				recursive: true
-			},
-			/* co dan cot */
-			allowColumnResizing: true,
-			columnResizingMode: "widget",
-			columns: [{
-				caption: "Tên",
-				dataField: "hovaten",
-			}],
-			// select data row
-			onSelectionChanged: function (selectedItems) {
-
-			},
-		});
-	});
+async function loadDataDsGiaoVien() {
+    let result = await axios.get("getDsGiaoVien").then(res => {
+        return res.data;
+    });
+    return result;
 }
 
-
-
-function danhsachlophoc(){
-	var data = axios.get('getdanhsachlophoc').then(function (response) {
-		var data1 = response.data;
-		var datas = data1.map(function (value, label) {
-			let data = value;
-			let stt = label + 1;
-			var datas = Object.assign(data, {stt: stt.toString()});
-			return datas;
-		});	
-		$("#girddslophoc").dxDataGrid({
-			dataSource: datas,
-			showBorders: true,
-			scrolling: {
-				mode: "virtual",
-				rowRenderingMode: "virtual"
-			},
-			sorting: {
-				mode: "multiple"
-			},
-			/* loc du lieu */
-			filterRow: {
-				visible: true,
-				applyFilter: "auto"
-			},
-			searchPanel: {
-				visible: true,
-				width: 240,
-				placeholder: "Tìm kiếm..."
-			},
-			selection: {
-				mode: "multiple",
-				recursive: true
-			},
-			allowColumnResizing: true,
-			columnResizingMode: "widget",
-			columns: [{
-				caption: "Tên lớp",
-				dataField: "tenlop",
-			}],
-			onSelectionChanged: function (selectedItems) {
-
-			},
-		});
-	});
+async function loadDataTieuChuan() {
+    let result = await axios.get("dataTieuChuan").then(res => {
+        return res.data;
+    });
+    return result;
 }
 
+async function loadDataTieuChi() {
+    let result = await axios.get("dataTieuChi").then(res => {
+        return res.data;
+    });
+    return result;
+}
 
+//biến toàn cục
+var layDataDsGiaoVien,
+	layDataTieuChuan,
+	layDataTieuChi;
 
-function danhsachphonghoc(){
-	var data = axios.get('getdanhsachphonghoc').then(function (response) {
-		var data1 = response.data;
-		var datas = data1.map(function (value, label) {
-			let data = value;
-			let stt = label + 1;
-			var datas = Object.assign(data, {stt: stt.toString()});
-			return datas;
-		});	
-		$("#girddsphonghoc").dxDataGrid({
-			dataSource: datas,
-			showBorders: true,
-			scrolling: {
-				mode: "virtual",
-				rowRenderingMode: "virtual"
-			},
-			sorting: {
-				mode: "multiple"
-			},
-			filterRow: {
-				visible: true,
-				applyFilter: "auto"
-			},
-			searchPanel: {
-				visible: true,
-				width: 240,
-				placeholder: "Tìm kiếm..."
-			},
-			selection: {
-				mode: "multiple",
-				recursive: true
-			},
-			allowColumnResizing: true,
-			columnResizingMode: "widget",
-			columns: [{
-				caption: "Tên phòng học",
-				dataField: "tenphong",
-			}],
-			onSelectionChanged: function (selectedItems) {
+//
+var selectToChuyenMon,
+	selectNam;
 
-			},
+window.onload = function () {
+    initControl();
+    initData();
+    initEvent();
+};
+
+function initControl () {
+	selectToChuyenMon = document.getElementById('selectToChuyenMon');
+	selectNam = document.getElementById('selectNam');
+}
+
+async function initData () {
+    layDataDsGiaoVien = await loadDataDsGiaoVien();
+    layDataTieuChuan = await loadDataTieuChuan();
+    layDataTieuChi = await loadDataTieuChi();
+    hienThiSelectToChuyenMon();
+    hienThiSelectNam();
+}
+
+function initEvent () {
+	selectNam.onchange = function() {
+
+		if(selectToChuyenMon.value == ''){
+			alert('Vui lòng chọn tổ chuyên môn');
+			selectNam.value = '';
+		}
+
+		let valTCM = selectToChuyenMon.value;
+		let dataGVTCM = [];
+
+		for(let i=0;i<layDataDsGiaoVien.length;i++){
+			let matochuyenmon = layDataDsGiaoVien[i].matochuyenmon;
+			if(valTCM == matochuyenmon) {
+				dataGVTCM.push(layDataDsGiaoVien[i]);
+			}
+		}
+
+		console.log(dataGVTCM);
+
+		$('#girddanhgiagiaovien').dxDataGrid({
+		    dataSource: dataGVTCM,
+		    showBorders: true,
+		    paging: {
+		        pageSize: 10
+		    },
+		    /* xap xep */
+		    sorting: {
+		        mode: "multiple"
+		    },
+		    searchPanel: {
+		        visible: true,
+		        width: 240,
+		        placeholder: "Tìm kiếm...",
+		    },
+		    pager: {
+		        showPageSizeSelector: true,
+		        allowedPageSizes: [5, 10, 20],
+		        showInfo: true
+		    },
+		    allowColumnResizing: true,
+		    columnResizingMode: "widget",
+		    columns: [ {
+		        caption: "Tên giáo viên",
+		        dataField: "hovaten",
+		    }
+		    ],
+		    masterDetail: {
+
+		    }
 		});
+	};
+
+}
+
+function hienThiSelectToChuyenMon () {
+
+	axios.get('getDsToChuyenMon').then(function(response) {
+		var data = response.data;
+		$('#selectToChuyenMon').append("<option value='' selected='' disabled=''></option>");
+		for(var i= 0; i< data.length;i++){
+			var option = document.createElement("option");
+		    option.value = data[i].id;
+		    option.text = data[i].tentocm;
+		    selectToChuyenMon.appendChild(option);
+		}
 	});
+	
+	$('#selectToChuyenMon').select2({ width: '50%'});
+}
+
+function hienThiSelectNam () {
+	$('#selectNam').datepicker({
+        format: "yyyy",
+        orientation: "bottom",
+        viewMode: "years",
+        minViewMode: "years",
+        autoclose: true,
+        language: "vi",
+    });
+}
+
+function danhgiagv() {
+
 }
