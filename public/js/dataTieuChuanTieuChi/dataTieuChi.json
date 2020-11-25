@@ -1,0 +1,77 @@
+[
+   	{
+      	"id":1,
+      	"tieuchuan_id":1,
+      	"tentieuchi":"1. Đạo đức nhà giáo"
+   	},
+   	{
+      	"id":2,
+      	"tieuchuan_id":1,
+      	"tentieuchi":"2. Phong cách nhà giáo"
+   	},
+   	{
+      	"id":3,
+      	"tieuchuan_id":2,
+      	"tentieuchi":"3. Phát triển chuyên môn bản thân"
+   	},
+   	{
+      	"id":4,
+      	"tieuchuan_id":2,
+      	"tentieuchi":"4. Xây dựng kế hoạch dạy học và giáo dục theo hướng phát triển phẩm chất, năng lực học sinh"
+   	},
+   	{
+      	"id":5,
+      	"tieuchuan_id":2,
+      	"tentieuchi":"5. Sử dụng phương pháp dạy học và giáo dục theo hướng phát triển phẩm chất, năng lực"
+  	},
+   	{
+      	"id":6,
+      	"tieuchuan_id":2,
+      	"tentieuchi":"6. Kiểm tra, đánh giá theo hướng phát triển phẩm chất, năng lực học sinh"
+   	},
+   	{
+      	"id":7,
+      	"tieuchuan_id":2,
+      	"tentieuchi":"7. Tư vấn và hỗ trợ học sinh"
+   	},
+   	{
+      	"id":8,
+      	"tieuchuan_id":3,
+      	"tentieuchi":"8. Xây dựng văn hoá nhà trường"
+   	},
+   	{
+      	"id":9,
+      	"tieuchuan_id":3,
+      	"tentieuchi":"9. Thực hiện quyền dân chủ trong nhà trường"
+   	},
+   	{
+      	"id":10,
+      	"tieuchuan_id":3,
+      	"tentieuchi":"10. Thực hiện và xây dựng trường học an toàn, phòng chống bạo lực học đường"
+   	},
+   	{
+      	"id":11,
+      	"tieuchuan_id":4,
+      	"tentieuchi":"11. Tạo dựng mối quan hệ hợp tác với cha mẹ hoặc người giám hộ của học sinh và các bên liên quan"
+   	},
+   	{
+      	"id":12,
+      	"tieuchuan_id":4,
+      	"tentieuchi":"12. Phối hợp giữa nhà trường, gia đình, xã hội để thực hiện hoạt động dạy học cho học sinh"
+   	},
+   	{
+      	"id":13,
+      	"tieuchuan_id":4,
+      	"tentieuchi":"13. Phối hợp giữa nhà trường, gia đình, xã hội để thực hiện giáo dục đạo đức, lối sống cho học sinh"
+   	},
+   	{
+      	"id":14,
+      	"tieuchuan_id":5,
+      	"tentieuchi":"14. Sử dụng ngoại ngữ hoặc tiếng dân tộc"
+   	},
+   	{
+      	"id":15,
+      	"tieuchuan_id":5,
+      	"tentieuchi":"15. Ứng dụng công nghệ thông tin, khai thác và sử dụng thiết bị công nghệ trong dạy học, giáo dục"
+   	}
+]

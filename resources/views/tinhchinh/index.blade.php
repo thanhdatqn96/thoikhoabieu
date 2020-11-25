@@ -67,18 +67,26 @@
 						<div class="card-body">
 							<form class="form">
 								<div class="form-body">
-									<div>
-										<label>Chọn tổ chuyên môn:</label>
-										<select id="selectToChuyenMon" data-live-search="true"></select>
+									<div class="col-md-10">
+										<div class="row">
+											<div class="col-md-3"><label style="padding-top: 10px;">Chọn tổ chuyên môn</label></div>
+											<div class="col-md-7"><select id="selectToChuyenMon" data-live-search="true"></select></div>
+										</div>
 									</div>
 									<br>
-							        <div>
-										<div class="input-group date" style="width: 50%;">
-								            <input id="selectNam" type="text" class="form-control-sm form-control" placeholder="Chọn năm đánh giá">
-								            <div class="input-group-addon">
-								                <i class="fa fa-calendar"></i>
-								            </div>
-								        </div>
+							        <div class="col-md-10">
+							        	<div class="row">
+							        		<div class="col-md-3"><label style="padding-top: 10px;">Chọn năm đánh giá</label></div>
+							        		<div class="col-md-7">
+							        			<div class="input-group date" style="width: 50%;">
+										            <input id="selectNam" type="text" class="form-control-sm form-control" placeholder="Chọn năm đánh giá">
+										            <div class="input-group-addon">
+										                <i class="fa fa-calendar"></i>
+										            </div>
+										        </div>
+							        		</div>
+							        	</div>
+										
 							    	</div>
 								</div>
 							</form>
@@ -142,6 +150,9 @@
 		<div class="modal-content">
 			<div class="modal-header bg-success white">
 				<h4 class="modal-title white" id="myModalLabel15">Đánh giá giáo viên: <b><span id="spanTenGV" style="color: yellow;"></span></b></h4>
+				<input type="hidden" id="inputMaGv">
+				<input type="hidden" id="inputMaTruong">
+				<input type="hidden" id="inputMaDGGV">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
@@ -159,10 +170,10 @@
 											<th colspan="4" style="text-align: center;background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;" >Kết quả xếp loại</th>
 										</tr>
 										<tr>
-											<th id="1" class="classXeploai" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Chưa đạt</th>
-											<th id="2" class="classXeploai" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Đạt</th>
-											<th id="3" class="classXeploai" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Khá</th>
-											<th id="4" class="classXeploai" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Tốt</th>
+											<th id="1" class="classXepLoai" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Chưa đạt</th>
+											<th id="2" class="classXepLoai" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Đạt</th>
+											<th id="3" class="classXepLoai" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Khá</th>
+											<th id="4" class="classXepLoai" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Tốt</th>
 										</tr>
 									</thead>
 									<tbody id="bodyDanhGiaGv">
@@ -185,7 +196,6 @@
 	$("#radioDanhGiaGv").change(function () {
 		$("#radioKetQuaDanhGiaGv").prop("checked", false);
 		//
-		document.getElementById("cardDanhGiaGv").style.display = "block";
 		document.getElementById("cardKetQuaDanhGiaGv").style.display = "none";
 		//select
 		document.getElementById("cardSelectTCMNam").style.display = "block";
@@ -194,7 +204,7 @@
 		$("#radioKetQuaDanhGiaGv").prop("checked", false);
 		//
 		document.getElementById("cardDanhGiaGv").style.display = "none";
-		document.getElementById("cardKetQuaDanhGiaGv").style.display = "block";
+		
 		//select
 		document.getElementById("cardSelectTCMNam").style.display = "block";
 	});

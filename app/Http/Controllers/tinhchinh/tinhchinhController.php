@@ -22,106 +22,15 @@ class tinhchinhController extends Controller
 	}
 
 	public function dataTieuChuanTieuChi () {
+
+		$getFileDataTieuChuan = file_get_contents(public_path('js/dataTieuChuanTieuChi/dataTieuChuan.json'));
+		$dataTieuChuan = json_decode($getFileDataTieuChuan, true);
+
+		$getFileDataTieuChi = file_get_contents(public_path('js/dataTieuChuanTieuChi/dataTieuChi.json'));
+		$dataTieuChi = json_decode($getFileDataTieuChi, true);
+
 		$data = [];
-		$dataTieuChuan = array(
-			array(
-				"id" => 1,
-				"tentieuchuan" => "I. Phẩm chất nhà giáo",
-			),
-			array(
-				"id" => 2,
-				"tentieuchuan" => "II. Phát triển chuyên môn, nghiệp vụ"
-			),
-			array(
-				"id" => 3,
-				"tentieuchuan" => "III. Xây dựng môi trường giáo dục"
-			),
-			array(
-				"id" => 4,
-				"tentieuchuan" => "IV. Phát triển mối quan hệ giữa nhà trường, gia đình và xã hội"
-			),
-			array(
-				"id" => 5,
-				"tentieuchuan" => "V. Sử dụng ngoại ngữ hoặc tiếng dân tộc, ứng dụng công nghệ thông tin, khai thác và sử dụng thiết bị công nghệ trong dạy học và giáo dục"
-			),
-		);
-		$dataTieuChi = array(
-			array(
-				"id" => 1,
-				"tieuchuan_id" => 1,
-				"tentieuchi" => "1. Đạo đức nhà giáo"
-			),
-			array(
-				"id" => 2,
-				"tieuchuan_id" => 1,
-				"tentieuchi" => "2. Phong cách nhà giáo"
-			),
-			array(
-				"id" => 3,
-				"tieuchuan_id" => 2,
-				"tentieuchi" => "3. Phát triển chuyên môn bản thân"
-			),
-			array(
-				"id" => 4,
-				"tieuchuan_id" => 2,
-				"tentieuchi" => "4. Xây dựng kế hoạch dạy học và giáo dục theo hướng phát triển phẩm chất, năng lực học sinh"
-			),
-			array(
-				"id" => 5,
-				"tieuchuan_id" => 2,
-				"tentieuchi" => "5. Sử dụng phương pháp dạy học và giáo dục theo hướng phát triển phẩm chất, năng lực"
-			),
-			array(
-				"id" => 6,
-				"tieuchuan_id" => 2,
-				"tentieuchi" => "6. Kiểm tra, đánh giá theo hướng phát triển phẩm chất, năng lực học sinh"
-			),
-			array(
-				"id" => 7,
-				"tieuchuan_id" => 2,
-				"tentieuchi" => "7. Tư vấn và hỗ trợ học sinh"
-			),
-			array(
-				"id" => 8,
-				"tieuchuan_id" => 3,
-				"tentieuchi" => "8. Xây dựng văn hoá nhà trường"
-			),
-			array(
-				"id" => 9,
-				"tieuchuan_id" => 3,
-				"tentieuchi" => "9. Thực hiện quyền dân chủ trong nhà trường"
-			),
-			array(
-				"id" => 10,
-				"tieuchuan_id" => 3,
-				"tentieuchi" => "10. Thực hiện và xây dựng trường học an toàn, phòng chống bạo lực học đường"
-			),
-			array(
-				"id" => 11,
-				"tieuchuan_id" => 4,
-				"tentieuchi" => "11. Tạo dựng mối quan hệ hợp tác với cha mẹ hoặc người giám hộ của học sinh và các bên liên quan"
-			),
-			array(
-				"id" => 12,
-				"tieuchuan_id" => 4,
-				"tentieuchi" => "12. Phối hợp giữa nhà trường, gia đình, xã hội để thực hiện hoạt động dạy học cho học sinh"
-			),
-			array(
-				"id" => 13,
-				"tieuchuan_id" => 4,
-				"tentieuchi" => "13. Phối hợp giữa nhà trường, gia đình, xã hội để thực hiện giáo dục đạo đức, lối sống cho học sinh"
-			),
-			array(
-				"id" => 14,
-				"tieuchuan_id" => 5,
-				"tentieuchi" => "14. Sử dụng ngoại ngữ hoặc tiếng dân tộc"
-			),
-			array(
-				"id" => 15,
-				"tieuchuan_id" => 5,
-				"tentieuchi" => "15. Ứng dụng công nghệ thông tin, khai thác và sử dụng thiết bị công nghệ trong dạy học, giáo dục"
-			)
-		);
+
 		foreach($dataTieuChuan as $d){
 			$mangTieuChi = [];
 			foreach($dataTieuChi as $d1){			
@@ -148,14 +57,42 @@ class tinhchinhController extends Controller
 		$matruong = Session::get('matruong');
 		$datagv = danhsachgv::where('matruong',$matruong)->where('trangthai',1)->get();
 		$datagvcm = giaovien_chuyenmon::where('matruong',$matruong)->get();
+		$datadggv = danhgiagv::where('matruong',$matruong)->get();
+		//
+		$groupedDGGV = [];
+		foreach($datadggv as $d){
+			$mGV = $d->magiaovien;
+			$mTChi = $d->matieuchi;
+			$groupedDGGV[$mGV][$mTChi][] = $d->matochuyenmon;
+		}
+		// dd($groupedDGGV);
+		$findGroupMGVTC = [];
+		foreach($groupedDGGV as $k=>$v){
+			$maTCM;
+			$dataTieuChi = [];
+			foreach($v as $k1=>$v1){
+				$maTCM = $v1[0];
+				array_push($dataTieuChi,array('matieuchi'=>$k1));
+			}
+			$demDataTieuChi = count($dataTieuChi);
+			$findGroupMGVTC[] = array('magiaovien' => $k, 'matochuyenmon'=>$maTCM, 'demDataTieuChi'=> $demDataTieuChi);
+		}
+		//
 		$data = [];
 		foreach($datagv as $d){
 			foreach($datagvcm as $d1){
 				if($d->id == $d1->magiaovien){
-					array_push($data,array('id'=>$d->id,'matochuyenmon'=>$d1->matochuyenmon,'hovaten'=>$d->hovaten));
+					array_push($data,array('id'=>$d->id,'matochuyenmon'=>$d1->matochuyenmon,'matruong'=>$d->matruong,'hovaten'=>$d->hovaten,'finishDGGV'=>0));
 				}
 			}
 		}
+
+		// foreach($findGroupMGVTC as $f){
+		// 	foreach($data as $d){
+		// 		if($f[''])
+		// 	}
+		// }
+		
 
 		$dict = array();
 		foreach($data as $one_index){
@@ -168,6 +105,67 @@ class tinhchinhController extends Controller
 		}
 		
 		return json_encode($res, JSON_UNESCAPED_UNICODE);
+	}
+
+	public function getDataDanhGiaGv () {
+		$matruong = Session::get('matruong');
+		$danhgiagv = danhgiagv::where('matruong',$matruong)->get();
+
+		$grouped = [];
+		foreach($danhgiagv as $d){
+			$maTCM = $d->matochuyenmon;
+			$namDG = $d->namdanhgia;
+			$maGV = $d->magiaovien;
+			$grouped[$maTCM][$namDG][$maGV][] = $d;
+		}
+		$data = [];
+		foreach($grouped as $k=>$v){
+			$dataNam = [];
+			foreach($v as $k1=>$v1){
+				$dataGv = [];
+				foreach($v1 as $k2=>$v2){
+					$dataDanhGiaGv = [];
+					foreach($v2 as $k3=>$v3){
+						$id = $v3['id'];
+						$matochuyenmon = $v3['matochuyenmon'];
+						$magiaovien = $v3['magiaovien'];
+						$matieuchuan = $v3['matieuchuan'];
+						$matieuchi = $v3['matieuchi'];
+						$maxeploai = $v3['maxeploai'];
+						array_push($dataDanhGiaGv,array('iddanhgiagv'=>$id,'matochuyenmon'=>$matochuyenmon,'magiaovien'=>$magiaovien,'matieuchuan'=>$matieuchuan,'matieuchi'=>$matieuchi,'maxeploai'=>$maxeploai));
+					}
+					array_push($dataGv,array('magiaovien'=>$k2,'dsdanhgiagv'=>$dataDanhGiaGv));
+				}
+				array_push($dataNam,array('nam'=>$k1,'dsgv'=>$dataGv));
+			}
+			$data[] = array('matochuyenmon' => $k, 'dsnam'=> $dataNam);
+		}
+		return json_encode($data, JSON_UNESCAPED_UNICODE);
+	}
+
+	public function addDanhGiaGv (Request $rq) {
+		$iddanhgiagv= json_decode($rq->iddanhgiagv);
+		$dataChBxXepLoaiTrue= json_decode($rq->dataChBxXepLoaiTrue);
+		if($iddanhgiagv != ''){
+			foreach($iddanhgiagv as $i){
+				danhgiagv::destroy($i->iddanhgiagv);
+			}
+		}
+		if($dataChBxXepLoaiTrue != ''){
+			foreach($dataChBxXepLoaiTrue as $d){
+				$danhgiagv = new danhgiagv();
+				$danhgiagv->matochuyenmon = $d->maToChuyenMon;
+				$danhgiagv->magiaovien = $d->maGiaoVien;
+				$danhgiagv->matieuchuan = $d->maTieuChuan;
+				$danhgiagv->matieuchi = $d->maTieuChi;
+				$danhgiagv->matruong = $d->maTruong;
+				$danhgiagv->maxeploai = $d->maXepLoai;
+				$danhgiagv->namdanhgia = $d->namDanhGia;
+				$danhgiagv->save();
+			}
+			$success = 1;
+		}
+		return json_encode($success);
 	}
 
 }

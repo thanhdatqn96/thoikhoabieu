@@ -1,0 +1,22 @@
+[
+   	{
+      	"id":1,
+      	"tentieuchuan":"I. Phẩm chất nhà giáo"
+   	},
+   	{
+      	"id":2,
+      	"tentieuchuan":"II. Phát triển chuyên môn, nghiệp vụ"
+   	},
+   	{
+      	"id":3,
+      	"tentieuchuan":"III. Xây dựng môi trường giáo dục"
+   	},
+   	{
+      	"id":4,
+      	"tentieuchuan":"IV. Phát triển mối quan hệ giữa nhà trường, gia đình và xã hội"
+   	},
+   	{
+      	"id":5,
+      	"tentieuchuan":"V. Sử dụng ngoại ngữ hoặc tiếng dân tộc, ứng dụng công nghệ thông tin, khai thác và sử dụng thiết bị công nghệ trong dạy học và giáo dục"
+   	}
+]

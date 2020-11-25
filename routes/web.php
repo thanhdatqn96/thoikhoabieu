@@ -79,11 +79,13 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('uptcrangbuoc','xeptkb\xeptkbController@uptcrangbuoc');
 	Route::post('capnhatthoikhoabieu','xeptkb\xeptkbController@capnhatthoikhoabieu');
 
-//tinhchinh
+//đánh giá giáo viên
 	Route::get('tinhchinh','tinhchinh\tinhchinhController@index');
 	Route::get('dataTieuChuanTieuChi','tinhchinh\tinhchinhController@dataTieuChuanTieuChi');
 	Route::get('getDsToChuyenMon','tinhchinh\tinhchinhController@getDsToChuyenMon');
 	Route::get('getDsGiaoVien','tinhchinh\tinhchinhController@getDsGiaoVien');
+	Route::get('getDataDanhGiaGv','tinhchinh\tinhchinhController@getDataDanhGiaGv');
+	Route::post('addDanhGiaGv','tinhchinh\tinhchinhController@addDanhGiaGv');
 
 
 
