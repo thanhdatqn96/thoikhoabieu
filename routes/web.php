@@ -85,6 +85,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('getDsToChuyenMon','tinhchinh\tinhchinhController@getDsToChuyenMon');
 	Route::get('getDsGiaoVien','tinhchinh\tinhchinhController@getDsGiaoVien');
 	Route::get('getDataDanhGiaGv','tinhchinh\tinhchinhController@getDataDanhGiaGv');
+	Route::get('statusDanhGiaGv','tinhchinh\tinhchinhController@statusDanhGiaGv');
 	Route::post('addDanhGiaGv','tinhchinh\tinhchinhController@addDanhGiaGv');
 
 

@@ -103,7 +103,25 @@ function initEvent () {
 			}, {
 				caption: "Tên giáo viên",
 				dataField: "hovaten",	
-			},	
+			},
+			{	
+				fixed: true,
+		        fixedPosition: "right",
+				caption: "Trạng thái",
+				cellTemplate: function(container, options) {
+					// if (options.data.finishDGGV == 1) {
+     //                    $(
+     //                        "<span class='badge badge-success'>Đã đánh giá</span>"
+     //                    ).appendTo(container);
+     //                }
+     //                if (options.data.finishDGGV == 0) {
+     //                    $(
+     //                        "<span class='badge badge-warning'>Chưa đánh giá</span>"
+     //                    ).appendTo(container);
+     //                }
+				},
+				width: 120,
+			}, 
 			{
 		        fixed: true,
 		        fixedPosition: "right",
@@ -206,6 +224,9 @@ function initEvent () {
 					});
 					$('#modalDanhGiaGv').modal("hide");
 					$('#modalDanhGiaGv').on('hidden.bs.modal', function() {
+						$('#inputMaGv').val('');
+						$('#inputMaTruong').val('');
+						$('#inputMaDGGV').val('');
 						$('#tableDanhGiaGv>tbody').empty();
 					})
 					refresh(); 
@@ -218,6 +239,15 @@ function initEvent () {
 	$('#selectToChuyenMon').on('change',function(){
 		$('#selectNam').val('');
 		$('#cardDanhGiaGv').css('display','none');
+	});
+
+	$('#btnCloseModal').on('click',function(){
+		$('#modalDanhGiaGv').on('hidden.bs.modal', function() {
+			$('#inputMaGv').val('');
+			$('#inputMaTruong').val('');
+			$('#inputMaDGGV').val('');
+			$('#tableDanhGiaGv>tbody').empty();
+		})
 	});
 
 }
@@ -340,7 +370,17 @@ function modalDanhGiaGv(dataDanhGiaGv) {
 	});
 
 }
+
 function refresh() {
     var dataGrid = $("#girdDsGv").dxDataGrid("instance");
     dataGrid.refresh();
 }
+
+jQuery(document).ready(function () {
+    jQuery('#modalDanhGiaGv').on('hidden.bs.modal', function (e) {
+        $('#inputMaGv').val('');
+		$('#inputMaTruong').val('');
+		$('#inputMaDGGV').val('');
+		$('#tableDanhGiaGv>tbody').empty();
+    });
+});

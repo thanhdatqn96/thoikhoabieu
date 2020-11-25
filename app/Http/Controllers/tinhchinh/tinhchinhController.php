@@ -57,42 +57,16 @@ class tinhchinhController extends Controller
 		$matruong = Session::get('matruong');
 		$datagv = danhsachgv::where('matruong',$matruong)->where('trangthai',1)->get();
 		$datagvcm = giaovien_chuyenmon::where('matruong',$matruong)->get();
-		$datadggv = danhgiagv::where('matruong',$matruong)->get();
 		//
-		$groupedDGGV = [];
-		foreach($datadggv as $d){
-			$mGV = $d->magiaovien;
-			$mTChi = $d->matieuchi;
-			$groupedDGGV[$mGV][$mTChi][] = $d->matochuyenmon;
-		}
-		// dd($groupedDGGV);
-		$findGroupMGVTC = [];
-		foreach($groupedDGGV as $k=>$v){
-			$maTCM;
-			$dataTieuChi = [];
-			foreach($v as $k1=>$v1){
-				$maTCM = $v1[0];
-				array_push($dataTieuChi,array('matieuchi'=>$k1));
-			}
-			$demDataTieuChi = count($dataTieuChi);
-			$findGroupMGVTC[] = array('magiaovien' => $k, 'matochuyenmon'=>$maTCM, 'demDataTieuChi'=> $demDataTieuChi);
-		}
-		//
+		
 		$data = [];
 		foreach($datagv as $d){
 			foreach($datagvcm as $d1){
 				if($d->id == $d1->magiaovien){
-					array_push($data,array('id'=>$d->id,'matochuyenmon'=>$d1->matochuyenmon,'matruong'=>$d->matruong,'hovaten'=>$d->hovaten,'finishDGGV'=>0));
+					array_push($data,array('id'=>$d->id,'matochuyenmon'=>$d1->matochuyenmon,'matruong'=>$d->matruong,'hovaten'=>$d->hovaten));
 				}
 			}
 		}
-
-		// foreach($findGroupMGVTC as $f){
-		// 	foreach($data as $d){
-		// 		if($f[''])
-		// 	}
-		// }
-		
 
 		$dict = array();
 		foreach($data as $one_index){
@@ -141,6 +115,33 @@ class tinhchinhController extends Controller
 			$data[] = array('matochuyenmon' => $k, 'dsnam'=> $dataNam);
 		}
 		return json_encode($data, JSON_UNESCAPED_UNICODE);
+	}
+
+	public function statusDanhGiaGv () {
+		$matruong = Session::get('matruong');
+		$datadggv = danhgiagv::where('matruong',$matruong)->get();
+		$groupedDGGV = [];
+		foreach($datadggv as $d){
+			$mGV = $d->magiaovien;
+			$mTChi = $d->matieuchi;
+			$groupedDGGV[$mGV][$mTChi][] = $d;
+		}
+
+		$findGroupMGVTC = [];
+		foreach($groupedDGGV as $k=>$v){
+			$maTCM;
+			$namDG;
+			$dataTieuChi = [];
+			foreach($v as $k1=>$v1){
+				$maTCM = $v1[0]->matochuyenmon;
+				$namDG = $v1[0]->namdanhgia;
+				array_push($dataTieuChi,array('matieuchi'=>$k1));
+			}
+			$demDataTieuChi = count($dataTieuChi);
+			$findGroupMGVTC[] = array('magiaovien' => $k, 'matochuyenmon'=>$maTCM, 'namdanhgia'=>$namDG ,'demDataTieuChi'=> $demDataTieuChi);
+		}
+		return json_encode($findGroupMGVTC, JSON_UNESCAPED_UNICODE);
+
 	}
 
 	public function addDanhGiaGv (Request $rq) {

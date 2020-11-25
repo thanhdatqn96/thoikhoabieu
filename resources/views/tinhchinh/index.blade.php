@@ -153,12 +153,12 @@
 				<input type="hidden" id="inputMaGv">
 				<input type="hidden" id="inputMaTruong">
 				<input type="hidden" id="inputMaDGGV">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModal">
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="form">
+				<form class="form" id="formDanhGiaGv">
 					<div class="form-body">
 						<div class="row">
 							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
