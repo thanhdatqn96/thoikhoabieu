@@ -115,23 +115,26 @@ function initEvent () {
 				columns: [{
 					caption: "",
 					width: 50,
+					// headerCellTemplate: function (header, info) {
+		   //              $(
+     //                        "<input type='checkbox' class='classChbxAllSelect'>"
+     //                    ).appendTo(header);
+		   //          },
 					cellTemplate: function(container, options) {
 						let dataCell = options.data;
 						let status = 0;
-						let stt;
 						layStatusDanhGiaGv.forEach(function(iTem,key){
 							if(iTem.matochuyenmon == dataCell.matochuyenmon && iTem.magiaovien == dataCell.id && iTem.namdanhgia == valNam){
 								status = 1;
-								stt = "idChbxSelect"+key;
 							}
 						});
 						if(status == 1){
 							$(
-	                            "<input type='checkbox' id="+stt+" class='classChbxSelect' data-matochuyenmon= "+dataCell.matochuyenmon+" data-magiaovien= "+dataCell.id+" data-matruong= "+dataCell.matruong+" data-namdanhgia= "+valNam+">"
+	                            "<input type='checkbox' class='classChbxSelect' data-matochuyenmon= "+dataCell.matochuyenmon+" data-magiaovien= "+dataCell.id+" data-matruong= "+dataCell.matruong+" data-namdanhgia= "+valNam+">"
 	                        ).appendTo(container);
 						}else{
 							$(
-	                            "<input type='checkbox' class='classChbxSelect' disabled>"
+	                            "<input type='checkbox' disabled>"
 	                        ).appendTo(container);
 						}	
 					}
@@ -239,6 +242,19 @@ function initEvent () {
 			        },
 			        width: 50,
 				}],
+				onContextMenuPreparing: function(data) { 
+					if (data.target == "content") {
+						if (!data.items) data.items = [];
+						data.items.push({
+							template: function () {
+								return $("<i class='fa fa-exchange'>").text("Hoàn thành đánh giá");                  
+							},
+							onItemClick: function() {
+								hoanThanhDanhGia();
+							}
+						});
+					} 
+				}
 			});
 		});
 
@@ -312,10 +328,6 @@ function initEvent () {
 			$('#inputMaDGGV').val('');
 			$('#tableDanhGiaGv>tbody').empty();
 		})
-	});
-
-	$('#btnDoneDanhGia').on('click',function(){
-		let chbxSelect = document.querySelectorAll('.dx-datagrid-table dx-datagrid-table-fixed .classChbxSelect');
 	});
 
 }
@@ -452,4 +464,46 @@ jQuery(document).ready(function () {
 		$('#tableDanhGiaGv>tbody').empty();
     });
 });
+
+function hoanThanhDanhGia () {
+	let chbxSelect = document.querySelectorAll('.classChbxSelect');
+	let arrChbx = [];
+	chbxSelect.forEach(function(Item,key){
+		if(chbxSelect[key].checked == true){
+			let maTChuyenMon= chbxSelect[key].dataset.matochuyenmon;
+            let maGVien = chbxSelect[key].dataset.magiaovien;
+            let maTrg = chbxSelect[key].dataset.matruong;
+            let namDGia = chbxSelect[key].dataset.namdanhgia;
+			arrChbx.push({matochuyenmon: maTChuyenMon, magiaovien: maGVien, matruong: maTrg, namdanhgia: namDGia});
+		}
+	});
+	let demArrChbx = arrChbx.length;
+	if(demArrChbx == 0){
+		alert('Vui lòng chọn giáo viên đã đánh giá');
+		return false;
+	}else{
+		axios.post('addKetQuaDanhGiaGv', {
+    		arrChbx: arrChbx
+		}).then(function(response) {
+			// let data = response.data;
+			// if(data == 1){
+			// 	Swal.fire({
+			// 		title: 'Lưu',
+			// 		text: 'Đã lưu thành công',
+			// 		icon: 'success',
+			// 		confirmButtonText: 'OK'
+			// 	});
+			// 	$('#modalDanhGiaGv').modal("hide");
+			// 	$('#modalDanhGiaGv').on('hidden.bs.modal', function() {
+			// 		$('#inputMaGv').val('');
+			// 		$('#inputMaTruong').val('');
+			// 		$('#inputMaDGGV').val('');
+			// 		$('#tableDanhGiaGv>tbody').empty();
+			// 	})
+			// 	refresh(); 
+			// }
+		});
+	}
+
+}
 

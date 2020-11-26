@@ -164,4 +164,8 @@ class tinhchinhController extends Controller
 		return json_encode($success);
 	}
 
+	public function addKetQuaDanhGiaGv (Request $rq) {
+		$arrChbxDGGV = $rq->arrChbx;
+	}
+
 }

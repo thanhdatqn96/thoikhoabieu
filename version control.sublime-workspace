@@ -4,516 +4,300 @@
 		"selected_items":
 		[
 			[
-				"id",
-				"idChbxSelect"
+				"matru",
+				"matruong"
 			],
 			[
-				"cl",
-				"classChbxXepLoai"
+				"matoch",
+				"matochuyenmon"
 			],
 			[
-				"sele",
-				"select"
-			],
-			[
-				"ye",
-				"yearCurrent"
-			],
-			[
-				"val",
-				"valNam"
-			],
-			[
-				"lay",
-				"layData"
-			],
-			[
-				"nam",
+				"namdanh",
 				"namdanhgia"
-			],
-			[
-				"mat",
-				"maToChuyenMon"
-			],
-			[
-				"ch",
-				"chbxXepLoai"
-			],
-			[
-				"For",
-				"forEach"
-			],
-			[
-				"fin",
-				"findGroupMGVTC"
-			],
-			[
-				"matieu",
-				"matieuchi"
-			],
-			[
-				"dataT",
-				"dataTieuChi"
-			],
-			[
-				"gr",
-				"groupedDGGV"
-			],
-			[
-				"datad",
-				"datadggv"
-			],
-			[
-				"maX",
-				"maXepLoai"
-			],
-			[
-				"mXl",
-				"maXLoai"
-			],
-			[
-				"maT",
-				"maTChi"
-			],
-			[
-				"maTieu",
-				"maTieuChuan"
-			],
-			[
-				"mati",
-				"matieuchi"
-			],
-			[
-				"ite",
-				"iTem"
-			],
-			[
-				"iT",
-				"iTem"
-			],
-			[
-				"for",
-				"forEach"
-			],
-			[
-				"da",
-				"dataDanhGiaGv"
-			],
-			[
-				"maG",
-				"maGV"
 			],
 			[
 				"magiao",
 				"magiaovien"
 			],
 			[
-				"namdan",
-				"namdanhgia"
+				"cl",
+				"classChbxAllSelect"
 			],
 			[
-				"matochuy",
-				"matochuyenmon"
+				"che",
+				"checked"
 			],
 			[
-				"matr",
-				"matruong"
+				"for",
+				"forEach"
 			],
 			[
-				"magia",
-				"magiaovien"
+				"nam",
+				"namDG"
 			],
 			[
-				"danh",
-				"danhgiagv"
-			],
-			[
-				"dataTieu",
-				"dataTieuChuanTieuChi"
-			],
-			[
-				"jso",
-				"jsonData"
-			],
-			[
-				"let",
-				"length"
+				"fin",
+				"findGroupMGVTC"
 			],
 			[
 				"mato",
 				"matochuyenmon"
 			],
 			[
-				"inpu",
-				"inputMaTruong"
+				"tentieu",
+				"tentieuchuan"
 			],
 			[
-				"che",
-				"checkBoxXepLoai"
-			],
-			[
-				"pa",
-				"padding-top\tproperty"
-			],
-			[
-				"mar",
-				"margin-top\tproperty"
-			],
-			[
-				"get",
-				"getElementById"
-			],
-			[
-				"to",
-				"tochuyenmon"
-			],
-			[
-				"arra",
+				"arr",
 				"array"
 			],
 			[
-				"div",
-				"divPassChange"
-			],
-			[
-				"pass",
-				"passwordshow"
-			],
-			[
-				"gettk",
-				"gettkblop"
-			],
-			[
-				"layDa",
-				"layDataDsTruong"
-			],
-			[
-				"res",
-				"result"
-			],
-			[
-				"getDS",
-				"getDataDsTruong"
-			],
-			[
-				"noidu",
-				"noidungbangchieu"
-			],
-			[
-				"fa",
-				"false"
-			],
-			[
-				"re",
-				"resultTKBLop"
-			],
-			[
-				"getDa",
-				"getDataTkbPhong"
-			],
-			[
-				"xuatTKB",
-				"xuatTKBTruongC"
-			],
-			[
-				"se",
-				"selected"
-			],
-			[
-				"check",
-				"checked"
-			],
-			[
-				"new",
-				"new_data_tkb_phong"
-			],
-			[
-				"idtr",
-				"idtruong"
-			],
-			[
-				"data",
-				"datarbtcd"
-			],
-			[
-				"mon",
-				"monthSelect"
-			],
-			[
-				"we",
-				"weekSelect"
-			],
-			[
-				"fir",
-				"firstDay"
-			],
-			[
-				"va",
-				"value"
-			],
-			[
-				"datal",
-				"datalop"
-			],
-			[
-				"tkb",
-				"tkbLoc"
-			],
-			[
-				"th",
-				"thoikhoabieu"
-			],
-			[
-				"tru",
-				"truong"
-			],
-			[
-				"tbl",
-				"tbl_admin_id"
-			],
-			[
-				"phan",
-				"phantranglop"
-			],
-			[
-				"fun",
-				"function"
-			],
-			[
-				"datepickernam",
-				"datepickernamlop"
-			],
-			[
-				"tha",
-				"thang"
-			],
-			[
-				"loa",
-				"loadthoikhoabieutruong"
-			],
-			[
-				"selectph",
-				"selecttuanphong"
-			],
-			[
-				"datepickerthangtu",
-				"datepickerthangtuanphong"
-			],
-			[
-				"selecttuan",
-				"selecttuangv"
-			],
-			[
-				"h",
-				"httkbsc"
-			],
-			[
-				"phanthantabletr",
-				"phanthantabletruong"
-			],
-			[
-				"tbodysang",
-				"tbodysangchieu"
-			],
-			[
-				"date",
-				"datepickerthangtuantruong"
-			],
-			[
-				"carxe",
-				"cardxeptkbtruong"
-			],
-			[
-				"co",
-				"color\tproperty"
-			],
-			[
-				"bangs",
-				"bangsangchieu"
-			],
-			[
 				"dat",
-				"dataloptruong"
+				"dataTieuChi"
 			],
 			[
-				"le",
-				"length"
+				"te",
+				"text-align\tproperty"
 			],
 			[
-				"pad",
-				"padding-left\tproperty"
+				"sele",
+				"selectNam"
 			],
 			[
-				"tao",
-				"taodiv"
+				"sel",
+				"selectNam"
 			],
 			[
-				"dsth",
-				"dsthang"
+				"ra",
+				"radioKetQuaDanhGiaGv"
 			],
 			[
-				"col",
-				"col-md-12"
+				"margi",
+				"margin-left\tproperty"
 			],
 			[
-				"dst",
-				"dstuan"
+				"bu",
+				"buoi"
 			],
 			[
-				"demth",
-				"demthang"
+				"ten",
+				"tenmonhoc"
 			],
 			[
-				"cte",
-				"createElement"
+				"tenm",
+				"tenmonhoc"
 			],
 			[
-				"padd",
-				"padding-top\tproperty"
+				"mam",
+				"mamonhoc"
 			],
 			[
-				"app",
-				"appendChild"
-			],
-			[
-				"dem",
-				"demtuan"
-			],
-			[
-				"dsbu",
-				"dsbuoithu"
-			],
-			[
-				"databuoi",
-				"databuoithu"
-			],
-			[
-				"ne",
-				"new_data_tkb_gv_thoigian"
-			],
-			[
-				"datath",
-				"datathang"
-			],
-			[
-				"ids",
-				"idselectlop"
-			],
-			[
-				"idse",
-				"idselectkhoi"
-			],
-			[
-				"vale",
-				"valSelectlop"
-			],
-			[
-				"thangnam",
-				"thangnamtuan"
-			],
-			[
-				"than",
-				"thangnamtuan"
-			],
-			[
-				"w",
-				"weeks"
-			],
-			[
-				"ng",
-				"ngay"
-			],
-			[
-				"datepickertha",
-				"datepickerthangtuan"
-			],
-			[
-				"datepic",
-				"datepickertuan"
-			],
-			[
-				"in",
-				"input\tTag"
-			],
-			[
-				"wi",
-				"width\tproperty"
-			],
-			[
-				"idca",
-				"idcaphoctt"
-			],
-			[
-				"idhuy",
-				"idhuyentt"
-			],
-			[
-				"idh",
-				"idhuyentt"
-			],
-			[
-				"datak",
-				"dataKhoiloc"
-			],
-			[
-				"maca",
-				"macap"
-			],
-			[
-				"ma",
-				"macaphoc"
-			],
-			[
-				"mac",
-				"macaphoc"
-			],
-			[
-				"req",
-				"request"
-			],
-			[
-				"st",
-				"style"
-			],
-			[
-				"sotiet",
-				"sotietmonhoc_temp"
-			],
-			[
-				"form",
-				"formimportdata"
+				"danhsac",
+				"danhsachlophoc"
 			],
 			[
 				"wh",
 				"where"
 			],
 			[
-				"des",
-				"destroy"
+				"rang",
+				"rangbuoctietcodinh"
 			],
 			[
-				"sotie",
-				"sotietmonhoc_temp"
+				"rnag",
+				"rangbuoctietcodinh"
 			],
 			[
-				"mang",
-				"mangTongsotietgv"
+				"danhsa",
+				"danhsachlophoc"
 			],
 			[
-				"man",
-				"mangTongsotietgv"
+				"tra",
+				"trangthai"
 			],
 			[
-				"hien",
-				"hienThitongsotiettoantruong"
+				"co",
+				"color"
 			],
 			[
-				"tong",
-				"tongsotietgv"
+				"st",
+				"style\tTag"
 			],
 			[
-				"que",
-				"querySelectorAll"
+				"button",
+				"buttonmagiaovien"
+			],
+			[
+				"back",
+				"backgroundColor"
+			],
+			[
+				"ma",
+				"magiaovien"
+			],
+			[
+				"da",
+				"dataset"
+			],
+			[
+				"on",
+				"onClick"
+			],
+			[
+				"but",
+				"button"
+			],
+			[
+				"fn",
+				"function"
+			],
+			[
+				"tbo",
+				"tbodycotrongtruong"
+			],
+			[
+				"data-ma",
+				"data-magiaovien"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"w",
+				"width"
+			],
+			[
+				"danh",
+				"danhsachgv"
+			],
+			[
+				"ov",
+				"overflow-x\tproperty"
+			],
+			[
+				"pa",
+				"padding-left\tproperty"
+			],
+			[
+				"id",
+				"idselectlop"
+			],
+			[
+				"dis",
+				"disabled"
+			],
+			[
+				"mabu",
+				"mabuoi"
+			],
+			[
+				"ds",
+				"dsbuoithu"
+			],
+			[
+				"pro",
+				"prop"
+			],
+			[
+				"data",
+				"datatkb"
+			],
+			[
+				"bacl",
+				"background-color\tproperty"
+			],
+			[
+				"col",
+				"color\tproperty"
+			],
+			[
+				"al",
+				"text-align\tproperty"
+			],
+			[
+				"lo",
+				"lopcheck"
+			],
+			[
+				"k",
+				"khois"
+			],
+			[
+				"hi",
+				"hidden"
+			],
+			[
+				"datas",
+				"dataset"
+			],
+			[
+				"apdungtoantruongrbt",
+				"apdungtoantruongrbtcd"
+			],
+			[
+				"tab",
+				"table"
+			],
+			[
+				"selec",
+				"select2"
+			],
+			[
+				"select",
+				"select2"
+			],
+			[
+				"se",
+				"setAttribute"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"idt",
+				"idthu"
+			],
+			[
+				"val",
+				"val"
+			],
+			[
+				"td",
+				"tddsbh"
+			],
+			[
+				"cla",
+				"class"
+			],
+			[
+				"gete",
+				"getElementsByClassName"
+			],
+			[
+				"at",
+				"attributes"
+			],
+			[
+				"tr",
+				"trdsbh"
+			],
+			[
+				"row",
+				"rowIndex"
+			],
+			[
+				"ch",
+				"checkbox"
+			],
+			[
+				"va",
+				"value"
+			],
+			[
+				"le",
+				"length"
 			]
 		]
 	},
@@ -523,7 +307,7 @@
 			"file": "routes/web.php",
 			"settings":
 			{
-				"buffer_size": 18884,
+				"buffer_size": 18971,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -532,8 +316,19 @@
 			"file": "app/Http/Controllers/tinhchinh/tinhchinhController.php",
 			"settings":
 			{
-				"buffer_size": 4898,
+				"buffer_size": 4985,
 				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "{\n    \"folders\":\n    [\n        {\n            \"follow_symlinks\": true,\n            \"path\": \".\"\n        }\n    ],\n    \"settings\": {\n        \"xdebug\": {\n             \"url\": \"http://localhost\",\n        }\n    }\n}",
+			"file": "version control.sublime-project",
+			"file_size": 53,
+			"file_write_time": 132507824508541104,
+			"settings":
+			{
+				"buffer_size": 206,
 				"line_ending": "Windows"
 			}
 		},
@@ -541,16 +336,16 @@
 			"file": "public/js/tinhchinh/tinhchinh.js",
 			"settings":
 			{
-				"buffer_size": 14103,
+				"buffer_size": 15737,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "public/js/xemtkb/xemtkb.js",
+			"file": "public/js/tonghop/xemthoikhoabieu.js",
 			"settings":
 			{
-				"buffer_size": 53571,
+				"buffer_size": 77120,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -559,9 +354,62 @@
 			"file": "resources/views/tinhchinh/index.blade.php",
 			"settings":
 			{
-				"buffer_size": 8525,
+				"buffer_size": 8402,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "resources/views/admin/taikhoan.blade.php",
+			"settings":
+			{
+				"buffer_size": 16035,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows",
+				"name": "Xdebug Context",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows",
+				"name": "Xdebug Watch",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows",
+				"name": "Xdebug Stack",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "=> D:\\laragon\\www\\thoikhoabieu\\app\\Http\\Controllers\\tinhchinh\\tinhchinhController.php\n\t|+| 168\n",
+			"settings":
+			{
+				"buffer_size": 95,
+				"line_ending": "Windows",
+				"name": "Xdebug Breakpoint",
+				"read_only": true,
+				"scratch": true
 			}
 		}
 	],
@@ -579,17 +427,13 @@
 			[
 				"install package",
 				"Package Control: Install Package"
-			],
-			[
-				"ww",
-				"Word Wrap: Toggle"
 			]
 		],
 		"width": 0.0
 	},
 	"console":
 	{
-		"height": 157.0,
+		"height": 0.0,
 		"history":
 		[
 		]
@@ -605,156 +449,147 @@
 	},
 	"expanded_folders":
 	[
-		"/E/laragon/www/thoikhoabieu",
-		"/E/laragon/www/thoikhoabieu/app",
-		"/E/laragon/www/thoikhoabieu/app/Http",
-		"/E/laragon/www/thoikhoabieu/public",
-		"/E/laragon/www/thoikhoabieu/public/js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao",
-		"/E/laragon/www/thoikhoabieu/public/js/xemtkb",
-		"/E/laragon/www/thoikhoabieu/resources",
-		"/E/laragon/www/thoikhoabieu/resources/views",
-		"/E/laragon/www/thoikhoabieu/resources/views/admin",
-		"/E/laragon/www/thoikhoabieu/routes"
+		"/D/laragon/www/thoikhoabieu",
+		"/D/laragon/www/thoikhoabieu/app",
+		"/D/laragon/www/thoikhoabieu/app/Http",
+		"/D/laragon/www/thoikhoabieu/app/Http/Controllers",
+		"/D/laragon/www/thoikhoabieu/app/Http/Controllers/tinhchinh",
+		"/D/laragon/www/thoikhoabieu/app/Http/Controllers/tonghop",
+		"/D/laragon/www/thoikhoabieu/app/Http/Controllers/xemtkb",
+		"/D/laragon/www/thoikhoabieu/public",
+		"/D/laragon/www/thoikhoabieu/public/css",
+		"/D/laragon/www/thoikhoabieu/public/css/xemtkb",
+		"/D/laragon/www/thoikhoabieu/public/js",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao",
+		"/D/laragon/www/thoikhoabieu/public/js/rangbuoc",
+		"/D/laragon/www/thoikhoabieu/public/js/tinhchinh",
+		"/D/laragon/www/thoikhoabieu/public/js/tonghop",
+		"/D/laragon/www/thoikhoabieu/resources",
+		"/D/laragon/www/thoikhoabieu/resources/views",
+		"/D/laragon/www/thoikhoabieu/resources/views/admin",
+		"/D/laragon/www/thoikhoabieu/resources/views/khaibao",
+		"/D/laragon/www/thoikhoabieu/resources/views/tinhchinh",
+		"/D/laragon/www/thoikhoabieu/routes"
 	],
 	"file_history":
 	[
-		"/E/laragon/www/thoikhoabieu/public/js/xemtkb/xemtkb.js",
-		"/E/laragon/www/thoikhoabieu/resources/views/admin/taikhoan.blade.php",
-		"/E/laragon/www/thoikhoabieu/public/js/tonghop/thongbao.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/sotietmoimon.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/sotiettrongbuoi.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/chonphonghoc.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/chonmonhoc.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/chonlophoc.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/chongvthamgiagiangday.js",
-		"/E/laragon/www/thoikhoabieu/public/js/thongbao/thongbao.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/nhapdanhsachtochuyenmon.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/nhapdanhsachphonghocbomon.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/nhapdanhsachlophoc.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/nhapdanhsachgv.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/diemtruong.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/danhsachgvcuatochuyenmon.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/chontochuyenmon.js",
-		"/E/laragon/www/thoikhoabieu/public/js/rangbuoc/tietgvbuocphaico.js",
-		"/E/laragon/www/thoikhoabieu/public/js/rangbuoc/rangbuoctietcodinh.js",
-		"/E/laragon/www/thoikhoabieu/public/js/rangbuoc/dangkybuoitietnghicuagv.js",
-		"/E/laragon/www/thoikhoabieu/public/js/tonghop/thongke.js",
-		"/E/laragon/www/thoikhoabieu/public/js/tonghop/xemthoikhoabieu.js",
-		"/E/laragon/www/thoikhoabieu/resources/views/tonghop/xemthoikhoabieu.blade.php",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/rangbuoc/rangbuocController.php",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/tonghop/tonghopController.php",
-		"/E/laragon/www/thoikhoabieu/public/js/dataTieuChuanTieuChi/dataTieuChuan.json",
-		"/E/laragon/www/thoikhoabieu/public/js/dataTieuChuanTieuChi/dataTieuChi.json",
-		"/E/laragon/www/thoikhoabieu/public/js/dataTieuChuanTieuChi/dataTieuChuanTieuChi.json",
-		"/C/Users/Admin/AppData/Roaming/Sublime Text 3/Packages/Xdebug Client/Xdebug.sublime-settings",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/tinhchinh/tinhchinhController.php",
-		"/E/laragon/www/thoikhoabieu/.env",
-		"/E/laragon/www/thoikhoabieu/version control.sublime-project",
-		"/E/laragon/www/thoikhoabieu/version control.sublime-workspace",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/js/pccm/index.js",
-		"/E/laragon/www/thoikhoabieu/public/js/tonghop/theodoibiendongtkb.js",
-		"/E/laragon/www/thoikhoabieu/resources/views/tonghop/theodoidanhgiagiaovien.blade.php",
-		"/E/laragon/www/thoikhoabieu/resources/views/tonghop/theodoibiendongtkb.blade.php",
-		"/E/laragon/www/thoikhoabieu/resources/views/tonghop/thongke.blade.php",
-		"/E/laragon/www/thoikhoabieu/resources/views/thongbao/thongbao.blade.php",
-		"/E/laragon/www/thoikhoabieu/public/js/api/phancongGVApi.js",
-		"/E/laragon/www/thoikhoabieu/public/js/khaibao/js/api/phancongGVApi.js",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/khaibao/khaibaoController.php",
-		"/E/laragon/www/thoikhoabieu/composer.json",
-		"/E/laragon/www/thoikhoabieu/vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemManager.php",
-		"/E/laragon/www/thoikhoabieu/resources/views/xemtkb/index.blade.php",
-		"/E/laragon/www/thoikhoabieu/app/monhoc.php",
-		"/E/laragon/www/thoikhoabieu/app/danhsachlophoc.php",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/taikhoantruong/taiKhoantruongController.php",
-		"/E/laragon/www/thoikhoabieu/resources/views/taikhoantruong/taikhoantruong.blade.php",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/admin/AdminController.php",
-		"/C/Users/Admin/Downloads/tietgvbuocphaico.js",
-		"/E/laragon/www/thoikhoabieu/public/js/api/xuattkbapi.js",
-		"/E/laragon/www/thoikhoabieu/public/js/api/getDataTkb.js",
-		"/E/laragon/www/thoikhoabieu/public/js/api/axiosClient.js",
-		"/E/laragon/www/thoikhoabieu/public/js/xuattkb/xuattkb.js",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/export/exportExcelController.php",
-		"/E/laragon/www/thoikhoabieu/app/thoikhoabieuexcel.php",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/xemtkb/xemtkbController.php",
-		"/E/laragon/www/thoikhoabieu/app/Objects/SessionInfo.php",
-		"/E/laragon/www/thoikhoabieu/resources/views/exportkb/index.blade.php",
-		"/E/laragon/www/thoikhoabieu/routes/api.php",
-		"/E/laragon/www/thoikhoabieu/public/js/tonghop/xuatthoikhoabieu.js",
-		"/E/laragon/www/thoikhoabieu/public/export/~$thoikhoabieutruong.xlsx",
-		"/E/laragon/www/thoikhoabieu/public/js/api/api.js",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/exportkb/exportkbController.php",
-		"/E/laragon/www/thoikhoabieu1810/storage/app/excel/mautkbgiaovien.xlsx",
-		"/E/laragon/www/thoikhoabieu1810/app/Objects/TableTimeTypeTwo.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/api/api.js",
-		"/E/laragon/www/thoikhoabieu1810/public/js/api/axiosClient.js",
-		"/E/laragon/www/thoikhoabieu1810/app/Http/Controllers/thongbao/thongbaoController.php",
-		"/E/laragon/www/thoikhoabieu1810/resources/views/admin/taikhoan.blade.php",
-		"/E/laragon/www/thoikhoabieu1810/resources/views/xemtkb/index.blade.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/tonghop/theodoibaocaodonvi.js",
-		"/E/laragon/www/thoikhoabieu1810/app/Http/Controllers/exportkb/exportkbController.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/tonghop/thongke.js",
-		"/E/laragon/www/thoikhoabieu1810/app/Http/Controllers/xemtkb/xemtkbController.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/api/xuattkbapi.js",
-		"/E/laragon/www/thoikhoabieu1810/public/js/xuattkb/xuattkb.js",
-		"/E/laragon/www/thoikhoabieu1810/resources/views/exportkb/index.blade.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/api/xeptkbApi.js",
-		"/E/laragon/www/thoikhoabieu1810/public/js/api/phancongGVApi.js",
-		"/E/laragon/www/thoikhoabieu1810/.env",
-		"/E/laragon/www/thoikhoabieu1810/public/js/ultils/ultils.js",
-		"/E/laragon/www/thoikhoabieu1810/app/thoikhoabieuexcel.php",
-		"/E/laragon/www/thoikhoabieu1810/vendor/symfony/process/Process.php",
-		"/E/laragon/www/thoikhoabieu1810/app/Http/Controllers/xeptkb/xeptkbController.php",
-		"/E/laragon/www/thoikhoabieu1810/app/Objects/XepTKB.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/xeptkb/xeptkb.js",
-		"/E/laragon/www/thoikhoabieu1810/resources/views/layout/top.blade.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/xeptkb/woker.js",
-		"/E/laragon/www/thoikhoabieu1810/public/theme/app-assets/vendors/js/editors/ace/worker-html.js",
-		"/E/laragon/www/thoikhoabieu1810/public/dx/js/jszip.js",
-		"/E/laragon/www/thoikhoabieu1810/public/dx/js/jszip/xlsxworker.js",
-		"/E/laragon/www/thoikhoabieu1810/app/Objects/PhancongGiaovien.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/thongbao/thongbao.js",
-		"/E/laragon/www/thoikhoabieu1810/resources/views/khaibao/index.blade.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/khaibao/js/pccm/index.js",
-		"/E/laragon/www/thoikhoabieu1810/public/js/xemtkb/xemtkb.js",
-		"/E/laragon/www/thoikhoabieu1810/vendor/symfony/http-foundation/Session/Session.php",
-		"/E/laragon/www/thoikhoabieu1810/app/Http/Controllers/taikhoantruong/taiKhoantruongController.php",
-		"/E/laragon/www/thoikhoabieu1810/app/Http/Controllers/rangbuoc/rangbuocController.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/rangbuoc/rangbuoccaptietxepliennhau.js",
-		"/E/laragon/www/thoikhoabieu1810/resources/views/admin/truong.blade.php",
-		"/E/laragon/www/thoikhoabieu1810/resources/views/rangbuoc/index.blade.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/rangbuoc/const/http.js",
-		"/E/laragon/www/thoikhoabieu1810/public/js/rangbuoc/const/path.js",
-		"/E/laragon/www/thoikhoabieu1810/public/js/rangbuoc/api/sotiettoidangayApi.js",
-		"/E/laragon/www/thoikhoabieu1810/public/js/rangbuoc/api/sotiettoidaBuoi.js",
-		"/E/laragon/www/thoikhoabieu1810/public/js/rangbuoc/api/api.js",
-		"/E/laragon/www/thoikhoabieu1810/public/js/rangbuoc/api/axiosClient.js",
-		"/E/laragon/www/thoikhoabieu1810/app/Http/Controllers/tonghop/tonghopController.php",
-		"/E/laragon/www/thoikhoabieu1810/resources/views/tonghop/xemthoikhoabieu.blade.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/tonghop/xemthoikhoabieu.js",
-		"/E/laragon/www/thoikhoabieu1810/public/js/rangbuoc/tietgvbuocphaico.js",
-		"/E/laragon/www/thoikhoabieu1810/public/js/rangbuoc/dangkybuoitietnghicuagv.js",
-		"/E/laragon/www/thoikhoabieu1810/public/css/xemtkb/styleXemtkb.css",
-		"/E/laragon/www/thoikhoabieu1810/resources/views/tonghop/theodoibiendongtkb.blade.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/tonghop/theodoibiendongtkb.js",
-		"/C/Users/Admin/Desktop/xemtkb.js",
-		"/C/Users/Admin/Desktop/xemtkb/xemthoikhoabieu.blade.php",
-		"/C/Users/Admin/Desktop/ab.js",
-		"/C/Users/Admin/Desktop/biendong0411/tonghopController.php",
-		"/E/laragon/www/thoikhoabieu1810/app/phonghoc.php",
-		"/E/laragon/www/thoikhoabieu1810/routes/web.php",
-		"/E/laragon/www/thoikhoabieu1810/server.php",
-		"/E/laragon/www/thoikhoabieu1810/.env.example",
-		"/E/laragon/www/thoikhoabieu1810/vendor/laravel/framework/src/Illuminate/Support/Carbon.php",
-		"/E/laragon/www/thoikhoabieu1810/vendor/nesbot/carbon/src/Carbon/Carbon.php"
+		"/D/laragon/www/thoikhoabieu/.env",
+		"/D/laragon/www/phpinfo.php",
+		"/D/laragon/www/thoikhoabieu/resources/views/taikhoantruong/taikhoantruong.blade.php",
+		"/D/laragon/www/thoikhoabieu/resources/views/tinhchinh/index.blade.php",
+		"/D/laragon/www/thoikhoabieu/public/js/tonghop/thongbao.js",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao/danhsachgvcuatochuyenmon.js",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao/chonlophoc.js",
+		"/D/laragon/www/thoikhoabieu/public/js/rangbuoc/tiethopcuato.js",
+		"/D/laragon/www/thoikhoabieu/public/js/rangbuoc/dangkybuoitietnghicuagv.js",
+		"/D/laragon/www/thoikhoabieu/public/js/rangbuoc/rangbuocsotiet5sangtiet1chieu.js",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao/sotietmoimon.js",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao/chongvthamgiagiangday.js",
+		"/D/laragon/www/thoikhoabieu/resources/views/rangbuoc/index.blade.php",
+		"/D/laragon/www/thoikhoabieu/public/js/rangbuoc/rangbuoctietcodinh.js",
+		"/D/laragon/www/thoikhoabieu/app/Http/Controllers/tonghop/tonghopController.php",
+		"/D/laragon/www/thoikhoabieu/resources/views/tonghop/xemthoikhoabieu.blade.php",
+		"/D/laragon/www/thoikhoabieu/public/js/tonghop/xemthoikhoabieu.js",
+		"/D/laragon/www/thoikhoabieu/public/css/xemtkb/styleXemtkb.css",
+		"/D/laragon/www/thoikhoabieu/resources/views/khaibao/index.blade.php",
+		"/D/laragon/www/thoikhoabieu/public/js/xemtkb/xemtkb.js",
+		"/D/laragon/www/thoikhoabieu/resources/views/xemtkb/index.blade.php",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao/chontochuyenmon.js",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao/chonphonghoc.js",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao/chonmonhoc.js",
+		"/D/laragon/www/thoikhoabieu/app/Http/Controllers/xemtkb/xemtkbController.php",
+		"/D/laragon/www/thoikhoabieu/app/Http/Controllers/export/exportExcelController.php",
+		"/D/laragon/www/thoikhoabieu/public/js/api/xuattkbapi.js",
+		"/D/laragon/www/thoikhoabieu/routes/web.php",
+		"/D/laragon/www/thoikhoabieu/routes/api.php",
+		"/D/laragon/www/thoikhoabieu/app/Objects/Day.php",
+		"/D/laragon/www/thoikhoabieu/app/Objects/HTTPCode.php",
+		"/D/laragon/www/thoikhoabieu/app/Objects/ObjectClass.php",
+		"/D/laragon/www/thoikhoabieu/app/Objects/PhancongGiaovien.php",
+		"/D/laragon/www/thoikhoabieu/app/Objects/SessionInfo.php",
+		"/D/laragon/www/thoikhoabieu/app/Objects/TableTime.php",
+		"/D/laragon/www/thoikhoabieu/app/Objects/TableTimeTypeTwo.php",
+		"/D/laragon/www/thoikhoabieu/app/Objects/XepTKB.php",
+		"/D/laragon/www/thoikhoabieu/app/Http/Controllers/exportkb/exportkbController.php",
+		"/D/laragon/www/thoikhoabieu/public/js/api/api.js",
+		"/D/laragon/www/thoikhoabieu/public/js/api/axiosClient.js",
+		"/D/laragon/www/thoikhoabieu/public/js/api/phancongGVApi.js",
+		"/D/laragon/www/thoikhoabieu/public/js/xuattkb/xuattkb.js",
+		"/D/laragon/www/thoikhoabieu/resources/views/exportkb/index.blade.php",
+		"/D/laragon/www/tkb/artisan",
+		"/D/laragon/www/thoikhoabieu_duc/routes/web.php",
+		"/D/laragon/www/thoikhoabieu_duc/.env",
+		"/D/laragon/www/thoikhoabieu1210/app/Http/Controllers/rangbuoc/rangbuocController.php",
+		"/D/laragon/www/thoikhoabieu1210/resources/views/rangbuoc/index.blade.php",
+		"/D/laragon/www/thoikhoabieu1210/public/js/rangbuoc/rangbuoctietcodinh.js",
+		"/C/Users/Admin/Desktop/rb/rangbuoctietcodinh.js",
+		"/D/laragon/www/thoikhoabieu1210/public/js/tonghop/xemthoikhoabieu.js",
+		"/D/laragon/www/thoikhoabieu1210/public/js/xemtkb/xemtkb.js",
+		"/D/laragon/www/thoikhoabieu1210/app/Http/Controllers/tonghop/tonghopController.php",
+		"/D/laragon/www/thoikhoabieu1210/app/rangbuoctietcodinh.php",
+		"/D/laragon/www/thoikhoabieu0410/public/js/rangbuoc/rangbuoctietcodinh.js",
+		"/D/laragon/www/thoikhoabieu1210/resources/views/exportkb/index.blade.php",
+		"/D/laragon/www/thoikhoabieu1210/app/Http/Controllers/exportkb/exportkbController.php",
+		"/D/laragon/www/thoikhoabieu1210/config/app.php",
+		"/D/laragon/www/thoikhoabieu1210/resources/views/tonghop/thongbao.blade.php",
+		"/D/laragon/www/thoikhoabieu1210/public/assets/js/bootstrap-datepicker.vi.min.js",
+		"/D/laragon/www/thoikhoabieu1210/vendor/nesbot/carbon/src/Carbon/Carbon.php",
+		"/D/laragon/www/thoikhoabieu1210/vendor/nesbot/carbon/src/Carbon/CarbonInterface.php",
+		"/D/laragon/www/thoikhoabieu1210/app/Providers/AppServiceProvider.php",
+		"/D/laragon/www/thoikhoabieu1210/vendor/fzaninotto/faker/src/Faker/Provider/DateTime.php",
+		"/D/laragon/www/thoikhoabieu1210/public/js/tonghop/thongbao.js",
+		"/D/laragon/www/thoikhoabieu1210/public/js/tonghop/theodoibiendongtkb.js",
+		"/D/laragon/www/thoikhoabieu1210/public/js/tonghop/theodoibaocaodonvi.js",
+		"/D/laragon/www/thoikhoabieu1210/public/js/xuattkb/xuattkb.js",
+		"/D/laragon/www/thoikhoabieu1210/public/js/thongbao/thongbao.js",
+		"/D/laragon/www/thoikhoabieu1210/resources/views/thongbao/thongbao.blade.php",
+		"/D/laragon/www/thoikhoabieu1210/.env",
+		"/D/laragon/www/thoikhoabieu1110/.env",
+		"/D/laragon/www/thoikhoabieu0410/public/js/tonghop/theodoibiendongtkb.js",
+		"/D/laragon/www/thoikhoabieu0410/public/js/rangbuoc/dangkybuoitietnghicuagv.js",
+		"/D/laragon/www/thoikhoabieu0410/public/js/tonghop/thongbao.js",
+		"/D/laragon/www/thoikhoabieu0410/resources/views/tonghop/thongbao.blade.php",
+		"/D/laragon/www/thoikhoabieu0410/public/js/xemtkb/xemtkb.js",
+		"/D/laragon/www/thoikhoabieu0410/.env",
+		"/D/laragon/www/thoikhoabieu0410/app/Http/Controllers/xemtkb/xemtkbController.php",
+		"/D/laragon/www/thoikhoabieu1709/resources/views/exportkb/index.blade.php",
+		"/D/laragon/www/thoikhoabieu1709/resources/views/rangbuoc/index.blade.php",
+		"/D/laragon/www/thoikhoabieu1709/resources/views/chontruongxemtkb/index.blade.php",
+		"/D/laragon/www/thoikhoabieu1709/app/Http/Controllers/thongke/thongkeController.php",
+		"/D/laragon/www/thoikhoabieu1709/app/Http/Controllers/chontruongxemtkb/chontruongxemtkbController.php",
+		"/D/laragon/www/thoikhoabieu1709/resources/views/xemtkb/xemtkb.blade.php",
+		"/D/laragon/www/thoikhoabieu1709/resources/views/layout/leftmenu.blade.php",
+		"/D/laragon/www/thoikhoabieu1709/public/js/xemtkb/xemtkb.js",
+		"/D/laragon/www/thoikhoabieu1709/app/Http/Controllers/xemtkb/xemtkbController.php",
+		"/D/laragon/www/thoikhoabieu1709/app/Http/Controllers/khaibao/khaibaoController.php",
+		"/D/laragon/www/thoikhoabieu1709/public/js/rangbuoc/rangbuoctietcodinh.js",
+		"/D/laragon/www/thoikhoabieu1709/app/Http/Controllers/rangbuoc/rangbuocController.php",
+		"/D/laragon/www/thoikhoabieu1709/resources/views/admin/taikhoan.blade.php",
+		"/D/laragon/www/thoikhoabieu1709/resources/views/xemtkb/index.blade.php",
+		"/D/laragon/www/thoikhoabieu1709/app/Http/Controllers/admin/LoginController.php",
+		"/D/laragon/www/thoikhoabieu1709/app/Http/Controllers/Auth/LoginController.php",
+		"/D/laragon/www/thoikhoabieu1709/app/Http/Middleware/Authenticate.php",
+		"/D/laragon/www/thoikhoabieu1709/public/js/khaibao/chongvthamgiagiangday.js",
+		"/D/laragon/www/thoikhoabieu1709/.env",
+		"/D/laragon/www/thoikhoabieu/public/js/rangbuoc/rangbuoctiettranhcuamon.js",
+		"/D/laragon/www/thoikhoabieu/public/js/rangbuoc/rangbuoccaptietxepliennhau.js",
+		"/D/laragon/www/thoikhoabieu/public/js/rangbuoc/tietgvbuocphaico.js",
+		"/D/laragon/www/thoikhoabieu/public/js/rangbuoc/toidangay.js",
+		"/D/laragon/www/thoikhoabieu/app/rangbuoctiethopcuato.php",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao/nhapdanhsachgv.js",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao/nhapdanhsachphonghocbomon.js",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao/nhapdanhsachtochuyenmon.js",
+		"/D/laragon/www/thoikhoabieu/public/js/khaibao/nhapdanhsachmonhoc.js",
+		"/C/Users/Admin/Desktop/rbdkbtngv/1309/dangkybuoitietnghicuagv.js",
+		"/C/Users/Admin/Desktop/rbdkbtngv/1309/index.blade.php"
 	],
 	"find":
 	{
-		"height": 41.0
+		"height": 27.0
 	},
 	"find_in_files":
 	{
-		"height": 118.0,
+		"height": 0.0,
 		"where_history":
 		[
 		]
@@ -764,134 +599,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"handleClick",
-			"numBer",
-			"xulythemmau",
-			"style",
-			"idselecttruong",
-			"layDataDanhGiaGv",
-			"layDataDsGiaoVien",
-			"btnluu",
-			"edit",
-			"dataDanhGiaGv",
-			"mucxeploai",
-			"=>",
-			"),",
-			"array(",
-			"dangkytietnghigv",
-			"maXepLoai",
-			"checkBoxXepLoai",
-			"classXeploai",
-			"classRoom",
-			"btnluu",
-			"datalop",
-			"map(function(item)",
-			"selectNam",
-			"layDataDsToChuyenMon",
-			"idselecttruong",
-			"data1",
-			"laydanhsach",
-			"hienthidanhsachMonhoc",
-			"danhsachLop",
-			"bangPhancong",
-			"hienthidanhsachMonhoc",
-			"danhsachphancong",
-			"laydanhsach",
-			"danhsachPhancong",
-			"laydanhsach",
-			"select",
-			"getdanhgiagv",
-			"tinhchinh",
-			"downloadTkb",
-			"download",
-			"doimatkhau",
-			"getlisttaikhoantruong",
-			"passwordreset",
-			"modalresetpassword",
-			"getlisttaikhoan",
-			"hiddenpass",
-			"modalresetpassword",
-			"datatkbphong",
-			"datatkblop",
-			"datatkbgv",
-			"dataloptruong",
-			"datatkb",
-			"dataloptruong",
-			"datatkb",
-			"dataloptruong",
-			"datatkb",
-			"getdskhoigvlop",
-			"datatkblop",
-			"datatkbgv",
-			"data",
-			"layDataDsTruong",
-			"xuattkbapi",
-			"datatkbphong",
-			"datatkblop",
-			"datatkbgv",
-			"dataloptruong",
-			"datatkb",
-			"dataloptruong",
-			"datatkb",
-			"window.onload",
-			"loadListClassroom",
-			"getDataDsTruong",
-			"loaddanhsachtruong",
-			"getdanhsachsotietmoimon",
-			"tbodycotrong",
-			"ththu",
-			"loadthoikhoabieutruongsang",
-			"dulieuLopTruong",
-			"showTable",
-			"loadTeacher",
-			"số tiết mỗi môn",
-			"số tiết mỗi môn lớp",
-			"exportTKBSchoolTwoColumn",
-			"exportTKBSchoolMorning",
-			"Vui lòng chọn tháng",
-			"httkbsc",
-			"cardsangchieu",
-			"layTuan",
-			"exportTKBSchoolTwoColumn",
-			"idtruong",
-			"export",
-			"$startMonth",
-			"$matruong",
-			"exportTKBSchoolTwoColumn",
-			"cell ",
-			"getdsgvpcgd",
-			"getkhoihoc",
-			"khoihoc",
-			"datepickerthangtuantruong",
-			"select thời gian",
-			"cardselectthoigiangiaovien",
-			"cardselectthoigiangv",
-			"progressExport",
-			"dateprocess",
-			"progressExport",
-			"tendaydu",
-			"kieu",
-			"httkbsc",
-			"firstDay",
-			"xuattkbapi",
-			"export",
-			"xuattkb",
-			"xuattkbapi",
-			"selectweek",
-			"tendaydu",
-			"Number",
-			"monthSelect",
-			"arrFile",
-			"weekSelect",
-			"xuattkb",
-			"Xuất thời khóa biểu",
-			"Xuất thời khoá biểu",
-			"phòng",
-			"tkb",
-			"tkk",
-			"tkb phòng",
-			"phòng",
-			"mamonhoc"
+			"addDanhGiaGv",
+			"i",
+			"chbxXepLoai",
+			"#483D8B",
+			"#28386c",
+			"40px",
+			"tablexemtkbgiaovien",
+			"theadthu",
+			"var",
+			"dsTieuChuan",
+			"suarangbuoctietcodinh",
+			"getdsloptruong",
+			"layDataLopTruong",
+			"$key"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -899,13 +620,6 @@
 		"regex": false,
 		"replace_history":
 		[
-			"layDataTkbPhong",
-			"layDataTkbLop",
-			"layDataTkbGv",
-			"layDataLopTruong",
-			"layDataTkbTruong",
-			"layDataLopTruong",
-			"layDataTkbTruong"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -925,7 +639,182 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18884,
+						"buffer_size": 18971,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4691,
+								4691
+							],
+							[
+								4742,
+								4742
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1116.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/Http/Controllers/tinhchinh/tinhchinhController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4985,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4978,
+								4978
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2815.2,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "version control.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 206,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								186,
+								186
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "public/js/tinhchinh/tinhchinh.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15737,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15196,
+								15203
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 6546.4,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "public/js/tonghop/xemthoikhoabieu.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 77120,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								72091,
+								72058
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 35669.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "resources/views/tinhchinh/index.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8402,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4205,
+								4205
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1998.4,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "resources/views/admin/taikhoan.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16035,
 						"regions":
 						{
 						},
@@ -942,126 +831,134 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
+						"translation.y": 6379.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 7,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
-				},
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
 				{
-					"buffer": 1,
-					"file": "app/Http/Controllers/tinhchinh/tinhchinhController.php",
+					"buffer": 9,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4898,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1633,
-								1646
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 700.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "public/js/tinhchinh/tinhchinh.js",
+					"buffer": 10,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14103,
+						"buffer_size": 95,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3028,
-								3028
+								95,
+								95
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5163.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "public/js/xemtkb/xemtkb.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 53571,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								20891,
-								20854
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 12243.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "resources/views/tinhchinh/index.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8525,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4298,
-								4298
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2160.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
@@ -1069,11 +966,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 29.0
+		"height": 27.0
 	},
 	"input":
 	{
-		"height": 42.0
+		"height": 40.0
 	},
 	"layout":
 	{
@@ -1082,18 +979,32 @@
 			[
 				0,
 				0,
-				1,
+				2,
 				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
+			],
+			[
+				1,
+				1,
+				2,
+				2
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
 		[
 			0.0,
+			0.7,
 			1.0
 		]
 	},
@@ -1110,7 +1021,7 @@
 	"project": "version control.sublime-project",
 	"replace":
 	{
-		"height": 54.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1153,65 +1064,30 @@
 					"group": 0,
 					"index": 0
 				},
+				"14":
+				{
+					"group": 0,
+					"index": 1
+				},
 				"15":
 				{
 					"group": 0,
 					"index": 2
 				},
-				"19":
-				{
-					"group": 0,
-					"index": 5
-				},
-				"23":
-				{
-					"group": 0,
-					"index": 6
-				},
-				"24":
+				"18":
 				{
 					"group": 0,
 					"index": 4
 				},
-				"25":
+				"20":
+				{
+					"group": 0,
+					"index": 5
+				},
+				"21":
 				{
 					"group": 0,
 					"index": 3
-				},
-				"26":
-				{
-					"group": 0,
-					"index": 7
-				},
-				"27":
-				{
-					"group": 0,
-					"index": 8
-				},
-				"43":
-				{
-					"group": 0,
-					"index": 1
-				},
-				"54":
-				{
-					"group": 0,
-					"index": 12
-				},
-				"55":
-				{
-					"group": 0,
-					"index": 9
-				},
-				"56":
-				{
-					"group": 0,
-					"index": 11
-				},
-				"58":
-				{
-					"group": 0,
-					"index": 10
 				}
 			},
 			"restore_layout":
@@ -1242,7 +1118,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 300.0,
+	"side_bar_width": 312.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

@@ -179,7 +179,6 @@ return [
         RenatoMarinho\LaravelPageSpeed\ServiceProvider::class,
         //quan ly css và js
         Botble\Assets\Providers\AssetsServiceProvider::class,
-
     ],
 
     /*
