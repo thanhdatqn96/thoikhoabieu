@@ -120,27 +120,22 @@ class tinhchinhController extends Controller
 	public function statusDanhGiaGv () {
 		$matruong = Session::get('matruong');
 		$datadggv = danhgiagv::where('matruong',$matruong)->get();
-		$groupedDGGV = [];
+		$data = [];
 		foreach($datadggv as $d){
-			$mGV = $d->magiaovien;
-			$mTChi = $d->matieuchi;
-			$groupedDGGV[$mGV][$mTChi][] = $d;
+			array_push($data,array('matochuyenmon'=>$d->matochuyenmon,'magiaovien'=>$d->magiaovien,'namdanhgia'=>$d->namdanhgia,'trangthai'=>$d->trangthai));
 		}
 
-		$findGroupMGVTC = [];
-		foreach($groupedDGGV as $k=>$v){
-			$maTCM;
-			$namDG;
-			$dataTieuChi = [];
-			foreach($v as $k1=>$v1){
-				$maTCM = $v1[0]->matochuyenmon;
-				$namDG = $v1[0]->namdanhgia;
-				array_push($dataTieuChi,array('matieuchi'=>$k1));
-			}
-			$demDataTieuChi = count($dataTieuChi);
-			$findGroupMGVTC[] = array('magiaovien' => $k, 'matochuyenmon'=>$maTCM, 'namdanhgia'=>$namDG ,'demDataTieuChi'=> $demDataTieuChi);
+		$dict = array();
+		foreach($data as $one_index){
+		  $dict[join('',$one_index)]=$one_index;
 		}
-		return json_encode($findGroupMGVTC, JSON_UNESCAPED_UNICODE);
+
+		$res=array();
+		foreach($dict as $one_index){
+		   $res[] = $one_index;
+		}
+
+		return json_encode($res, JSON_UNESCAPED_UNICODE);
 
 	}
 

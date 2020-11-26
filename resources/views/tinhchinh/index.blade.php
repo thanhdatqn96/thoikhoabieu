@@ -84,6 +84,7 @@
 										                <i class="fa fa-calendar"></i>
 										            </div>
 										        </div>
+										        <input type="hidden" id="namDGVirtual">
 							        		</div>
 							        	</div>
 										
@@ -109,6 +110,7 @@
 						<div class="card-body">
 							<form class="form">
 								<div class="form-body">
+									<button type="button" class="btn btn-success btn-sm" id="btnDoneDanhGia" disabled="">Hoàn thành đánh giá</button>
 									<div id="girdDsGv"></div>
 								</div>
 							</form>

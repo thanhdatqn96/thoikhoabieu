@@ -45,12 +45,24 @@ async function initData () {
 
 function initEvent () {
 	$('#selectNam').on('change',function(){
-		
+		let valNam = $(this).val();
+		let dateCurrent = new Date();
+  		let yearCurrent = dateCurrent.getFullYear();
 		let valTCM = $('#selectToChuyenMon').val();
-		if(valTCM == ''){
+
+		if(valTCM == null){
 			alert('Vui lòng chọn tổ chuyên môn');
 			$('#selectNam').val('');
+			return false;
 		}
+
+		if(valNam > yearCurrent || valNam < yearCurrent) {
+			alert('Năm đánh giá không phù hợp');
+			$('#selectNam').val('');
+			return false;
+		}
+
+		$('#namDGVirtual').val(valNam);
 
 		let dataGVTCM = [];
 
@@ -68,114 +80,166 @@ function initEvent () {
 			return datas;
 		});
 
-		$("#girdDsGv").dxDataGrid({
-			dataSource: datas,
-			showBorders: true,
-			paging: {
-				pageSize: 30
-			},
-			/* xap xep */
-			sorting: {
-				mode: "multiple"
-			},
-			/* loc du lieu */
-			// filterRow: {
-			// 	visible: true,
-			// 	applyFilter: "auto"
-			// },
-			searchPanel: {
-				visible: true,
-				width: 240,
-				placeholder: "Tìm kiếm..."
-			},
-			pager: {
-				showPageSizeSelector: true,
-				allowedPageSizes: [10,20,30],
-				showInfo: true
-			},
-			/* co dan cot */
-			allowColumnResizing: true,
-			columnResizingMode: "widget",
-			columns: [{
-				caption: "STT",
-				dataField: "stt",
-				width: 50,
-			}, {
-				caption: "Tên giáo viên",
-				dataField: "hovaten",	
-			},
-			{	
-				fixed: true,
-		        fixedPosition: "right",
-				caption: "Trạng thái",
-				cellTemplate: function(container, options) {
-					// if (options.data.finishDGGV == 1) {
-     //                    $(
-     //                        "<span class='badge badge-success'>Đã đánh giá</span>"
-     //                    ).appendTo(container);
-     //                }
-     //                if (options.data.finishDGGV == 0) {
-     //                    $(
-     //                        "<span class='badge badge-warning'>Chưa đánh giá</span>"
-     //                    ).appendTo(container);
-     //                }
+		axios.get("statusDanhGiaGv").then(res => {
+
+			let layStatusDanhGiaGv = res.data;
+
+			$("#girdDsGv").dxDataGrid({
+				dataSource: datas,
+				showBorders: true,
+				paging: {
+					pageSize: 30
 				},
-				width: 120,
-			}, 
-			{
-		        fixed: true,
-		        fixedPosition: "right",
-		        caption: "",
-		        cellTemplate: function(container, options) {
-		            container.addClass("center");
-		            $("<div>")
-		                .dxButton({
-		                    template: function(e) {
-		                        return $('<i class="fa fa-pencil-square-o"></i>');
-		                    },
-		                    onClick: function(e) {
-		                    	let maTCM = $('#selectToChuyenMon').val();
-		                    	let namDG = $('#selectNam').val();
-		                    	let maGv = options.data.id;
-		                    	let maTruong = options.data.matruong;
-		                    	let tenGv = options.data.hovaten;
-		                    	$('#spanTenGV').text(tenGv);
-		                    	$('#inputMaGv').val(maGv);
-		                    	$('#inputMaTruong').val(maTruong);
+				/* xap xep */
+				sorting: {
+					mode: "multiple"
+				},
+				/* loc du lieu */
+				// filterRow: {
+				// 	visible: true,
+				// 	applyFilter: "auto"
+				// },
+				searchPanel: {
+					visible: true,
+					width: 240,
+					placeholder: "Tìm kiếm..."
+				},
+				pager: {
+					showPageSizeSelector: true,
+					allowedPageSizes: [10,20,30],
+					showInfo: true
+				},
+				/* co dan cot */
+				allowColumnResizing: true,
+				columnResizingMode: "widget", 
+				columns: [{
+					caption: "",
+					width: 50,
+					cellTemplate: function(container, options) {
+						let dataCell = options.data;
+						let status = 0;
+						let stt;
+						layStatusDanhGiaGv.forEach(function(iTem,key){
+							if(iTem.matochuyenmon == dataCell.matochuyenmon && iTem.magiaovien == dataCell.id && iTem.namdanhgia == valNam){
+								status = 1;
+								stt = "idChbxSelect"+key;
+							}
+						});
+						if(status == 1){
+							$(
+	                            "<input type='checkbox' id="+stt+" class='classChbxSelect' data-matochuyenmon= "+dataCell.matochuyenmon+" data-magiaovien= "+dataCell.id+" data-matruong= "+dataCell.matruong+" data-namdanhgia= "+valNam+">"
+	                        ).appendTo(container);
+						}else{
+							$(
+	                            "<input type='checkbox' class='classChbxSelect' disabled>"
+	                        ).appendTo(container);
+						}	
+					}
+				}, {
+					caption: "STT",
+					dataField: "stt",
+					width: 50,
+				}, {
+					caption: "Tên giáo viên",
+					dataField: "hovaten",	
+				},
+				{	
+					fixed: true,
+			        fixedPosition: "right",
+					caption: "Trạng thái",
+					cellTemplate: function(container, options) {
+						let numBer = 0;
+
+						let mTCM = $('#selectToChuyenMon').val();
+	                	let nDG = $('#selectNam').val();
+	                	let mGV = options.data.id;
+
+	                	layStatusDanhGiaGv.forEach(function(iTem){
+	                		if (iTem.matochuyenmon == mTCM && iTem.magiaovien == mGV && iTem.namdanhgia == nDG && iTem.trangthai == 1) {
+		                        numBer = 1;
+		                    }
+
+		                    if (iTem.matochuyenmon == mTCM && iTem.magiaovien == mGV && iTem.namdanhgia == nDG && iTem.trangthai == 2) {
+		                        numBer = 2;
+		                    }
+	                	});
+
+	                	if(numBer == 0){
+							$(
+	                            "<span class='badge badge-pill badge-secondary'>Chưa đánh giá</span>"
+	                        ).appendTo(container);
+						}
+
+						if(numBer == 1){
+							$(
+	                            "<span class='badge badge-pill badge-danger'>Đã đánh giá</span>"
+	                        ).appendTo(container);
+						}
+						
+						if(numBer == 2){
+							$(
+	                            "<span class='badge badge-pill badge-success'>Hoàn thành đánh giá</span>"
+	                        ).appendTo(container);
+						}
+						
+					},
+					width: 120,
+				}, 
+				{
+			        fixed: true,
+			        fixedPosition: "right",
+			        caption: "",
+			        cellTemplate: function(container, options) {
+			            container.addClass("center");
+			            $("<div>")
+			                .dxButton({
+			                    template: function(e) {
+			                        return $('<i class="fa fa-pencil-square-o"></i>');
+			                    },
+			                    onClick: function(e) {
+			                    	let maTCM = $('#selectToChuyenMon').val();
+			                    	let namDG = $('#selectNam').val();
+			                    	let maGv = options.data.id;
+			                    	let maTruong = options.data.matruong;
+			                    	let tenGv = options.data.hovaten;
+			                    	$('#spanTenGV').text(tenGv);
+			                    	$('#inputMaGv').val(maGv);
+			                    	$('#inputMaTruong').val(maTruong);
 
 
-		                    	axios.get("getDataDanhGiaGv").then(res => {
-									let layDataDanhGiaGv = res.data;
+			                    	axios.get("getDataDanhGiaGv").then(res => {
+										let layDataDanhGiaGv = res.data;
 
-		                    		let dataDanhGiaGv = [];
+			                    		let dataDanhGiaGv = [];
 
-									layDataDanhGiaGv.forEach(function(iTem1){
-			                    		let dsNam = iTem1.dsnam;
-			                    		dsNam.forEach(function(iTem2){
-			                    			let dsGv = iTem2.dsgv;
-			                    			dsGv.forEach(function(iTem3){
-			                    				let dsDGGV = iTem3.dsdanhgiagv;
-			                    				dsDGGV.forEach(function(iTem4){
-			                    					if(iTem1.matochuyenmon == maTCM && iTem2.nam == namDG && iTem3.magiaovien == maGv) {
-			                    						dataDanhGiaGv.push(iTem4);
-				                    				}
-			                    				});
-			                    				
-			                    			});
-			                    		});
-			                    	});
+										layDataDanhGiaGv.forEach(function(iTem1){
+				                    		let dsNam = iTem1.dsnam;
+				                    		dsNam.forEach(function(iTem2){
+				                    			let dsGv = iTem2.dsgv;
+				                    			dsGv.forEach(function(iTem3){
+				                    				let dsDGGV = iTem3.dsdanhgiagv;
+				                    				dsDGGV.forEach(function(iTem4){
+				                    					if(iTem1.matochuyenmon == maTCM && iTem2.nam == namDG && iTem3.magiaovien == maGv) {
+				                    						dataDanhGiaGv.push(iTem4);
+					                    				}
+				                    				});
+				                    				
+				                    			});
+				                    		});
+				                    	});
 
-		                    		modalDanhGiaGv(dataDanhGiaGv);
+			                    		modalDanhGiaGv(dataDanhGiaGv);
 
-								});
+									});
 
-		                    },
-		                })
-		                .css('background-color', 'info')
-		                .appendTo(container);
-		        },
-		        width: 50,
-			}],
+			                    },
+			                })
+			                .css('background-color', 'info')
+			                .appendTo(container);
+			        },
+			        width: 50,
+				}],
+			});
 		});
 
 		$('#cardDanhGiaGv').css('display','block');
@@ -248,6 +312,10 @@ function initEvent () {
 			$('#inputMaDGGV').val('');
 			$('#tableDanhGiaGv>tbody').empty();
 		})
+	});
+
+	$('#btnDoneDanhGia').on('click',function(){
+		let chbxSelect = document.querySelectorAll('.dx-datagrid-table dx-datagrid-table-fixed .classChbxSelect');
 	});
 
 }
@@ -372,8 +440,8 @@ function modalDanhGiaGv(dataDanhGiaGv) {
 }
 
 function refresh() {
-    var dataGrid = $("#girdDsGv").dxDataGrid("instance");
-    dataGrid.refresh();
+    let valNamVir = $('#namDGVirtual').val();
+    $('#selectNam').val(valNamVir).trigger('change');
 }
 
 jQuery(document).ready(function () {
@@ -384,3 +452,4 @@ jQuery(document).ready(function () {
 		$('#tableDanhGiaGv>tbody').empty();
     });
 });
+
