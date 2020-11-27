@@ -117,6 +117,41 @@
 					</div>
 				</div>
 
+				<!-- select tổ chuyên môn, năm xem kết quả -->
+				<div class="card" id="cardSelectTCMNamXem" style="display: none;">
+					<div class="card-header" style="padding: 10px">
+					</div>
+					<div class="card-content collpase show">
+						<div class="card-body">
+							<form class="form">
+								<div class="form-body">
+									<div class="col-md-10">
+										<div class="row">
+											<div class="col-md-3"><label style="padding-top: 10px;">Chọn tổ chuyên môn</label></div>
+											<div class="col-md-7"><select id="selectToChuyenMonXem" data-live-search="true"></select></div>
+										</div>
+									</div>
+									<br>
+							        <div class="col-md-10">
+							        	<div class="row">
+							        		<div class="col-md-3"><label style="padding-top: 10px;">Chọn năm đánh giá</label></div>
+							        		<div class="col-md-7">
+							        			<div class="input-group date" style="width: 50%;">
+										            <input id="selectNamXem" type="text" class="form-control-sm form-control" placeholder="Chọn năm đánh giá">
+										            <div class="input-group-addon">
+										                <i class="fa fa-calendar"></i>
+										            </div>
+										        </div>
+							        		</div>
+							        	</div>
+										
+							    	</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
 				<!-- Kết quả đánh giá giáo viên -->
 				<div class="card" id="cardKetQuaDanhGiaGv" style="display: none;">
 					<div class="card-header" style="padding: 10px">
@@ -132,7 +167,7 @@
 						<div class="card-body">
 							<form class="form">
 								<div class="form-body">
-									<!-- <div id="girdDanhGiaGv"></div> -->
+									<div id="girdKetQuaDanhGiaGv"></div>
 								</div>
 							</form>
 						</div>
@@ -193,6 +228,52 @@
 	</div>
 </div>
 
+<!-- modal xem đánh giá gv -->
+<div class="modal fade text-left" id="modalXemDanhGiaGv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Đánh giá giáo viên: <b><span id="spanTenGVXem" style="color: yellow;"></span></b></h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalXem">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form" id="formDanhGiaGvXem">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDanhGiaGvXem" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th rowspan="2" class='stickyThu' style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Tiêu Chuẩn</th>
+											<th rowspan="2" class='stickyTiet' style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Tiêu Chí</th>
+											<th colspan="4" style="text-align: center;background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;" >Kết quả xếp loại</th>
+										</tr>
+										<tr>
+											<th id="1" class="classXepLoaiXem" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Chưa đạt</th>
+											<th id="2" class="classXepLoaiXem" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Đạt</th>
+											<th id="3" class="classXepLoaiXem" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Khá</th>
+											<th id="4" class="classXepLoaiXem" style="background-color: #4682B4;color: white;position: sticky;top: 42px;z-index: 1;">Tốt</th>
+										</tr>
+									</thead>
+									<tbody id="bodyDanhGiaGvXem">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- <div class="modal-footer">
+				<button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal" id="btnHuy">Huỷ</button>
+				<button type="button" class="btn btn-outline-danger" id="btnLuuDanhGiaGv">Lưu</button>
+			</div> -->
+		</div>
+	</div>
+</div>
+
+
 <script type="text/javascript">
 	$("#radioDanhGiaGv").change(function () {
 		$("#radioKetQuaDanhGiaGv").prop("checked", false);
@@ -200,14 +281,22 @@
 		document.getElementById("cardKetQuaDanhGiaGv").style.display = "none";
 		//select
 		document.getElementById("cardSelectTCMNam").style.display = "block";
+		document.getElementById("cardSelectTCMNamXem").style.display = "none";
+		//clear
+		$('#selectToChuyenMon').val('').trigger('change.select2');
+		document.getElementById("selectNam").value = '';
+
 	});
 	$("#radioKetQuaDanhGiaGv").change(function () {
-		$("#radioKetQuaDanhGiaGv").prop("checked", false);
+		$("#radioDanhGiaGv").prop("checked", false);
 		//
 		document.getElementById("cardDanhGiaGv").style.display = "none";
-		
 		//select
-		document.getElementById("cardSelectTCMNam").style.display = "block";
+		document.getElementById("cardSelectTCMNam").style.display = "none";
+		document.getElementById("cardSelectTCMNamXem").style.display = "block";
+		//clear
+		$('#selectToChuyenMonXem').val('').trigger('change.select2');
+		document.getElementById("selectNamXem").value = '';
 	});
 </script>
 

@@ -17,6 +17,7 @@ use App\thoikhoabieu;
 use App\danhgiagv;
 use App\tochuyenmon;
 use App\giaovien_chuyenmon;
+use App\ketquadanhgiagv;
 use Auth;
 use DB;
 use stdClass;
@@ -942,15 +943,6 @@ class tonghopController extends Controller
 		return json_encode($new_data_tkb_phong, JSON_UNESCAPED_UNICODE);
 	}
 
-	//lấy danh sách đánh giá giáo viên
-	public function getdanhgiagv(){
-		$data =  tochuyenmon::get();
-		$tengv = danhsachgv::get();
-		$danhgiagv = danhgiagv::get();
-		$giaovien_chuyenmon = giaovien_chuyenmon::join('danhgiagv','danhgiagv.magiaovien','giaovien_chuyenmon.magiaovien')->get();
-		return json_encode([$data,$tengv,$giaovien_chuyenmon,$danhgiagv], JSON_UNESCAPED_UNICODE);
-	}
-
 	//lấy thời khoá biểu giáo viên theo thời gian
 	public function getthoikhoabieugvtime(){
 
@@ -1311,6 +1303,40 @@ class tonghopController extends Controller
 		$baocao->update();
 		$success = 1;
 		return json_encode($success);
+	}
+
+	//đánh giá giáo viên
+
+	public function getDsToChuyenMonTH ($matruong) {
+		$data = tochuyenmon::where('matruong',$matruong)->where('trangthai',1)->get();
+		return json_encode($data, JSON_UNESCAPED_UNICODE);
+	}
+
+	public function getDsGiaoVienTH ($matruong) {
+		$datagv = danhsachgv::where('matruong',$matruong)->where('trangthai',1)->get();
+		$datagvcm = giaovien_chuyenmon::where('matruong',$matruong)->get();
+		//
+		
+		$data = [];
+		foreach($datagv as $d){
+			foreach($datagvcm as $d1){
+				if($d->id == $d1->magiaovien){
+					array_push($data,array('id'=>$d->id,'matochuyenmon'=>$d1->matochuyenmon,'matruong'=>$d->matruong,'hovaten'=>$d->hovaten));
+				}
+			}
+		}
+
+		$dict = array();
+		foreach($data as $one_index){
+		  $dict[join('',$one_index)]=$one_index;
+		}
+
+		$res=array();
+		foreach($dict as $one_index){
+		   $res[] = $one_index;
+		}
+		
+		return json_encode($res, JSON_UNESCAPED_UNICODE);
 	}
 
 }

@@ -12,6 +12,7 @@ use App\danhsachgv;
 use App\monhoc;
 use App\danhgiagv;
 use App\giaovien_chuyenmon;
+use App\ketquadanhgiagv;
 
 class tinhchinhController extends Controller
 {
@@ -23,11 +24,111 @@ class tinhchinhController extends Controller
 
 	public function dataTieuChuanTieuChi () {
 
-		$getFileDataTieuChuan = file_get_contents(public_path('js/dataTieuChuanTieuChi/dataTieuChuan.json'));
-		$dataTieuChuan = json_decode($getFileDataTieuChuan, true);
+		// $getFileDataTieuChuan = file_get_contents(public_path('js/dataTieuChuanTieuChi/dataTieuChuan.json'));
+		// $dataTieuChuan = json_decode($getFileDataTieuChuan, true);
+		// $getFileDataTieuChi = file_get_contents(public_path('js/dataTieuChuanTieuChi/dataTieuChi.json'));
+		// $dataTieuChi = json_decode($getFileDataTieuChi, true);
 
-		$getFileDataTieuChi = file_get_contents(public_path('js/dataTieuChuanTieuChi/dataTieuChi.json'));
-		$dataTieuChi = json_decode($getFileDataTieuChi, true);
+		$dataTieuChuan = [
+			[
+		      	"id"=>1,
+		      	"tentieuchuan"=>"I. Phẩm chất nhà giáo"
+		   	],
+		   	[
+		      	"id"=>2,
+		      	"tentieuchuan"=>"II. Phát triển chuyên môn, nghiệp vụ"
+		   	],
+		   	[
+		      	"id"=>3,
+		      	"tentieuchuan"=>"III. Xây dựng môi trường giáo dục"
+		   	],
+		   	[
+		      	"id"=>4,
+		      	"tentieuchuan"=>"IV. Phát triển mối quan hệ giữa nhà trường, gia đình và xã hội"
+		   	],
+		   	[
+		      	"id"=>5,
+		      	"tentieuchuan"=>"V. Sử dụng ngoại ngữ hoặc tiếng dân tộc, ứng dụng công nghệ thông tin, khai thác và sử dụng thiết bị công nghệ trong dạy học và giáo dục"
+		   	]
+		];
+
+		$dataTieuChi = [
+			[
+		      	"id"=>1,
+		      	"tieuchuan_id"=>1,
+		      	"tentieuchi"=>"1. Đạo đức nhà giáo"
+		   	],
+		   	[
+		      	"id"=>2,
+		      	"tieuchuan_id"=>1,
+		      	"tentieuchi"=>"2. Phong cách nhà giáo"
+		   	],
+		   	[
+		      	"id"=>3,
+		      	"tieuchuan_id"=>2,
+		      	"tentieuchi"=>"3. Phát triển chuyên môn bản thân"
+		   	],
+		   	[
+		      	"id"=>4,
+		      	"tieuchuan_id"=>2,
+		      	"tentieuchi"=>"4. Xây dựng kế hoạch dạy học và giáo dục theo hướng phát triển phẩm chất, năng lực học sinh"
+		   	],
+		   	[
+		      	"id"=>5,
+		      	"tieuchuan_id"=>2,
+		      	"tentieuchi"=>"5. Sử dụng phương pháp dạy học và giáo dục theo hướng phát triển phẩm chất, năng lực"
+		  	],
+		   	[
+		      	"id"=>6,
+		      	"tieuchuan_id"=>2,
+		      	"tentieuchi"=>"6. Kiểm tra, đánh giá theo hướng phát triển phẩm chất, năng lực học sinh"
+		   	],
+		   	[
+		      	"id"=>7,
+		      	"tieuchuan_id"=>2,
+		      	"tentieuchi"=>"7. Tư vấn và hỗ trợ học sinh"
+		   	],
+		   	[
+		      	"id"=>8,
+		      	"tieuchuan_id"=>3,
+		      	"tentieuchi"=>"8. Xây dựng văn hoá nhà trường"
+		   	],
+		   	[
+		      	"id"=>9,
+		      	"tieuchuan_id"=>3,
+		      	"tentieuchi"=>"9. Thực hiện quyền dân chủ trong nhà trường"
+		   	],
+		   	[
+		      	"id"=>10,
+		      	"tieuchuan_id"=>3,
+		      	"tentieuchi"=>"10. Thực hiện và xây dựng trường học an toàn, phòng chống bạo lực học đường"
+		   	],
+		   	[
+		      	"id"=>11,
+		      	"tieuchuan_id"=>4,
+		      	"tentieuchi"=>"11. Tạo dựng mối quan hệ hợp tác với cha mẹ hoặc người giám hộ của học sinh và các bên liên quan"
+		   	],
+		   	[
+		      	"id"=>12,
+		      	"tieuchuan_id"=>4,
+		      	"tentieuchi"=>"12. Phối hợp giữa nhà trường, gia đình, xã hội để thực hiện hoạt động dạy học cho học sinh"
+		   	],
+		   	[
+		      	"id"=>13,
+		      	"tieuchuan_id"=>4,
+		      	"tentieuchi"=>"13. Phối hợp giữa nhà trường, gia đình, xã hội để thực hiện giáo dục đạo đức, lối sống cho học sinh"
+		   	],
+		   	[
+		      	"id"=>14,
+		      	"tieuchuan_id"=>5,
+		      	"tentieuchi"=>"14. Sử dụng ngoại ngữ hoặc tiếng dân tộc"
+		   	],
+		   	[
+		      	"id"=>15,
+		      	"tieuchuan_id"=>5,
+		      	"tentieuchi"=>"15. Ứng dụng công nghệ thông tin, khai thác và sử dụng thiết bị công nghệ trong dạy học, giáo dục"
+		   	]
+		];
 
 		$data = [];
 
@@ -166,6 +267,176 @@ class tinhchinhController extends Controller
 
 	public function addKetQuaDanhGiaGv (Request $rq) {
 		$arrChbxDGGV = $rq->arrChbx;
+		$matruong = Session::get('matruong');
+		$dataDanhGiaGv = danhgiagv::where('matruong',$matruong)->get();
+		$dataDGGVLoc = []; 
+		foreach($dataDanhGiaGv as $d){
+			foreach($arrChbxDGGV as $a){
+				if($d->matochuyenmon == $a['matochuyenmon'] && $d->magiaovien == $a['magiaovien'] && $d->matruong == $a['matruong'] && $d->namdanhgia == $a['namdanhgia']){
+					array_push($dataDGGVLoc, array('iddggv'=>$d->id,'matochuyenmon'=>$d->matochuyenmon,'magiaovien'=>$d->magiaovien,'matieuchuan'=>$d->matieuchuan,'matieuchi'=>$d->matieuchi,'matruong'=>$d->matruong,'maxeploai'=>$d->maxeploai,'namdanhgia'=>$d->namdanhgia,'trangthai'=>$d->trangthai));
+				}
+			}
+		}
+		$grouped = [];
+		foreach($dataDGGVLoc as $d){
+			$magiaovien = $d['magiaovien'];
+			$matieuchi = $d['matieuchi'];
+			$grouped[$magiaovien][$matieuchi][] = $d;
+		}
+		$arrLoc = [];
+		foreach($grouped as $k=>$v){
+			$data = [];
+			$matochuyenmon;
+			$matruong;
+			$namdanhgia;
+			foreach($v as $k1=>$v1){
+				$maxeploai;
+				foreach($v1 as $v2){
+					$matochuyenmon = $v2['matochuyenmon'];
+					$matruong = $v2['matruong'];
+					$namdanhgia = $v2['namdanhgia'];
+					$maxeploai = $v2['maxeploai'];
+				}
+				array_push($data,array('matieuchi' => $k1,'maxeploai'=>$maxeploai));
+			}
+			$arrLoc[] = array('magiaovien' => $k,'matochuyenmon'=>$matochuyenmon, 'matruong'=>$matruong, 'namdanhgia'=>$namdanhgia ,'data'=> $data);
+		}
+		$arrLast = [];
+		foreach($arrLoc as $ar){
+			$xeploai = 0;
+
+			//tốt
+			if($xeploai == 0) {
+				if(	$ar['data'][0]['maxeploai'] >= 3 &&
+					$ar['data'][1]['maxeploai'] >= 3 &&
+					$ar['data'][2]['maxeploai'] == 4 &&
+					$ar['data'][3]['maxeploai'] == 4 &&
+					$ar['data'][4]['maxeploai'] == 4 &&
+					$ar['data'][5]['maxeploai'] == 4 &&
+					$ar['data'][6]['maxeploai'] == 4 &&
+					$ar['data'][7]['maxeploai'] >= 3 &&
+					$ar['data'][8]['maxeploai'] >= 3 &&
+					$ar['data'][9]['maxeploai'] >= 3 &&
+					$ar['data'][10]['maxeploai'] >= 3 &&
+					$ar['data'][11]['maxeploai'] >= 3 &&
+					$ar['data'][12]['maxeploai'] >= 3 &&
+					$ar['data'][13]['maxeploai'] >= 3 &&
+					$ar['data'][14]['maxeploai'] >= 3 
+				){
+					$xeploai = 4;
+					array_push($arrLast,array('magiaovien'=>$ar['magiaovien'],'matochuyenmon'=>$ar['matochuyenmon'],'matruong'=>$ar['matruong'],'namdanhgia'=>$ar['namdanhgia'],'maxeploai'=>4));
+				}
+			}
+
+			//khá
+			if($xeploai == 0) {
+				if(	$ar['data'][0]['maxeploai'] >= 2 &&
+					$ar['data'][1]['maxeploai'] >= 2 &&
+					$ar['data'][2]['maxeploai'] == 3 &&
+					$ar['data'][3]['maxeploai'] == 3 &&
+					$ar['data'][4]['maxeploai'] == 3 &&
+					$ar['data'][5]['maxeploai'] == 3 &&
+					$ar['data'][6]['maxeploai'] == 3 &&
+					$ar['data'][7]['maxeploai'] >= 2 &&
+					$ar['data'][8]['maxeploai'] >= 2 &&
+					$ar['data'][9]['maxeploai'] >= 2 &&
+					$ar['data'][10]['maxeploai'] >= 2 &&
+					$ar['data'][11]['maxeploai'] >= 2 &&
+					$ar['data'][12]['maxeploai'] >= 2 &&
+					$ar['data'][13]['maxeploai'] >= 2 &&
+					$ar['data'][14]['maxeploai'] >= 2 
+				){
+					$xeploai = 3;
+					array_push($arrLast,array('magiaovien'=>$ar['magiaovien'],'matochuyenmon'=>$ar['matochuyenmon'],'matruong'=>$ar['matruong'],'namdanhgia'=>$ar['namdanhgia'],'maxeploai'=>3));
+				}
+			}
+
+			//đạt
+			if($xeploai == 0) {
+				if(	$ar['data'][0]['maxeploai'] >= 2 &&
+					$ar['data'][1]['maxeploai'] >= 2 &&
+					$ar['data'][2]['maxeploai'] >= 2 &&
+					$ar['data'][3]['maxeploai'] >= 2 &&
+					$ar['data'][4]['maxeploai'] >= 2 &&
+					$ar['data'][5]['maxeploai'] >= 2 &&
+					$ar['data'][6]['maxeploai'] >= 2 &&
+					$ar['data'][7]['maxeploai'] >= 2 &&
+					$ar['data'][8]['maxeploai'] >= 2 &&
+					$ar['data'][9]['maxeploai'] >= 2 &&
+					$ar['data'][10]['maxeploai'] >= 2 &&
+					$ar['data'][11]['maxeploai'] >= 2 &&
+					$ar['data'][12]['maxeploai'] >= 2 &&
+					$ar['data'][13]['maxeploai'] >= 2 &&
+					$ar['data'][14]['maxeploai'] >= 2 
+
+				){
+					$xeploai = 2;
+					array_push($arrLast,array('magiaovien'=>$ar['magiaovien'],'matochuyenmon'=>$ar['matochuyenmon'],'matruong'=>$ar['matruong'],'namdanhgia'=>$ar['namdanhgia'],'maxeploai'=>2));
+				}
+			}
+			
+			//chưa đạt
+			if($xeploai == 0) {
+				if(	$ar['data'][0]['maxeploai'] == 1 ||
+					$ar['data'][1]['maxeploai'] == 1 ||
+					$ar['data'][2]['maxeploai'] == 1 ||
+					$ar['data'][3]['maxeploai'] == 1 ||
+					$ar['data'][4]['maxeploai'] == 1 ||
+					$ar['data'][5]['maxeploai'] == 1 ||
+					$ar['data'][6]['maxeploai'] == 1 ||
+					$ar['data'][7]['maxeploai'] == 1 ||
+					$ar['data'][8]['maxeploai'] == 1 ||
+					$ar['data'][9]['maxeploai'] == 1 ||
+					$ar['data'][10]['maxeploai'] == 1 ||
+					$ar['data'][11]['maxeploai'] == 1 ||
+					$ar['data'][12]['maxeploai'] == 1 ||
+					$ar['data'][13]['maxeploai'] == 1 ||
+					$ar['data'][14]['maxeploai'] == 1  
+
+				){
+					$xeploai = 1;
+					array_push($arrLast,array('magiaovien'=>$ar['magiaovien'],'matochuyenmon'=>$ar['matochuyenmon'],'matruong'=>$ar['matruong'],'namdanhgia'=>$ar['namdanhgia'],'maxeploai'=>1));
+				}
+			}
+		}
+		if($arrLast != ''){
+			$maDGGV = [];
+			//add
+			foreach($arrLast as $a){
+				$ketquadanhgiagv = new ketquadanhgiagv();
+				$ketquadanhgiagv->matochuyenmon = $a['matochuyenmon'];
+				$ketquadanhgiagv->magiaovien = $a['magiaovien'];
+				$ketquadanhgiagv->matruong = $a['matruong'];
+				$ketquadanhgiagv->maxeploai = $a['maxeploai'];
+				$ketquadanhgiagv->namdanhgia = $a['namdanhgia'];
+				$ketquadanhgiagv->save();
+			}
+			//update trạng thái
+			foreach($arrLast as $arl){
+				foreach($dataDanhGiaGv as $d){
+					if($arl['matochuyenmon'] == $d->matochuyenmon && $arl['magiaovien'] == $d->magiaovien && $arl['matruong'] == $d->matruong && $arl['namdanhgia'] == $d->namdanhgia){
+						array_push($maDGGV,array('iddggv'=>$d->id));
+					}
+				}
+			}
+			if($maDGGV != ''){
+				foreach($maDGGV as $m){
+					$danhgiagv = danhgiagv::find($m['iddggv']);
+					$danhgiagv->trangthai = 2;
+					$danhgiagv->update();
+				}
+			}
+		}
+
+		$success = 1;
+		return json_encode($success);
+
+	}
+
+	public function getKetQuaDanhGiaGv () {
+		$matruong = Session::get('matruong');
+		$data = ketquadanhgiagv::where('matruong',$matruong)->get();
+		return json_encode($data, JSON_UNESCAPED_UNICODE);
 	}
 
 }

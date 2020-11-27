@@ -20,12 +20,34 @@
 				<div class="card-body">
 					<form class="form">
 						<div class="form-body">
-							<div class="row">
-								<div class="col-md-12">
-									<label>Chọn trường xem đánh giá:</label>
-											<select id="idselecttruong" data-live-search="true"></select>
-								</div>						
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-3"><label style="padding-top: 10px;">Chọn trường xem đánh giá:</label></div>
+									<div class="col-md-7"><select id="idselecttruong" data-live-search="true" disabled=""></select></div>
+								</div>
 							</div>
+							<!-- <br> -->
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-3"><label style="padding-top: 10px;">Chọn tổ chuyên môn</label></div>
+									<div class="col-md-7"><select id="selectToChuyenMonXem" data-live-search="true" disabled=""></select></div>
+								</div>
+							</div>
+							<!-- <br> -->
+					        <div class="col-md-10">
+					        	<div class="row">
+					        		<div class="col-md-3"><label style="padding-top: 10px;">Chọn năm đánh giá</label></div>
+					        		<div class="col-md-7">
+					        			<div class="input-group date" style="width: 50%;">
+								            <input id="selectNamXem" type="text" class="form-control-sm form-control" placeholder="Chọn năm đánh giá">
+								            <div class="input-group-addon">
+								                <i class="fa fa-calendar"></i>
+								            </div>
+								        </div>
+					        		</div>
+					        	</div>
+								
+					    	</div>
 						</div>
 					</form>
 				</div>
@@ -37,6 +59,7 @@
 		<div class="card">
 			<div class="card-header" style="padding: 10px">
 				<h4 class="card-title" style="padding-left: 10px">Đánh giá giáo viên trường: <b><span id="idtentruong" style="color: blue;"></span></b></h4>
+				<input type="hidden" id="inputMatruong">
 				<a class="heading-elements-toggle" ><i class="fa fa-ellipsis-v font-medium-3"></i></a>
 				<div class="heading-elements" style="top: 10px">
 					<ul class="list-inline mb-0">
@@ -51,7 +74,7 @@
 						<div class="form-body">
 							<div class="row">
 								<div class="col-md-12">
-									<div id="danhgiagiaovien"></div>
+									<div id="girdKetQuaDanhGiaGv"></div>
 								</div>						
 							</div>
 						</div>
@@ -61,50 +84,6 @@
 		</div>
 	</dir>
 </dir>
-
-<script type="text/javascript">
-	setTimeout(function() {
-		$('#changegv').trigger('click');
-	},500);
-
-	$("#changegv").change(function () {
-		if ($(this).is(":checked")) {
-			$("#changelophoc").prop("checked", false);
-			$("#changephonghoc").prop("checked", false);
-			danhsachgv();
-			document.getElementById("girddsgv").style.display = "block";
-			document.getElementById("girddslophoc").style.display = "none";
-			document.getElementById("girddsphonghoc").style.display = "none";
-
-		}
-	});
-
-	$("#changelophoc").change(function () {
-		if ($(this).is(":checked")) {
-			$("#changegv").prop("checked", false);
-			$("#changephonghoc").prop("checked", false);
-			danhsachlophoc();
-			document.getElementById("girddsgv").style.display = "none";
-			document.getElementById("girddslophoc").style.display = "block";
-			document.getElementById("girddsphonghoc").style.display = "none";
-
-		}
-	});
-
-	$("#changephonghoc").change(function () {
-		if ($(this).is(":checked")) {
-			$("#changelophoc").prop("checked", false);
-			$("#changegv").prop("checked", false);
-			danhsachphonghoc();
-			document.getElementById("girddsgv").style.display = "none";
-			document.getElementById("girddslophoc").style.display = "none";
-			document.getElementById("girddsphonghoc").style.display = "block";
-
-		}
-	});
-
-
-</script>
 
 <script type="text/javascript" src="{{asset('js/tonghop/theodoidanhgiagiaovien.js')}}"></script>
 @endsection

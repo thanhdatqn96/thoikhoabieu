@@ -88,6 +88,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('statusDanhGiaGv','tinhchinh\tinhchinhController@statusDanhGiaGv');
 	Route::post('addDanhGiaGv','tinhchinh\tinhchinhController@addDanhGiaGv');
 	Route::post('addKetQuaDanhGiaGv','tinhchinh\tinhchinhController@addKetQuaDanhGiaGv');
+	Route::get('getKetQuaDanhGiaGv','tinhchinh\tinhchinhController@getKetQuaDanhGiaGv');
 
 
 
@@ -339,8 +340,6 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::post('updatetrangthaixembaocaodonvi','tonghop\tonghopController@updatetrangthaixembaocaodonvi');
 		// đánh giá giáo viên
 		Route::get('theodoidanhgiagiaovien','tonghop\tonghopController@theodoidanhgiagiaovien');
-		//lấy danh sách đánh giá giáo viên
-		Route::get('getdanhgiagvtonghop','tonghop\tonghopController@getdanhgiagv');
 		//lấy danh sách thời khoá biểu giáo viên theo thời gian
 		Route::get('getthoikhoabieugvtime','tonghop\tonghopController@getthoikhoabieugvtime');
 		//lấy danh sách thời khoá biểu lớp theo thời gian
@@ -361,6 +360,8 @@ Route::group(['middleware' => 'auth'], function(){
 		//Thu hồi thông báo
 		Route::post('thuhoithongbao','tonghop\tonghopController@thuhoithongbao');
 
-
+	//đánh giá giáo viên
+		Route::get('getDsToChuyenMonTH/{matruong}','tonghop\tonghopController@getDsToChuyenMonTH');
+		Route::get('getDsGiaoVienTH/{matruong}','tonghop\tonghopController@getDsGiaoVienTH');	
 });
 
