@@ -1339,4 +1339,44 @@ class tonghopController extends Controller
 		return json_encode($res, JSON_UNESCAPED_UNICODE);
 	}
 
+	public function getKetQuaDanhGiaGvTH ($matruong) {
+		$data = ketquadanhgiagv::where('matruong',$matruong)->get();
+		return json_encode($data, JSON_UNESCAPED_UNICODE);
+	}
+
+	public function getDataDanhGiaGvTH ($matruong) {
+		$danhgiagv = danhgiagv::where('matruong',$matruong)->get();
+
+		$grouped = [];
+		foreach($danhgiagv as $d){
+			$maTCM = $d->matochuyenmon;
+			$namDG = $d->namdanhgia;
+			$maGV = $d->magiaovien;
+			$grouped[$maTCM][$namDG][$maGV][] = $d;
+		}
+		$data = [];
+		foreach($grouped as $k=>$v){
+			$dataNam = [];
+			foreach($v as $k1=>$v1){
+				$dataGv = [];
+				foreach($v1 as $k2=>$v2){
+					$dataDanhGiaGv = [];
+					foreach($v2 as $k3=>$v3){
+						$id = $v3['id'];
+						$matochuyenmon = $v3['matochuyenmon'];
+						$magiaovien = $v3['magiaovien'];
+						$matieuchuan = $v3['matieuchuan'];
+						$matieuchi = $v3['matieuchi'];
+						$maxeploai = $v3['maxeploai'];
+						array_push($dataDanhGiaGv,array('iddanhgiagv'=>$id,'matochuyenmon'=>$matochuyenmon,'magiaovien'=>$magiaovien,'matieuchuan'=>$matieuchuan,'matieuchi'=>$matieuchi,'maxeploai'=>$maxeploai));
+					}
+					array_push($dataGv,array('magiaovien'=>$k2,'dsdanhgiagv'=>$dataDanhGiaGv));
+				}
+				array_push($dataNam,array('nam'=>$k1,'dsgv'=>$dataGv));
+			}
+			$data[] = array('matochuyenmon' => $k, 'dsnam'=> $dataNam);
+		}
+		return json_encode($data, JSON_UNESCAPED_UNICODE);
+	}
+
 }

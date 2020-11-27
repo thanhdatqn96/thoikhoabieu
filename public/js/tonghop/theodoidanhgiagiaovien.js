@@ -19,7 +19,7 @@ async function loadDataTieuChuanTieuChi() {
     return result;
 }
 
-// async function loadDataDanhGiaGv() {
+// function loadDataDanhGiaGv() {
 //     let result = await axios.get("getDataDanhGiaGv").then(res => {
 //         return res.data;
 //     });
@@ -57,6 +57,8 @@ async function initData () {
 function initEvent () {
 
     $('#idselecttruong').on('change',function(){
+        $('#cardKetQuaDanhGiaGv').css('display','none');
+        $('#selectNamXem').val('');
         let matruong = $(this).val();
         let tentruong = $(this).find('option:selected').text();
         $('#inputMatruong').val(matruong);
@@ -72,13 +74,26 @@ function initEvent () {
                 option.text = dataToChuyenMon[j].tentocm;
                 selectToChuyenMonXem.appendChild(option);
             }
-            $('#selectToChuyenMonXem').removeAttr('disabled'); 
+            $('#selectToChuyenMonXem').removeAttr('disabled');
         });
+        axios.get(`getDsGiaoVienTH/${matruong}`).then(res => {
+            layDataDsGiaoVien = res.data;
+        });
+
+
     });
+
+    $('#selectToChuyenMonXem').on('change',function(){
+        $('#cardKetQuaDanhGiaGv').css('display','none');
+        $('#selectNamXem').val('');
+        $('#selectNamXem').removeAttr('disabled');
+    });
+
     //xem đánh giá giáo viên
     $('#selectNamXem').on('change',function(){
         let valNam = $(this).val();
         let valTCM = $('#selectToChuyenMonXem').val();
+        let maTruong = $('#inputMatruong').val();
 
         if(valTCM == null){
             alert('Vui lòng chọn tổ chuyên môn');
@@ -95,6 +110,7 @@ function initEvent () {
             }
         }
 
+
         let datas = dataGVTCM.map(function (value, label) {
             let data = value;
             let stt = label + 1;
@@ -102,7 +118,7 @@ function initEvent () {
             return datas;
         });
 
-        axios.get("getKetQuaDanhGiaGv").then(res => {
+        axios.get(`getKetQuaDanhGiaGvTH/${maTruong}`).then(res => {
 
             let layKetQuaDanhGiaGv = res.data;
 
@@ -213,7 +229,7 @@ function initEvent () {
                                     $('#spanTenGVXem').text(tenGv);
 
 
-                                    axios.get("getDataDanhGiaGv").then(res => {
+                                    axios.get(`getDataDanhGiaGvTH/${maTruong}`).then(res => {
                                         let layDataDanhGiaGv = res.data;
 
                                         let dataDanhGiaGv = [];

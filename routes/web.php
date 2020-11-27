@@ -362,6 +362,8 @@ Route::group(['middleware' => 'auth'], function(){
 
 	//đánh giá giáo viên
 		Route::get('getDsToChuyenMonTH/{matruong}','tonghop\tonghopController@getDsToChuyenMonTH');
-		Route::get('getDsGiaoVienTH/{matruong}','tonghop\tonghopController@getDsGiaoVienTH');	
+		Route::get('getDsGiaoVienTH/{matruong}','tonghop\tonghopController@getDsGiaoVienTH');
+		Route::get('getKetQuaDanhGiaGvTH/{matruong}','tonghop\tonghopController@getKetQuaDanhGiaGvTH');
+		Route::get('getDataDanhGiaGvTH/{matruong}','tonghop\tonghopController@getDataDanhGiaGvTH');	
 });
 
