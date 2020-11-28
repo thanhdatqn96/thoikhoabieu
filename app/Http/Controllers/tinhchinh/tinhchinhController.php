@@ -332,11 +332,11 @@ class tinhchinhController extends Controller
 			if($xeploai == 0) {
 				if(	$ar['data'][0]['maxeploai'] >= 2 &&
 					$ar['data'][1]['maxeploai'] >= 2 &&
-					$ar['data'][2]['maxeploai'] == 3 &&
-					$ar['data'][3]['maxeploai'] == 3 &&
-					$ar['data'][4]['maxeploai'] == 3 &&
-					$ar['data'][5]['maxeploai'] == 3 &&
-					$ar['data'][6]['maxeploai'] == 3 &&
+					$ar['data'][2]['maxeploai'] >= 3 &&
+					$ar['data'][3]['maxeploai'] >= 3 &&
+					$ar['data'][4]['maxeploai'] >= 3 &&
+					$ar['data'][5]['maxeploai'] >= 3 &&
+					$ar['data'][6]['maxeploai'] >= 3 &&
 					$ar['data'][7]['maxeploai'] >= 2 &&
 					$ar['data'][8]['maxeploai'] >= 2 &&
 					$ar['data'][9]['maxeploai'] >= 2 &&

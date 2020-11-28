@@ -273,6 +273,38 @@
 	</div>
 </div>
 
+<div class="modal fade text-left show" id="modalLoading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel20" style="display: none;">
+	<div class="modal-dialog modal-xs" role="document">
+		<div class="modal-content">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">Đang cập nhât! Vui lòng đợi trong giây lát</h4>				
+						</div>
+						<div class="card-content">
+							<div class="loader-wrapper">
+								<div class="loader-container">
+									<div class="ball-spin-fade-loader loader-blue">
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <script type="text/javascript">
 	$("#radioDanhGiaGv").change(function () {
@@ -299,6 +331,6 @@
 		document.getElementById("selectNamXem").value = '';
 	});
 </script>
-
+<link rel="stylesheet" type="text/css" href="theme/app-assets/css/plugins/loaders/loaders.min.css">
 <script type="text/javascript" src="js/tinhchinh/tinhchinh.js"></script>
 @endsection
