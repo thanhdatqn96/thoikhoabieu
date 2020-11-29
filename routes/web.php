@@ -89,7 +89,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('addDanhGiaGv','tinhchinh\tinhchinhController@addDanhGiaGv');
 	Route::post('addKetQuaDanhGiaGv','tinhchinh\tinhchinhController@addKetQuaDanhGiaGv');
 	Route::get('getKetQuaDanhGiaGv','tinhchinh\tinhchinhController@getKetQuaDanhGiaGv');
-
+	Route::get('getFileMauExcelDGGV/{matochuyenmon}','tinhchinh\tinhchinhController@getFileMauExcelDGGV');
 
 
 

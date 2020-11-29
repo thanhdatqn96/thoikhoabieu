@@ -13,6 +13,8 @@ use App\monhoc;
 use App\danhgiagv;
 use App\giaovien_chuyenmon;
 use App\ketquadanhgiagv;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpParser\Node\Expr\FuncCall;
 
 class tinhchinhController extends Controller
 {
@@ -207,7 +209,8 @@ class tinhchinhController extends Controller
 						$matieuchuan = $v3['matieuchuan'];
 						$matieuchi = $v3['matieuchi'];
 						$maxeploai = $v3['maxeploai'];
-						array_push($dataDanhGiaGv,array('iddanhgiagv'=>$id,'matochuyenmon'=>$matochuyenmon,'magiaovien'=>$magiaovien,'matieuchuan'=>$matieuchuan,'matieuchi'=>$matieuchi,'maxeploai'=>$maxeploai));
+						$matruong = $v3['matruong'];
+						array_push($dataDanhGiaGv,array('iddanhgiagv'=>$id,'matochuyenmon'=>$matochuyenmon,'magiaovien'=>$magiaovien,'matieuchuan'=>$matieuchuan,'matieuchi'=>$matieuchi,'maxeploai'=>$maxeploai,'matruong'=>$matruong));
 					}
 					array_push($dataGv,array('magiaovien'=>$k2,'dsdanhgiagv'=>$dataDanhGiaGv));
 				}
@@ -437,6 +440,131 @@ class tinhchinhController extends Controller
 		$matruong = Session::get('matruong');
 		$data = ketquadanhgiagv::where('matruong',$matruong)->get();
 		return json_encode($data, JSON_UNESCAPED_UNICODE);
+	}
+
+
+	private function loadSheetExcel($excelFile)
+    {
+        if (!is_dir(public_path('excelfilemau'))) {
+            mkdir(public_path('excelfilemau'));
+        }
+        $sheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path('excelfilemau') . '/' . $excelFile);
+        return $sheet;
+    }
+
+    private function autoSiezColumn($sheet)
+    {
+        // Auto-size columns for all worksheets
+        foreach ($sheet->getWorksheetIterator() as $worksheet) {
+            foreach ($worksheet->getColumnIterator() as $column) {
+                $worksheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
+            }
+        }
+    }
+
+    private function saveExcel($sheet, $fileName)
+    {
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($sheet);
+        if (!file_exists(public_path('export'))) {
+            mkdir(public_path('export'));
+        }
+        $writer->save(public_path('export') . "/" . $fileName . ".xlsx");
+    }
+
+	public function getFileMauExcelDGGV ($matochuyenmon) {
+		$matruong = Session::get('matruong');
+		$datagv = danhsachgv::where('matruong',$matruong)->where('trangthai',1)->get();
+		$datagvcm = DB::table('giaovien_chuyenmon')
+		->join('tochuyenmon','tochuyenmon.id','=','giaovien_chuyenmon.matochuyenmon')
+		->where('giaovien_chuyenmon.matruong',$matruong)
+		->where('giaovien_chuyenmon.matochuyenmon',$matochuyenmon)
+		->select('giaovien_chuyenmon.*','tochuyenmon.tentocm')
+		->get();
+		
+		
+		$currentYear = date("Y");
+		$data = [];
+		foreach($datagv as $d){
+			foreach($datagvcm as $d1){
+				if($d->id == $d1->magiaovien){
+					array_push($data,array('magiaovien'=>$d->id,'matochuyenmon'=>$d1->matochuyenmon,'tentochuyenmon'=>$d1->tentocm,'hovaten'=>$d->hovaten,'namdanhgia'=>$currentYear));
+				}
+			}
+		}
+
+		$dict = array();
+		foreach($data as $one_index){
+		  $dict[join('',$one_index)]=$one_index;
+		}
+
+		$res=array();
+		foreach($dict as $one_index){
+		   $res[] = $one_index;
+		}
+
+		$sheet = $this->loadSheetExcel('danhgiagiaovien.xlsx');
+		$sheet->setActiveSheetIndex(0);
+        $sheetDGGV= $sheet->getActiveSheet();
+        $this->exportMauDGGV($sheetDGGV, $sheet, $res);
+
+	}
+
+	private function exportMauDGGV($sheetDGGV, $sheet, $res){
+		 $styleBorder = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => 'thin',
+                ),
+            ),
+            'alignment' => array(
+                'horizontal' => 'center',
+                'vertical' => 'center',
+            )
+        );
+        $styleCenter = array(
+            'alignment' => array(
+                'horizontal' => 'center',
+                'vertical' => 'center',
+            )
+        );
+        $styleLeft = array(
+            'alignment' => array(
+                'horizontal' => 'left',
+                // 'vertical' => 'center',
+            )
+        );
+        $styleFont = array(
+            'font'  => array(
+                'bold'  => true,
+// 'color' => array('rgb' => 'FF0000'),
+                'size'  => 15,
+                'name'  => 'Wingdings'
+            )
+        );      
+        $styleBold = array('font'=>array('bold'=>true));
+        $stt=1;
+        $i = 3;
+        foreach($res as $r){
+        	$sheetDGGV->setCellValue('A'.$i,$r['matochuyenmon']);
+        	$sheetDGGV->getStyle("A".$i)->applyFromArray($styleBorder);
+        	$sheetDGGV->setCellValue('B'.$i,$r['magiaovien']);
+        	$sheetDGGV->getStyle("B".$i)->applyFromArray($styleBorder);
+        	$sheetDGGV->setCellValue('C'.$i,$r['namdanhgia']);
+        	$sheetDGGV->getStyle("C".$i)->applyFromArray($styleBorder);
+        	$sheetDGGV->setCellValue('D'.$i,$stt++);
+        	$sheetDGGV->getStyle("D".$i)->applyFromArray($styleBorder);
+        	$sheetDGGV->setCellValue('E'.$i,$r['hovaten']);
+        	$sheetDGGV->getStyle("E".$i)->applyFromArray($styleBorder);
+        	$sheetDGGV->setCellValue('F'.$i,$r['tentochuyenmon']);
+        	$sheetDGGV->getStyle("F".$i)->applyFromArray($styleBorder);
+        	$sheetDGGV->getStyle('A'.$i.':F'.$i)->getAlignment()->setWrapText(true);
+            $sheetDGGV->getRowDimension($i)->setRowHeight(-1);
+            $i++;
+        }
+        $this->autoSiezColumn($sheet);
+        $this->saveExcel($sheet, 'danhgiagiaovien');
+        $success = 1;
+        return json_encode($success);
 	}
 
 }
