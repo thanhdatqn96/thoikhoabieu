@@ -50,6 +50,12 @@
 																<input type="radio" name="radio" value="" id="radioKetQuaDanhGiaGv">
 																Kết quả đánh giá giáo viên	
 															</label>
+														</fieldset>
+														<fieldset class="radio">
+															<label>
+																<input type="radio" name="radio" value="" id="radioExportKetQuaDanhGiaGv">
+																Xuất kết quả đánh giá giáo viên	
+															</label>
 														</fieldset>		
 													</div>
 												</div>							
@@ -209,6 +215,80 @@
 					</div>
 				</div>
 
+				<!-- Xuất kết quả đánh giá giáo viên -->
+				<div class="card" id="cardExportKetQuaDanhGiaGv" style="display: none;">
+					<div class="card-header" style="padding: 10px">
+						<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+						<div class="heading-elements" style="top: 10px">
+							<ul class="list-inline mb-0">
+								<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+								<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+							</ul>
+						</div>						
+					</div>
+					<div class="card-content collpase show">
+						<div class="card-body">
+							<form class="form">
+								<div class="form-body">
+									<div class="col-md-10">
+										<div class="row">
+											<div class="col-md-3"><label style="padding-top: 10px;">Chọn loại xuất</label></div>
+											<div class="col-md-7"><select id="selectLoaiExport" data-live-search="true"><option value="" selected='' disabled=''></option><option value="1">Toàn trường</option><option value="2">Tổ chuyên môn</option></select></div>
+										</div>
+									</div>
+								</div>
+								<hr>
+								<div class="form-body" id="divExportToanTruong" style="display: none;">
+							        <div class="col-md-10">
+							        	<div class="row">
+							        		<div class="col-md-3"><label style="padding-top: 10px;">Chọn năm đánh giá</label></div>
+							        		<div class="col-md-7">
+							        			<div class="input-group date" style="width: 50%;">
+										            <input id="selectNamToanTruongExport" type="text" class="form-control-sm form-control" placeholder="Chọn năm đánh giá">
+										            <div class="input-group-addon">
+										                <i class="fa fa-calendar"></i>
+										            </div>
+										        </div>
+							        		</div>
+							        	</div>
+							    	</div>
+							    	<br>
+							    	<div class="col-md-3">
+							    		<button type="button" class="btn btn-primary" id="btnXuatToanTruong"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất</button>
+							    	</div>
+								</div>
+								<div class="form-body" id="divExportToChuyenMon" style="display: none;">
+									<div class="col-md-10">
+										<div class="row">
+											<div class="col-md-3"><label style="padding-top: 10px;">Chọn tổ chuyên môn</label></div>
+											<div class="col-md-7"><select id="selectToChuyenMonExport" data-live-search="true"></select></div>
+										</div>
+									</div>
+									<br>
+							        <div class="col-md-10">
+							        	<div class="row">
+							        		<div class="col-md-3"><label style="padding-top: 10px;">Chọn năm đánh giá</label></div>
+							        		<div class="col-md-7">
+							        			<div class="input-group date" style="width: 50%;">
+										            <input id="selectNamToChuyenMonExport" type="text" class="form-control-sm form-control" placeholder="Chọn năm đánh giá">
+										            <div class="input-group-addon">
+										                <i class="fa fa-calendar"></i>
+										            </div>
+										        </div>
+							        		</div>
+							        	</div>
+										
+							    	</div>
+							    	<br>
+							    	<div class="col-md-3">
+							    		<button type="button" class="btn btn-primary" id="btnXuatToChuyenMon"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất</button>
+							    	</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
 			</dir>
 		</div>
 	</div>
@@ -314,8 +394,6 @@
 	</div>
 </div>
 
-<<<<<<< HEAD
-=======
 <!-- modal import đánh giá kiểm tra -->
 <div class="modal fade text-left" id="modalImportDGGVCheck" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
@@ -376,7 +454,6 @@
 </div>
 
 <!-- modal loading -->
->>>>>>> 0ef2dd7 (update 29/11)
 <div class="modal fade text-left show" id="modalLoading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel20" style="display: none;">
 	<div class="modal-dialog modal-xs" role="document">
 		<div class="modal-content">
@@ -384,11 +461,7 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-<<<<<<< HEAD
-							<h4 class="card-title">Đang cập nhât! Vui lòng đợi trong giây lát</h4>				
-=======
-							<h4 class="card-title">Đang xử lý! Vui lòng đợi trong giây lát</h4>				
->>>>>>> 0ef2dd7 (update 29/11)
+							<h4 class="card-title">Đang xử lý! Vui lòng đợi trong giây lát</h4>							
 						</div>
 						<div class="card-content">
 							<div class="loader-wrapper">
@@ -412,10 +485,6 @@
 		</div>
 	</div>
 </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> 0ef2dd7 (update 29/11)
 
 <script type="text/javascript">
 	$("#radioImportExcel").change(function () {
@@ -434,9 +503,11 @@
 	$("#radioDanhGiaGv").change(function () {
 		$("#radioImportExcel").prop("checked", false);
 		$("#radioKetQuaDanhGiaGv").prop("checked", false);
+		$("#radioExportKetQuaDanhGiaGv").prop("checked", false);
 		//
 		document.getElementById("cardImportExcel").style.display = "none";
 		document.getElementById("cardKetQuaDanhGiaGv").style.display = "none";
+		document.getElementById("cardExportKetQuaDanhGiaGv").style.display = "none";
 		//select
 		document.getElementById("cardSelectTCMNam").style.display = "block";
 		document.getElementById("cardSelectTCMNamXem").style.display = "none";
@@ -447,9 +518,11 @@
 	$("#radioKetQuaDanhGiaGv").change(function () {
 		$("#radioImportExcel").prop("checked", false);
 		$("#radioDanhGiaGv").prop("checked", false);
+		$("#radioExportKetQuaDanhGiaGv").prop("checked", false);
 		//
 		document.getElementById("cardImportExcel").style.display = "none";
 		document.getElementById("cardDanhGiaGv").style.display = "none";
+		document.getElementById("cardExportKetQuaDanhGiaGv").style.display = "none";
 		//select
 		document.getElementById("cardSelectTCMNam").style.display = "none";
 		document.getElementById("cardSelectTCMNamXem").style.display = "block";
@@ -457,11 +530,24 @@
 		$('#selectToChuyenMonXem').val('').trigger('change.select2');
 		document.getElementById("selectNamXem").value = '';
 	});
+	$("#radioExportKetQuaDanhGiaGv").change(function () {
+		$("#radioImportExcel").prop("checked", false);
+		$("#radioDanhGiaGv").prop("checked", false);
+		$("#radioKetQuaDanhGiaGv").prop("checked", false);
+		//
+		document.getElementById("cardImportExcel").style.display = "none";
+		document.getElementById("cardDanhGiaGv").style.display = "none";
+		document.getElementById("cardKetQuaDanhGiaGv").style.display = "none";
+		document.getElementById("cardExportKetQuaDanhGiaGv").style.display = "block";
+		//select
+		document.getElementById("cardSelectTCMNam").style.display = "none";
+		document.getElementById("cardSelectTCMNamXem").style.display = "none";
+		//clear
+		// $('#selectToChuyenMonXem').val('').trigger('change.select2');
+		// document.getElementById("selectNamXem").value = '';
+	});
 </script>
-<<<<<<< HEAD
-=======
 
->>>>>>> 0ef2dd7 (update 29/11)
 <link rel="stylesheet" type="text/css" href="theme/app-assets/css/plugins/loaders/loaders.min.css">
 <script type="text/javascript" src="js/tinhchinh/tinhchinh.js"></script>
 <script type="text/javascript" src='dx/js/jszip/dist/xlsx.full.min.js'></script>

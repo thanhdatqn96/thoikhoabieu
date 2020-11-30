@@ -210,7 +210,9 @@ class tinhchinhController extends Controller
 						$matieuchi = $v3['matieuchi'];
 						$maxeploai = $v3['maxeploai'];
 						$matruong = $v3['matruong'];
-						array_push($dataDanhGiaGv,array('iddanhgiagv'=>$id,'matochuyenmon'=>$matochuyenmon,'magiaovien'=>$magiaovien,'matieuchuan'=>$matieuchuan,'matieuchi'=>$matieuchi,'maxeploai'=>$maxeploai,'matruong'=>$matruong));
+						$trangthai = $v3['trangthai'];
+						$namdanhgia = $v3['namdanhgia'];
+						array_push($dataDanhGiaGv,array('iddanhgiagv'=>$id,'matochuyenmon'=>$matochuyenmon,'magiaovien'=>$magiaovien,'matieuchuan'=>$matieuchuan,'matieuchi'=>$matieuchi,'maxeploai'=>$maxeploai,'matruong'=>$matruong,'trangthai'=>$trangthai,'namdanhgia'=>$namdanhgia));
 					}
 					array_push($dataGv,array('magiaovien'=>$k2,'dsdanhgiagv'=>$dataDanhGiaGv));
 				}
@@ -218,6 +220,12 @@ class tinhchinhController extends Controller
 			}
 			$data[] = array('matochuyenmon' => $k, 'dsnam'=> $dataNam);
 		}
+		return json_encode($data, JSON_UNESCAPED_UNICODE);
+	}
+
+	public function getDGGV () {
+		$matruong = Session::get('matruong');
+		$data = danhgiagv::where('matruong',$matruong)->get();
 		return json_encode($data, JSON_UNESCAPED_UNICODE);
 	}
 
@@ -443,8 +451,8 @@ class tinhchinhController extends Controller
 	}
 
 
-	private function loadSheetExcel($excelFile)
-    {
+	private function loadSheetExcel($excelFile){
+
         if (!is_dir(public_path('excelfilemau'))) {
             mkdir(public_path('excelfilemau'));
         }
@@ -452,8 +460,7 @@ class tinhchinhController extends Controller
         return $sheet;
     }
 
-    private function autoSiezColumn($sheet)
-    {
+    private function autoSiezColumn($sheet){
         // Auto-size columns for all worksheets
         foreach ($sheet->getWorksheetIterator() as $worksheet) {
             foreach ($worksheet->getColumnIterator() as $column) {
@@ -462,8 +469,7 @@ class tinhchinhController extends Controller
         }
     }
 
-    private function saveExcel($sheet, $fileName)
-    {
+    private function saveExcel($sheet, $fileName){
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($sheet);
         if (!file_exists(public_path('export'))) {
             mkdir(public_path('export'));
@@ -510,7 +516,7 @@ class tinhchinhController extends Controller
 	}
 
 	private function exportMauDGGV($sheetDGGV, $sheet, $res){
-		 $styleBorder = array(
+		$styleBorder = array(
             'borders' => array(
                 'allborders' => array(
                     'style' => 'thin',
@@ -565,6 +571,56 @@ class tinhchinhController extends Controller
         $this->saveExcel($sheet, 'danhgiagiaovien');
         $success = 1;
         return json_encode($success);
+	}
+
+	//xuất đánh giá giáo viên
+	private function loadSheetExcelExport($excelFile)
+    {
+        if (!is_dir(storage_path('excel'))) {
+            mkdir(storage_path('excel'));
+        }
+        $sheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(storage_path('app/excel') . '/' . $excelFile);
+        return $sheet;
+    }
+
+    public function getExportDGGVToanTruong ($namdanhgia) {
+		$matruong = Session::get('matruong');
+		$datakqdggv = ketquadanhgiagv::where('matruong',$matruong)->where('namdanhgia',$namdanhgia)->get();
+		$datadggv = DB::table('danhgiagv')
+		->leftjoin('tochuyenmon','tochuyenmon.id','=','danhgiagv.matochuyenmon')
+		->leftjoin('danhsachgv','danhsachgv.id','=','danhgiagv.magiaovien')
+		->where('danhgiagv.matruong',$matruong)
+		->where('danhgiagv.namdanhgia',$namdanhgia)
+		->where('danhgiagv.trangthai',2)
+		->select('danhsachgv.hovaten','tochuyenmon.tentocm','danhgiagv.*')
+		->get();
+		
+		dd($datadggv);
+		// $currentYear = date("Y");
+		// $data = [];
+		// foreach($datagv as $d){
+		// 	foreach($datagvcm as $d1){
+		// 		if($d->id == $d1->magiaovien){
+		// 			array_push($data,array('magiaovien'=>$d->id,'matochuyenmon'=>$d1->matochuyenmon,'tentochuyenmon'=>$d1->tentocm,'hovaten'=>$d->hovaten,'namdanhgia'=>$currentYear));
+		// 		}
+		// 	}
+		// }
+
+		// $dict = array();
+		// foreach($data as $one_index){
+		//   $dict[join('',$one_index)]=$one_index;
+		// }
+
+		// $res=array();
+		// foreach($dict as $one_index){
+		//    $res[] = $one_index;
+		// }
+
+		// $sheet = $this->loadSheetExcel('danhgiagiaovien.xlsx');
+		// $sheet->setActiveSheetIndex(0);
+  //       $sheetDGGV= $sheet->getActiveSheet();
+  //       $this->exportMauDGGV($sheetDGGV, $sheet, $res);
+
 	}
 
 }

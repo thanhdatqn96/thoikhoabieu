@@ -85,11 +85,13 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('getDsToChuyenMon','tinhchinh\tinhchinhController@getDsToChuyenMon');
 	Route::get('getDsGiaoVien','tinhchinh\tinhchinhController@getDsGiaoVien');
 	Route::get('getDataDanhGiaGv','tinhchinh\tinhchinhController@getDataDanhGiaGv');
+	Route::get('getDGGV','tinhchinh\tinhchinhController@getDGGV');
 	Route::get('statusDanhGiaGv','tinhchinh\tinhchinhController@statusDanhGiaGv');
 	Route::post('addDanhGiaGv','tinhchinh\tinhchinhController@addDanhGiaGv');
 	Route::post('addKetQuaDanhGiaGv','tinhchinh\tinhchinhController@addKetQuaDanhGiaGv');
 	Route::get('getKetQuaDanhGiaGv','tinhchinh\tinhchinhController@getKetQuaDanhGiaGv');
 	Route::get('getFileMauExcelDGGV/{matochuyenmon}','tinhchinh\tinhchinhController@getFileMauExcelDGGV');
+	Route::get('getExportDGGVToanTruong/{namdanhgia}','tinhchinh\tinhchinhController@getExportDGGVToanTruong');
 
 
 

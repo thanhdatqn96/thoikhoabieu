@@ -331,6 +331,11 @@ function initEvent () {
 
 	
 	//xem đánh giá giáo viên
+	$('#selectToChuyenMonXem').on('change',function(){
+		$('#selectNamXem').val('');
+		document.getElementById("cardKetQuaDanhGiaGv").style.display = "none";
+	});
+
 	$('#selectNamXem').on('change',function(){
 		let valNam = $(this).val();
 		let valTCM = $('#selectToChuyenMonXem').val();
@@ -579,10 +584,18 @@ function initEvent () {
 
 	    this.parseExcel = function(file) {
 	    	let tenFile = file.name;
-	    	if(tenFile != 'danhgiagiaovien.xlsx'){
+	    	let status = 0 ;
+	    	for(let i=1;i<50;i++){
+	    		if(tenFile == 'danhgiagiaovien.xlsx' || tenFile == 'danhgiagiaovien ('+i+').xlsx'){
+		    		status = 1;
+		    	}
+	    	}
+
+	    	if(status != 1){
 	    		Swal.fire("File không hợp lệ", "Lỗi", "error");
 	    		return false;
 	    	}
+	    	
 	        var reader = new FileReader();
 
 	        reader.onload = function(e) {
@@ -1060,15 +1073,15 @@ function initEvent () {
 		}
 
 		if(mangChbxTrue.length == demChbxImport) {
-
-			let checkTrung = 0;
-
+			$('#modalLoading').modal('show');
 			axios.get("statusDanhGiaGv").then(res => {
 				let layStatusDanhGiaGv = res.data;
-				axios.get("getDataDanhGiaGv").then(res1 => {
-					let layDataDanhGiaGv = res1.data;
 
-					if(layStatusDanhGiaGv == '' && layDataDanhGiaGv == '') {
+				axios.get("getDGGV").then(res1 => {
+					let layDataDGGV = res1.data;
+
+					if(layStatusDanhGiaGv == '' && layDataDGGV == '') {
+						$('#modalLoading').modal('hide');
 						Swal.fire(
 						  'Hoàn tất',
 						  'Kiểm tra hợp lệ',
@@ -1079,64 +1092,77 @@ function initEvent () {
 						return false;
 					}
 
+					let checkTrung = 0;
+					let iddanhgiagv = [];
+
 					layStatusDanhGiaGv.forEach(function(iTem){
 
 						mangChbxTrue.forEach(function(iTem1,key1){
 
-							if(iTem.matochuyenmon == iTem1.dataset.matochuyenmon && iTem.magiaovien == iTem1.dataset.magiaovien && iTem.namdanhgia == iTem1.dataset.namdanhgia && iTem.trangthai == 2){
+							let matochuyenmon = iTem1.dataset.matochuyenmon;
+							let magiaovien = iTem1.dataset.magiaovien;
+							let namdanhgia = iTem1.dataset.namdanhgia;
+
+							//kiểm tra có dữ liệu đã hoàn thành đánh giá
+							if(iTem.matochuyenmon == matochuyenmon && iTem.magiaovien == magiaovien && iTem.namdanhgia == namdanhgia && iTem.trangthai == 2){
 								mangChbxTrue[key1].checked = false;
 								mangChbxTrue[key1].setAttribute("disabled", true);
 								mangChbxTrue[key1].setAttribute("class", "");
-								Swal.fire(
-								  'Thông báo',
-								  'Có giáo viên đã hoàn thành đánh giá, Đã loại bỏ giáo viên',
-								  'info'
-								);
 								checkTrung = 1;
-								$('#btnCheckImportDGGV').attr("disabled", false);
-								$('#btnLuuImportDGGV').attr("disabled", true);
 								return false;
 							}
 
-							if(checkTrung == 0) {
-								
-								let iddanhgiagv = [];
-								
-								layDataDanhGiaGv.forEach(function(iTem1s){
-		                    		let dsNam = iTem1s.dsnam;
-		                    		dsNam.forEach(function(iTem2s){
-		                    			let dsGv = iTem2s.dsgv;
-		                    			dsGv.forEach(function(iTem3s){
-		                    				let dsDGGV = iTem3s.dsdanhgiagv;
-		                    				dsDGGV.forEach(function(iTem4s){
-		                    					if(iTem1s.matochuyenmon == iTem1.dataset.matochuyenmon && iTem2s.nam == iTem1.dataset.namdanhgia && iTem3s.magiaovien == iTem1.dataset.magiaovien) {
-		                    						iddanhgiagv.push({iddanhgiagv:iTem4s.iddanhgiagv});
-			                    				}
-		                    				});
-		                    				
-		                    			});
-		                    		});
-		                    	});
-
-
-								$('#inputMaDGGVImport').val(JSON.stringify(iddanhgiagv));
-
-								Swal.fire(
-								  'Hoàn tất',
-								  'Kiểm tra hợp lệ',
-								  'success'
-								);
-
-								$('#btnCheckImportDGGV').attr("disabled", true);
-								$('#btnLuuImportDGGV').attr("disabled", false);
+							//kiểm tra có dữ liệu đã đc đánh giá
+							if(iTem.matochuyenmon == matochuyenmon && iTem.magiaovien == magiaovien && iTem.namdanhgia == namdanhgia && iTem.trangthai == 1){
+								for(let i=0;i<layDataDGGV.length;i++){
+									if(layDataDGGV[i].matochuyenmon == matochuyenmon  && layDataDGGV[i].magiaovien == magiaovien && layDataDGGV[i].namdanhgia == namdanhgia && layDataDGGV[i].trangthai == 1){
+	            						iddanhgiagv.push({iddanhgiagv:layDataDGGV[i].id});
+	            					}
+								}
 							}
+								
 						});
 
-					});	
+						//kiểm tra trùng dữ liệu
+						if(checkTrung == 1) {
+							$('#modalLoading').modal('hide');
+							Swal.fire(
+							  'Thông báo',
+							  'Có giáo viên đã hoàn thành đánh giá, Đã loại bỏ giáo viên',
+							  'info'
+							);
+
+							$('#btnCheckImportDGGV').attr("disabled", false);
+							$('#btnLuuImportDGGV').attr("disabled", true);
+							return false;	
+
+						}
+
+						if(checkTrung == 0) {
+							$('#modalLoading').modal('hide');
+							Swal.fire(
+							  'Hoàn tất',
+							  'Kiểm tra hợp lệ',
+							  'success'
+							);
+
+							$('#btnCheckImportDGGV').attr("disabled", true);
+							$('#btnLuuImportDGGV').attr("disabled", false);
+							return false;
+						}
+
+					});
+
+					if(iddanhgiagv != ''){
+						$('#inputMaDGGVImport').val(JSON.stringify(iddanhgiagv));
+					}else{
+						$('#inputMaDGGVImport').val('');
+					}	
 
 				});
 
 			});
+
 		}
 
 	});
@@ -1236,36 +1262,120 @@ function initEvent () {
 				});
 			}
 		});
-		axios.post('addDanhGiaGv', {
-    		iddanhgiagv: maDGGVImport,
-			dataChBxXepLoaiTrue: JSON.stringify(dataChBxXepLoaiTrueImport)
-		}).then(function(response) {
-			let data = response.data;
-			if(data == 1){
-				Swal.fire({
-					title: 'Lưu',
-					text: 'Đã lưu thành công',
-					icon: 'success',
-					confirmButtonText: 'OK'
-				});
-				$('#modalImportDGGVCheck').modal("hide");
-				$('#modalImportDGGVCheck').on('hidden.bs.modal', function() {
-					$('#inputMaDGGVImport').val('');
-					$('#tableImportDGGVCheck>tbody').empty();
-					$('#btnCheckImportDGGV').attr("disabled", false);
-					$('#btnLuuImportDGGV').attr("disabled", true);
-				});
-			}
-		});
+
+		if(maDGGVImport != '') {
+			Swal.fire({
+	            title: 'Cảnh báo?',
+	            text: "Đã có giáo viên được đánh giá, Bạn có muốn ghi đè dữ liệu",
+	            icon: 'warning',
+	            showCancelButton: true,
+	            confirmButtonColor: '#3085d6',
+	            cancelButtonColor: '#d33',
+	            confirmButtonText: 'OK'
+	        }).then((result) => {
+	        	if (result.value) {
+	        		$('#modalLoading').modal('show');
+	        		axios.post('addDanhGiaGv', {
+			    		iddanhgiagv: maDGGVImport,
+						dataChBxXepLoaiTrue: JSON.stringify(dataChBxXepLoaiTrueImport)
+					}).then(function(response) {
+						let data = response.data;
+						if(data == 1){
+							$('#modalLoading').modal('hide');
+							Swal.fire({
+								title: 'Import',
+								text: 'Import dữ liệu thành công',
+								icon: 'success',
+								confirmButtonText: 'OK'
+							});
+							$('#modalImportDGGVCheck').modal("hide");
+							$('#modalImportDGGVCheck').on('hidden.bs.modal', function() {
+								$('#inputMaDGGVImport').val('');
+								$('#tableImportDGGVCheck>tbody').empty();
+								$('#btnCheckImportDGGV').attr("disabled", false);
+								$('#btnLuuImportDGGV').attr("disabled", true);
+							});
+						}
+					});
+	        	}
+	        });
+		}else{
+			$('#modalLoading').modal('show');
+			axios.post('addDanhGiaGv', {
+	    		iddanhgiagv: 0,
+				dataChBxXepLoaiTrue: JSON.stringify(dataChBxXepLoaiTrueImport)
+			}).then(function(response) {
+				let data = response.data;
+				if(data == 1){
+					$('#modalLoading').modal('hide');
+					Swal.fire({
+						title: 'Import',
+						text: 'Import dữ liệu thành công',
+						icon: 'success',
+						confirmButtonText: 'OK'
+					});
+					$('#modalImportDGGVCheck').modal("hide");
+					$('#modalImportDGGVCheck').on('hidden.bs.modal', function() {
+						$('#inputMaDGGVImport').val('');
+						$('#tableImportDGGVCheck>tbody').empty();
+						$('#btnCheckImportDGGV').attr("disabled", false);
+						$('#btnLuuImportDGGV').attr("disabled", true);
+					});
+				}
+			});
+		}
+
 	});
+
+	
+	//xuất đánh giá giáo viên
+
+	$('#selectLoaiExport').on('change',function(){
+		let valType = $(this).val();
+		if(valType == 1){
+			document.getElementById('divExportToanTruong').style.display = "block";
+			document.getElementById('divExportToChuyenMon').style.display = "none";
+		}else{
+			document.getElementById('divExportToChuyenMon').style.display = "block";
+			document.getElementById('divExportToanTruong').style.display = "none";
+		}
+	});
+
+	//xuất toàn trường
+	$('#btnXuatToanTruong').on('click',function(){
+		let valNamTr = $('#selectNamToanTruongExport').val();
+		if(valNamTr == ''){
+			Swal.fire(
+			  'Thông báo',
+			  'Vui lòng chọn năm đánh giá',
+			  'info'
+			);
+			return false;
+		}else{
+			$('#modalLoading').modal('show');
+			axios.get(`getExportDGGVToanTruong/${valNamTr}`).then(res => {
+				let status =  res.status;
+				if(status == 200){
+					$('#modalLoading').modal('hide');
+					window.open('../public/export/ketquadanhgiagiaovien.xlsx');
+				}else{
+					$('#modalLoading').modal('hide');
+					Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+				}
+			});
+
+		}
+	});
+
 
 }
 
 function hienThiSelectToChuyenMon () {
-
+	$('#selectLoaiExport').select2({ width: '50%'});
 	$('#selectToChuyenMon').find('option').remove();
 	$('#selectToChuyenMonXem').find('option').remove();
 	$('#selectToChuyenMonExcel').find('option').remove();
+	$('#selectToChuyenMonExport').find('option').remove();
 
 	axios.get('getDsToChuyenMon').then(function(response) {
 		let data = response.data;
@@ -1273,10 +1383,12 @@ function hienThiSelectToChuyenMon () {
 		let selectToChuyenMon = document.getElementById('selectToChuyenMon');
 		let selectToChuyenMonXem = document.getElementById('selectToChuyenMonXem');
 		let selectToChuyenMonExcel = document.getElementById('selectToChuyenMonExcel');
+		let selectToChuyenMonExport = document.getElementById('selectToChuyenMonExport');
 
 		$('#selectToChuyenMon').append("<option value='' selected='' disabled=''></option>");
 		$('#selectToChuyenMonXem').append("<option value='' selected='' disabled=''></option>");
 		$('#selectToChuyenMonExcel').append("<option value='' selected='' disabled=''></option>");
+		$('#selectToChuyenMonExport').append("<option value='' selected='' disabled=''></option>");
 
 		for(let i= 0; i< data.length;i++){
 			let option = document.createElement("option");
@@ -1299,15 +1411,41 @@ function hienThiSelectToChuyenMon () {
 		    selectToChuyenMonExcel.appendChild(option);
 		}
 
+		for(let m= 0; m< data.length;m++){
+			let option = document.createElement("option");
+		    option.value = data[m].id;
+		    option.text = data[m].tentocm;
+		    selectToChuyenMonExport.appendChild(option);
+		}
+
 	});
 	
 	$('#selectToChuyenMon').select2({ width: '50%'});
 	$('#selectToChuyenMonXem').select2({ width: '50%'});
 	$('#selectToChuyenMonExcel').select2({ width: '50%'});
+	$('#selectToChuyenMonExport').select2({ width: '50%'});
 }
 
 function hienThiSelectNam () {
     $('#selectNamXem').datepicker({
+        format: "yyyy",
+        orientation: "bottom",
+        viewMode: "years",
+        minViewMode: "years",
+        autoclose: true,
+        language: "vi",
+    });
+
+    $('#selectNamToanTruongExport').datepicker({
+        format: "yyyy",
+        orientation: "bottom",
+        viewMode: "years",
+        minViewMode: "years",
+        autoclose: true,
+        language: "vi",
+    });
+
+    $('#selectNamToChuyenMonExport').datepicker({
         format: "yyyy",
         orientation: "bottom",
         viewMode: "years",
@@ -1565,14 +1703,8 @@ function hoanThanhDanhGia () {
 						refresh(); 
 					}
 				});
-<<<<<<< HEAD
         	}
         });
-		
-=======
-			}
-		});
->>>>>>> 0ef2dd7 (update 29/11)
 	}
 
 }
