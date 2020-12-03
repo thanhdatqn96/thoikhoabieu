@@ -1,4 +1,6 @@
-var layDataDsTruong;
+var layDataDsTruong,
+    layDataTkbGv,
+    layDataTkbLop;
 
 async function loadDataDsTruong() {
     let result = await axios.get("getdstruong").then(res => {
@@ -106,8 +108,11 @@ async function loaddanhsachtruong() {
                             var datadsgv = options.data.danhsachgv;
                             var datadslop = options.data.danhsachlop;
                             var datadskhoi = options.data.danhsachkhoihoc;
+                            var matruong = options.data.matruong;
                             loaddanhsachgv(datadsgv);
                             loaddanhsachkhoilop(datadskhoi, datadslop);
+                            loaddatatkbgv(matruong);
+                            loaddatatkblop(matruong);
                             document.getElementById("formxemtkb").style.display = "block";
                         },
                     })
@@ -219,6 +224,18 @@ function loaddanhsachkhoilop(datadskhoi, datadslop) {
 
     });
 
+}
+
+async function loaddatatkbgv(matruong) {
+    layDataTkbGv = await axios.get(`getthoikhoabieugvtime/${matruong}`).then(restkbgv => {
+        return restkbgv.data;
+    });
+}
+
+async function loaddatatkblop(matruong) {
+    layDataTkbLop = await axios.get(`getthoikhoabieuloptime/${matruong}`).then(restkblop => {
+        return restkblop.data;
+    });
 }
 
 function phantranggv(){
@@ -374,6 +391,12 @@ window.onload = function() {
             $('#divResults').children('div').remove();
         }
 
+        //xoá pagination gv
+        let dem = $('body').find('#divResults ~ div').length;
+        if(dem != 0){
+            $('body').find('#divResults ~ div').remove();
+        }
+
         const thangnamtuan = $('#datepickerthangtuan').val();
         const date = moment(thangnamtuan, 'MM/YYYY');
         const thang = date.format('M');
@@ -400,7 +423,7 @@ window.onload = function() {
                     for(let m=0;m<demthang;m++){
                         let demtuan = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan.length;
                         for(let n=0;n<demtuan;n++){
-                            if(layDataTkbGv[i].matruong == idtruonggv && layDataTkbGv[i].dsgiaovien[j].magiaovien == idgv && layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam == nam && layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang == thang && layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
+                            if(layDataTkbGv[i].dsgiaovien[j].magiaovien == idgv && layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam == nam && layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang == thang && layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
                                 //tạo div
                                 let taodiv = document.createElement("div");
                                 taodiv.setAttribute("class","col-md-12");
@@ -585,6 +608,13 @@ window.onload = function() {
         for(let m=0;m<dembang;m++){
             $('#divResults').children('div').remove();
         }
+
+        //xoá pagination gv
+        let dem = $('body').find('#divResults ~ div').length;
+        if(dem != 0){
+            $('body').find('#divResults ~ div').remove();
+        }
+
         const thangnam = $(this).val();
         const date = moment(thangnam, 'MM/YYYY');
         const thang = date.format('M');
@@ -603,7 +633,7 @@ window.onload = function() {
                     for(let m=0;m<demthang;m++){
                         let demtuan = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan.length;
                         for(let n=0;n<demtuan;n++){
-                            if(layDataTkbGv[i].matruong == idtruonggv && layDataTkbGv[i].dsgiaovien[j].magiaovien == idgv && layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam == nam && layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang == thang){
+                            if(layDataTkbGv[i].dsgiaovien[j].magiaovien == idgv && layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam == nam && layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang == thang){
                                 let tuan = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan;
                                 // $('#idthangtuan').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
                                 //tạo div
@@ -824,7 +854,7 @@ window.onload = function() {
                     for(let m=0;m<demthang;m++){
                         let demtuan = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan.length;
                         for(let n=0;n<demtuan;n++){
-                            if(layDataTkbGv[i].matruong == idtruonggv && layDataTkbGv[i].dsgiaovien[j].magiaovien == idgv && layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam == nam ){
+                            if(layDataTkbGv[i].dsgiaovien[j].magiaovien == idgv && layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam == nam ){
                                 
                                 let thangnam = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].thang+"/"+layDataTkbGv[i].dsgiaovien[j].dsnam[k].nam;
                                 let tuan = layDataTkbGv[i].dsgiaovien[j].dsnam[k].dsthang[m].dstuan[n].tuan;
@@ -1084,6 +1114,12 @@ window.onload = function() {
         for(let m=0;m<dembang;m++){
             $('#divResultsLop').children('div').remove();
         }
+
+        //xoá pagination lớp
+        let dem = $('body').find('#divResultsLop ~ div').length;
+        if(dem != 0){
+            $('body').find('#divResultsLop ~ div').remove();
+        }
         
         const thangnamtuan = $('#datepickerthangtuanlop').val();
         const date = moment(thangnamtuan, 'MM/YYYY');
@@ -1111,7 +1147,7 @@ window.onload = function() {
                     for(let m=0;m<demthang;m++){
                         let demtuan = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan.length;
                         for(let n=0;n<demtuan;n++){
-                            if(layDataTkbLop[i].matruong == idtruonglop && layDataTkbLop[i].dslop[j].malop == idlop && layDataTkbLop[i].dslop[j].dsnam[k].nam == nam && layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].thang == thang && layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
+                            if(layDataTkbLop[i].dslop[j].malop == idlop && layDataTkbLop[i].dslop[j].dsnam[k].nam == nam && layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].thang == thang && layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan == tuan){
                                 let taodiv = document.createElement("div");
                                 taodiv.setAttribute("class","col-md-12");
                                 //tạo bảng
@@ -1302,6 +1338,11 @@ window.onload = function() {
         for(let m=0;m<dembang;m++){
             $('#divResultsLop').children('div').remove();
         }
+        //xoá pagination lớp
+        let dem = $('body').find('#divResultsLop ~ div').length;
+        if(dem != 0){
+            $('body').find('#divResultsLop ~ div').remove();
+        }
         const thangnam = $(this).val();
         const date = moment(thangnam, 'MM/YYYY');
         const thang = date.format('M');
@@ -1320,7 +1361,7 @@ window.onload = function() {
                     for(let m=0;m<demthang;m++){
                         let demtuan = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan.length;
                         for(let n=0;n<demtuan;n++){
-                            if(layDataTkbLop[i].matruong == idtruonglop && layDataTkbLop[i].dslop[j].malop == idlop && layDataTkbLop[i].dslop[j].dsnam[k].nam == nam && layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].thang == thang){
+                            if(layDataTkbLop[i].dslop[j].malop == idlop && layDataTkbLop[i].dslop[j].dsnam[k].nam == nam && layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].thang == thang){
                                 let tuan = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan;
                                 //tạo div
                                 let taodiv = document.createElement("div");
@@ -1544,7 +1585,7 @@ window.onload = function() {
                     for(let m=0;m<demthang;m++){
                         let demtuan = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan.length;
                         for(let n=0;n<demtuan;n++){
-                            if(layDataTkbLop[i].matruong == idtruonglop && layDataTkbLop[i].dslop[j].malop == idlop && layDataTkbLop[i].dslop[j].dsnam[k].nam == nam ){
+                            if(layDataTkbLop[i].dslop[j].malop == idlop && layDataTkbLop[i].dslop[j].dsnam[k].nam == nam ){
                                 
                                 let thangnam = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].thang+"/"+layDataTkbLop[i].dslop[j].dsnam[k].nam;
                                 let tuan = layDataTkbLop[i].dslop[j].dsnam[k].dsthang[m].dstuan[n].tuan;

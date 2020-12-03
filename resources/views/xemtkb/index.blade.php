@@ -161,6 +161,8 @@
 					                                </option>
 					                        	</select>
 											</div>
+											<br>
+											<button type="button" class="btn btn-success btn-sm" id="btnDSCoTKBTruong">DS thời gian có TKB</button>	
 										</div>
 									</section>
 
@@ -256,6 +258,8 @@
 				                                    </option>
 				                            	</select>
 											</div>
+											<br>
+											<button type="button" class="btn btn-success btn-sm" id="btnDSCoTKBGv">DS thời gian có TKB</button>	
 										</div>
 									</section>
 
@@ -345,6 +349,8 @@
 				                                    </option>
 				                            	</select>
 											</div>
+											<br>
+											<button type="button" class="btn btn-success btn-sm" id="btnDSCoTKBLop">DS thời gian có TKB</button>
 										</div>
 									</section>
 
@@ -427,6 +433,8 @@
 				                                    </option>
 				                            	</select>
 											</div>
+											<br>
+											<button type="button" class="btn btn-success btn-sm" id="btnDSCoTKBPhong">DS thời gian có TKB</button>
 										</div>
 									</section>
 
@@ -480,11 +488,44 @@
 					</div>
 				</div>
 
-
 			</dir>
 		</div>
 	</div>	
 </dir>
+
+<!-- modal danh sách thời gian có thời khoá biểu -->
+<div class="modal fade text-left" id="modalDsCoTKB" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKB">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKB" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKB">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
 	// setTimeout(function() {

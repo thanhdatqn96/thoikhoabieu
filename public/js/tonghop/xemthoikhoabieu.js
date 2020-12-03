@@ -581,7 +581,7 @@ async function loadDataDsTruong() {
 
 //load danh sách các trường trực thuộc
 
-function loaddanhsachtruong() {
+async function loaddanhsachtruong() {
 
 	layDataDsTruong = await loadDataDsTruong();
 
