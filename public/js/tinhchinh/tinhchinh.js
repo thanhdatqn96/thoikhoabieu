@@ -38,12 +38,52 @@ async function initData () {
 function initEvent () {
 
 	//đánh giá giáo viên
+
 	$('#selectToChuyenMon').on('change',function(){
-		let valTCM = $(this).val();
+		$('#selectNam').val('');
+		document.getElementById('cardDanhGiaGv').style.display = "none";
+	});
+
+	$('#selectNam').on('change',function(){
+		let valTCM = $('#selectToChuyenMon').val();
+		let valNam = $(this).val();
 		let dateCurrent = new Date();
   		let yearCurrent = dateCurrent.getFullYear();
 
+		if(valTCM == null) {
+			Swal.fire(
+			  'Thông báo',
+			  'Vui lòng tổ chuyên môn',
+			  'info'
+			);
+			return false;
+		}
+
+		if(valNam == '') {
+			Swal.fire(
+			  'Thông báo',
+			  'Vui lòng chọn năm đánh giá',
+			  'info'
+			);
+			$('#selectNam').val('');
+			return false;
+		}
+
+		if(valNam > yearCurrent || valNam < yearCurrent) {
+			Swal.fire(
+			  'Thông báo',
+			  'Năm đánh giá không phù hợp',
+			  'info'
+			);
+			$('#selectNam').val('');
+			document.getElementById('cardDanhGiaGv').style.display = "none";
+			return false;
+		}
+
+
   		$('#toChuyenMonVirtual').val(valTCM);
+
+  		$('#namDanhGiaVirtual').val(valNam);
 
   		let dataGVTCM = [];
 
@@ -121,16 +161,16 @@ function initEvent () {
 						let dataCell = options.data;
 						let status = 0;
 						layStatusDanhGiaGv.forEach(function(iTem,key){
-							if(iTem.matochuyenmon == dataCell.matochuyenmon && iTem.magiaovien == dataCell.id && iTem.namdanhgia == yearCurrent && iTem.trangthai == 1){
+							if(iTem.matochuyenmon == dataCell.matochuyenmon && iTem.magiaovien == dataCell.id && iTem.namdanhgia == valNam && iTem.trangthai == 1){
 								status = 1;
 							}
-							if(iTem.matochuyenmon == dataCell.matochuyenmon && iTem.magiaovien == dataCell.id && iTem.namdanhgia == yearCurrent && iTem.trangthai == 2){
+							if(iTem.matochuyenmon == dataCell.matochuyenmon && iTem.magiaovien == dataCell.id && iTem.namdanhgia == valNam && iTem.trangthai == 2){
 								status = 2;
 							}
 						});
 						if(status == 1){
 							$(
-	                            "<input type='checkbox' class='classChbxSelect' data-matochuyenmon= "+dataCell.matochuyenmon+" data-magiaovien= "+dataCell.id+" data-matruong= "+dataCell.matruong+" data-namdanhgia= "+yearCurrent+">"
+	                            "<input type='checkbox' class='classChbxSelect' data-matochuyenmon= "+dataCell.matochuyenmon+" data-magiaovien= "+dataCell.id+" data-matruong= "+dataCell.matruong+" data-namdanhgia= "+valNam+">"
 	                        ).appendTo(container);
 						}else{
 							$(
@@ -157,11 +197,11 @@ function initEvent () {
 	                	let mGV = options.data.id;
 
 	                	layStatusDanhGiaGv.forEach(function(iTem){
-	                		if (iTem.matochuyenmon == valTCM && iTem.magiaovien == mGV && iTem.namdanhgia == yearCurrent && iTem.trangthai == 1) {
+	                		if (iTem.matochuyenmon == valTCM && iTem.magiaovien == mGV && iTem.namdanhgia == valNam && iTem.trangthai == 1) {
 		                        numBer = 1;
 		                    }
 
-		                    if (iTem.matochuyenmon == valTCM && iTem.magiaovien == mGV && iTem.namdanhgia == yearCurrent && iTem.trangthai == 2) {
+		                    if (iTem.matochuyenmon == valTCM && iTem.magiaovien == mGV && iTem.namdanhgia == valNam && iTem.trangthai == 2) {
 		                        numBer = 2;
 		                    }
 	                	});
@@ -221,7 +261,7 @@ function initEvent () {
 				                    			dsGv.forEach(function(iTem3){
 				                    				let dsDGGV = iTem3.dsdanhgiagv;
 				                    				dsDGGV.forEach(function(iTem4){
-				                    					if(iTem1.matochuyenmon == valTCM && iTem2.nam == yearCurrent && iTem3.magiaovien == maGv) {
+				                    					if(iTem1.matochuyenmon == valTCM && iTem2.nam == valNam && iTem3.magiaovien == maGv) {
 				                    						dataDanhGiaGv.push(iTem4);
 					                    				}
 				                    				});
@@ -231,7 +271,7 @@ function initEvent () {
 				                    	});
 
 				                    	layStatusDanhGiaGv.forEach(function(iTem){
-				                    		if(iTem.matochuyenmon == valTCM && iTem.magiaovien == maGv && iTem.namdanhgia == yearCurrent && iTem.trangthai == 2){
+				                    		if(iTem.matochuyenmon == valTCM && iTem.magiaovien == maGv && iTem.namdanhgia == valNam && iTem.trangthai == 2){
 				                    			doneDanhGia = 1;
 				                    		}
 				                    	})
@@ -583,19 +623,7 @@ function initEvent () {
 	var ExcelToJSON = function() {
 
 	    this.parseExcel = function(file) {
-	    	let tenFile = file.name;
-	    	let status = 0 ;
-	    	for(let i=1;i<50;i++){
-	    		if(tenFile == 'danhgiagiaovien.xlsx' || tenFile == 'danhgiagiaovien ('+i+').xlsx'){
-		    		status = 1;
-		    	}
-	    	}
 
-	    	if(status != 1){
-	    		Swal.fire("File không hợp lệ", "Lỗi", "error");
-	    		return false;
-	    	}
-	    	
 	        var reader = new FileReader();
 
 	        reader.onload = function(e) {
@@ -735,22 +763,38 @@ function initEvent () {
 
 			for (let i = 0; i < data.length; i++) {
 				let tc1,tc2,tc3,tc4,tc5,tc6,tc7,tc8,tc9,tc10,tc11,tc12,tc13,tc14,tc15;
+				let arrNumber = [1,2,3,4];
 
-				if(	data[i].tc1 > 4 || 
-					data[i].tc2 > 4 ||
-					data[i].tc3 > 4 ||
- 					data[i].tc4 > 4 ||
-					data[i].tc5 > 4 ||
-					data[i].tc6 > 4 ||
-					data[i].tc7 > 4 ||
-					data[i].tc8 > 4 ||
-					data[i].tc9 > 4 ||
-					data[i].tc10 > 4 ||
-					data[i].tc11 > 4 ||
-					data[i].tc12 > 4 ||
-					data[i].tc13 > 4 ||
-					data[i].tc14 > 4 ||
-					data[i].tc15 > 4) {
+				if( data[i].stt == null ||
+					data[i].matochuyenmon == null ||
+					data[i].magiaovien == null ||
+					data[i].namdanhgia == null ||
+					data[i].hovaten == null ||
+					data[i].tentochuyenmon == null ||
+					data[i].matruong == null ) {
+					Swal.fire(
+					  'Thông báo',
+					  'Dữ liệu không hợp lệ, Vui lòng kiểm tra lại',
+					  'info'
+					)
+					return false;
+				}
+
+				if(	!(arrNumber.includes(parseInt(data[i].tc1, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc2, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc3, 10)) && 
+ 					arrNumber.includes(parseInt(data[i].tc4, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc5, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc6, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc7, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc8, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc9, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc10, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc11, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc12, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc13, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc14, 10)) && 
+					arrNumber.includes(parseInt(data[i].tc15, 10))) ) {
 					Swal.fire(
 					  'Thông báo',
 					  'Có tiêu chí xếp loại không phù hợp',
@@ -758,6 +802,7 @@ function initEvent () {
 					)
 					return false;
 				}
+
 				//
 				if(data[i].tc1 == 1) {
 					tc1 = 'Chưa đạt';
@@ -765,8 +810,10 @@ function initEvent () {
 					tc1 = 'Đạt';
 				}else if(data[i].tc1 == 3){
 					tc1 = 'Khá';
-				}else{
+				}else if(data[i].tc1 == 4){
 					tc1 = 'Tốt';
+				}else{
+					tc1 = '';
 				}
 				//
 				if(data[i].tc2 == 1) {
@@ -775,8 +822,10 @@ function initEvent () {
 					tc2 = 'Đạt';
 				}else if(data[i].tc2 == 3){
 					tc2 = 'Khá';
-				}else{
+				}else if(data[i].tc2 == 4){
 					tc2 = 'Tốt';
+				}else{
+					tc2 = '';
 				}
 				//
 				if(data[i].tc3 == 1) {
@@ -785,8 +834,10 @@ function initEvent () {
 					tc3 = 'Đạt';
 				}else if(data[i].tc3 == 3){
 					tc3 = 'Khá';
-				}else{
+				}else if(data[i].tc3 == 4){
 					tc3 = 'Tốt';
+				}else{
+					tc3 = '';
 				}
 				//
 				if(data[i].tc4 == 1) {
@@ -795,8 +846,10 @@ function initEvent () {
 					tc4 = 'Đạt';
 				}else if(data[i].tc4 == 3){
 					tc4 = 'Khá';
-				}else{
+				}else if(data[i].tc4 == 4){
 					tc4 = 'Tốt';
+				}else{
+					tc4 = '';
 				}
 				//
 				if(data[i].tc5 == 1) {
@@ -805,8 +858,10 @@ function initEvent () {
 					tc5 = 'Đạt';
 				}else if(data[i].tc5 == 3){
 					tc5 = 'Khá';
-				}else{
+				}else if(data[i].tc5 == 4){
 					tc5 = 'Tốt';
+				}else{
+					tc5 = '';
 				}
 				//
 				if(data[i].tc6 == 1) {
@@ -815,8 +870,10 @@ function initEvent () {
 					tc6 = 'Đạt';
 				}else if(data[i].tc6 == 3){
 					tc6 = 'Khá';
-				}else{
+				}else if(data[i].tc6 == 4){
 					tc6 = 'Tốt';
+				}else{
+					tc6 = '';
 				}
 				//
 				if(data[i].tc7 == 1) {
@@ -825,8 +882,10 @@ function initEvent () {
 					tc7 = 'Đạt';
 				}else if(data[i].tc7 == 3){
 					tc7 = 'Khá';
-				}else{
+				}else if(data[i].tc7 == 4){
 					tc7 = 'Tốt';
+				}else{
+					tc7 = '';
 				}
 				//
 				if(data[i].tc8 == 1) {
@@ -835,8 +894,10 @@ function initEvent () {
 					tc8 = 'Đạt';
 				}else if(data[i].tc8 == 3){
 					tc8 = 'Khá';
-				}else{
+				}else if(data[i].tc8 == 4){
 					tc8 = 'Tốt';
+				}else{
+					tc8 = '';
 				}
 				//
 				if(data[i].tc9 == 1) {
@@ -845,8 +906,10 @@ function initEvent () {
 					tc9 = 'Đạt';
 				}else if(data[i].tc9 == 3){
 					tc9 = 'Khá';
-				}else{
+				}else if(data[i].tc9 == 4){
 					tc9 = 'Tốt';
+				}else{
+					tc9 = '';
 				}
 				//
 				if(data[i].tc10 == 1) {
@@ -855,8 +918,10 @@ function initEvent () {
 					tc10 = 'Đạt';
 				}else if(data[i].tc10 == 3){
 					tc10 = 'Khá';
-				}else{
+				}else if(data[i].tc10 == 4){
 					tc10 = 'Tốt';
+				}else{
+					tc10 = '';
 				}
 				//
 				if(data[i].tc11 == 1) {
@@ -865,8 +930,10 @@ function initEvent () {
 					tc11 = 'Đạt';
 				}else if(data[i].tc11 == 3){
 					tc11 = 'Khá';
-				}else{
+				}else if(data[i].tc11 == 4){
 					tc11 = 'Tốt';
+				}else{
+					tc11 = '';
 				}
 				//
 				if(data[i].tc12 == 1) {
@@ -875,8 +942,10 @@ function initEvent () {
 					tc12 = 'Đạt';
 				}else if(data[i].tc12 == 3){
 					tc12 = 'Khá';
-				}else{
+				}else if(data[i].tc12 == 4){
 					tc12 = 'Tốt';
+				}else{
+					tc12 = '';
 				}
 				//
 				if(data[i].tc13 == 1) {
@@ -885,8 +954,10 @@ function initEvent () {
 					tc13 = 'Đạt';
 				}else if(data[i].tc13 == 3){
 					tc13 = 'Khá';
-				}else{
+				}else if(data[i].tc13 == 4){
 					tc13 = 'Tốt';
+				}else{
+					tc13 = '';
 				}
 				//
 				if(data[i].tc14 == 1) {
@@ -895,8 +966,10 @@ function initEvent () {
 					tc14 = 'Đạt';
 				}else if(data[i].tc14 == 3){
 					tc14 = 'Khá';
-				}else{
+				}else if(data[i].tc14 == 4){
 					tc14 = 'Tốt';
+				}else{
+					tc14 = '';
 				}
 				//
 				if(data[i].tc15 == 1) {
@@ -905,8 +978,10 @@ function initEvent () {
 					tc15 = 'Đạt';
 				}else if(data[i].tc15 == 3){
 					tc15 = 'Khá';
-				}else{
+				}else if(data[i].tc15 == 4){
 					tc15 = 'Tốt';
+				}else{
+					tc15 = '';
 				}
 				//
 				noidungbang += "<tr>"
@@ -1072,6 +1147,17 @@ function initEvent () {
 			return false;
 		}
 
+		if(mangChbxTrue.length == '' ) {
+			Swal.fire(
+			  'Thông báo',
+			  'Tất cả giáo viên đã hoàn thành đánh giá',
+			  'info'
+			);
+			$('.classChbxImportDGGVCheckAll').prop('checked',false);
+			$('.classChbxImportDGGVCheckAll').attr("disabled", true);
+			return false;
+		}
+
 		if(mangChbxTrue.length == demChbxImport) {
 			$('#modalLoading').modal('show');
 			axios.get("statusDanhGiaGv").then(res => {
@@ -1164,6 +1250,7 @@ function initEvent () {
 			});
 
 		}
+
 
 	});
 
@@ -1332,6 +1419,7 @@ function initEvent () {
 
 	$('#selectLoaiExport').on('change',function(){
 		let valType = $(this).val();
+
 		if(valType == 1){
 			document.getElementById('divExportToanTruong').style.display = "block";
 			document.getElementById('divExportToChuyenMon').style.display = "none";
@@ -1355,18 +1443,77 @@ function initEvent () {
 			$('#modalLoading').modal('show');
 			axios.get(`getExportDGGVToanTruong/${valNamTr}`).then(res => {
 				let status =  res.status;
+				if(status == 204){
+                    $('#modalLoading').modal('hide');
+                    Swal.fire(
+                      'Thông báo',
+                      'Không có kết quả đánh giá giáo viên',
+                      'info'
+                    );
+                }
 				if(status == 200){
 					$('#modalLoading').modal('hide');
 					window.open('../public/export/ketquadanhgiagiaovien.xlsx');
-				}else{
-					$('#modalLoading').modal('hide');
-					Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
 				}
+				// else{
+				// 	$('#modalLoading').modal('hide');
+				// 	Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+				// }
 			});
 
 		}
 	});
 
+	//xuất tổ chuyên môn
+	$('#btnXuatToChuyenMon').on('click',function(){
+		let valtcm = $('#selectToChuyenMonExport').val();
+		let valnam = $('#selectNamToChuyenMonExport').val();
+
+		if(valtcm == null){
+			Swal.fire(
+			  'Thông báo',
+			  'Vui lòng chọn tổ chuyên môn',
+			  'info'
+			);
+			return false;
+		}
+
+		if(valnam == ''){
+			Swal.fire(
+			  'Thông báo',
+			  'Vui lòng chọn năm đánh giá',
+			  'info'
+			);
+			return false;
+		}
+
+		if(valtcm != '' && valnam != ''){
+			$('#modalLoading').modal('show');
+			axios.get(`getExportDGGVToChuyenMon/${valtcm}/${valnam}`).then(res => {
+				let status =  res.status;
+				if(status == 204){
+                    $('#modalLoading').modal('hide');
+                    Swal.fire(
+                      'Thông báo',
+                      'Không có kết quả đánh giá giáo viên',
+                      'info'
+                    );
+                }
+				if(status == 200){
+					$('#modalLoading').modal('hide');
+					window.open('../public/export/ketquadanhgiagiaovien.xlsx');
+				}
+				// else{
+				// 	$('#modalLoading').modal('hide');
+				// 	Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+				// }
+			});
+		}
+	});
+
+	$('#selectToChuyenMonExport').on('change',function(){
+		$('#selectNamToChuyenMonExport').val('');
+	});
 
 }
 
@@ -1427,6 +1574,15 @@ function hienThiSelectToChuyenMon () {
 }
 
 function hienThiSelectNam () {
+	$('#selectNam').datepicker({
+        format: "yyyy",
+        orientation: "bottom",
+        viewMode: "years",
+        minViewMode: "years",
+        autoclose: true,
+        language: "vi",
+    });
+
     $('#selectNamXem').datepicker({
         format: "yyyy",
         orientation: "bottom",
@@ -1628,7 +1784,9 @@ function modalDanhGiaGvXem(dataDanhGiaGv,doneDanhGia) {
 
 function refresh() {
     let valSelectTCMVir = $('#toChuyenMonVirtual').val();
+    let valSelectNamDGVir = $('#namDanhGiaVirtual').val();
     $('#selectToChuyenMon').val(valSelectTCMVir).trigger('change');
+    $('#selectNam').val(valSelectNamDGVir).trigger('change');
 }
 
 jQuery(document).ready(function () {

@@ -131,6 +131,22 @@
 										</div>
 									</div>
 								</div>
+								<br>
+							        <div class="col-md-10">
+							        	<div class="row">
+							        		<div class="col-md-3"><label style="padding-top: 10px;">Chọn năm đánh giá</label></div>
+							        		<div class="col-md-7">
+							        			<div class="input-group date" style="width: 50%;">
+										            <input id="selectNam" type="text" class="form-control-sm form-control" placeholder="Chọn năm đánh giá">
+										            <div class="input-group-addon">
+										                <i class="fa fa-calendar"></i>
+										            </div>
+										        </div>
+							        		</div>
+							        		<input type="hidden" id="namDanhGiaVirtual">
+							        	</div>
+										
+							    	</div>
 							</form>
 						</div>
 					</div>
@@ -254,7 +270,7 @@
 							    	</div>
 							    	<br>
 							    	<div class="col-md-3">
-							    		<button type="button" class="btn btn-primary" id="btnXuatToanTruong"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất</button>
+							    		<button type="button" class="btn btn-success btn-sm" id="btnXuatToanTruong"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất</button>
 							    	</div>
 								</div>
 								<div class="form-body" id="divExportToChuyenMon" style="display: none;">
@@ -281,7 +297,7 @@
 							    	</div>
 							    	<br>
 							    	<div class="col-md-3">
-							    		<button type="button" class="btn btn-primary" id="btnXuatToChuyenMon"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất</button>
+							    		<button type="button" class="btn btn-success btn-sm" id="btnXuatToChuyenMon"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất</button>
 							    	</div>
 								</div>
 							</form>
@@ -447,7 +463,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-outline-danger" id="btnCheckImportDGGV">Kiểm tra</button>
-				<button type="button" class="btn btn-outline-success" id="btnLuuImportDGGV">Lưu</button>
+				<button type="button" class="btn btn-outline-success" id="btnLuuImportDGGV" disabled="">Lưu</button>
 			</div>
 		</div>
 	</div>
@@ -490,14 +506,17 @@
 	$("#radioImportExcel").change(function () {
 		$("#radioDanhGiaGv").prop("checked", false);
 		$("#radioKetQuaDanhGiaGv").prop("checked", false);
+		$("#radioExportKetQuaDanhGiaGv").prop("checked", false);
 		//
 		document.getElementById("cardImportExcel").style.display = "block";
 		document.getElementById("cardKetQuaDanhGiaGv").style.display = "none";
 		document.getElementById("cardDanhGiaGv").style.display = "none";
+		document.getElementById("cardExportKetQuaDanhGiaGv").style.display = "none";
 		//select
 		document.getElementById("cardSelectTCMNam").style.display = "none";
 		document.getElementById("cardSelectTCMNamXem").style.display = "none";
 		//clear
+		$('#selectToChuyenMonExcel').val('').trigger('change.select2');
 
 	});
 	$("#radioDanhGiaGv").change(function () {
@@ -513,6 +532,7 @@
 		document.getElementById("cardSelectTCMNamXem").style.display = "none";
 		//clear
 		$('#selectToChuyenMon').val('').trigger('change.select2');
+		document.getElementById("selectNam").value = '';
 
 	});
 	$("#radioKetQuaDanhGiaGv").change(function () {
@@ -543,7 +563,9 @@
 		document.getElementById("cardSelectTCMNam").style.display = "none";
 		document.getElementById("cardSelectTCMNamXem").style.display = "none";
 		//clear
-		// $('#selectToChuyenMonXem').val('').trigger('change.select2');
+		$('#selectLoaiExport').val('').trigger('change.select2');
+		document.getElementById('divExportToanTruong').style.display = "none";
+		document.getElementById('divExportToChuyenMon').style.display = "none";
 		// document.getElementById("selectNamXem").value = '';
 	});
 </script>

@@ -64,7 +64,7 @@
 												</div>							
 											</div>
 
-											<div class="card box-shadow-0 border-info bg-transparent" id="cardsangchieu">
+											<div class="card box-shadow-0 border-info bg-transparent" id="cardsangchieu" style="display: none;">
 												<div class="card-header bg-transparent" style="padding: 10px">
 													<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
 													<div class="heading-elements">

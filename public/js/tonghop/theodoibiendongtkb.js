@@ -1,6 +1,4 @@
-var layDataDsTruong,
-    layDataTkbGv,
-    layDataTkbLop;
+var layDataDsTruong;
 
 async function loadDataDsTruong() {
     let result = await axios.get("getdstruong").then(res => {
@@ -9,25 +7,9 @@ async function loadDataDsTruong() {
     return result;
 }
 
-async function loadDataTkbGv() {
-    let result = await axios.get("getthoikhoabieugvtime").then(res => {
-        return res.data;
-    });
-    return result;
-}
-
-async function loadDataTkbLop() {
-    let result = await axios.get("getthoikhoabieuloptime").then(res => {
-        return res.data;
-    });
-    return result;
-}
-
 async function loaddanhsachtruong() {
 
     layDataDsTruong = await loadDataDsTruong();
-    layDataTkbGv = await loadDataTkbGv();
-    layDataTkbLop = await loadDataTkbLop();
 
     var datas = layDataDsTruong.map(function(value, label) {
         let data = value;

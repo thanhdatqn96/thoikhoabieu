@@ -4,8 +4,62 @@
 
 <dir class="row" style="padding: 0;margin: 0">
 
-	<dir class="col-md-12" style="margin: 0;padding: 2px">
+	<dir class="col-md-3">
 		<div class="card">
+			<div class="card-header" style="padding: 10px">
+				<h4 class="card-title">Đánh giá giáo viên</h4>
+				<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+				<div class="heading-elements" style="top: 10px">
+					<ul class="list-inline mb-0">
+						<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+						<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="card-content collpase show">
+				<div class="card-body">
+					<form class="form">
+						<div class="form-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card box-shadow-0 border-info bg-transparent" id="nhapdulieuhethong">
+										<div class="card-header bg-transparent" style="padding: 10px">
+											<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+											<div class="heading-elements">
+												<ul class="list-inline mb-0">
+													<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+												</ul>
+											</div>
+										</div>
+										<div class="card-content collapse show" style="">
+											<div class="card-body">
+												<fieldset class="radio">
+													<label>
+														<input type="radio" name="radio" value="" id="radioXemKetQuaDanhGiaGv">
+														Xem kết quả đánh giá giáo viên	
+													</label>
+												</fieldset>
+												<fieldset class="radio">
+													<label>
+														<input type="radio" name="radio" value="" id="radioExportKetQuaDanhGiaGv">
+														Xuất kết quả đánh giá giáo viên	
+													</label>
+												</fieldset>		
+											</div>
+										</div>							
+									</div>
+								</div>						
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</dir>
+
+	<dir class="col-md-9" style="margin: 0;padding: 2px">
+		<!-- lựa chọn select đánh giá giáo viên -->
+		<div class="card" id="cardSelectXemDanhGiaGv" style="display: none;">
 			<div class="card-header" style="padding: 10px">
 				<h4 class="card-title" style="padding-left: 10px"></h4>
 				<a class="heading-elements-toggle" ><i class="fa fa-ellipsis-v font-medium-3"></i></a>
@@ -53,9 +107,8 @@
 				</div>
 			</div>
 		</div>
-	</dir>
 
-	<dir class="col-md-12" style="margin: 0;padding: 2px">
+		<!-- xem kết quả đánh giá giáo viên -->
 		<div class="card" id="cardKetQuaDanhGiaGv" style="display: none;">
 			<div class="card-header" style="padding: 10px">
 				<h4 class="card-title" style="padding-left: 10px">Đánh giá giáo viên trường: <b><span id="idtentruong" style="color: blue;"></span></b></h4>
@@ -82,9 +135,99 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Xuất kết quả đánh giá giáo viên -->
+		<div class="card" id="cardExportKetQuaDanhGiaGv" style="display: none;">
+			<div class="card-header" style="padding: 10px">
+				<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+				<div class="heading-elements" style="top: 10px">
+					<ul class="list-inline mb-0">
+						<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+						<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+					</ul>
+				</div>						
+			</div>
+			<div class="card-content collpase show">
+				<div class="card-body">
+					<form class="form">
+						<div class="form-body">
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-3"><label style="padding-top: 10px;">Chọn loại xuất</label></div>
+									<div class="col-md-7"><select id="selectLoaiExport" data-live-search="true"><option value="" selected='' disabled=''></option><option value="1">Toàn trường</option><option value="2">Tổ chuyên môn</option></select></div>
+								</div>
+							</div>
+						</div>
+						<hr>
+						<div class="form-body" id="divExportToanTruong" style="display: none;">
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-3"><label style="padding-top: 10px;">Chọn trường</label></div>
+									<div class="col-md-7"><select id="idselecttruongToanTruong" data-live-search="true"></select></div>
+								</div>
+							</div>
+							<br>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-3"><label style="padding-top: 10px;">Chọn năm đánh giá</label></div>
+									<div class="col-md-7">
+										<div class="input-group date" style="width: 50%;">
+											<input id="selectNamToanTruongExport" type="text" class="form-control-sm form-control" placeholder="Chọn năm đánh giá">
+											<div class="input-group-addon">
+												<i class="fa fa-calendar"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="col-md-3">
+								<button type="button" class="btn btn-success btn-sm" id="btnXuatToanTruong"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất</button>
+							</div>
+						</div>
+						<div class="form-body" id="divExportToChuyenMon" style="display: none;">
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-3"><label style="padding-top: 10px;">Chọn trường</label></div>
+									<div class="col-md-7"><select id="idselecttruongToChuyenMon" data-live-search="true"></select></div>
+								</div>
+							</div>
+							<br>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-3"><label style="padding-top: 10px;">Chọn tổ chuyên môn</label></div>
+									<div class="col-md-7"><select id="selectToChuyenMonExport" data-live-search="true" disabled=''></select></div>
+								</div>
+							</div>
+							<br>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-3"><label style="padding-top: 10px;">Chọn năm đánh giá</label></div>
+									<div class="col-md-7">
+										<div class="input-group date" style="width: 50%;">
+											<input id="selectNamToChuyenMonExport" type="text" class="form-control-sm form-control" placeholder="Chọn năm đánh giá">
+											<div class="input-group-addon">
+												<i class="fa fa-calendar"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<br>
+							<div class="col-md-3">
+								<button type="button" class="btn btn-success btn-sm" id="btnXuatToChuyenMon"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</dir>
+
 </dir>
 
+<!-- modal xem kết quả đánh giá giáo viên -->
 <div class="modal fade text-left" id="modalXemDanhGiaGv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
 		<div class="modal-content">
@@ -129,5 +272,71 @@
 	</div>
 </div>
 
+<!-- modal loading -->
+<div class="modal fade text-left show" id="modalLoading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel20" style="display: none;">
+	<div class="modal-dialog modal-xs" role="document">
+		<div class="modal-content">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">Đang xử lý! Vui lòng đợi trong giây lát</h4>							
+						</div>
+						<div class="card-content">
+							<div class="loader-wrapper">
+								<div class="loader-container">
+									<div class="ball-spin-fade-loader loader-blue">
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("#radioXemKetQuaDanhGiaGv").change(function () {
+		$("#radioExportKetQuaDanhGiaGv").prop("checked", false);
+		//
+		document.getElementById("cardSelectXemDanhGiaGv").style.display = "block";
+		document.getElementById("cardExportKetQuaDanhGiaGv").style.display = "none";
+		//select
+		// document.getElementById("cardSelectTCMNam").style.display = "none";
+		// document.getElementById("cardSelectTCMNamXem").style.display = "block";
+		//clear
+		$('#idselecttruong').val('').trigger('change.select2');
+		$('#selectToChuyenMonXem').val('').trigger('change.select2');
+		document.getElementById("selectNamXem").value = '';
+	});
+	$("#radioExportKetQuaDanhGiaGv").change(function () {
+		$("#radioXemKetQuaDanhGiaGv").prop("checked", false);
+		//
+		document.getElementById("cardSelectXemDanhGiaGv").style.display = "none";
+		document.getElementById("cardKetQuaDanhGiaGv").style.display = "none";
+		document.getElementById("cardExportKetQuaDanhGiaGv").style.display = "block";
+		//select
+		// document.getElementById("cardSelectTCMNam").style.display = "none";
+		// document.getElementById("cardSelectTCMNamXem").style.display = "none";
+		//clear
+		$('#selectLoaiExport').val('').trigger('change.select2');
+		document.getElementById('divExportToanTruong').style.display = "none";
+		document.getElementById('divExportToChuyenMon').style.display = "none";
+		// document.getElementById("selectNamXem").value = '';
+	});
+</script>
+
+<link rel="stylesheet" type="text/css" href="theme/app-assets/css/plugins/loaders/loaders.min.css">
 <script type="text/javascript" src="{{asset('js/tonghop/theodoidanhgiagiaovien.js')}}"></script>
+<script type="text/javascript" src='dx/js/jszip/dist/xlsx.full.min.js'></script>
 @endsection

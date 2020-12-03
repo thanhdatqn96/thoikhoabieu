@@ -4,8 +4,88 @@
 		"selected_items":
 		[
 			[
+				"wh",
+				"where"
+			],
+			[
+				"pag",
+				"paginatedItems"
+			],
+			[
+				"n",
+				"new_data_tkb"
+			],
+			[
+				"pro",
+				"prop"
+			],
+			[
+				"val",
+				"valNam"
+			],
+			[
+				"yea",
+				"yearCurrent"
+			],
+			[
+				"tru",
+				"truongItem"
+			],
+			[
+				"iT",
+				"iTem2"
+			],
+			[
+				"ite",
+				"iTem1"
+			],
+			[
+				"ids",
+				"idselecttruongToChuyenMon"
+			],
+			[
+				"valn",
+				"valnam"
+			],
+			[
+				"va",
+				"valType"
+			],
+			[
+				"styLe",
+				"styleLeft"
+			],
+			[
+				"ketquadanh",
+				"ketquadanhgiagiaovien"
+			],
+			[
+				"w",
+				"where"
+			],
+			[
 				"data",
 				"datakqdggv"
+			],
+			[
+				"ten",
+				"tentocm"
+			],
+			[
+				"tento",
+				"tentochuyenmon"
+			],
+			[
+				"mati",
+				"matieuchi"
+			],
+			[
+				"matieu",
+				"matieuchi"
+			],
+			[
+				"fi",
+				"fillData"
 			],
 			[
 				"danh",
@@ -14,10 +94,6 @@
 			[
 				"danhgia",
 				"danhgiagv"
-			],
-			[
-				"val",
-				"valNamTr"
 			],
 			[
 				"dis",
@@ -132,10 +208,6 @@
 				"findGroupMGVTC"
 			],
 			[
-				"matieu",
-				"matieuchi"
-			],
-			[
 				"dataT",
 				"dataTieuChi"
 			],
@@ -158,18 +230,6 @@
 			[
 				"maTieu",
 				"maTieuChuan"
-			],
-			[
-				"mati",
-				"matieuchi"
-			],
-			[
-				"ite",
-				"iTem"
-			],
-			[
-				"iT",
-				"iTem"
 			],
 			[
 				"for",
@@ -320,10 +380,6 @@
 				"firstDay"
 			],
 			[
-				"va",
-				"value"
-			],
-			[
 				"datal",
 				"datalop"
 			],
@@ -334,10 +390,6 @@
 			[
 				"th",
 				"thoikhoabieu"
-			],
-			[
-				"tru",
-				"truong"
 			],
 			[
 				"tbl",
@@ -462,58 +514,6 @@
 			[
 				"ne",
 				"new_data_tkb_gv_thoigian"
-			],
-			[
-				"datath",
-				"datathang"
-			],
-			[
-				"ids",
-				"idselectlop"
-			],
-			[
-				"idse",
-				"idselectkhoi"
-			],
-			[
-				"vale",
-				"valSelectlop"
-			],
-			[
-				"thangnam",
-				"thangnamtuan"
-			],
-			[
-				"than",
-				"thangnamtuan"
-			],
-			[
-				"w",
-				"weeks"
-			],
-			[
-				"ng",
-				"ngay"
-			],
-			[
-				"datepickertha",
-				"datepickerthangtuan"
-			],
-			[
-				"datepic",
-				"datepickertuan"
-			],
-			[
-				"in",
-				"input\tTag"
-			],
-			[
-				"wi",
-				"width\tproperty"
-			],
-			[
-				"idca",
-				"idcaphoctt"
 			]
 		]
 	},
@@ -523,25 +523,43 @@
 			"file": "routes/web.php",
 			"settings":
 			{
-				"buffer_size": 19614,
+				"buffer_size": 19843,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "app/Http/Controllers/tinhchinh/tinhchinhController.php",
+			"file": "app/Http/Controllers/tonghop/tonghopController.php",
 			"settings":
 			{
-				"buffer_size": 20451,
+				"buffer_size": 59662,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "app/Http/Controllers/export/exportExcelController.php",
+			"file": "public/js/tonghop/xemthoikhoabieu.js",
 			"settings":
 			{
-				"buffer_size": 129563,
+				"buffer_size": 80059,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/js/tonghop/theodoibiendongtkb.js",
+			"settings":
+			{
+				"buffer_size": 91216,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "resources/views/tonghop/theodoibiendongtkb.blade.php",
+			"settings":
+			{
+				"buffer_size": 19190,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -550,16 +568,24 @@
 			"file": "public/js/tinhchinh/tinhchinh.js",
 			"settings":
 			{
-				"buffer_size": 50429,
+				"buffer_size": 54607,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "resources/views/tinhchinh/index.blade.php",
+			"contents": "axios.get(`getthoikhoabieutruong/${matruong}`).then(restkb => {\n\t\tlet layDataTkbTruong = restkb.data;",
 			"settings":
 			{
-				"buffer_size": 25544,
+				"buffer_size": 101,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "resources/views/tonghop/xemthoikhoabieu.blade.php",
+			"settings":
+			{
+				"buffer_size": 30857,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -609,33 +635,46 @@
 		"/E/laragon/www/thoikhoabieu/app",
 		"/E/laragon/www/thoikhoabieu/app/Http",
 		"/E/laragon/www/thoikhoabieu/app/Http/Controllers",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/export",
 		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/tinhchinh",
+		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/tonghop",
 		"/E/laragon/www/thoikhoabieu/public",
 		"/E/laragon/www/thoikhoabieu/public/js",
 		"/E/laragon/www/thoikhoabieu/public/js/rangbuoc",
 		"/E/laragon/www/thoikhoabieu/public/js/tinhchinh",
+		"/E/laragon/www/thoikhoabieu/public/js/tonghop",
 		"/E/laragon/www/thoikhoabieu/resources",
 		"/E/laragon/www/thoikhoabieu/resources/views",
-		"/E/laragon/www/thoikhoabieu/resources/views/tinhchinh",
-		"/E/laragon/www/thoikhoabieu/routes"
+		"/E/laragon/www/thoikhoabieu/resources/views/tonghop",
+		"/E/laragon/www/thoikhoabieu/resources/views/xemtkb",
+		"/E/laragon/www/thoikhoabieu/storage",
+		"/E/laragon/www/thoikhoabieu/storage/app",
+		"/E/laragon/www/thoikhoabieu/storage/app/excel"
 	],
 	"file_history":
 	[
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/exportkb/exportkbController.php",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/tinhchinh/tinhchinhController.php",
-		"/E/laragon/www/thoikhoabieu/public/js/tinhchinh/tinhchinh.js",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/tonghop/tonghopController.php",
-		"/E/laragon/www/thoikhoabieu/public/js/tonghop/theodoidanhgiagiaovien.js",
-		"/E/laragon/www/thoikhoabieu/resources/views/tonghop/theodoidanhgiagiaovien.blade.php",
 		"/E/laragon/www/thoikhoabieu/public/js/rangbuoc/rangbuoctietcodinh.js",
+		"/E/laragon/www/thoikhoabieu/public/js/tinhchinh/tinhchinh.js",
 		"/E/laragon/www/thoikhoabieu/resources/views/tinhchinh/index.blade.php",
+		"/E/laragon/www/thoikhoabieu/public/js/tonghop/theodoidanhgiagiaovien.js",
+		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/tinhchinh/tinhchinhController.php",
+		"/E/laragon/www/thoikhoabieu/public/theme/app-assets/vendors/js/editors/tinymce/tinymce.js",
+		"/E/laragon/www/thoikhoabieu/vendor/laravel/framework/src/Illuminate/Pagination/AbstractPaginator.php",
+		"/E/laragon/www/thoikhoabieu/vendor/laravel/framework/src/Illuminate/Pagination/LengthAwarePaginator.php",
+		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/tonghop/tonghopController.php",
+		"/E/laragon/www/thoikhoabieu/resources/views/tonghop/xemthoikhoabieu.blade.php",
 		"/E/laragon/www/thoikhoabieu/public/js/tonghop/xemthoikhoabieu.js",
+		"/E/laragon/www/thoikhoabieu/resources/views/tonghop/theodoidanhgiagiaovien.blade.php",
+		"/E/laragon/www/thoikhoabieu/resources/views/xemtkb/index.blade.php",
+		"/E/laragon/www/thoikhoabieu/app/danhgiagv.php",
+		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/export/exportExcelController.php",
+		"/E/laragon/www/thoikhoabieu/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Style/Alignment.php",
+		"/E/laragon/www/thoikhoabieu/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Style/Borders.php",
+		"/E/laragon/www/thoikhoabieu/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Style/Border.php",
+		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/exportkb/exportkbController.php",
 		"/E/laragon/www/thoikhoabieu/public/js/dataTieuChuanTieuChi/dataTieuChi.json",
 		"/E/laragon/www/thoikhoabieu/public/js/dataTieuChuanTieuChi/dataTieuChuan.json",
 		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/rangbuoc/rangbuocController.php",
 		"/E/laragon/www/thoikhoabieu/app/ketquadanhgiagv.php",
-		"/E/laragon/www/thoikhoabieu/app/danhgiagv.php",
 		"/E/laragon/www/thoikhoabieu/public/js/xemtkb/xemtkb.js",
 		"/E/laragon/www/thoikhoabieu/resources/views/admin/taikhoan.blade.php",
 		"/E/laragon/www/thoikhoabieu/public/js/tonghop/thongbao.js",
@@ -656,7 +695,6 @@
 		"/E/laragon/www/thoikhoabieu/public/js/rangbuoc/tietgvbuocphaico.js",
 		"/E/laragon/www/thoikhoabieu/public/js/rangbuoc/dangkybuoitietnghicuagv.js",
 		"/E/laragon/www/thoikhoabieu/public/js/tonghop/thongke.js",
-		"/E/laragon/www/thoikhoabieu/resources/views/tonghop/xemthoikhoabieu.blade.php",
 		"/E/laragon/www/thoikhoabieu/public/js/dataTieuChuanTieuChi/dataTieuChuanTieuChi.json",
 		"/C/Users/Admin/AppData/Roaming/Sublime Text 3/Packages/Xdebug Client/Xdebug.sublime-settings",
 		"/E/laragon/www/thoikhoabieu/.env",
@@ -672,7 +710,6 @@
 		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/khaibao/khaibaoController.php",
 		"/E/laragon/www/thoikhoabieu/composer.json",
 		"/E/laragon/www/thoikhoabieu/vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemManager.php",
-		"/E/laragon/www/thoikhoabieu/resources/views/xemtkb/index.blade.php",
 		"/E/laragon/www/thoikhoabieu/app/monhoc.php",
 		"/E/laragon/www/thoikhoabieu/app/danhsachlophoc.php",
 		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/taikhoantruong/taiKhoantruongController.php",
@@ -683,7 +720,6 @@
 		"/E/laragon/www/thoikhoabieu/public/js/api/getDataTkb.js",
 		"/E/laragon/www/thoikhoabieu/public/js/api/axiosClient.js",
 		"/E/laragon/www/thoikhoabieu/public/js/xuattkb/xuattkb.js",
-		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/export/exportExcelController.php",
 		"/E/laragon/www/thoikhoabieu/app/thoikhoabieuexcel.php",
 		"/E/laragon/www/thoikhoabieu/app/Http/Controllers/xemtkb/xemtkbController.php",
 		"/E/laragon/www/thoikhoabieu/app/Objects/SessionInfo.php",
@@ -743,13 +779,7 @@
 		"/E/laragon/www/thoikhoabieu1810/public/js/rangbuoc/tietgvbuocphaico.js",
 		"/E/laragon/www/thoikhoabieu1810/public/js/rangbuoc/dangkybuoitietnghicuagv.js",
 		"/E/laragon/www/thoikhoabieu1810/public/css/xemtkb/styleXemtkb.css",
-		"/E/laragon/www/thoikhoabieu1810/resources/views/tonghop/theodoibiendongtkb.blade.php",
-		"/E/laragon/www/thoikhoabieu1810/public/js/tonghop/theodoibiendongtkb.js",
-		"/C/Users/Admin/Desktop/xemtkb.js",
-		"/C/Users/Admin/Desktop/xemtkb/xemthoikhoabieu.blade.php",
-		"/C/Users/Admin/Desktop/ab.js",
-		"/C/Users/Admin/Desktop/biendong0411/tonghopController.php",
-		"/E/laragon/www/thoikhoabieu1810/app/phonghoc.php"
+		"/E/laragon/www/thoikhoabieu1810/resources/views/tonghop/theodoibiendongtkb.blade.php"
 	],
 	"find":
 	{
@@ -767,6 +797,53 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"loadbanggiaovien",
+			"unbind(\"click\");",
+			"divResults",
+			"Không có thời khoá biểu nào phù hợp trong thời gian này",
+			"loaddanhsachgv",
+			"datadskhoi",
+			"loaddanhsachgv",
+			"loaddanhsachcothoikhoabieu",
+			"loaddanhsachcothoikhoabieu\nloaddanhsachcothoikhoabieu",
+			"loaddanhsachtruong",
+			"loadthoikhoabieutruong",
+			"request",
+			"initEvent",
+			"initControl",
+			"loaddanhsachtruong",
+			"async",
+			"[1, 2, 3, 4]",
+			"regExp",
+			"refresh",
+			"selectToChuyenMon",
+			"refresh",
+			"modalDanhGiaGv",
+			"valNam",
+			"selectToChuyenMon",
+			"cardSelectTCMNam",
+			"selectToChuyenMon",
+			"xuattkb/listRoom",
+			"xuất",
+			"cardsangchieu",
+			"Swal",
+			"idselecttruongToanTruong",
+			"idselecttruongToChuyenMon",
+			"layDataDsGiaoVien",
+			"selectToChuyenMonXem",
+			"selectLoaiExport",
+			"hienThiSelectTruong",
+			"idselecttruong",
+			"hienThiSelectTruong",
+			"cardExportKetQuaDanhGiaGv",
+			"selectLoaiExport",
+			"autoSiezColumn",
+			"cellPart",
+			"applyFromArray",
+			"loadSheetExcel",
+			"ketquaxeploai",
+			"xeploai",
+			"tc1",
 			"exportMauDGGV",
 			"getFileMauExcelDGGV",
 			"Vui lòng chọn năm",
@@ -847,54 +924,7 @@
 			"data",
 			"layDataDsTruong",
 			"xuattkbapi",
-			"datatkbphong",
-			"datatkblop",
-			"datatkbgv",
-			"dataloptruong",
-			"datatkb",
-			"dataloptruong",
-			"datatkb",
-			"window.onload",
-			"loadListClassroom",
-			"getDataDsTruong",
-			"loaddanhsachtruong",
-			"getdanhsachsotietmoimon",
-			"tbodycotrong",
-			"ththu",
-			"loadthoikhoabieutruongsang",
-			"dulieuLopTruong",
-			"showTable",
-			"loadTeacher",
-			"số tiết mỗi môn",
-			"số tiết mỗi môn lớp",
-			"exportTKBSchoolTwoColumn",
-			"exportTKBSchoolMorning",
-			"Vui lòng chọn tháng",
-			"httkbsc",
-			"cardsangchieu",
-			"layTuan",
-			"exportTKBSchoolTwoColumn",
-			"idtruong",
-			"export",
-			"$startMonth",
-			"$matruong",
-			"exportTKBSchoolTwoColumn",
-			"cell ",
-			"getdsgvpcgd",
-			"getkhoihoc",
-			"khoihoc",
-			"datepickerthangtuantruong",
-			"select thời gian",
-			"cardselectthoigiangiaovien",
-			"cardselectthoigiangv",
-			"progressExport",
-			"dateprocess",
-			"progressExport",
-			"tendaydu",
-			"kieu",
-			"httkbsc",
-			"firstDay",
-			"xuattkbapi"
+			"datatkbphong"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -919,7 +949,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -928,15 +958,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 19614,
+						"buffer_size": 19843,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5013,
-								5036
+								17025,
+								17036
 							]
 						],
 						"settings":
@@ -945,27 +975,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1576.0,
+						"translation.y": 6196.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "app/Http/Controllers/tinhchinh/tinhchinhController.php",
+					"file": "app/Http/Controllers/tonghop/tonghopController.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 20451,
+						"buffer_size": 59662,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								19690,
-								19676
+								23021,
+								23012
 							]
 						],
 						"settings":
@@ -974,57 +1004,114 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2436.0,
+						"translation.y": 6740.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public/js/tonghop/xemthoikhoabieu.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 80059,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18403,
+								18365
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2103.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "app/Http/Controllers/export/exportExcelController.php",
+					"buffer": 3,
+					"file": "public/js/tonghop/theodoibiendongtkb.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 129563,
+						"buffer_size": 91216,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1579,
-								1297
+								20,
+								20
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "resources/views/tonghop/theodoibiendongtkb.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 19190,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3681,
+								3638
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 956.0,
+						"translation.y": 1895.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 5,
 					"file": "public/js/tinhchinh/tinhchinh.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 50429,
+						"buffer_size": 54607,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								38902,
-								38902
+								8811,
+								8773
 							]
 						],
 						"settings":
@@ -1033,27 +1120,54 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 26843.0,
+						"translation.y": 663.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "resources/views/tinhchinh/index.blade.php",
+					"buffer": 6,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 25544,
+						"buffer_size": 101,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								11420,
-								11420
+								101,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "resources/views/tonghop/xemthoikhoabieu.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 30857,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7685,
+								7701
 							]
 						],
 						"settings":
@@ -1062,7 +1176,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3212.0,
+						"translation.y": 3896.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,

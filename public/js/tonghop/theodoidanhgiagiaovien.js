@@ -5,26 +5,12 @@ async function loadDataDsTruong() {
     return result;
 }
 
-// async function loadDataDsGiaoVien() {
-//     let result = await axios.get("getDsGiaoVien").then(res => {
-//         return res.data;
-//     });
-//     return result;
-// }
-
 async function loadDataTieuChuanTieuChi() {
     let result = await axios.get("dataTieuChuanTieuChi").then(res => {
         return res.data;
     });
     return result;
 }
-
-// function loadDataDanhGiaGv() {
-//     let result = await axios.get("getDataDanhGiaGv").then(res => {
-//         return res.data;
-//     });
-//     return result;
-// }
 
 //biến toàn cục
 var layDataDsTruong,
@@ -35,7 +21,10 @@ var layDataDsTruong,
 
 window.onload = function () {
     $('#idselecttruong').select2({ width: '50%'});
+    $('#idselecttruongToanTruong').select2({ width: '50%'});
+    $('#idselecttruongToChuyenMon').select2({ width: '50%'});
     $('#selectToChuyenMonXem').select2({ width: '50%'});
+    $('#selectToChuyenMonExport').select2({ width: '50%'});
     initControl();
     initData();
     initEvent();
@@ -79,7 +68,6 @@ function initEvent () {
         axios.get(`getDsGiaoVienTH/${matruong}`).then(res => {
             layDataDsGiaoVien = res.data;
         });
-
 
     });
 
@@ -282,24 +270,205 @@ function initEvent () {
         })
     });
 
+    //xuất đánh giá giáo viên
+
+    $('#selectLoaiExport').on('change',function(){
+        let valType = $(this).val();
+
+        if(valType == 1){
+            document.getElementById('divExportToanTruong').style.display = "block";
+            document.getElementById('divExportToChuyenMon').style.display = "none";
+        }else{
+            document.getElementById('divExportToChuyenMon').style.display = "block";
+            document.getElementById('divExportToanTruong').style.display = "none";
+        }
+    });
+
+    $('#idselecttruongToChuyenMon').on('change',function(){
+        let matruong = $(this).val();
+        $('#selectNamToChuyenMonExport').val('');
+        $('#selectToChuyenMonExport').find('option').remove();
+        axios.get(`getDsToChuyenMonTH/${matruong}`).then(res => {
+            let dataToChuyenMon = res.data;
+            let selectToChuyenMonExport= document.getElementById('selectToChuyenMonExport');
+            $('#selectToChuyenMonExport').append("<option value='' selected='' disabled=''></option>");
+            for(let j= 0; j< dataToChuyenMon.length;j++){
+                let option = document.createElement("option");
+                option.value = dataToChuyenMon[j].id;
+                option.text = dataToChuyenMon[j].tentocm;
+                selectToChuyenMonExport.appendChild(option);
+            }
+            $('#selectToChuyenMonExport').removeAttr('disabled');
+        });
+
+    });
+
+    $('#idselecttruongToanTruong').on('change',function(){
+        $('#selectNamToanTruongExport').val('');
+    });
+
+    //xuất toàn trường
+    $('#btnXuatToanTruong').on('click',function(){
+        let valTruong = $('#idselecttruongToanTruong').val();
+        let valNamTr = $('#selectNamToanTruongExport').val();
+        if(valTruong == null){
+            Swal.fire(
+              'Thông báo',
+              'Vui lòng chọn trường',
+              'info'
+            );
+            return false;
+        }
+        if(valNamTr == ''){
+            Swal.fire(
+              'Thông báo',
+              'Vui lòng chọn năm đánh giá',
+              'info'
+            );
+            return false;
+        }
+        if(valTruong != '' && valNamTr != ''){
+            $('#modalLoading').modal('show');
+            axios.get(`getExportDGGVToanTruongTH/${valTruong}/${valNamTr}`).then(res => {
+                let status =  res.status;
+                if(status == 204){
+                    $('#modalLoading').modal('hide');
+                    Swal.fire(
+                      'Thông báo',
+                      'Không có kết quả đánh giá giáo viên',
+                      'info'
+                    );
+                }
+                if(status == 200){
+                    $('#modalLoading').modal('hide');
+                    window.open('../public/export/ketquadanhgiagiaovien.xlsx');
+                }
+                // else{
+                //     $('#modalLoading').modal('hide');
+                //     Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+                // }
+            });
+        }
+        
+    });
+
+    //xuất tổ chuyên môn
+    $('#btnXuatToChuyenMon').on('click',function(){
+        let valtruong = $('#idselecttruongToChuyenMon').val();
+        let valtcm = $('#selectToChuyenMonExport').val();
+        let valnam = $('#selectNamToChuyenMonExport').val();
+
+        if(valtruong == null){
+            Swal.fire(
+              'Thông báo',
+              'Vui lòng chọn trường',
+              'info'
+            );
+            return false;
+        }
+
+        if(valtcm == null){
+            Swal.fire(
+              'Thông báo',
+              'Vui lòng chọn tổ chuyên môn',
+              'info'
+            );
+            return false;
+        }
+
+        if(valnam == ''){
+            Swal.fire(
+              'Thông báo',
+              'Vui lòng chọn năm đánh giá',
+              'info'
+            );
+            return false;
+        }
+
+        if(valtruong != '' && valtcm != '' && valnam != ''){
+            $('#modalLoading').modal('show');
+            axios.get(`getExportDGGVToChuyenMonTH/${valtruong}/${valtcm}/${valnam}`).then(res => {
+                let status =  res.status;
+                if(status == 204){
+                    $('#modalLoading').modal('hide');
+                    Swal.fire(
+                      'Thông báo',
+                      'Không có kết quả đánh giá giáo viên',
+                      'info'
+                    );
+                }
+                if(status == 200){
+                    $('#modalLoading').modal('hide');
+                    window.open('../public/export/ketquadanhgiagiaovien.xlsx');
+                }
+                // else{
+                //     $('#modalLoading').modal('hide');
+                //     Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+                // }
+            });
+        }
+    });
 }
 
 function hienThiSelectTruong() {
+    $('#selectLoaiExport').select2({ width: '50%'});
     $('#idselecttruong').find('option').remove();
+    $('#idselecttruongToanTruong').find('option').remove();
+    $('#idselecttruongToChuyenMon').find('option').remove();
+
     let selectListTruong  = document.getElementById('idselecttruong');
+    let selectListTruongToanTruong  = document.getElementById('idselecttruongToanTruong');
+    let selectListTruongToChuyenMon  = document.getElementById('idselecttruongToChuyenMon');
+
     $('#idselecttruong').append("<option value='' selected='' disabled=''></option>");
+    $('#idselecttruongToanTruong').append("<option value='' selected='' disabled=''></option>");
+    $('#idselecttruongToChuyenMon').append("<option value='' selected='' disabled=''></option>");
+
     for(let i= 0; i< layDataDsTruong.length;i++){
         let option = document.createElement("option");
         option.value = layDataDsTruong[i].matruong;
         option.text = layDataDsTruong[i].tentruong;
         selectListTruong.appendChild(option);
     }
+
+    for(let j= 0; j< layDataDsTruong.length;j++){
+        let option = document.createElement("option");
+        option.value = layDataDsTruong[j].matruong;
+        option.text = layDataDsTruong[j].tentruong;
+        selectListTruongToanTruong.appendChild(option);
+    }
+
+    for(let k= 0; k< layDataDsTruong.length;k++){
+        let option = document.createElement("option");
+        option.value = layDataDsTruong[k].matruong;
+        option.text = layDataDsTruong[k].tentruong;
+        selectListTruongToChuyenMon.appendChild(option);
+    }
+
     $('#idselecttruong').removeAttr('disabled'); 
 }
 
 function hienThiSelectNam () {
 
     $('#selectNamXem').datepicker({
+        format: "yyyy",
+        orientation: "bottom",
+        viewMode: "years",
+        minViewMode: "years",
+        autoclose: true,
+        language: "vi",
+    });
+
+    $('#selectNamToanTruongExport').datepicker({
+        format: "yyyy",
+        orientation: "bottom",
+        viewMode: "years",
+        minViewMode: "years",
+        autoclose: true,
+        language: "vi",
+    });
+
+    $('#selectNamToChuyenMonExport').datepicker({
         format: "yyyy",
         orientation: "bottom",
         viewMode: "years",
