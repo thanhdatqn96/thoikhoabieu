@@ -516,6 +516,43 @@ class tinhchinhController extends Controller
 
 	}
 
+	public function getFileMauExcelDGGVToanTruong () {
+		$matruong = Session::get('matruong');
+		$datagv = danhsachgv::where('matruong',$matruong)->where('trangthai',1)->get();
+		$datagvcm = DB::table('giaovien_chuyenmon')
+		->join('tochuyenmon','tochuyenmon.id','=','giaovien_chuyenmon.matochuyenmon')
+		->where('giaovien_chuyenmon.matruong',$matruong)
+		->orderBy('giaovien_chuyenmon.matochuyenmon', 'asc')
+		->select('giaovien_chuyenmon.*','tochuyenmon.tentocm')
+		->get();		
+		
+		$currentYear = date("Y");
+		$data = [];
+		foreach($datagvcm as $d1){
+			foreach($datagv as $d){
+				if($d1->magiaovien == $d->id){
+					array_push($data,array('magiaovien'=>$d->id,'matochuyenmon'=>$d1->matochuyenmon,'tentochuyenmon'=>$d1->tentocm,'hovaten'=>$d->hovaten,'namdanhgia'=>$currentYear));
+				}
+			}
+		}
+
+		$dict = array();
+		foreach($data as $one_index){
+		  $dict[join('',$one_index)]=$one_index;
+		}
+
+		$res=array();
+		foreach($dict as $one_index){
+		   $res[] = $one_index;
+		}
+
+		$sheet = $this->loadSheetExcel('danhgiagiaovien.xlsx');
+		$sheet->setActiveSheetIndex(0);
+        $sheetDGGV= $sheet->getActiveSheet();
+        $this->exportMauDGGV($sheetDGGV, $sheet, $res);
+
+	}
+
 	private function exportMauDGGV($sheetDGGV, $sheet, $res){
 		$styleBorder = array(
             'borders' => [

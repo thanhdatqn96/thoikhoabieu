@@ -36,7 +36,6 @@
 <dir class="row" style="padding: 0;margin: 0;display: none;" id="formxemtkb">
 	<div class="col-md-12">
 		<div class="row">
-
 			<dir class="col-md-3">
 				<div class="card">
 					<div class="card-header" style="padding: 10px">
@@ -170,49 +169,6 @@
 					</div>
 				</div>
 
-				<!-- xem tkb giáo viên -->
-				<div class="card" id="cardxeptkbgiaovien" style="display: none;">
-					<div class="card-header" style="padding: 10px">
-						<h4 class="card-title" id="titletkbgv" style="text-align: center;font-size: 20px;">Thời khóa biểu giáo viên: <b><span id="idtengv" style="color: green;"></span></b></h4>
-						<br>
-						<div id="nhantuan" style="display: none;">
-							<!-- <h5 style="text-align: center;font-size: 15px;"><i><span id="idtungay"></span><span id="iddenngay"></span></i></h5> -->
-							<h5 style="text-align: center;font-size: 15px;"><i><span id="idthangtuan"></span></i></h5>
-						</div>
-						<div id="nhanthang" style="display: none;">
-							<h5 style="text-align: center;font-size: 15px;"><i><span id="idthang"></span></i></h5>			
-						</div>
-						<div id="nhannam" style="display: none;">
-							<h5 style="text-align: center;font-size: 15px;"><i><span id="idnam"></span></i></h5>	
-						</div>
-						<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
-						<div class="heading-elements" style="top: 10px">
-							<ul class="list-inline mb-0">
-								<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-								<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="card-content collpase show">
-						<div class="card-body">
-							<form class="form">
-								<div class="form-body">
-									<section>
-										<div class="container">
-											<div class="col-md-12">
-												<div class="row" id="divResults">
-												</div>
-											</div>
-										</div>
-									</section>
-
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-
-
 				<!-- select lớp của trường -->
 				<div class="card" id="cardselectlop" style="display: none;">
 					<div class="card-header" style="padding: 10px">
@@ -283,51 +239,96 @@
 					</div>
 				</div>
 
-				<!-- xem tkb lớp -->
-				<div class="card" id="cardxeptkblop" style="display: none;">
-					<div class="card-header" style="padding: 10px">
-						<h4 class="card-title" id="titletkbgv" style="text-align: center;font-size: 20px;">Thời khóa biểu lớp: <b><span id="idtenlop" style="color: green;"></span></b></h4>
-						<br>
-						<div id="nhantuanlop" style="display: none;">
-							<!-- <h5 style="text-align: center;font-size: 15px;"><i><span id="idtungaylop"></span><span id="iddenngaylop"></span></i></h5> -->
-							<h5 style="text-align: center;font-size: 15px;"><i><span id="idthangtuanlop"></span></i></h5>
-						</div>
-						<div id="nhanthanglop" style="display: none;">
-							<h5 style="text-align: center;font-size: 15px;"><i><span id="idthanglop"></span></i></h5>			
-						</div>
-						<div id="nhannamlop" style="display: none;">
-							<h5 style="text-align: center;font-size: 15px;"><i><span id="idnamlop"></span></i></h5>	
-						</div>
-						<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
-						<div class="heading-elements" style="top: 10px">
-							<ul class="list-inline mb-0">
-								<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-								<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="card-content collpase show">
-						<div class="card-body">
-							<form class="form">
-								<div class="form-body">
-									<section>
-										<div class="container">
-											<div class="col-md-12">
-												<div class="row" id="divResultsLop">
-												</div>
-											</div>
-										</div>
-									</section>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-
-
 			</dir>
 		</div>
 	</div>	
+</dir>
+
+<dir class="row" style="padding: 0;margin: 0;">
+	<dir class="col-md-12">
+		<!-- xem tkb giáo viên -->
+		<div class="card" id="cardxeptkbgiaovien" style="display: none;">
+			<div class="card-header" style="padding: 10px">
+				<h4 class="card-title" id="titletkbgv" style="text-align: center;font-size: 20px;">Thời khóa biểu giáo viên: <b><span id="idtengv" style="color: green;"></span></b></h4>
+				<br>
+				<div id="nhantuan" style="display: none;">
+					<!-- <h5 style="text-align: center;font-size: 15px;"><i><span id="idtungay"></span><span id="iddenngay"></span></i></h5> -->
+					<h5 style="text-align: center;font-size: 15px;"><i><span id="idthangtuan"></span></i></h5>
+				</div>
+				<div id="nhanthang" style="display: none;">
+					<h5 style="text-align: center;font-size: 15px;"><i><span id="idthang"></span></i></h5>			
+				</div>
+				<div id="nhannam" style="display: none;">
+					<h5 style="text-align: center;font-size: 15px;"><i><span id="idnam"></span></i></h5>	
+				</div>
+				<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+				<div class="heading-elements" style="top: 10px">
+					<ul class="list-inline mb-0">
+						<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+						<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="card-content collpase show">
+				<div class="card-body">
+					<form class="form">
+						<div class="form-body">
+							<section>
+								<div class="container-fluid">
+									<div class="col-md-12">
+										<div class="row" id="divResults">
+										</div>
+									</div>
+								</div>
+							</section>
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- xem tkb lớp -->
+		<div class="card" id="cardxeptkblop" style="display: none;">
+			<div class="card-header" style="padding: 10px">
+				<h4 class="card-title" id="titletkbgv" style="text-align: center;font-size: 20px;">Thời khóa biểu lớp: <b><span id="idtenlop" style="color: green;"></span></b></h4>
+				<br>
+				<div id="nhantuanlop" style="display: none;">
+					<!-- <h5 style="text-align: center;font-size: 15px;"><i><span id="idtungaylop"></span><span id="iddenngaylop"></span></i></h5> -->
+					<h5 style="text-align: center;font-size: 15px;"><i><span id="idthangtuanlop"></span></i></h5>
+				</div>
+				<div id="nhanthanglop" style="display: none;">
+					<h5 style="text-align: center;font-size: 15px;"><i><span id="idthanglop"></span></i></h5>			
+				</div>
+				<div id="nhannamlop" style="display: none;">
+					<h5 style="text-align: center;font-size: 15px;"><i><span id="idnamlop"></span></i></h5>	
+				</div>
+				<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+				<div class="heading-elements" style="top: 10px">
+					<ul class="list-inline mb-0">
+						<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+						<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="card-content collpase show">
+				<div class="card-body">
+					<form class="form">
+						<div class="form-body">
+							<section>
+								<div class="container-fluid">
+									<div class="col-md-12">
+										<div class="row" id="divResultsLop">
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</dir>	
 </dir>
 
 <script type="text/javascript">

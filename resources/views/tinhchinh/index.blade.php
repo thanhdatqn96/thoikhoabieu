@@ -60,6 +60,14 @@
 													</div>
 												</div>							
 											</div>
+											<!-- //thông báo -->
+											<div class="card box-shadow-0 border-info bg-transparent" id="nhapdulieuhethong">
+												<div class="card">
+												  <div class="card-body" style="font-size: 13px;">
+												    <p style="color: red;"><b>Lưu ý:</b></p> <i>Đánh giá giáo viên thực hiện theo thông tư Số 20/2018/TT-BGDĐT ngày 22/8/2018 Ban hành quy định chuẩn nghề nghiệp giáo viên cơ sở giáo dục phổ thông</i>
+												  </div>
+												</div>							
+											</div>
 										</div>						
 									</div>
 								</div>
@@ -82,15 +90,39 @@
 							</ul>
 						</div>
 					</div>
+
 					<div class="card-content collapse show">
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-6">
 		                            <div class="form-group">
-		                                <label for="projectinput5">Chọn tổ chuyên môn</label>
-		                                <select id="selectToChuyenMonExcel" data-live-search="true"></select>	
+		                                <label for="projectinput5">Chọn loại import</label>
+		                                <select id="selectLoaiImport" data-live-search="true"><option value="" selected='' disabled=''></option><option value="1">Toàn trường</option><option value="2">Tổ chuyên môn</option></select>	
 		                            </div>
 		                        </div>
+		                        <div class="col-md-6">
+		                            <div class="form-group">
+		                                <!-- <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5> -->
+										<button type="button" class="btn mr-1 mb-1 btn-info btn-sm" id="btnFileMauDGGVToanTruong" style="display: none;"><i class="fa fa-file-excel-o"></i> Tải file mẫu</button>
+		                            </div>
+		                        </div>
+							</div>
+							<div id="divImportToChuyenMon" style="display: none;">
+								<hr>
+								<div class = "row">
+									<div class="col-md-6">
+			                            <div class="form-group">
+			                                <label for="projectinput5">Chọn tổ chuyên môn</label>
+			                                <select id="selectToChuyenMonExcel" data-live-search="true"></select>	
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="form-group">
+			                                <!-- <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5> -->
+											<button type="button" class="btn mr-1 mb-1 btn-info btn-sm" id="btnFileMauDGGV"><i class="fa fa-file-excel-o"></i> Tải file mẫu</button>
+			                            </div>
+			                        </div>
+								</div>
 							</div>
 							<hr>
 							<div class="row" id="formExcel" >
@@ -101,13 +133,6 @@
 											<input type="file" name="file[]" id="importFileDGGV" class="form-control input-sm" required="" style="padding: 0px;
 											height: auto;">
 										</div>	
-										<!-- <input id="upload" type=file  name="files[]"  style="display: none;" /> -->
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="form-group">
-										<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>
-										<button type="button" class="btn mr-1 mb-1 btn-info btn-sm" id="btnFileMauDGGV"><i class="fa fa-file-excel-o"></i> Tải file mẫu</button>	
 									</div>
 								</div>
 							</div>
@@ -167,6 +192,7 @@
 						<div class="card-body">
 							<form class="form">
 								<div class="form-body">
+									<button type="button" id="btnHoanThanhDanhGia" class="btn btn-success btn-sm">Hoàn thành đánh giá</button>
 									<div id="girdDsGv"></div>
 								</div>
 							</form>
@@ -517,6 +543,9 @@
 		document.getElementById("cardSelectTCMNamXem").style.display = "none";
 		//clear
 		$('#selectToChuyenMonExcel').val('').trigger('change.select2');
+		$('#selectLoaiImport').val('').trigger('change.select2');
+		document.getElementById("btnFileMauDGGVToanTruong").style.display = "none";
+		document.getElementById('divImportToChuyenMon').style.display = "none";
 
 	});
 	$("#radioDanhGiaGv").change(function () {

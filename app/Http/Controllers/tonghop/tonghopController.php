@@ -339,6 +339,7 @@ class tonghopController extends Controller
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.tuan','thoikhoabieu.created_at')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->orderBy('thoikhoabieu.tuan','ASC')
 	 	->get();
 	 	// dd($thoikhoabieu);
 
@@ -572,6 +573,7 @@ class tonghopController extends Controller
 	 	->where('thoikhoabieu.maphong','!=',0)
 	 	->where('thoikhoabieu.matruong',$matruong)
 	 	->select('danhsachgv.bidanh','monhoc.tenmonhoc','phonghoc.tenphong','thoikhoabieu.magiaovien','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan','thoikhoabieu.malop','danhsachlophoc.tenlop')
+	 	->orderBy('thoikhoabieu.tuan','ASC')
 	 	->get();
 
 	 	$dataLoc = [];
@@ -742,6 +744,7 @@ class tonghopController extends Controller
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->orderBy('thoikhoabieu.tuan','ASC')
 	 	->get();
 
 	 	$dataLoc = [];
@@ -907,6 +910,7 @@ class tonghopController extends Controller
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->orderBy('thoikhoabieu.tuan','ASC')
 	 	->get();
 
 	 	$dataLoc = [];

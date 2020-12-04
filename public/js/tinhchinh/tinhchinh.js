@@ -287,19 +287,19 @@ function initEvent () {
 			        },
 			        width: 80,
 				}],
-				onContextMenuPreparing: function(data) { 
-					if (data.target == "content") {
-						if (!data.items) data.items = [];
-						data.items.push({
-							template: function () {
-								return $("<i class='fa fa-exchange'>").text("Hoàn thành đánh giá");                  
-							},
-							onItemClick: function() {
-								hoanThanhDanhGia();
-							}
-						});
-					} 
-				}
+				// onContextMenuPreparing: function(data) { 
+				// 	if (data.target == "content") {
+				// 		if (!data.items) data.items = [];
+				// 		data.items.push({
+				// 			template: function () {
+				// 				return $("<i class='fa fa-exchange'>").text("Hoàn thành đánh giá");                  
+				// 			},
+				// 			onItemClick: function() {
+				// 				hoanThanhDanhGia();
+				// 			}
+				// 		});
+				// 	} 
+				// }
 			});
 		});
 
@@ -343,12 +343,14 @@ function initEvent () {
 			);
 			return false;
 	    }else{
+	    	$('#modalLoading').modal('show');
 	    	axios.post('addDanhGiaGv', {
 	    		iddanhgiagv: maDGGV,
 				dataChBxXepLoaiTrue: JSON.stringify(dataChBxXepLoaiTrue)
 			}).then(function(response) {
 				let data = response.data;
 				if(data == 1){
+					$('#modalLoading').modal('hide');
 					Swal.fire({
 						title: 'Lưu',
 						text: 'Đã lưu thành công',
@@ -615,6 +617,32 @@ function initEvent () {
 					Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
 				}
 			});
+		}
+	});
+
+	$('#btnFileMauDGGVToanTruong').on('click',function(){
+		$('#modalLoading').modal('show');
+		axios.get("getFileMauExcelDGGVToanTruong").then(res => {
+			let status =  res.status;
+			if(status == 200){
+				$('#modalLoading').modal('hide');
+				window.open('../public/export/danhgiagiaovien.xlsx');
+			}else{
+				$('#modalLoading').modal('hide');
+				Swal.fire("Đã có lỗi xảy ra vui lòng thử lại sau", "Lỗi", "error");
+			}
+		});
+	});
+
+	$('#selectLoaiImport').on('change',function(){
+		let valType = $(this).val();
+
+		if(valType == 1){
+			document.getElementById('btnFileMauDGGVToanTruong').style.display = "block";
+			document.getElementById('divImportToChuyenMon').style.display = "none";
+		}else{
+			document.getElementById('divImportToChuyenMon').style.display = "block";
+			document.getElementById('btnFileMauDGGVToanTruong').style.display = "none";
 		}
 	});
 
@@ -1414,6 +1442,57 @@ function initEvent () {
 
 	});
 
+	$('#btnHoanThanhDanhGia').on('click',function(){
+		let chbxSelect = document.querySelectorAll('.classChbxSelect');
+		let arrChbx = [];
+		chbxSelect.forEach(function(Item,key){
+			if(chbxSelect[key].checked == true){
+				let maTChuyenMon= chbxSelect[key].dataset.matochuyenmon;
+				let maGVien = chbxSelect[key].dataset.magiaovien;
+				let maTrg = chbxSelect[key].dataset.matruong;
+				let namDGia = chbxSelect[key].dataset.namdanhgia;
+				arrChbx.push({matochuyenmon: maTChuyenMon, magiaovien: maGVien, matruong: maTrg, namdanhgia: namDGia});
+			}
+		});
+		let demArrChbx = arrChbx.length;
+		if(demArrChbx == 0){
+			Swal.fire(
+				'Thông báo',
+				'Vui lòng chọn giáo viên đã đánh giá',
+				'info'
+				);
+			return false;
+		}else{
+			Swal.fire({
+				title: 'Cảnh báo?',
+				text: "Bạn có muốn hoàn thành đánh giá cho những giáo viên đã chọn",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'OK'
+			}).then((result) => {
+				if (result.value) {
+					$('#modalLoading').modal('show');
+					axios.post('addKetQuaDanhGiaGv', {
+						arrChbx: arrChbx
+					}).then(function(response) {
+						let data = response.data;
+						if(data == 1){
+							$('#modalLoading').modal('hide');
+							Swal.fire({
+								title: 'Hoàn thành đánh giá',
+								text: 'Đã lưu thành công',
+								icon: 'success',
+								confirmButtonText: 'OK'
+							});
+							refresh(); 
+						}
+					});
+				}
+			});
+		}
+	});
 	
 	//xuất đánh giá giáo viên
 
@@ -1519,6 +1598,7 @@ function initEvent () {
 
 function hienThiSelectToChuyenMon () {
 	$('#selectLoaiExport').select2({ width: '50%'});
+	$('#selectLoaiImport').select2({ width: '50%'});
 	$('#selectToChuyenMon').find('option').remove();
 	$('#selectToChuyenMonXem').find('option').remove();
 	$('#selectToChuyenMonExcel').find('option').remove();
@@ -1814,56 +1894,56 @@ jQuery(document).ready(function () {
     });
 });
 
-function hoanThanhDanhGia () {
-	let chbxSelect = document.querySelectorAll('.classChbxSelect');
-	let arrChbx = [];
-	chbxSelect.forEach(function(Item,key){
-		if(chbxSelect[key].checked == true){
-			let maTChuyenMon= chbxSelect[key].dataset.matochuyenmon;
-            let maGVien = chbxSelect[key].dataset.magiaovien;
-            let maTrg = chbxSelect[key].dataset.matruong;
-            let namDGia = chbxSelect[key].dataset.namdanhgia;
-			arrChbx.push({matochuyenmon: maTChuyenMon, magiaovien: maGVien, matruong: maTrg, namdanhgia: namDGia});
-		}
-	});
-	let demArrChbx = arrChbx.length;
-	if(demArrChbx == 0){
-		Swal.fire(
-		  'Thông báo',
-		  'Vui lòng chọn giáo viên đã đánh giá',
-		  'info'
-		);
-		return false;
-	}else{
-		Swal.fire({
-            title: 'Cảnh báo?',
-            text: "Bạn có muốn hoàn thành đánh giá cho những giáo viên đã chọn",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'OK'
-        }).then((result) => {
-        	if (result.value) {
-        		$('#modalLoading').modal('show');
-        		axios.post('addKetQuaDanhGiaGv', {
-		    		arrChbx: arrChbx
-				}).then(function(response) {
-					let data = response.data;
-					if(data == 1){
-						$('#modalLoading').modal('hide');
-						Swal.fire({
-							title: 'Hoàn thành đánh giá',
-							text: 'Đã lưu thành công',
-							icon: 'success',
-							confirmButtonText: 'OK'
-						});
-						refresh(); 
-					}
-				});
-        	}
-        });
-	}
+// function hoanThanhDanhGia () {
+// 	let chbxSelect = document.querySelectorAll('.classChbxSelect');
+// 	let arrChbx = [];
+// 	chbxSelect.forEach(function(Item,key){
+// 		if(chbxSelect[key].checked == true){
+// 			let maTChuyenMon= chbxSelect[key].dataset.matochuyenmon;
+//             let maGVien = chbxSelect[key].dataset.magiaovien;
+//             let maTrg = chbxSelect[key].dataset.matruong;
+//             let namDGia = chbxSelect[key].dataset.namdanhgia;
+// 			arrChbx.push({matochuyenmon: maTChuyenMon, magiaovien: maGVien, matruong: maTrg, namdanhgia: namDGia});
+// 		}
+// 	});
+// 	let demArrChbx = arrChbx.length;
+// 	if(demArrChbx == 0){
+// 		Swal.fire(
+// 		  'Thông báo',
+// 		  'Vui lòng chọn giáo viên đã đánh giá',
+// 		  'info'
+// 		);
+// 		return false;
+// 	}else{
+// 		Swal.fire({
+//             title: 'Cảnh báo?',
+//             text: "Bạn có muốn hoàn thành đánh giá cho những giáo viên đã chọn",
+//             icon: 'warning',
+//             showCancelButton: true,
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             confirmButtonText: 'OK'
+//         }).then((result) => {
+//         	if (result.value) {
+//         		$('#modalLoading').modal('show');
+//         		axios.post('addKetQuaDanhGiaGv', {
+// 		    		arrChbx: arrChbx
+// 				}).then(function(response) {
+// 					let data = response.data;
+// 					if(data == 1){
+// 						$('#modalLoading').modal('hide');
+// 						Swal.fire({
+// 							title: 'Hoàn thành đánh giá',
+// 							text: 'Đã lưu thành công',
+// 							icon: 'success',
+// 							confirmButtonText: 'OK'
+// 						});
+// 						refresh(); 
+// 					}
+// 				});
+//         	}
+//         });
+// 	}
 
-}
+// }
 

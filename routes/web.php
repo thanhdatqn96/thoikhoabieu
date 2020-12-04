@@ -91,6 +91,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('addKetQuaDanhGiaGv','tinhchinh\tinhchinhController@addKetQuaDanhGiaGv');
 	Route::get('getKetQuaDanhGiaGv','tinhchinh\tinhchinhController@getKetQuaDanhGiaGv');
 	Route::get('getFileMauExcelDGGV/{matochuyenmon}','tinhchinh\tinhchinhController@getFileMauExcelDGGV');
+	Route::get('getFileMauExcelDGGVToanTruong','tinhchinh\tinhchinhController@getFileMauExcelDGGVToanTruong');
 	Route::get('getExportDGGVToanTruong/{namdanhgia}','tinhchinh\tinhchinhController@getExportDGGVToanTruong');
 	Route::get('getExportDGGVToChuyenMon/{matochuyenmon}/{namdanhgia}','tinhchinh\tinhchinhController@getExportDGGVToChuyenMon');
 

@@ -674,6 +674,7 @@ async function loaddanhsachtruong() {
 	                    	$("#idtentruonggv").text(options.data.tentruong);
 	                    	$("#idtentruonglop").text(options.data.tentruong);
 	                    	$("#idtentruongphong").text(options.data.tentruong);
+	                    	$('#idtruong').val(options.data.matruong);
 	                    	var datadsgv = options.data.danhsachgv;
 	                    	var datadslop = options.data.danhsachlop;
 	                    	var datadskhoi = options.data.danhsachkhoihoc;
@@ -2016,6 +2017,7 @@ function loaddanhsachcothoikhoabieu(matruong) {
 
 }
 
+
 window.onload = function() {
 
 	//call xuất tkb
@@ -2336,5 +2338,6 @@ window.onload = function() {
 			$('#modalDsCoTKB').modal('show');
 		}
 	});
+
 }
 
