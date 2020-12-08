@@ -55,6 +55,10 @@ class xemtkbController extends Controller
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.tuan','thoikhoabieu.created_at')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->orderBy('thoikhoabieu.tuan','ASC')
+	 	->orderBy('thoikhoabieu.buoi','ASC')
+	 	->orderBy('thoikhoabieu.tiet','ASC')
+	 	->orderBy('thoikhoabieu.thu','ASC')
 	 	->get();
 
 	 	$buoithu = array(
@@ -231,6 +235,10 @@ class xemtkbController extends Controller
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->orderBy('thoikhoabieu.tuan','ASC')
+	 	->orderBy('thoikhoabieu.buoi','ASC')
+	 	->orderBy('thoikhoabieu.tiet','ASC')
+	 	->orderBy('thoikhoabieu.thu','ASC')
 	 	->get();
 
 	 	$buoi = array(
@@ -364,6 +372,10 @@ class xemtkbController extends Controller
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->orderBy('thoikhoabieu.tuan','ASC')
+	 	->orderBy('thoikhoabieu.buoi','ASC')
+	 	->orderBy('thoikhoabieu.tiet','ASC')
+	 	->orderBy('thoikhoabieu.thu','ASC')
 	 	->get();
 
 	 	$buoi = array(
@@ -500,6 +512,10 @@ class xemtkbController extends Controller
 	 	->where('thoikhoabieu.maphong','!=',0)
 	 	->select('danhsachgv.bidanh','monhoc.tenmonhoc','phonghoc.tenphong','thoikhoabieu.magiaovien','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan','thoikhoabieu.malop','danhsachlophoc.tenlop')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->orderBy('thoikhoabieu.tuan','ASC')
+	 	->orderBy('thoikhoabieu.buoi','ASC')
+	 	->orderBy('thoikhoabieu.tiet','ASC')
+	 	->orderBy('thoikhoabieu.thu','ASC')
 	 	->get();
 
 	 	$buoi = array(
@@ -603,7 +619,7 @@ class xemtkbController extends Controller
 												$tenmonhoc= $v9[0]['tenmonhoc'];
 												$tenphong= $v9[0]['tenphong'];
 												$tenlop = $v9[0]['tenlop'];
-												array_push($datalop,array('malop' => $k9,'tenlop' => $tenlop));
+												array_push($datalop,array('malop' => $k9,'tenlop' => $tenlop, 'tenmonhoc' => $tenmonhoc));
 											}
 											array_push($datagv,array('magiaovien' => $k8,'bidanh'=>$bidanh,'dslop'=>$datalop));
 										}
@@ -636,6 +652,135 @@ class xemtkbController extends Controller
 		->select('*')
 		->get();
 		return json_encode($data, JSON_UNESCAPED_UNICODE);
+	}
+
+	//get ds giáo viên nghỉ
+	public function getgiaoviennghi(){
+		$matruong = Session::get('matruong');
+	 	$thoikhoabieu = DB::table('thoikhoabieu')
+	 	->join('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
+	 	->select('danhsachgv.bidanh','danhsachgv.hovaten','thoikhoabieu.magiaovien','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
+	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->orderBy('thoikhoabieu.tuan','ASC')
+	 	->orderBy('thoikhoabieu.buoi','ASC')
+	 	->orderBy('thoikhoabieu.tiet','ASC')
+	 	->orderBy('thoikhoabieu.thu','ASC')
+	 	->get();
+
+	 	$buoi = array(
+	 		array(
+	 			'idbuoi'=>0,
+	 			"tenbuoi"=>"Sáng"
+	 		),
+	 		array(
+	 			'idbuoi'=>1,
+	 			"tenbuoi"=>"Chiều"
+	 		)
+	 	);
+
+	 	$thu = array(
+	 		array(
+	 			'idthu'=>2,
+	 			"tenthu"=>"Thứ 2"
+	 		),
+	 		array(
+	 			'idthu'=>3,
+	 			"tenthu"=>"Thứ 3"
+	 		),
+	 		array(
+	 			'idthu'=>4,
+	 			"tenthu"=>"Thứ 4"
+	 		),
+	 		array(
+	 			'idthu'=>5,
+	 			"tenthu"=>"Thứ 5"
+	 		),
+	 		array(
+	 			'idthu'=>6,
+	 			"tenthu"=>"Thứ 6"
+	 		),
+	 		array(
+	 			'idthu'=>7,
+	 			"tenthu"=>"Thứ 7"
+	 		),
+	 	);
+
+	 	$databt= array();
+		foreach($thoikhoabieu as $t){
+			foreach($buoi as $b){
+				foreach($thu as $k){
+					if($t->buoi != $b['idbuoi'] && $t->thu != $k['idthu'] ){
+						$datetime = date_parse_from_format('Y-m-d', $t->created_at);
+						$thang = $datetime['month'];
+						$nam = $datetime['year'];
+						array_push($databt,array('matruong'=>$t->matruong,'magiaovien'=>$t->magiaovien,'mabuoi'=>$b['idbuoi'],'mathu'=>$k['idthu'],'bidanh'=>$t->bidanh,'hovaten'=>$t->hovaten,'tenbuoi'=>$b['tenbuoi'],'tenthu'=>$k['tenthu'],'nam'=>$nam,'thang'=>$thang,'tuan'=>$t->tuan,'created_at'=>$t->created_at));
+					}
+				}
+				
+			}
+		}
+
+		foreach($thoikhoabieu as $t){
+			foreach($databt as $k => $d){
+				if($t->matruong == $d['matruong'] && $t->magiaovien == $d['magiaovien'] && $t->buoi == $d['mabuoi'] && $t->thu == $d['mathu'] && $t->tuan == $d['tuan'] && $t->created_at == $d['created_at']){
+					unset($databt[$k]);
+				}
+			}
+		}
+
+		$databt = array_values($databt);
+
+		$grouped = [];
+
+		foreach($databt as $d){
+			$matruong = $d['matruong'];
+			$nam = $d['nam'];
+			$thang = $d['thang'];
+			$tuan = $d['tuan'];
+			$mabuoi = $d['mabuoi'];
+			$mathu = $d['mathu'];
+			$magiaovien = $d['magiaovien'];
+			$grouped[$matruong][$nam][$thang][$tuan][$mabuoi][$mathu][$magiaovien][] = $d;
+		}
+		
+		$new_data_giaoviennghi = [];
+
+		foreach($grouped as $k=>$v){
+			$datanam = [];
+			foreach($v as $k1=>$v1){
+				$datathang = [];
+				foreach($v1 as $k2=>$v2){
+					$datatuan = [];
+					foreach($v2 as $k3=>$v3){
+						$databuoi = [];
+						foreach($v3 as $k4=>$v4){
+							$datathu = [];
+							$tenbuoi;
+							foreach($v4 as $k5=>$v5){
+								$datagv = [];
+								$tenthu;
+								foreach($v5 as $k6=>$v6){
+									$tenbuoi = $v6[0]['tenbuoi'];
+									$tenthu = $v6[0]['tenthu'];
+									$hovaten = $v6[0]['hovaten'];
+									$bidanh = $v6[0]['bidanh'];
+									array_push($datagv,array('magiaovien'=>$k6,'hovaten'=> $hovaten, 'bidanh'=>$bidanh));
+								}
+								array_push($datathu,array('mathu'=>$k5,'tenthu'=> $tenthu,'dsgiaovien'=>$datagv));
+							}
+							array_push($databuoi,array('mabuoi'=>$k4,'tenbuoi'=> $tenbuoi,'dsthu'=>$datathu));
+						}
+						array_push($datatuan,array('tuan'=>$k3,'dsbuoi'=> $databuoi));
+					}
+					array_push($datathang,array('thang'=>$k2,'dstuan'=> $datatuan));
+				}
+				array_push($datanam,array('nam'=>$k1,'dsthang'=> $datathang));
+			}
+			$new_data_giaoviennghi[] = array('matruong' => $k, 'dsnam'=> $datanam);
+
+		}
+
+		return json_encode($new_data_giaoviennghi, JSON_UNESCAPED_UNICODE);
 	}
 
 }

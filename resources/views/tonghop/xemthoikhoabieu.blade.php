@@ -5,15 +5,15 @@
 <!-- chọn trường xem tkb -->
 
 <dir class="row" style="padding: 0;margin: 0" id="tabletruong">
-	<dir class="col-md-12" style="margin: 0;padding: 2px">
+	<dir class="col-md-12" >
 		<div class="card">
 			<div class="card-header" style="padding: 10px">
 				<h4 class="card-title">Thời khoá biểu các trường trực thuộc</h4>
 				<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
 				<div class="heading-elements" style="top: 10px">
 					<ul class="list-inline mb-0">
-						<li><a data-action="collapse"><i class="ft-minus" id="hieuungcongtru"></i></a></li>
-						<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+						<li><a data-action="collapse"><i id="hieuungcongtru"></i></a></li>
+						<!-- <li><a data-action="expand"><i class="ft-maximize"></i></a></li> -->
 					</ul>
 				</div>
 			</div>
@@ -146,8 +146,7 @@
 																	<th>Màu</th>
 																</tr>
 															</thead>
-															<tbody id="banggiaovien"></tbody>
-																
+															<tbody id="banggiaovien"></tbody>	
 														</table>
 													</div>
 												</div>							
@@ -587,13 +586,13 @@
 	</div>	
 </dir>
 
-<!-- modal danh sách thời gian có thời khoá biểu -->
-<div class="modal fade text-left" id="modalDsCoTKB" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+<!-- modal danh sách thời gian có thời khoá biểu trường -->
+<div class="modal fade text-left" id="modalDsCoTKBTruong" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
 		<div class="modal-content">
 			<div class="modal-header bg-success white">
 				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKB">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBTruong">
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
@@ -602,14 +601,120 @@
 					<div class="form-body">
 						<div class="row">
 							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
-								<table id="tableDsCoTKB" class="table table-striped table-bordered" style="border-collapse: separate;">
+								<table id="tableDsCoTKBTruong" class="table table-striped table-bordered" style="border-collapse: separate;">
 									<thead>
 										<tr>
 											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
 											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
 										</tr>
 									</thead>
-									<tbody id="bodyDSCoTKB">
+									<tbody id="bodyDSCoTKBTruong">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có thời khoá biểu giáo viên-->
+<div class="modal fade text-left" id="modalDsCoTKBGv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBGv">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBGv" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBGv">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có thời khoá biểu lớp-->
+<div class="modal fade text-left" id="modalDsCoTKBLop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBLop">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBLop" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBLop">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có thời khoá biểu phòng học-->
+<div class="modal fade text-left" id="modalDsCoTKBPhong" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBPhong">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBPhong" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBPhong">
 									</tbody>
 								</table>
 							</div>

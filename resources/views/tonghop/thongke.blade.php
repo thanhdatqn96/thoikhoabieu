@@ -102,6 +102,8 @@
 				<div class="card" id="cardthongkesoluongtietday" style="display: none;">
 					<div class="card-header" style="padding: 10px">
 						<h4 class="card-title" id="titletkbgv">Trường: <b><span id="idtentruong" style="color: blue;"></span></b></h4>
+						<br>
+						<h5 style="color: green;display: none;" id="idH5TongSoTietToanTruong">Tổng số tiết của toàn trường: <span style="color: red" id="idTongsotiettoantruong"></span></h5>
 						<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
 						<div class="heading-elements" style="top: 10px">
 							<ul class="list-inline mb-0">

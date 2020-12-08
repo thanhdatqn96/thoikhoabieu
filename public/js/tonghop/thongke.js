@@ -154,12 +154,33 @@ function loadthongkesoluongtietday() {
 			        	tr.cells[0].appendChild(document.createTextNode(' ' + datagv[k].stt));
 				        tr.cells[1].appendChild(document.createTextNode(' ' + datagv[k].hovaten));
 				       	tr.cells[2].appendChild(document.createTextNode(' ' + tongtietgvmonlop));
-				       	tr.cells[2].setAttribute("style","color:red;"); 
+				       	tr.cells[2].setAttribute("style","color:red;");
+				       	tr.cells[2].setAttribute("class","tongsotietgv");  
 				        tr.cells[3].appendChild(div);
 				        phanthantablesotietday.appendChild(tr);
 					}
 
 					$("#iddiv span").after("<br />").after("<br />");
+
+					// get cột tổng số tiết của gv
+				    let getTdgvtable = document.querySelectorAll('table tbody#phanthantablesotietday tr td.tongsotietgv');
+				    let mangTongsotietgvs = [];
+
+				    for(let i= 0 ; i<getTdgvtable.length; i++){
+				        mangTongsotietgvs.push(getTdgvtable[i].innerHTML);
+				    }
+
+				    let tongTiettoantruong = 0;
+				    for(let j=0;j<mangTongsotietgvs.length;j++){
+				        tongTiettoantruong += mangTongsotietgvs[j] << 0;
+				    }
+				    $('#idTongsotiettoantruong').text(tongTiettoantruong);
+
+				    if(tongTiettoantruong != 0){
+				    	document.getElementById('idH5TongSoTietToanTruong').style.display = "block";
+				    }else{
+				    	document.getElementById('idH5TongSoTietToanTruong').style.display = "none";
+				    }
 
 					//thống kế sl phòng học
 					var demslphong = data1[j].phonghoc.length;
@@ -222,6 +243,7 @@ function loadthongkesoluongtietday() {
 
 				}
 			}
+
 			$('#tablesotietday').DataTable({
 				"oLanguage": {
 				  	"sProcessing":   "Đang xử lý...",

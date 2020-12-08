@@ -5,15 +5,15 @@
 <!-- chọn trường xem tkb -->
 
 <dir class="row" style="padding: 0;margin: 0" id="tabletruong">
-	<dir class="col-md-12" style="margin: 0;padding: 2px">
+	<dir class="col-md-12" >
 		<div class="card">
 			<div class="card-header" style="padding: 10px">
 				<h4 class="card-title">Thời khoá biểu các trường trực thuộc</h4>
 				<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
 				<div class="heading-elements" style="top: 10px">
 					<ul class="list-inline mb-0">
-						<li><a data-action="collapse"><i class="ft-minus" id="hieuungcongtru"></i></a></li>
-						<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+						<li><a data-action="collapse"><i id="hieuungcongtru"></i></a></li>
+						<!-- <li><a data-action="expand"><i class="ft-maximize"></i></a></li> -->
 					</ul>
 				</div>
 			</div>

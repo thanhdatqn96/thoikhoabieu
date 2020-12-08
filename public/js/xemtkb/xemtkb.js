@@ -1150,7 +1150,7 @@ function loadthoikhoabieuphong() {
 							        				var matiet = tbodycotrong[m].dataset.matiet;
 							        				var mathu = tbodycotrong[m].dataset.mathu;
 							        				if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dstiet[j].tiet == matiet && dsbuoi[i].dstiet[j].dsthu[k].mathu == mathu){
-							        					tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsgiaovien[0].bidanh+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsgiaovien[0].dslop[0].tenlop+')'+"</span>";
+							        					tbodycotrong[m].innerHTML = "<span style='white-space: nowrap;'>"+dsbuoi[i].dstiet[j].dsthu[k].dsgiaovien[0].dslop[0].tenmonhoc+" | "+dsbuoi[i].dstiet[j].dsthu[k].dsgiaovien[0].bidanh+' ('+dsbuoi[i].dstiet[j].dsthu[k].dsgiaovien[0].dslop[0].tenlop+')'+"</span>";
 							        				}
 							        			}
 							        		}
@@ -1227,6 +1227,29 @@ function loadbanggiaovien(){
 
 			// }
 		}
+		$('#tablemaugiaovien').DataTable({
+			"dom": '<lf<t>ip>',
+			"bLengthChange" : false,
+			"info": false,
+			"paging": false,
+			"oLanguage": {
+			  	"sProcessing":   "Đang xử lý...",
+				"sLengthMenu":   "Xem _MENU_ mục",
+				"sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+				"sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+				"sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+				"sInfoFiltered": "(được lọc từ _MAX_ mục)",
+				"sInfoPostFix":  "",
+				"sSearch":       "Tìm:",
+				"sUrl":          "",
+				"oPaginate": {
+					"sFirst":    "Đầu",
+					"sPrevious": "Trước",
+					"sNext":     "Tiếp",
+					"sLast":     "Cuối"
+				}
+			}	
+		});
 	});
 
 	
@@ -1277,17 +1300,53 @@ function xulythemmau(){
 		}
 	}
 
+	//giáo viên nghỉ
+	var tbodycotronggiaoviennghi = document.querySelectorAll('#tablexemgiaoviennghi tbody tr td.classoronggiaoviennghi span');
+	var buttonmagiaovien = tbodybangmauchon[0].dataset.magiaovien;
+	var laymau = tbodybangmauchon[0].style['background-color'];
+	for(var k =0;k<tbodycotronggiaoviennghi.length;k++){
+	var magiaovien =tbodycotronggiaoviennghi[k].dataset.magiaovien; 
+		if(magiaovien == buttonmagiaovien){
+			tbodycotronggiaoviennghi[k].style.backgroundColor = laymau;
+			tbodycotronggiaoviennghi[k].style.color = "white";
+		}else{
+			tbodycotronggiaoviennghi[k].style.backgroundColor = '';
+			tbodycotronggiaoviennghi[k].style.color = '';
+		}
+	}
 }
 
-// load danh sách có thời khoá biểu
+// load danh sách có thời khoá biểu 
 
 function loaddanhsachcothoikhoabieu() {
 	axios.get("gettkbtruong").then(restkbtruong => {
 		let layDataTkbTruong = restkbtruong.data;
+		
+		let tableDsCoTKBTruong = $('#tableDsCoTKBTruong').DataTable();
+		let tableDsCoTKBGv = $('#tableDsCoTKBGv').DataTable();
+		let tableDsCoTKBLop = $('#tableDsCoTKBLop').DataTable();
+		let tableDsCoTKBPhong = $('#tableDsCoTKBPhong').DataTable();
+		let tableDsCoGvNghi = $('#tableDsCoGvNghi').DataTable();
 
-		$('#bodyDSCoTKB').empty();
+		tableDsCoTKBTruong.destroy();
+		tableDsCoTKBGv.destroy();
+		tableDsCoTKBLop.destroy();
+		tableDsCoTKBPhong.destroy();
+		tableDsCoGvNghi.destroy();
+
+		$('#bodyDSCoTKBTruong').empty();
+		$('#bodyDSCoTKBGv').empty();
+		$('#bodyDSCoTKBLop').empty();
+		$('#bodyDSCoTKBPhong').empty();
+		$('#bodyDSCoGvNghi').empty();
 		//
-		let stt = 0;
+		let sttTruong = 0;
+		let sttGv = 0;
+		let sttLop = 0;
+		let sttPhong = 0;
+		let sttGvNghi = 0;
+
+		//ds thời gian có tkb trường
 
 		layDataTkbTruong.forEach(function(iTem){
 			let truongItem = iTem.matruong;
@@ -1299,23 +1358,357 @@ function loaddanhsachcothoikhoabieu() {
 					let thangItem2 = iTem2.thang;
 					let dataTuan = iTem2.dstuan;
 					dataTuan.forEach(function(iTem3){
-						let bodyDSCoTKB = document.getElementById("bodyDSCoTKB");
 
 						let noidungbang = "";
 
-						stt++;
+						sttTruong++;
 
 						noidungbang += "<tr>"
-						+"<td>"+ stt + "</td>"
+						+"<td>"+ sttTruong + "</td>"
 						+"<td>"+ "Tuần "+iTem3.tuan+ "- Tháng "+thangItem2+ "- Năm "+namItem1 + "</td>"
+						+"<td><button type='button' class='btn btn-primary btn-sm classButtonTruong' data-tuan= "+iTem3.tuan+" data-thang= "+thangItem2+" data-nam="+namItem1+"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
 						+"</tr>";
 
-						$("tbody#bodyDSCoTKB").append(noidungbang);
+						$("tbody#bodyDSCoTKBTruong").append(noidungbang);
 					});
 				});
 			});
 		});
 
+		$('#tableDsCoTKBTruong').DataTable({
+			"bLengthChange" : false,
+			"oLanguage": {
+			  	"sProcessing":   "Đang xử lý...",
+				"sLengthMenu":   "Xem _MENU_ mục",
+				"sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+				"sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+				"sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+				"sInfoFiltered": "(được lọc từ _MAX_ mục)",
+				"sInfoPostFix":  "",
+				"sSearch":       "Tìm:",
+				"sUrl":          "",
+				"oPaginate": {
+					"sFirst":    "Đầu",
+					"sPrevious": "Trước",
+					"sNext":     "Tiếp",
+					"sLast":     "Cuối"
+				}
+			}	
+		});
+
+		//ds thời gian có tkb gv
+
+		layDataTkbTruong.forEach(function(iTem){
+			let truongItem = iTem.matruong;
+			let dataNam = iTem.dsnam;
+			dataNam.forEach(function(iTem1){
+				let namItem1 = iTem1.nam;
+				let dataThang = iTem1.dsthang;
+				dataThang.forEach(function(iTem2){
+					let thangItem2 = iTem2.thang;
+					let dataTuan = iTem2.dstuan;
+					dataTuan.forEach(function(iTem3){
+
+						let noidungbang = "";
+
+						sttGv++;
+
+						noidungbang += "<tr>"
+						+"<td>"+ sttGv + "</td>"
+						+"<td>"+ "Tuần "+iTem3.tuan+ "- Tháng "+thangItem2+ "- Năm "+namItem1 + "</td>"
+						+"<td><button type='button' class='btn btn-primary btn-sm classButtonGv' data-tuan= "+iTem3.tuan+" data-thang= "+thangItem2+" data-nam="+namItem1+"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
+						+"</tr>";
+
+						$("tbody#bodyDSCoTKBGv").append(noidungbang);
+					});
+				});
+			});
+		});
+
+		$('#tableDsCoTKBGv').DataTable({
+			"bLengthChange" : false,
+			"oLanguage": {
+			  	"sProcessing":   "Đang xử lý...",
+				"sLengthMenu":   "Xem _MENU_ mục",
+				"sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+				"sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+				"sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+				"sInfoFiltered": "(được lọc từ _MAX_ mục)",
+				"sInfoPostFix":  "",
+				"sSearch":       "Tìm:",
+				"sUrl":          "",
+				"oPaginate": {
+					"sFirst":    "Đầu",
+					"sPrevious": "Trước",
+					"sNext":     "Tiếp",
+					"sLast":     "Cuối"
+				}
+			}	
+		});
+
+		//ds thời gian có tkb lớp
+
+		layDataTkbTruong.forEach(function(iTem){
+			let truongItem = iTem.matruong;
+			let dataNam = iTem.dsnam;
+			dataNam.forEach(function(iTem1){
+				let namItem1 = iTem1.nam;
+				let dataThang = iTem1.dsthang;
+				dataThang.forEach(function(iTem2){
+					let thangItem2 = iTem2.thang;
+					let dataTuan = iTem2.dstuan;
+					dataTuan.forEach(function(iTem3){
+
+						let noidungbang = "";
+
+						sttLop++;
+
+						noidungbang += "<tr>"
+						+"<td>"+ sttLop + "</td>"
+						+"<td>"+ "Tuần "+iTem3.tuan+ "- Tháng "+thangItem2+ "- Năm "+namItem1 + "</td>"
+						+"<td><button type='button' class='btn btn-primary btn-sm classButtonLop' data-tuan= "+iTem3.tuan+" data-thang= "+thangItem2+" data-nam="+namItem1+"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
+						+"</tr>";
+
+						$("tbody#bodyDSCoTKBLop").append(noidungbang);
+					});
+				});
+			});
+		});
+
+		$('#tableDsCoTKBLop').DataTable({
+			"bLengthChange" : false,
+			"oLanguage": {
+			  	"sProcessing":   "Đang xử lý...",
+				"sLengthMenu":   "Xem _MENU_ mục",
+				"sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+				"sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+				"sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+				"sInfoFiltered": "(được lọc từ _MAX_ mục)",
+				"sInfoPostFix":  "",
+				"sSearch":       "Tìm:",
+				"sUrl":          "",
+				"oPaginate": {
+					"sFirst":    "Đầu",
+					"sPrevious": "Trước",
+					"sNext":     "Tiếp",
+					"sLast":     "Cuối"
+				}
+			}	
+		});
+
+		//ds thời gian có tkb phòng học
+
+		layDataTkbTruong.forEach(function(iTem){
+			let truongItem = iTem.matruong;
+			let dataNam = iTem.dsnam;
+			dataNam.forEach(function(iTem1){
+				let namItem1 = iTem1.nam;
+				let dataThang = iTem1.dsthang;
+				dataThang.forEach(function(iTem2){
+					let thangItem2 = iTem2.thang;
+					let dataTuan = iTem2.dstuan;
+					dataTuan.forEach(function(iTem3){
+
+						let noidungbang = "";
+
+						sttPhong++;
+
+						noidungbang += "<tr>"
+						+"<td>"+ sttPhong + "</td>"
+						+"<td>"+ "Tuần "+iTem3.tuan+ "- Tháng "+thangItem2+ "- Năm "+namItem1 + "</td>"
+						+"<td><button type='button' class='btn btn-primary btn-sm classButtonPhong' data-tuan= "+iTem3.tuan+" data-thang= "+thangItem2+" data-nam="+namItem1+"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
+						+"</tr>";
+
+						$("tbody#bodyDSCoTKBPhong").append(noidungbang);
+					});
+				});
+			});
+		});
+
+		$('#tableDsCoTKBPhong').DataTable({
+			"bLengthChange" : false,
+			"oLanguage": {
+			  	"sProcessing":   "Đang xử lý...",
+				"sLengthMenu":   "Xem _MENU_ mục",
+				"sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+				"sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+				"sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+				"sInfoFiltered": "(được lọc từ _MAX_ mục)",
+				"sInfoPostFix":  "",
+				"sSearch":       "Tìm:",
+				"sUrl":          "",
+				"oPaginate": {
+					"sFirst":    "Đầu",
+					"sPrevious": "Trước",
+					"sNext":     "Tiếp",
+					"sLast":     "Cuối"
+				}
+			}	
+		});
+
+		//ds thời gian có giáo viên nghỉ
+
+		layDataTkbTruong.forEach(function(iTem){
+			let truongItem = iTem.matruong;
+			let dataNam = iTem.dsnam;
+			dataNam.forEach(function(iTem1){
+				let namItem1 = iTem1.nam;
+				let dataThang = iTem1.dsthang;
+				dataThang.forEach(function(iTem2){
+					let thangItem2 = iTem2.thang;
+					let dataTuan = iTem2.dstuan;
+					dataTuan.forEach(function(iTem3){
+
+						let noidungbang = "";
+
+						sttGvNghi++;
+
+						noidungbang += "<tr>"
+						+"<td>"+ sttGvNghi + "</td>"
+						+"<td>"+ "Tuần "+iTem3.tuan+ "- Tháng "+thangItem2+ "- Năm "+namItem1 + "</td>"
+						+"<td><button type='button' class='btn btn-primary btn-sm classButtonGvNghi' data-tuan= "+iTem3.tuan+" data-thang= "+thangItem2+" data-nam="+namItem1+"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
+						+"</tr>";
+
+						$("tbody#bodyDSCoGvNghi").append(noidungbang);
+					});
+				});
+			});
+		});
+
+		$('#tableDsCoGvNghi').DataTable({
+			"bLengthChange" : false,
+			"oLanguage": {
+			  	"sProcessing":   "Đang xử lý...",
+				"sLengthMenu":   "Xem _MENU_ mục",
+				"sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+				"sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+				"sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+				"sInfoFiltered": "(được lọc từ _MAX_ mục)",
+				"sInfoPostFix":  "",
+				"sSearch":       "Tìm:",
+				"sUrl":          "",
+				"oPaginate": {
+					"sFirst":    "Đầu",
+					"sPrevious": "Trước",
+					"sNext":     "Tiếp",
+					"sLast":     "Cuối"
+				}
+			}	
+		});
+
+	});
+	
+
+}
+
+function loadgiaoviennghi() {
+	axios.get("getgiaoviennghi").then(resgvnghi => {
+		let layDataGvNghi = resgvnghi.data;
+
+		$('#selecttuangiaoviennghi').on('change',function(){
+
+			let valdateThang = $('#datepickerthangtuangiaoviennghi').val();
+
+	        if(valdateThang == ''){
+	            alert('Vui lòng chọn tháng');
+	            $(this).val('none');
+	            return;
+	        }
+
+	        const thangnamtuan = $('#datepickerthangtuangiaoviennghi').val();
+	        const date = moment(thangnamtuan, 'MM/YYYY');
+	        const thang = date.format('M');
+	        const nam = date.format('YYYY');
+
+	        let tuan = $(this).val();
+
+	        if (tuan != '' && thangnamtuan != '') {
+	            $('#idthangtuangiaoviennghi').text("(Tháng: "+thangnamtuan+" - "+"Tuần: "+tuan+")");
+	        } else {
+	            $('#idthangtuangiaoviennghi').text('');
+	        }
+
+			$('#phanthantablegiaoviennghi').empty();
+	  		
+	  		for(let i =0;i<layDataGvNghi.length;i++){
+	            let demnam = layDataGvNghi[i].dsnam.length;
+	            for(let j=0;j<demnam;j++){
+	                let demthang = layDataGvNghi[i].dsnam[j].dsthang.length;
+	                for(let k=0;k<demthang;k++){
+	                    let demtuan = layDataGvNghi[i].dsnam[j].dsthang[k].dstuan.length;
+	                    for(let m=0;m<demtuan;m++){
+	                        if(layDataGvNghi[i].dsnam[j].nam == nam && layDataGvNghi[i].dsnam[j].dsthang[k].thang == thang && layDataGvNghi[i].dsnam[j].dsthang[k].dstuan[m].tuan == tuan){
+
+								var dsbuoi = layDataGvNghi[i].dsnam[j].dsthang[k].dstuan[m].dsbuoi;
+
+								var databuoi = [
+									{
+										"mabuoi":0,
+										"tenbuoi":"Sáng"
+									},{
+										"mabuoi":1,
+										"tenbuoi":"Chiều"
+									},
+								];
+
+								var noidungbang = "";
+						        for (let i = 0; i < databuoi.length; i++) {
+						            var cotrong = '';
+								  	var theadthu = document.querySelectorAll('#tablexemgiaoviennghi thead tr .classthugiaoviennghi');
+			                    	for(var x=0;x<theadthu.length;x++){
+			                    		var mathu = theadthu[x].id;
+							            cotrong += "<td data-mabuoi= "+databuoi[i].mabuoi+" data-mathu="+mathu+" class='classoronggiaoviennghi'></td>";
+								  	}
+				                    	
+				                    noidungbang += "<tr>"
+				                    +"<td class='sticky-col first-col' style='color: red;position: sticky;background-color: #FAFAD2;z-index: 5;left: 0px;width: 100px;min-width: 100px;max-width: 100px;'>" + databuoi[i].tenbuoi + "</td>"
+				                    +cotrong
+				                    +"</tr>";				      
+						        }
+
+						        $("tbody#phanthantablegiaoviennghi").append(noidungbang);
+
+						        var tbodycotrong = document.querySelectorAll('#tablexemgiaoviennghi tbody tr td.classoronggiaoviennghi');
+
+						        for(let i=0;i<dsbuoi.length;i++){
+						        	var demthu = dsbuoi[i].dsthu.length;
+					        		for(let j=0;j<demthu;j++){
+					        			var demgv = dsbuoi[i].dsthu[j].dsgiaovien.length;
+					        			for(let k=0;k<tbodycotrong.length;k++){
+					        				var mabuoi =tbodycotrong[k].dataset.mabuoi; 
+					        				var mathu = tbodycotrong[k].dataset.mathu;
+					        				if(dsbuoi[i].mabuoi == mabuoi && dsbuoi[i].dsthu[j].mathu == mathu){
+					        					var dataBang = '';
+					        					for(let m=0;m<demgv;m++){
+					        						dataBang += "<span style='white-space: nowrap;' data-magiaovien = "+dsbuoi[i].dsthu[j].dsgiaovien[m].magiaovien+">"+dsbuoi[i].dsthu[j].dsgiaovien[m].hovaten+"</span><br/>";
+					        					}
+					        					tbodycotrong[k].innerHTML = dataBang;
+
+					        				}
+					        			}
+					        		}
+						        }
+						        document.getElementById("cardxepgiaoviennghi").style.display = "block";
+	                                  
+	                        }
+
+	                    }
+	                }
+	            }
+	            
+	        }
+
+	        var tbodygvnghi = $("#tablexemgiaoviennghi tbody#phanthantablegiaoviennghi");
+			if(tbodygvnghi.children().length == 0){
+				Swal.fire(
+				  'Thông báo',
+				  'Không giáo viên nghỉ trong thời gian này',
+				  'info'
+				)
+				document.getElementById("cardxepgiaoviennghi").style.display = "none";
+			}
+	 		
+	  	});
 	});
 }
 
@@ -1327,6 +1720,7 @@ window.onload = function() {
 	loaddanhsachkhoilop();
 	loadbanggiaovien();
 	loadthoikhoabieuphong();
+	loadgiaoviennghi();
 
 	$('#datepickerthangtuantruong').datepicker({
         format: "mm/yyyy",
@@ -1364,6 +1758,15 @@ window.onload = function() {
         language: "vi",
     });
 
+    $('#datepickerthangtuangiaoviennghi').datepicker({
+        format: "mm/yyyy",
+        orientation: "bottom",
+        viewMode: "months",
+        minViewMode: "months",
+        autoclose: true,
+        language: "vi",
+    });
+
 
     $('#datepickerthangtuantruong').on('change',function(){
     	$('#selecttuantruong').val('none');
@@ -1381,27 +1784,53 @@ window.onload = function() {
     	$('#selecttuanphong').val('none');
     });
 
+    $('#datepickerthangtuangiaoviennghi').on('change',function(){
+    	$('#selecttuangiaoviennghi').val('none');
+    });
+
     $('#idselectgv').on('change',function(){
-    	$('#datepickerthangtuangv').val('');
-    	$('#selecttuangv').val('none');
-    	document.getElementById("cardxeptkbgiaovien").style.display = "none";
+    	let thangNamGv = $('#datepickerthangtuangv').val();
+    	let tuanGv = $('#selecttuangv').val();
+    	if(thangNamGv != '' && tuanGv != null){
+    		$('#selecttuangv').trigger('change');
+    	}
+    	// $('#datepickerthangtuangv').val('');
+    	// $('#selecttuangv').val('none');
+    	// document.getElementById("cardxeptkbgiaovien").style.display = "none";
     });
 
     $('#idselectlop').on('change',function(){
-    	$('#datepickerthangtuanlop').val('');
-    	$('#selecttuanlop').val('none');
-    	document.getElementById("cardxeptkblop").style.display = "none";
+    	let thangNamLop = $('#datepickerthangtuanlop').val();
+    	let tuanLop = $('#selecttuanlop').val();
+    	if(thangNamLop != '' && tuanLop != null){
+    		$('#selecttuanlop').trigger('change');
+    	}
+    	// $('#datepickerthangtuanlop').val('');
+    	// $('#selecttuanlop').val('none');
+    	// document.getElementById("cardxeptkblop").style.display = "none";
     });
 
     $('#idselectkhoi').on('change',function(){
-    	$('#datepickerthangtuanlop').val('');
-    	$('#selecttuanlop').val('none');
+    	let thangNamLop = $('#datepickerthangtuanlop').val();
+    	let tuanLop = $('#selecttuanlop').val();
+    	if(thangNamLop != '' && tuanLop != null){
+    		
+    	}else{
+    		$('#datepickerthangtuanlop').val('');
+    		$('#selecttuanlop').val('none');
+    	}
+    	
     });
 
     $('#idselectphong').on('change',function(){
-    	$('#datepickerthangtuanphong').val('');
-    	$('#selecttuanphong').val('none');
-    	document.getElementById("cardxeptkbphong").style.display = "none";
+    	let thangNamPhong = $('#datepickerthangtuanphong').val();
+    	let tuanPhong = $('#selecttuanphong').val();
+    	if(thangNamPhong != '' && tuanPhong != null){
+    		$('#selecttuanphong').trigger('change');
+    	}
+    	// $('#datepickerthangtuanphong').val('');
+    	// $('#selecttuanphong').val('none');
+    	// document.getElementById("cardxeptkbphong").style.display = "none";
     });
 
 	$("input[type='checkbox']").change(function () {
@@ -1549,10 +1978,31 @@ window.onload = function() {
 		$('#idselectphong').val('none').trigger('change.select2');
 	});
 
-	$('#btnDSCoTKBTruong').on('click',function(){
-		let tbodyDsCoTKB = $("#tableDsCoTKB tbody");
+	$("#xemgiaoviennghi").change(function () {
+		$('#idselectgv').val('none').trigger('change.select2');
+		$('#datepickerthangtuantruong').val('');
+    	$('#selecttuantruong').val('none');
+    	$('#datepickerthangtuangv').val('');
+    	$('#selecttuangv').val('none');
+    	$('#datepickerthangtuanlop').val('');
+    	$('#selecttuanlop').val('none');
+		$('#idselectphong').val('none').trigger('change.select2');
+		$('#datepickerthangtuangiaoviennghi').val('');
+		$('#selecttuangiaoviennghi').val('none');
+		var tbodymaugv = $("#tablemaugiaovien tbody#banggiaovien");
+		if(tbodymaugv.children().length == 0){
+			document.getElementById("cardmaugiaovien").style.display = "none";
+		}else{
+			document.getElementById("cardmaugiaovien").style.display = "block";
+		}
+	});
 
-		if (tbodyDsCoTKB.children().length == 0) {
+	//button hiển thị ds có tkb
+
+	$('#btnDSCoTKBTruong').on('click',function(){
+		let tbodyDsCoTKBTruong = $("#tableDsCoTKBTruong tbody");
+
+		if (tbodyDsCoTKBTruong.children().length == 0) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',
@@ -1560,14 +2010,14 @@ window.onload = function() {
 			);
 			return false;
 		} else{
-			$('#modalDsCoTKB').modal('show');
+			$('#modalDsCoTKBTruong').modal('show');
 		}
 	});
 
 	$('#btnDSCoTKBGv').on('click',function(){
-		let tbodyDsCoTKB = $("#tableDsCoTKB tbody");
+		let tbodyDsCoTKBGv = $("#tableDsCoTKBGv tbody");
 
-		if (tbodyDsCoTKB.children().length == 0) {
+		if (tbodyDsCoTKBGv.children().length == 0) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',
@@ -1575,14 +2025,14 @@ window.onload = function() {
 			);
 			return false;
 		} else{
-			$('#modalDsCoTKB').modal('show');
+			$('#modalDsCoTKBGv').modal('show');
 		}
 	});
 
 	$('#btnDSCoTKBLop').on('click',function(){
-		let tbodyDsCoTKB = $("#tableDsCoTKB tbody");
+		let tbodyDsCoTKBLop = $("#tableDsCoTKBLop tbody");
 
-		if (tbodyDsCoTKB.children().length == 0) {
+		if (tbodyDsCoTKBLop.children().length == 0) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',
@@ -1590,14 +2040,14 @@ window.onload = function() {
 			);
 			return false;
 		} else{
-			$('#modalDsCoTKB').modal('show');
+			$('#modalDsCoTKBLop').modal('show');
 		}
 	});
 
 	$('#btnDSCoTKBPhong').on('click',function(){
-		let tbodyDsCoTKB = $("#tableDsCoTKB tbody");
+		let tbodyDsCoTKBPhong = $("#tableDsCoTKBPhong tbody");
 
-		if (tbodyDsCoTKB.children().length == 0) {
+		if (tbodyDsCoTKBPhong.children().length == 0) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',
@@ -1605,7 +2055,104 @@ window.onload = function() {
 			);
 			return false;
 		} else{
-			$('#modalDsCoTKB').modal('show');
+			$('#modalDsCoTKBPhong').modal('show');
 		}
+	});
+
+	$('#btnDSCoGvNghi').on('click',function(){
+		let tbodyDsCoGvNghi = $("#tableDsCoGvNghi tbody");
+
+		if (tbodyDsCoGvNghi.children().length == 0) {
+		    Swal.fire(
+			  'Thông báo',
+			  'Không có thời gian nào có giáo viên nghỉ',
+			  'info'
+			);
+			return false;
+		} else{
+			$('#modalDsCoGvNghi').modal('show');
+		}
+	});
+
+	//xử lý click thời gian có tkb trường
+
+	$("#tableDsCoTKBTruong tbody").on("click", ".classButtonTruong", function() {
+	    let tuan = $(this).data('tuan');
+	    let thang = $(this).data('thang');
+	    let nam = $(this).data('nam');
+	    let thangNam = thang+"/"+nam;
+	    $('#datepickerthangtuantruong').val(thangNam).trigger('change');
+	    $('#selecttuantruong').val(tuan).trigger('change');
+	    $('#modalDsCoTKBTruong').modal('hide');
+	});
+
+	//xử lý click thời gian có tkb gv
+
+	$("#tableDsCoTKBGv tbody").on("click", ".classButtonGv", function() {
+	    let tuan = $(this).data('tuan');
+	    let thang = $(this).data('thang');
+	    let nam = $(this).data('nam');
+	    let thangNam = thang+"/"+nam;
+	    let selectGv = $('#idselectgv').val();
+	    if(selectGv != null){
+	    	$('#datepickerthangtuangv').val(thangNam).trigger('change');
+	    	$('#selecttuangv').val(tuan).trigger('change');
+	    }else{
+	    	$('#datepickerthangtuangv').val(thangNam).trigger('change');
+	    	$('#selecttuangv').val(tuan);
+	    }
+	    
+	    $('#modalDsCoTKBGv').modal('hide');
+	});
+
+	//xử lý click thời gian có tkb lớp
+
+	$("#tableDsCoTKBLop tbody").on("click", ".classButtonLop", function() {
+	    let tuan = $(this).data('tuan');
+	    let thang = $(this).data('thang');
+	    let nam = $(this).data('nam');
+	    let thangNam = thang+"/"+nam;
+	    let selectKhoi = $('#idselectkhoi').val();
+	    let selectLop = $('#idselectlop').val();
+	    if(selectKhoi != null && selectLop != null){
+	    	$('#datepickerthangtuanlop').val(thangNam).trigger('change');
+	    	$('#selecttuanlop').val(tuan).trigger('change');
+	    }else{
+	    	$('#datepickerthangtuanlop').val(thangNam).trigger('change');
+	    	$('#selecttuanlop').val(tuan);
+	    }
+	    
+	    $('#modalDsCoTKBLop').modal('hide');
+	});
+
+	//xử lý click thời gian có tkb phòng
+
+	$("#tableDsCoTKBPhong tbody").on("click", ".classButtonPhong", function() {
+	    let tuan = $(this).data('tuan');
+	    let thang = $(this).data('thang');
+	    let nam = $(this).data('nam');
+	    let thangNam = thang+"/"+nam;
+	    let selectPhong= $('#idselectphong').val();
+	    if(selectPhong != null){
+	    	$('#datepickerthangtuanphong').val(thangNam).trigger('change');
+	    	$('#selecttuanphong').val(tuan).trigger('change');
+	    }else{
+	    	$('#datepickerthangtuanphong').val(thangNam).trigger('change');
+	    	$('#selecttuanphong').val(tuan);
+	    }
+	    
+	    $('#modalDsCoTKBPhong').modal('hide');
+	});
+
+	//xử lý click thời gian có giáo viên nghỉ
+
+	$("#tableDsCoGvNghi tbody").on("click", ".classButtonGvNghi", function() {
+	    let tuan = $(this).data('tuan');
+	    let thang = $(this).data('thang');
+	    let nam = $(this).data('nam');
+	    let thangNam = thang+"/"+nam;
+	    $('#datepickerthangtuangiaoviennghi').val(thangNam).trigger('change');
+	    $('#selecttuangiaoviennghi').val(tuan).trigger('change');
+	    $('#modalDsCoGvNghi').modal('hide');
 	});
 }

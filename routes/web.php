@@ -113,6 +113,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('gettkbphong','xemtkb\xemtkbController@gettkbphong');
 	//lấy list phòng học
 	Route::get('getlistphong','xemtkb\xemtkbController@getlistphong');
+	//lấy danh sách giáo viên nghỉ
+	Route::get('getgiaoviennghi','xemtkb\xemtkbController@getgiaoviennghi');
 
 //tro giup
 	Route::get('exportkb','exportkb\exportkbController@index');

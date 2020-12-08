@@ -60,6 +60,12 @@
 																Xem TKB phòng học
 															</label>
 														</fieldset>			
+														<fieldset class="radio">
+															<label>
+																<input type="radio" name="radio" value="" id="xemgiaoviennghi">														
+																Xem giáo viên nghỉ
+															</label>
+														</fieldset>	
 													</div>
 												</div>							
 											</div>
@@ -116,8 +122,7 @@
 																	<th>Màu</th>
 																</tr>
 															</thead>
-															<tbody id="banggiaovien"></tbody>
-																
+															<tbody id="banggiaovien"></tbody>	
 														</table>
 													</div>
 												</div>							
@@ -488,18 +493,98 @@
 					</div>
 				</div>
 
+				<!-- select thời gian giáo viên nghỉ -->
+				<div class="card" id="cardselectthoigiangiaoviennghi" style="display: none;">
+					<div class="card-header" style="padding: 10px">
+						<!-- <h4 class="card-title" id="titletkbgv">Trường: <b><span id="idtentruonggv" style="color: blue;"></span></b></h4>
+						<input type="hidden" id="idtruonggv"> -->
+					</div>
+					<div class="card-content collpase show">
+						<div class="card-body">
+							<form class="form">
+								<div class="form-body">
+									<section>
+										<div class="container">
+											<label>Chọn thời gian:</label>
+											<div class="input-daterange input-group" style="width: 50%;">
+												<span class="input-group-addon">Tháng</span>
+												<input type="text" class="form-control-sm form-control" name="start" value="" id="datepickerthangtuangiaoviennghi" placeholder="Chọn tháng">
+												<span class="input-group-addon">Tuần</span>
+												<select id="selecttuangiaoviennghi" name="interested" class="form-control">
+					                                <option value="none" selected="" disabled="">--Chọn tuần--
+					                                </option><option value="1">Tuần 1
+					                                </option><option value="2">Tuần 2
+					                                </option><option value="3">Tuần 3
+					                                </option><option value="4">Tuần 4
+					                                </option>
+					                        	</select>
+											</div>
+											<br>
+											<button type="button" class="btn btn-success btn-sm" id="btnDSCoGvNghi">DS thời gian có giáo viên nghỉ</button>	
+										</div>
+									</section>
+
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<!-- xem giáo viên nghỉ -->
+				<div class="card" id="cardxepgiaoviennghi" style="display: none;">
+					<div class="card-header" style="padding: 10px">
+						<!-- <h4 style="text-align: center;font-size: 20px;" class="card-title" id="titletkbgv">Thời khóa biểu phòng: <b><span id="idtenphong" style="color: green;"></span></b></h4>
+						<br> -->
+						<h5 style="text-align: center;font-size: 15px;color: red;"><i><span id="idthangtuangiaoviennghi"></span></i></h5>
+						<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+						<div class="heading-elements" style="top: 10px">
+							<ul class="list-inline mb-0">
+								<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+								<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="card-content collpase show">
+						<div class="card-body">
+							<form class="form">
+								<div class="form-body">
+									<section>
+										<div class="container">
+											<table id="tablexemgiaoviennghi" class="table table-striped table-bordered dataex-key-basic table-responsive display nowrap" style="overflow-y: auto; height: 100%;width: 100%;border-collapse: separate;">
+												<thead class="thead-inverse" style="background-color: #28386c;color: white;">
+													<tr id="phandautablegiaoviennghi">
+														<th class='stickyThu' style="position: sticky;position: -webkit-sticky;background-color: #28386c;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;">Buổi</th>
+														<th id="2" class="classthugiaoviennghi">Thứ 2</th>
+														<th id="3" class="classthugiaoviennghi">Thứ 3</th>
+														<th id="4" class="classthugiaoviennghi">Thứ 4</th>
+														<th id="5" class="classthugiaoviennghi">Thứ 5</th>
+														<th id="6" class="classthugiaoviennghi">Thứ 6</th>
+														<th id="7" class="classthugiaoviennghi">Thứ 7</th>
+													</tr>
+												</thead>
+												<tbody id="phanthantablegiaoviennghi"></tbody>
+											</table>
+										</div>
+									</section>
+
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
 			</dir>
 		</div>
 	</div>	
 </dir>
 
-<!-- modal danh sách thời gian có thời khoá biểu -->
-<div class="modal fade text-left" id="modalDsCoTKB" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+<!-- modal danh sách thời gian có thời khoá biểu trường -->
+<div class="modal fade text-left" id="modalDsCoTKBTruong" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
 		<div class="modal-content">
 			<div class="modal-header bg-success white">
 				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKB">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBTruong">
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
@@ -508,14 +593,155 @@
 					<div class="form-body">
 						<div class="row">
 							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
-								<table id="tableDsCoTKB" class="table table-striped table-bordered" style="border-collapse: separate;">
+								<table id="tableDsCoTKBTruong" class="table table-striped table-bordered" style="border-collapse: separate;">
 									<thead>
 										<tr>
 											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
 											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
 										</tr>
 									</thead>
-									<tbody id="bodyDSCoTKB">
+									<tbody id="bodyDSCoTKBTruong">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có thời khoá biểu giáo viên-->
+<div class="modal fade text-left" id="modalDsCoTKBGv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBGv">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBGv" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBGv">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có thời khoá biểu lớp-->
+<div class="modal fade text-left" id="modalDsCoTKBLop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBLop">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBLop" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBLop">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có thời khoá biểu phòng học-->
+<div class="modal fade text-left" id="modalDsCoTKBPhong" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBPhong">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBPhong" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBPhong">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có giáo viên nghỉ-->
+<div class="modal fade text-left" id="modalDsCoGvNghi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có giáo viên nghỉ</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoGvNghi">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoGvNghi" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoGvNghi">
 									</tbody>
 								</table>
 							</div>
@@ -537,16 +763,19 @@
 		$("#xemtkbgiaovien").prop("checked", false);
 		$("#xemtkblop").prop("checked", false);
 		$("#xemtkbphong").prop("checked", false);
+		$("#xemgiaoviennghi").prop("checked", false);
 		//thời khoá biểu
 		document.getElementById("cardxeptkbtruong").style.display = "none";
 		document.getElementById("cardxeptkbgiaovien").style.display = "none";
 		document.getElementById("cardxeptkblop").style.display = "none";
 		document.getElementById("cardxeptkbphong").style.display = "none";
+		document.getElementById("cardxepgiaoviennghi").style.display = "none";
 		//select
 		document.getElementById("cardselectthoigiantruong").style.display = "block";
 		document.getElementById("cardselectgv").style.display = "none";
 		document.getElementById("cardselectlop").style.display = "none";
 		document.getElementById("cardselectphong").style.display = "none";
+		document.getElementById("cardselectthoigiangiaoviennghi").style.display = "none";
 		//radio tkb trường sáng, chiều, cả buổi
 		document.getElementById("cardsangchieu").style.display = "block";
 	});
@@ -556,15 +785,18 @@
 		$("#xemtkbtruong").prop("checked", false);
 		$("#xemtkblop").prop("checked", false);
 		$("#xemtkbphong").prop("checked", false);
+		$("#xemgiaoviennghi").prop("checked", false);
 		//thời khoá biểu
 		document.getElementById("cardxeptkbtruong").style.display = "none";			
 		document.getElementById("cardxeptkblop").style.display = "none";
 		document.getElementById("cardxeptkbphong").style.display = "none";
+		document.getElementById("cardxepgiaoviennghi").style.display = "none";
 		//select
 		document.getElementById("cardselectthoigiantruong").style.display = "none";
 		document.getElementById("cardselectgv").style.display = "block";
 		document.getElementById("cardselectlop").style.display = "none";
 		document.getElementById("cardselectphong").style.display = "none";
+		document.getElementById("cardselectthoigiangiaoviennghi").style.display = "none";
 		//radio tkb trường sáng, chiều, cả buổi
 		document.getElementById("cardsangchieu").style.display = "none";
 		//table màu giáo viên tkb trường
@@ -576,15 +808,18 @@
 		$("#xemtkbgiaovien").prop("checked", false);
 		$("#xemtkbtruong").prop("checked", false);
 		$("#xemtkbphong").prop("checked", false);
+		$("#xemgiaoviennghi").prop("checked", false);
 		//thời khoá biểu
 		document.getElementById("cardxeptkbtruong").style.display = "none";
 		document.getElementById("cardxeptkbgiaovien").style.display = "none";
 		document.getElementById("cardxeptkbphong").style.display = "none";
+		document.getElementById("cardxepgiaoviennghi").style.display = "none";
 		//select
 		document.getElementById("cardselectthoigiantruong").style.display = "none";
 		document.getElementById("cardselectgv").style.display = "none";
 		document.getElementById("cardselectlop").style.display = "block";
 		document.getElementById("cardselectphong").style.display = "none";
+		document.getElementById("cardselectthoigiangiaoviennghi").style.display = "none";
 		//radio tkb trường sáng, chiều, cả buổi
 		document.getElementById("cardsangchieu").style.display = "none";
 		//table màu giáo viên tkb trường
@@ -596,15 +831,41 @@
 		$("#xemtkbtruong").prop("checked", false);
 		$("#xemtkblop").prop("checked", false);
 		$("#xemtkbgiaovien").prop("checked", false);
+		$("#xemgiaoviennghi").prop("checked", false);
 		//thời khoá biểu
 		document.getElementById("cardxeptkbtruong").style.display = "none";		
 		document.getElementById("cardxeptkblop").style.display = "none";
 		document.getElementById("cardxeptkbgiaovien").style.display = "none";
+		document.getElementById("cardxepgiaoviennghi").style.display = "none";
 		//select
 		document.getElementById("cardselectthoigiantruong").style.display = "none";
 		document.getElementById("cardselectgv").style.display = "none";
 		document.getElementById("cardselectphong").style.display = "block";
 		document.getElementById("cardselectlop").style.display = "none";
+		document.getElementById("cardselectthoigiangiaoviennghi").style.display = "none";
+		//radio tkb trường sáng, chiều, cả buổi
+		document.getElementById("cardsangchieu").style.display = "none";
+		//table màu giáo viên tkb trường
+		document.getElementById("cardmaugiaovien").style.display = "none";
+	});
+
+	$("#xemgiaoviennghi").change(function () {
+		//radio chọn xem tkb
+		$("#xemtkbtruong").prop("checked", false);
+		$("#xemtkblop").prop("checked", false);
+		$("#xemtkbgiaovien").prop("checked", false);
+		$("#xemtkbphong").prop("checked", false);
+		//thời khoá biểu
+		document.getElementById("cardxeptkbtruong").style.display = "none";		
+		document.getElementById("cardxeptkblop").style.display = "none";
+		document.getElementById("cardxeptkbgiaovien").style.display = "none";
+		document.getElementById("cardxeptkbphong").style.display = "none";
+		//select
+		document.getElementById("cardselectthoigiantruong").style.display = "none";
+		document.getElementById("cardselectgv").style.display = "none";
+		document.getElementById("cardselectphong").style.display = "none";
+		document.getElementById("cardselectlop").style.display = "none";
+		document.getElementById("cardselectthoigiangiaoviennghi").style.display = "block";
 		//radio tkb trường sáng, chiều, cả buổi
 		document.getElementById("cardsangchieu").style.display = "none";
 		//table màu giáo viên tkb trường

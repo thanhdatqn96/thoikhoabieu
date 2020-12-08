@@ -48,6 +48,14 @@
 											</div>
 										</div>							
 									</div>
+									<!-- //thông báo -->
+									<div class="card box-shadow-0 border-info bg-transparent" id="nhapdulieuhethong">
+										<div class="card">
+										  <div class="card-body" style="font-size: 13px;">
+										    <p style="color: red;"><b>Lưu ý:</b></p> <i>Đánh giá giáo viên thực hiện theo thông tư Số 20/2018/TT-BGDĐT ngày 22/8/2018 Ban hành quy định chuẩn nghề nghiệp giáo viên cơ sở giáo dục phổ thông</i>
+										  </div>
+										</div>							
+									</div>
 								</div>						
 							</div>
 						</div>

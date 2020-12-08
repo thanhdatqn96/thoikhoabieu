@@ -99,7 +99,7 @@ async function loaddanhsachtruong() {
                         },
                         onClick: function(e) {
                             $("#bangdstruong").collapse('toggle');
-                            $("#hieuungcongtru").addClass("ft-plus").removeClass("ft-minus");;
+                            $("#hieuungcongtru").addClass("fa fa-undo").removeClass("ft-minus ft-plus");
                             $("#idtentruong").text(options.data.tentruong);
                             $("#idtentruonggv").text(options.data.tentruong);
                             $("#idtentruonglop").text(options.data.tentruong);
