@@ -62,6 +62,10 @@
 													lòng chờ</div>
 											</div>
 										</div>
+										<br>
+										<button type="button" class="btn btn-info btn-sm" id="btnDSCoTKBTruong">DS thời gian có TKB</button>	
+										<br>
+										<br>	
 										<div class="form-group">
 											<label>Thời gian</label>
 											<div style="z-index: 300">
@@ -548,860 +552,1000 @@
 	</div>
 </div>
 
+<!-- modal danh sách thời gian có thời khoá biểu trường -->
+<div class="modal fade text-left" id="modalDsCoTKBTruong" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBTruong">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBTruong" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBTruong">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript">
-	document.getElementById('importfile').addEventListener('change', handleFileSelect, false);	
-	var ExcelToJSON = function() {
-		this.parseExcel = function(file) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				var data = e.target.result;
-				var workbook = XLSX.read(data, {
-					type: 'binary'
-				});
-				workbook.SheetNames.forEach(function(sheetName) {
+    document.getElementById('importfile').addEventListener('change', handleFileSelect, false);
+    var ExcelToJSON = function() {
+        this.parseExcel = function(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var data = e.target.result;
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                });
+                workbook.SheetNames.forEach(function(sheetName) {
 
-					var xlsx = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                    var xlsx = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-					var arrResult = [];
-					xlsx.forEach(function(element){
-						let obj = {};
-          		// Lap qua tung phan tu va tao obj moi chua cac key value nhu minh muon
-          		for (const property in element) {
-          			var str = property;
-          			str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
-          			str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
-          			str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i"); 
-          			str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o"); 
-          			str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u"); 
-          			str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y"); 
-          			str = str.replace(/đ/g,"d",);
-          			// str = str.replace(/[!@#$%^&*-;()]/g, "");
-          			str = str.replace(/\s+/g, '');
-          			str = str.trim();
+                    var arrResult = [];
+                    xlsx.forEach(function(element) {
+                        let obj = {};
+                        // Lap qua tung phan tu va tao obj moi chua cac key value nhu minh muon
+                        for (const property in element) {
+                            var str = property;
+                            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                            str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                            str = str.replace(/đ/g, "d", );
+                            // str = str.replace(/[!@#$%^&*-;()]/g, "");
+                            str = str.replace(/\s+/g, '');
+                            str = str.trim();
 
-          			let key = str;
-          			let keynumber = parseInt(key.slice(0,1));
-          			var ii = Number.isInteger(keynumber);
-          			obj[key] = element[property]; 
-          			if(Number.isInteger(keynumber) == true){
-          				obj['lop'] = key; 
-          				obj['mon'] = element[property]; 
-          			}
-          			
-
-          		}
-          		arrResult.push(obj);
-          	});
-					var dataResult = arrResult.filter(function(number,key) {
-						if(key >= 1 ){
-							return number;
-						}
-					});
-					if(dataResult != ""){
-						importexcel(dataResult);
-					}
-				})
-			};
-			reader.onerror = function(ex) {
-				console.log(ex);
-			};
-			reader.readAsBinaryString(file);
-		};
-	};
-
-	function handleFileSelect(evt) {
-		Swal.fire({
-			title: 'Lưu',
-			text: "Bạn có muốn import file excel này không",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Lưu'
-		}).then((result) => {
-			if (result.value) {
-				var files = evt.target.files;
-				var xl2json = new ExcelToJSON();
-				xl2json.parseExcel(files[0]);
-				$('#modalloading').modal('show');
-				var i = 0;
-				if (i == 0) {
-					i = 1;
-					var elem = document.getElementById("loading");
-					var width = 1;
-					var id = setInterval(frame, 50);
-					function frame() {
-						if (width >= 60) {
-							clearInterval(id);
-							i = 0;
-							
-						} else {
-							width++;
-							elem.style.width = width + "%";
-							if(width == 60){
-								$('#modalloading').modal('toggle');
-							}
-						}
-					}
-
-				}
-
-			}
-			$('#importfile').val('');
-		})
-	}
-
-	function importexcel(datas){
-		var data = datas.map(function (value, key){
-			var monhoc = value.mon;
-			var tengv = value.undefined;
-			var tiet = value.Tiet;			
-			var thubuoi = value.Thu;
-			var lop = value.lop;
-			if(thubuoi != undefined){
-				var thu = thubuoi.slice(4,6);
-				var buois = thubuoi.slice(6,15);
-				if(buois == "Sáng"){
-					var buoi = "0";
-				}else if(buois == "Chiều"){
-					var buoi = "1";
-				}
-			}	
-			if(key == 1,2,3,4){
-				var buoi = "0";
-				var thu = "2";
-			}else if(key == 6,7,8,9){
-				var buoi = "1";
-				var thu = "2";
-			}else if(key == 11,12,13,14){
-				var buoi = "0";
-				var thu = "3";
-			}else if(key == 16,17,18,19){
-				var buoi = "1";
-				var thu = "3";
-			}else if(key == 21,22,23,24){
-				var buoi = "0";
-				var thu = "4";
-			}else if(key == 26,27,28,29){
-				var buoi = "1";
-				var thu = "4";
-			}else if(key == 31,32,33,34){
-				var buoi = "0";
-				var thu = "5";
-			}else if(key == 36,37,38,39){
-				var buoi = "1";
-				var thu = "5";
-			}else if(key == 41,42,43,44){
-				var buoi = "0";
-				var thu = "6";
-			}else if(key == 46,47,48,49){
-				var buoi = "1";
-				var thu = "6";
-			}else if(key == 51,52,53,54){
-				var buoi = "0";
-				var thu = "7";
-			}else if(key == 56,57,58,59){
-				var buoi = "1";
-				var thu = "7";
-			}
-			return {
-				monhoc: monhoc,
-				tengv: tengv,
-				tiet: tiet,
-				thu:thu,
-				buoi:buoi,
-				lop:lop,
-			}
-		});
-		var datalucky = data.filter(function(number) {
-			if(number != undefined){
-				if (number.monhoc != undefined && number.tengv != undefined) {
-					return number;
-				}
-			}
-		});
+                            let key = str;
+                            let keynumber = parseInt(key.slice(0, 1));
+                            var ii = Number.isInteger(keynumber);
+                            obj[key] = element[property];
+                            if (Number.isInteger(keynumber) == true) {
+                                obj['lop'] = key;
+                                obj['mon'] = element[property];
+                            }
 
 
-		axios.post('importexceltkb',datalucky).then(function (response) {
-			var data =  response.data;
-		});
-	}
+                        }
+                        arrResult.push(obj);
+                    });
+                    var dataResult = arrResult.filter(function(number, key) {
+                        if (key >= 1) {
+                            return number;
+                        }
+                    });
+                    if (dataResult != "") {
+                        importexcel(dataResult);
+                    }
+                })
+            };
+            reader.onerror = function(ex) {
+                console.log(ex);
+            };
+            reader.readAsBinaryString(file);
+        };
+    };
+
+    function handleFileSelect(evt) {
+        Swal.fire({
+            title: 'Lưu',
+            text: "Bạn có muốn import file excel này không",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Lưu'
+        }).then((result) => {
+            if (result.value) {
+                var files = evt.target.files;
+                var xl2json = new ExcelToJSON();
+                xl2json.parseExcel(files[0]);
+                $('#modalloading').modal('show');
+                var i = 0;
+                if (i == 0) {
+                    i = 1;
+                    var elem = document.getElementById("loading");
+                    var width = 1;
+                    var id = setInterval(frame, 50);
+
+                    function frame() {
+                        if (width >= 60) {
+                            clearInterval(id);
+                            i = 0;
+
+                        } else {
+                            width++;
+                            elem.style.width = width + "%";
+                            if (width == 60) {
+                                $('#modalloading').modal('toggle');
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            $('#importfile').val('');
+        })
+    }
+
+    function importexcel(datas) {
+        var data = datas.map(function(value, key) {
+            var monhoc = value.mon;
+            var tengv = value.undefined;
+            var tiet = value.Tiet;
+            var thubuoi = value.Thu;
+            var lop = value.lop;
+            if (thubuoi != undefined) {
+                var thu = thubuoi.slice(4, 6);
+                var buois = thubuoi.slice(6, 15);
+                if (buois == "Sáng") {
+                    var buoi = "0";
+                } else if (buois == "Chiều") {
+                    var buoi = "1";
+                }
+            }
+            if (key == 1, 2, 3, 4) {
+                var buoi = "0";
+                var thu = "2";
+            } else if (key == 6, 7, 8, 9) {
+                var buoi = "1";
+                var thu = "2";
+            } else if (key == 11, 12, 13, 14) {
+                var buoi = "0";
+                var thu = "3";
+            } else if (key == 16, 17, 18, 19) {
+                var buoi = "1";
+                var thu = "3";
+            } else if (key == 21, 22, 23, 24) {
+                var buoi = "0";
+                var thu = "4";
+            } else if (key == 26, 27, 28, 29) {
+                var buoi = "1";
+                var thu = "4";
+            } else if (key == 31, 32, 33, 34) {
+                var buoi = "0";
+                var thu = "5";
+            } else if (key == 36, 37, 38, 39) {
+                var buoi = "1";
+                var thu = "5";
+            } else if (key == 41, 42, 43, 44) {
+                var buoi = "0";
+                var thu = "6";
+            } else if (key == 46, 47, 48, 49) {
+                var buoi = "1";
+                var thu = "6";
+            } else if (key == 51, 52, 53, 54) {
+                var buoi = "0";
+                var thu = "7";
+            } else if (key == 56, 57, 58, 59) {
+                var buoi = "1";
+                var thu = "7";
+            }
+            return {
+                monhoc: monhoc,
+                tengv: tengv,
+                tiet: tiet,
+                thu: thu,
+                buoi: buoi,
+                lop: lop,
+            }
+        });
+        var datalucky = data.filter(function(number) {
+            if (number != undefined) {
+                if (number.monhoc != undefined && number.tengv != undefined) {
+                    return number;
+                }
+            }
+        });
 
 
-
+        axios.post('importexceltkb', datalucky).then(function(response) {
+            var data = response.data;
+        });
+    }
 
 
 
 
+    $(document).ready(function() {
+        var data = axios.get('getdanhsachgv').then(function(response) {
+            var data1 = response.data;
+            var datas = data1.map(function(value, label) {
+                let data = value;
+                let stt = label + 1;
+                var datas = Object.assign(data, {
+                    stt: stt.toString()
+                });
+                return datas;
+            });
+            $("#dsgiaovienguimails").dxDataGrid({
+                dataSource: datas,
+                showBorders: true,
+                // remoteOperations: true,
+                scrolling: {
+                    mode: "virtual",
+                    rowRenderingMode: "virtual"
+                },
+                /* xap xep */
+                sorting: {
+                    mode: "multiple"
+                },
+                /* loc du lieu */
+                filterRow: {
+                    visible: true,
+                    applyFilter: "auto"
+                },
+                searchPanel: {
+                    visible: true,
+                    width: 240,
+                    placeholder: "Tìm kiếm..."
+                },
+                /*chon row*/
+                selection: {
+                    mode: "multiple",
+                    recursive: true
+                },
+                /* co dan cot */
+                allowColumnResizing: true,
+                columnResizingMode: "widget",
+                columns: [{
+                    caption: "Tên",
+                    dataField: "hovaten",
+                }, {
+                    caption: "Email",
+                    dataField: "email",
+                }],
+                // select data row
+                onSelectionChanged: function(selectedItems) {
+
+                },
+            });
+        });
 
 
 
-	$( document ).ready(function() {
-		var data = axios.get('getdanhsachgv').then(function (response) {
-			var data1 = response.data;
-			var datas = data1.map(function (value, label) {
-				let data = value;
-				let stt = label + 1;
-				var datas = Object.assign(data, {stt: stt.toString()});
-				return datas;
-			});	
-			$("#dsgiaovienguimails").dxDataGrid({
-				dataSource: datas,
-				showBorders: true,
-				// remoteOperations: true,
-				scrolling: {
-					mode: "virtual",
-					rowRenderingMode: "virtual"
-				},
-				/* xap xep */
-				sorting: {
-					mode: "multiple"
-				},
-				/* loc du lieu */
-				filterRow: {
-					visible: true,
-					applyFilter: "auto"
-				},
-				searchPanel: {
-					visible: true,
-					width: 240,
-					placeholder: "Tìm kiếm..."
-				},
-				/*chon row*/
-				selection: {
-					mode: "multiple",
-					recursive: true
-				},
-				/* co dan cot */
-				allowColumnResizing: true,
-				columnResizingMode: "widget",
-				columns: [{
-					caption: "Tên",
-					dataField: "hovaten",
-				},{
-					caption: "Email",
-					dataField: "email",
-				}],
-				// select data row
-				onSelectionChanged: function (selectedItems) {
 
-				},
-			});
-		});
+        //js gửi báo cáo PGD
 
 
+        function reloadbaocao() {
+            loaddanhsachbaocao();
+            var dataGrid = $("#girddsbaocao").dxDataGrid("instance");
+            dataGrid.clearSelection();
+            dataGrid.refresh();
+            // dataGrid.reload();
+        }
+
+        function loaddanhsachbaocao() {
+            axios.get('getdsbaocao').then(function(response) {
+                var data1 = response.data;
+                var datas = data1.map(function(value, label) {
+                    let data = value;
+                    let stt = label + 1;
+                    var datas = Object.assign(data, {
+                        stt: stt.toString()
+                    });
+                    return datas;
+                });
+                $("#girddsbaocao").dxDataGrid({
+                    dataSource: datas,
+                    showBorders: true,
+                    paging: {
+                        pageSize: 30
+                    },
+                    /* xap xep */
+                    sorting: {
+                        mode: "multiple"
+                    },
+                    /* loc du lieu */
+                    // filterRow: {
+                    //  visible: true,
+                    //  applyFilter: "auto"
+                    // },
+                    searchPanel: {
+                        visible: true,
+                        width: 240,
+                        placeholder: "Tìm kiếm..."
+                    },
+                    pager: {
+                        showPageSizeSelector: true,
+                        allowedPageSizes: [10, 20, 30],
+                        showInfo: true
+                    },
+                    /* co dan cot */
+                    allowColumnResizing: true,
+                    columnResizingMode: "widget",
+                    selection: {
+                        mode: "single",
+                    },
+                    columns: [{
+                        caption: "STT",
+                        dataField: "stt",
+                        width: 50,
+                    }, {
+                        caption: "Số hiệu",
+                        dataField: "sohieu",
+                    }, {
+                        caption: "Tiêu đề",
+                        dataField: "tieude",
+                    }, {
+                        caption: "Loại",
+                        dataField: "loai",
+                        cellTemplate: function(container, options) {
+                            if (options.data.loai == 1) {
+                                $(
+                                    "<span>Công tác quản lý</span>"
+                                ).appendTo(container);
+                            }
+                            if (options.data.loai == 2) {
+                                $(
+                                    "<span>Công tác chuyên môn</span>"
+                                ).appendTo(container);
+                            }
+                            if (options.data.loai == 3) {
+                                $(
+                                    "<span>Lịch kiểm tra</span>"
+                                ).appendTo(container);
+                            }
+                            if (options.data.loai == 4) {
+                                $(
+                                    "<span>Thông báo khác</span>"
+                                ).appendTo(container);
+                            }
+                        },
+                    }, {
+                        caption: "Người cập nhật",
+                        dataField: "tentaikhoan"
+                    }, {
+                        caption: "Gửi",
+                        dataField: "gui",
+                        cellTemplate: function(container, options) {
+                            if (options.data.gui == 0) {
+                                $(
+                                    "<span style='color:red'>Chưa gửi</span>"
+                                ).appendTo(container);
+                            }
+                            if (options.data.gui == 1) {
+                                $(
+                                    "<span style='color:blue'>Đã gửi</span>"
+                                ).appendTo(container);
+                            }
+                        },
+                    }, {
+                        caption: "Tình trạng",
+                        dataField: "trangthai",
+                        cellTemplate: function(container, options) {
+                            if (options.data.trangthai == 0) {
+                                $(
+                                    "<span style='color:red'>Chưa xem</span>"
+                                ).appendTo(container);
+                            }
+                            if (options.data.trangthai == 1) {
+                                $(
+                                    "<span style='color:blue'>Đã xem</span>"
+                                ).appendTo(container);
+                            }
+                        },
+                    }, {
+                        fixed: true,
+                        fixedPosition: "right",
+                        caption: "Xem",
+                        cellTemplate: function(container, options) {
+                            container.addClass("center");
+                            $("<div>")
+                                .dxButton({
+                                    template: function(e) {
+                                        return $('<i class="fa fa-eye"></i>');
+                                    },
+                                    onClick: function(e) {
+                                        var data = options.data;
+                                        $('#filedinhkem a').empty();
+                                        loaddatamodalthongtinchung(data);
+                                        $('#modalthongtinchung').modal('show');
+
+                                    },
+                                })
+                                .css('background-color', '#008CBA')
+                                .appendTo(container);
+                        },
+                        width: 50,
+                    }, {
+                        fixed: true,
+                        fixedPosition: "right",
+                        caption: "Sửa",
+                        cellTemplate: function(container, options) {
+                            container.addClass("center");
+                            $("<div>")
+                                .dxButton({
+                                    template: function(e) {
+                                        return $('<i class="fa fa-pencil-square-o"></i>');
+                                    },
+                                    onClick: function(e) {
+                                        var data = options.data;
+                                        if (data.gui == 1) {
+                                            Swal.fire(
+                                                "Báo cáo đã được gửi đi",
+                                                "Báo cáo đã được gửi không thể sửa",
+                                                "info"
+                                            );
+                                        } else {
+                                            $('#filedinhkemsua a').empty();
+                                            loadmodalsua(data);
+                                            $('#modalsuabaocao').modal('show');
+                                        }
+                                    },
+                                })
+                                .css('background-color', '#4CAF50')
+                                .appendTo(container);
+                        },
+                        width: 50,
+                    }, {
+                        fixed: true,
+                        fixedPosition: "right",
+                        caption: "Xoá",
+                        cellTemplate: function(container, options) {
+                            container.addClass("center");
+                            $("<div>")
+                                .dxButton({
+                                    template: function(e) {
+                                        return $('<i class="fa fa-trash-o"></i>');
+                                    },
+                                    onClick: function(e) {
+                                        var data = options.data;
+                                        if (data.gui == 1) {
+                                            Swal.fire(
+                                                "Báo cáo đã được gửi đi",
+                                                "Báo cáo đã được gửi không thể xoá",
+                                                "info"
+                                            );
+                                        } else {
+                                            Swal.fire({
+                                                title: 'Xoá?',
+                                                text: "Bạn có muốn xoá!",
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#3085d6',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'OK'
+                                            }).then((result) => {
+                                                if (result.value) {
+                                                    axios.post('delbaocao', {
+                                                        idbaocao: data.id
+                                                    }).then(function(response) {
+                                                        var data = response.data;
+                                                        if (data == 1) {
+                                                            Swal.fire(
+                                                                'Xoá!',
+                                                                'Xoá thành công.',
+                                                                'success'
+                                                            )
+                                                            reloadbaocao();
+                                                        }
+                                                    });
+                                                }
+                                            })
+                                        }
+
+                                    },
+                                })
+                                .css('background-color', '#f44336')
+                                .appendTo(container);
+                        },
+                        width: 50,
+                    }, {
+                        fixed: true,
+                        fixedPosition: "right",
+                        caption: "Gửi",
+                        cellTemplate: function(container, options) {
+                            container.addClass("center");
+                            $("<div>")
+                                .dxButton({
+                                    template: function(e) {
+                                        return $('<i class="fa fa-share-square-o"></i>');
+                                    },
+                                    onClick: function(e) {
+                                        var data = options.data;
+                                        if (data.gui == 1) {
+                                            Swal.fire(
+                                                "Báo cáo đã được gửi không thể gửi lại",
+                                                "Báo cáo đã được gửi đi",
+                                                "info"
+                                            );
+                                        } else {
+                                            axios.post('sendbaocao', {
+                                                idbaocao: data.id
+                                            }).then(function(response) {
+                                                var data = response.data;
+                                                if (data == 1) {
+                                                    Swal.fire(
+                                                        "Đã gửi",
+                                                        "Bạn đã gửi thành công",
+                                                        "success"
+                                                    )
+                                                    reloadbaocao();
+                                                }
+                                            });
+                                        }
+                                    },
+                                })
+                                .css('background-color', '#C71585')
+                                .appendTo(container);
+                        },
+                        width: 50,
+                    }, {
+                        fixed: true,
+                        fixedPosition: "right",
+                        caption: "Thu hồi",
+                        cellTemplate: function(container, options) {
+                            container.addClass("center");
+                            $("<div>")
+                                .dxButton({
+                                    template: function(e) {
+                                        return $('<i class="fa fa-ban"></i>');
+                                    },
+                                    onClick: function(e) {
+                                        var data = options.data;
+                                        if (data.gui != 1) {
+                                            Swal.fire(
+                                                "Báo cáo chưa được gửi không thể thu hồi",
+                                                "Báo cáo chưa được gửi",
+                                                "info"
+                                            );
+                                        } else if (data.trangthai == 1) {
+                                            Swal.fire(
+                                                "Báo cáo đã được xem không thể thu hồi",
+                                                "Báo cáo đã được xem",
+                                                "info"
+                                            );
+                                        } else if (data.gui == 1 && data.trangthai != 1) {
+                                            Swal.fire({
+                                                title: 'Thu hồi báo cáo?',
+                                                text: "Bạn có muốn thu hồi báo cáo!",
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#3085d6',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'OK'
+                                            }).then((result) => {
+                                                if (result.value) {
+                                                    axios.post('thuhoibaocao', {
+                                                        idbaocao: data.id
+                                                    }).then(function(response) {
+                                                        var data = response.data;
+                                                        if (data == 1) {
+                                                            Swal.fire(
+                                                                'Thu hồi báo cáo!',
+                                                                'Thu hồi báo cáo thành công.',
+                                                                'success'
+                                                            )
+                                                            reloadbaocao();
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    },
+                                })
+                                .css('background-color', '#B8860B')
+                                .appendTo(container);
+                        },
+                        width: 65,
+                    }],
+                    onToolbarPreparing: function(e) {
+                        var dataGrid = e.component;
+                        e.toolbarOptions.items.unshift({
+                            location: "after",
+                            widget: "dxButton",
+                            options: {
+                                text: "Thêm mới",
+                                icon: "fa fa-plus-square",
+                                onClick: function() {
+                                    $('#modalthembaocao').modal('show');
+                                },
+                            },
+
+                        }, );
+                    },
+                });
+            });
+
+        }
+        //load thông tin xem báo cáo
+        function loaddatamodalthongtinchung(data) {
+            var datattc = data;
+            var tenloai;
+            if (datattc.loai == 1) {
+                tenloai = "Công tác quản lý";
+            } else if (datattc.loai == 2) {
+                tenloai = "Công tác chuyên môn";
+            } else if (datattc.loai == 3) {
+                tenloai = "Lịch kiểm tra";
+            } else if (datattc.loai == 4) {
+                tenloai = "Thông báo khác";
+            }
+            var ngaytao = datattc.ngaytao;
+            var formatngaytao = moment(ngaytao).format('DD/MM/YYYY');
+            var ngaygui = datattc.ngaygui;
+            if (ngaygui != null) {
+                $('#formngaygui').show();
+            } else {
+                $('#formngaygui').hide();
+            }
+            var formatngaygui = moment(ngaygui).format('DD/MM/YYYY');
+            $('#idloaixem').val(tenloai);
+            $('#idsohieuxem').val(datattc.sohieu);
+            $('#idtieudexem').val(datattc.tieude);
+            $('#idngaytaoxem').val(formatngaytao);
+            $('#idngayguixem').val(formatngaygui);
+            $('#idnoidungxem').text(datattc.noidung);
+            var tenfile = datattc.file;
+            // var url = url('uploads/thongbao/'+tenfile);
+            var divfile = document.getElementById("filedinhkem");
+            var a = document.createElement('a');
+            a.textContent = tenfile;
+            a.href = "uploads/baocao/" + tenfile + "";
+            // a.target = '_blank';
+            divfile.appendChild(a);
+        }
+
+        //load modal sửa báo cáo
+        function loadmodalsua(data) {
+            var datatts = data;
+            $('#idbaocao').val(datatts.id);
+            $('#idloaisua option').each(function(value) {
+                if (datatts.loai == $(this).val()) {
+                    $(this).attr('selected', 'selected');
+                } else {
+                    $(this).removeAttr('selected', 'selected');
+                }
+            });
+            $('#idsohieusua').val(datatts.sohieu);
+            $('#idtieudesua').val(datatts.tieude);
+            var ngaytaosua = datatts.ngaytao;
+            var formatngaytaosua = moment(ngaytaosua).format('DD/MM/YYYY');
+            $('#idngaytaosua').val(formatngaytaosua);
+            $('#idnoidungsua').text(datatts.noidung);
+            var tenfilesua = datatts.file;
+            var divfile = document.getElementById("filedinhkemsua");
+            var a = document.createElement('a');
+            a.textContent = tenfilesua;
+            a.href = "uploads/baocao/" + tenfilesua + "";
+            // a.target = '_blank';
+            divfile.appendChild(a);
+        }
+        //thêm mới báo cáo
+        $('#btnluu').click(function() {
+            var idloai = $('#idloai').val();
+            var idsohieu = $('#idsohieu').val();
+            var idtieude = $('#idtieude').val();
+            var idngaytao = $('#idngaytao').val();
+            var idnoidung = $('#idnoidung').val();
+            var formData = new FormData();
+            var imagefile = document.querySelector('#file');
+            formData.append("file", imagefile.files[0]);
+            formData.append("idloai", idloai);
+            formData.append("idsohieu", idsohieu);
+            formData.append("idtieude", idtieude);
+            formData.append("idngaytao", idngaytao);
+            formData.append("idnoidung", idnoidung);
+            axios.post('addbaocao', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(function(response) {
+                var data = response.data;
+                if (data == 1) {
+                    Swal.fire({
+                        title: 'Lưu',
+                        text: 'Đã lưu thành công',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                    $('#modalthembaocao').modal("hide");
+                    $('#modalthembaocao').on('hidden.bs.modal', function() {
+                        $(this).find('#formthembaocao')[0].reset();
+                        // $(this).find('#formthemmoirangbuoctietcodinhtiethoc').trigger("reset");
+                    });
+                    reloadbaocao();
+                }
+            });
+        });
+        //sửa báo cáo
+        $('#btnsua').click(function() {
+            var idbaocao = $('#idbaocao').val();
+            var idloai = $('#idloaisua').val();
+            var idsohieu = $('#idsohieusua').val();
+            var idtieude = $('#idtieudesua').val();
+            var idngaytao = $('#idngaytaosua').val();
+            var idnoidung = $('#idnoidungsua').val();
+            var formData = new FormData();
+            var imagefile = document.querySelector('#filesua');
+            formData.append("file", imagefile.files[0]);
+            formData.append("idbaocao", idbaocao);
+            formData.append("idloai", idloai);
+            formData.append("idsohieu", idsohieu);
+            formData.append("idtieude", idtieude);
+            formData.append("idngaytao", idngaytao);
+            formData.append("idnoidung", idnoidung);
+            axios.post('updatebaocao', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(function(response) {
+                var data = response.data;
+                if (data == 1) {
+                    Swal.fire({
+                        title: 'Cập nhật',
+                        text: 'Đã cập nhật thành công',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                    $('#modalsuabaocao').modal("hide");
+                    $('#modalsuabaocao').on('hidden.bs.modal', function() {
+                        $(this).find('#formsuabaocao')[0].reset();
+                        // $(this).find('#formthemmoirangbuoctietcodinhtiethoc').trigger("reset");
+                    });
+                    reloadbaocao();
+                }
+            });
+        });
+        $('#btndsbaocao').on('click', function() {
+            loaddanhsachbaocao();
+            $('#idngaytao').datepicker({
+                autoclose: true,
+                language: "vi",
+
+            });
+            $('#idngaytaosua').datepicker({
+                autoclose: true,
+                language: "vi",
+
+            });
+            // danh sách báo cáo
+            $('#modaldsbaocao').modal('show');
 
 
-	//js gửi báo cáo PGD
+        });
 
-
-	function reloadbaocao() {
-		loaddanhsachbaocao();
-		var dataGrid = $("#girddsbaocao").dxDataGrid("instance");
-		dataGrid.clearSelection();
-		dataGrid.refresh();
-		    // dataGrid.reload();
-		}
-
-		function loaddanhsachbaocao() {
-			axios.get('getdsbaocao').then(function(response) {
-				var data1 = response.data;
-				var datas = data1.map(function(value, label) {
-					let data = value;
-					let stt = label + 1;
-					var datas = Object.assign(data, {
-						stt: stt.toString()
-					});
-					return datas;
-				});
-				$("#girddsbaocao").dxDataGrid({
-					dataSource: datas,
-					showBorders: true,
-					paging: {
-						pageSize: 30
-					},
-					/* xap xep */
-					sorting: {
-						mode: "multiple"
-					},
-					/* loc du lieu */
-		            // filterRow: {
-		            //  visible: true,
-		            //  applyFilter: "auto"
-		            // },
-		            searchPanel: {
-		            	visible: true,
-		            	width: 240,
-		            	placeholder: "Tìm kiếm..."
-		            },
-		            pager: {
-		            	showPageSizeSelector: true,
-		            	allowedPageSizes: [10, 20, 30],
-		            	showInfo: true
-		            },
-		            /* co dan cot */
-		            allowColumnResizing: true,
-		            columnResizingMode: "widget",
-		            selection: {
-		            	mode: "single",
-		            },
-		            columns: [{
-		            	caption: "STT",
-		            	dataField: "stt",
-		            	width: 50,
-		            }, {
-		            	caption: "Số hiệu",
-		            	dataField: "sohieu",
-		            }, {
-		            	caption: "Tiêu đề",
-		            	dataField: "tieude",
-		            }, {
-		            	caption: "Loại",
-		            	dataField: "loai",
-		            	cellTemplate: function (container, options) {
-		            		if (options.data.loai == 1) {
-		            			$(
-		            				"<span>Công tác quản lý</span>"
-		            				).appendTo(container);
-		            		}
-		            		if (options.data.loai == 2) {
-		            			$(
-		            				"<span>Công tác chuyên môn</span>"
-		            				).appendTo(container);
-		            		}
-		            		if (options.data.loai == 3) {
-		            			$(
-		            				"<span>Lịch kiểm tra</span>"
-		            				).appendTo(container);
-		            		}
-		            		if (options.data.loai == 4) {
-		            			$(
-		            				"<span>Thông báo khác</span>"
-		            				).appendTo(container);
-		            		}
-		            	},
-		            }, {
-		            	caption: "Người cập nhật",
-		            	dataField: "tentaikhoan"
-		            }, {
-		            	caption: "Gửi",
-		            	dataField: "gui",
-		            	cellTemplate: function (container, options) {
-		            		if (options.data.gui == 0) {
-		            			$(
-		            				"<span style='color:red'>Chưa gửi</span>"
-		            				).appendTo(container);
-		            		}
-		            		if (options.data.gui == 1) {
-		            			$(
-		            				"<span style='color:blue'>Đã gửi</span>"
-		            				).appendTo(container);
-		            		}
-		            	},
-		            }, {
-		            	caption: "Tình trạng",
-		            	dataField: "trangthai",
-		            	cellTemplate: function (container, options) {
-		            		if (options.data.trangthai == 0) {
-		            			$(
-		            				"<span style='color:red'>Chưa xem</span>"
-		            				).appendTo(container);
-		            		}
-		            		if (options.data.trangthai == 1) {
-		            			$(
-		            				"<span style='color:blue'>Đã xem</span>"
-		            				).appendTo(container);
-		            		}
-		            	},
-		            }, {
-		            	fixed: true,
-		            	fixedPosition: "right",
-		            	caption: "Xem",
-		            	cellTemplate: function(container, options) {
-		            		container.addClass("center");
-		            		$("<div>")
-		            		.dxButton({
-		            			template: function(e) {
-		            				return $('<i class="fa fa-eye"></i>');
-		            			},
-		            			onClick: function(e) {
-		            				var data = options.data;
-		            				$('#filedinhkem a').empty();
-		            				loaddatamodalthongtinchung(data);
-		            				$('#modalthongtinchung').modal('show');
-
-		            			},
-		            		})
-		            		.css('background-color', '#008CBA')
-		            		.appendTo(container);
-		            	},
-		            	width: 50,
-		            }, {
-		            	fixed: true,
-		            	fixedPosition: "right",
-		            	caption: "Sửa",
-		            	cellTemplate: function(container, options) {
-		            		container.addClass("center");
-		            		$("<div>")
-		            		.dxButton({
-		            			template: function(e) {
-		            				return $('<i class="fa fa-pencil-square-o"></i>');
-		            			},
-		            			onClick: function(e) {
-		            				var data = options.data;
-		            				if(data.gui == 1){
-		            					Swal.fire(
-		            						"Báo cáo đã được gửi đi",
-		            						"Báo cáo đã được gửi không thể sửa",
-		            						"info"
-		            						);
-		            				}else{
-		            					$('#filedinhkemsua a').empty();
-		            					loadmodalsua(data);
-		            					$('#modalsuabaocao').modal('show');
-		            				}
-		            			},
-		            		})
-		            		.css('background-color', '#4CAF50')
-		            		.appendTo(container);
-		            	},
-		            	width: 50,
-		            }, {
-		            	fixed: true,
-		            	fixedPosition: "right",
-		            	caption: "Xoá",
-		            	cellTemplate: function(container, options) {
-		            		container.addClass("center");
-		            		$("<div>")
-		            		.dxButton({
-		            			template: function(e) {
-		            				return $('<i class="fa fa-trash-o"></i>');
-		            			},
-		            			onClick: function(e) {
-		            				var data = options.data;
-		            				if(data.gui == 1){
-		            					Swal.fire(
-		            						"Báo cáo đã được gửi đi",
-		            						"Báo cáo đã được gửi không thể xoá",
-		            						"info"
-		            						);
-		            				}else{
-		            					Swal.fire({
-		            						title: 'Xoá?',
-		            						text: "Bạn có muốn xoá!",
-		            						icon: 'warning',
-		            						showCancelButton: true,
-		            						confirmButtonColor: '#3085d6',
-		            						cancelButtonColor: '#d33',
-		            						confirmButtonText: 'OK'
-		            					}).then((result) => {
-		            						if (result.value) {
-		            							axios.post('delbaocao', {
-		            								idbaocao: data.id
-		            							}).then(function(response) {
-		            								var data = response.data;
-		            								if(data == 1){
-		            									Swal.fire(
-		            										'Xoá!',
-		            										'Xoá thành công.',
-		            										'success'
-		            										)
-		            									reloadbaocao();
-		            								}
-		            							});
-		            						}
-		            					}) 
-		            				}
-		            				
-		            			},
-		            		})
-		            		.css('background-color', '#f44336')
-		            		.appendTo(container);
-		            	},
-		            	width: 50,
-		            }, {
-		            	fixed: true,
-		            	fixedPosition: "right",
-		            	caption: "Gửi",
-		            	cellTemplate: function(container, options) {
-		            		container.addClass("center");
-		            		$("<div>")
-		            		.dxButton({
-		            			template: function(e) {
-		            				return $('<i class="fa fa-share-square-o"></i>');
-		            			},
-		            			onClick: function(e) {
-		            				var data = options.data;
-		            				if(data.gui == 1){
-		            					Swal.fire(
-		            						"Báo cáo đã được gửi không thể gửi lại",
-		            						"Báo cáo đã được gửi đi",
-		            						"info"
-		            						);
-		            				}else{
-		            					axios.post('sendbaocao',{
-		            						idbaocao: data.id
-		            					}).then(function(response) {
-		            						var data = response.data;
-		            						if (data == 1) {
-		            							Swal.fire(
-		            								"Đã gửi",
-		            								"Bạn đã gửi thành công",
-		            								"success"
-		            								)
-		            							reloadbaocao();
-		            						}
-		            					});
-		            				}
-		            			},
-		            		})
-		            		.css('background-color', '#C71585')
-		            		.appendTo(container);
-		            	},
-		            	width: 50,
-		            },{
-		            	fixed: true,
-		            	fixedPosition: "right",
-		            	caption: "Thu hồi",
-		            	cellTemplate: function(container, options) {
-		            		container.addClass("center");
-		            		$("<div>")
-		            		.dxButton({
-		            			template: function(e) {
-		            				return $('<i class="fa fa-ban"></i>');
-		            			},
-		            			onClick: function(e) {
-		            				var data = options.data;
-		            				if(data.gui != 1 ){
-		            					Swal.fire(
-		            						"Báo cáo chưa được gửi không thể thu hồi",
-		            						"Báo cáo chưa được gửi",
-		            						"info"
-		            						);
-		            				}else if(data.trangthai == 1){
-		            					Swal.fire(
-		            						"Báo cáo đã được xem không thể thu hồi",
-		            						"Báo cáo đã được xem",
-		            						"info"
-		            						);
-		            				}else if(data.gui == 1 && data.trangthai != 1){
-		            					Swal.fire({
-		            						title: 'Thu hồi báo cáo?',
-		            						text: "Bạn có muốn thu hồi báo cáo!",
-		            						icon: 'warning',
-		            						showCancelButton: true,
-		            						confirmButtonColor: '#3085d6',
-		            						cancelButtonColor: '#d33',
-		            						confirmButtonText: 'OK'
-		            					}).then((result) => {
-		            						if (result.value) {
-		            							axios.post('thuhoibaocao', {
-		            								idbaocao: data.id
-		            							}).then(function(response) {
-		            								var data = response.data;
-		            								if(data == 1){
-		            									Swal.fire(
-		            										'Thu hồi báo cáo!',
-		            										'Thu hồi báo cáo thành công.',
-		            										'success'
-		            										)
-		            									reloadbaocao();
-		            								}
-		            							});
-		            						}
-		            					});
-		            				}
-		            			},
-		            		})
-		            		.css('background-color', '#B8860B')
-		            		.appendTo(container);
-		            	},
-		            	width: 65,
-		            }],
-		            onToolbarPreparing: function(e) {
-		            	var dataGrid = e.component;
-		            	e.toolbarOptions.items.unshift({
-		            		location: "after",
-		            		widget: "dxButton",
-		            		options: {
-		            			text: "Thêm mới",
-		            			icon: "fa fa-plus-square",
-		            			onClick: function() {
-		            				$('#modalthembaocao').modal('show');
-		            			},
-		            		},
-
-		            	}, );
-		            },
-		        });
-});
-
-}
-		//load thông tin xem báo cáo
-		function loaddatamodalthongtinchung(data){
-			var datattc = data;
-			var tenloai;
-			if(datattc.loai == 1){
-				tenloai = "Công tác quản lý";
-			}else if(datattc.loai == 2){
-				tenloai = "Công tác chuyên môn";
-			}else if(datattc.loai == 3){
-				tenloai = "Lịch kiểm tra";
-			}else if(datattc.loai == 4){
-				tenloai = "Thông báo khác";
-			}
-			var ngaytao = datattc.ngaytao;
-			var formatngaytao = moment(ngaytao).format('DD/MM/YYYY');
-			var ngaygui = datattc.ngaygui;
-			if(ngaygui != null){
-				$('#formngaygui').show();
-			}else{
-				$('#formngaygui').hide();
-			}
-			var formatngaygui = moment(ngaygui).format('DD/MM/YYYY');
-			$('#idloaixem').val(tenloai);
-			$('#idsohieuxem').val(datattc.sohieu);
-			$('#idtieudexem').val(datattc.tieude);
-			$('#idngaytaoxem').val(formatngaytao);
-			$('#idngayguixem').val(formatngaygui);
-			$('#idnoidungxem').text(datattc.noidung);
-			var tenfile = datattc.file;
-	      	// var url = url('uploads/thongbao/'+tenfile);
-	      	var divfile = document.getElementById("filedinhkem");
-	      	var a = document.createElement('a');
-	      	a.textContent= tenfile;
-	      	a.href = "uploads/baocao/"+tenfile+"";
-	      	// a.target = '_blank';
-	      	divfile.appendChild(a);
-	      }
-
-		//load modal sửa báo cáo
-		function loadmodalsua(data){
-			var datatts = data;
-			$('#idbaocao').val(datatts.id);
-			$('#idloaisua option').each(function(value) {
-				if (datatts.loai == $(this).val()) {
-					$(this).attr('selected', 'selected');
-				}else{
-					$(this).removeAttr('selected','selected');
-				}
-			});
-			$('#idsohieusua').val(datatts.sohieu);
-			$('#idtieudesua').val(datatts.tieude);
-			var ngaytaosua = datatts.ngaytao;
-			var formatngaytaosua = moment(ngaytaosua).format('DD/MM/YYYY');
-			$('#idngaytaosua').val(formatngaytaosua);
-			$('#idnoidungsua').text(datatts.noidung);
-			var tenfilesua = datatts.file;
-			var divfile = document.getElementById("filedinhkemsua");
-			var a = document.createElement('a');
-			a.textContent= tenfilesua;
-			a.href = "uploads/baocao/"+tenfilesua+"";
-		      // a.target = '_blank';
-		      divfile.appendChild(a);
-		  }
-		//thêm mới báo cáo
-		$('#btnluu').click(function() {
-			var idloai = $('#idloai').val();
-			var idsohieu = $('#idsohieu').val();
-			var idtieude = $('#idtieude').val();
-			var idngaytao = $('#idngaytao').val();
-			var idnoidung = $('#idnoidung').val();
-			var formData = new FormData();
-			var imagefile = document.querySelector('#file');
-			formData.append("file", imagefile.files[0]);
-			formData.append("idloai", idloai);
-			formData.append("idsohieu", idsohieu);
-			formData.append("idtieude", idtieude);
-			formData.append("idngaytao", idngaytao);
-			formData.append("idnoidung", idnoidung);
-			axios.post('addbaocao', formData, {
-				headers: {
-					'Content-Type': 'multipart/form-data'
-				}
-			}).then(function(response) {
-				var data = response.data;
-				if (data == 1) {
-					Swal.fire({
-						title: 'Lưu',
-						text: 'Đã lưu thành công',
-						icon: 'success',
-						confirmButtonText: 'OK'
-					});
-					$('#modalthembaocao').modal("hide");
-					$('#modalthembaocao').on('hidden.bs.modal', function() {
-						$(this).find('#formthembaocao')[0].reset();
-		                // $(this).find('#formthemmoirangbuoctietcodinhtiethoc').trigger("reset");
-		            });
-					reloadbaocao();
-				}
-			});
-		});
-		//sửa báo cáo
-		$('#btnsua').click(function() {
-			var idbaocao = $('#idbaocao').val();
-			var idloai = $('#idloaisua').val();
-			var idsohieu = $('#idsohieusua').val();
-			var idtieude = $('#idtieudesua').val();
-			var idngaytao = $('#idngaytaosua').val();
-			var idnoidung = $('#idnoidungsua').val();
-			var formData = new FormData();
-			var imagefile = document.querySelector('#filesua');
-			formData.append("file", imagefile.files[0]);
-			formData.append("idbaocao", idbaocao);
-			formData.append("idloai", idloai);
-			formData.append("idsohieu", idsohieu);
-			formData.append("idtieude", idtieude);
-			formData.append("idngaytao", idngaytao);
-			formData.append("idnoidung", idnoidung);
-			axios.post('updatebaocao', formData, {
-				headers: {
-					'Content-Type': 'multipart/form-data'
-				}
-			}).then(function(response) {
-				var data = response.data;
-				if (data == 1) {
-					Swal.fire({
-						title: 'Cập nhật',
-						text: 'Đã cập nhật thành công',
-						icon: 'success',
-						confirmButtonText: 'OK'
-					});
-					$('#modalsuabaocao').modal("hide");
-					$('#modalsuabaocao').on('hidden.bs.modal', function() {
-						$(this).find('#formsuabaocao')[0].reset();
-		                // $(this).find('#formthemmoirangbuoctietcodinhtiethoc').trigger("reset");
-		            });
-					reloadbaocao();
-				}
-			});
-		});
-		$('#btndsbaocao').on('click',function(){
-			loaddanhsachbaocao();
-			$('#idngaytao').datepicker({
-				autoclose: true,
-				language: "vi",
-
-			});
-			$('#idngaytaosua').datepicker({
-				autoclose: true,
-				language: "vi",
-
-			});
-		    // danh sách báo cáo
-		    $('#modaldsbaocao').modal('show');
-		    
-
-		});
-
-	});
-
-
-	
+    });
 
 
 
-/*********************************************************
- * Ký số văn bản *
- ********************************************************/
-	var urlFile="";
-	$('#btnSign').click(function(){
- exc_sign_approved();
-});
-function SignFileCallBack1(rv) {
-    var received_msg = JSON.parse(rv);
-    console.log(received_msg);
-    if (received_msg.Status == 0) {
-        Swal.fire(
-            received_msg.FileName +
+
+    /*********************************************************
+     * Ký số văn bản *
+     ********************************************************/
+    var urlFile = "";
+    $('#btnSign').click(function() {
+        exc_sign_approved();
+    });
+
+    function SignFileCallBack1(rv) {
+        var received_msg = JSON.parse(rv);
+        console.log(received_msg);
+        if (received_msg.Status == 0) {
+            Swal.fire(
+                received_msg.FileName +
                 ":" +
                 received_msg.FileServer +
                 ":" +
                 received_msg.DocumentNumber +
                 ":" +
                 received_msg.DocumentDate,
-            "Thông báo",
-            "info"
-        );
-        //them code luu tru file ky so va tai ve thu muc lucu tru file
-        console.log(received_msg.FileServer);
-        // document.getElementById("file1").value = received_msg.FileServer;
-        // document.getElementById("file2").value = received_msg.FileServer;
-    } else {
-        Swal.fire(received_msg.Message, "Không thành công", "error");
+                "Thông báo",
+                "info"
+            );
+            //them code luu tru file ky so va tai ve thu muc lucu tru file
+            console.log(received_msg.FileServer);
+            // document.getElementById("file1").value = received_msg.FileServer;
+            // document.getElementById("file2").value = received_msg.FileServer;
+        } else {
+            Swal.fire(received_msg.Message, "Không thành công", "error");
+        }
     }
-}
 
-// Đóng dấu phát hành
-function exc_sign_issued() {
-    var prms = {};
+    // Đóng dấu phát hành
+    function exc_sign_issued() {
+            var prms = {};
 
-    prms["FileUploadHandler"] =
-        "https://api.lihanet.com/FileUploadHandler.aspx";
-    prms["SessionId"] = "";
-    prms["FileName"] = urlFile;
-    prms["DocNumber"] = $("#docNumber");
-    prms["IssuedDate"] = new Date();
+            prms["FileUploadHandler"] =
+                "https://api.lihanet.com/FileUploadHandler.aspx";
+            prms["SessionId"] = "";
+            prms["FileName"] = urlFile;
+            prms["DocNumber"] = $("#docNumber");
+            prms["IssuedDate"] = new Date();
 
-    var json_prms = JSON.stringify(prms);
-    vgca_sign_issued(json_prms, SignFileCallBack1);
-}
-// Ham ky phe duyet
-function exc_sign_approved() {
-    var prms = {};
+            var json_prms = JSON.stringify(prms);
+            vgca_sign_issued(json_prms, SignFileCallBack1);
+        }
+        // Ham ky phe duyet
+    function exc_sign_approved() {
+            var prms = {};
 
-    prms["FileUploadHandler"] =
-        "https://api.lihanet.com/FileUploadHandler.aspx";
-    prms["SessionId"] = "";
-    prms["FileName"] = urlFile; //"http://localhost:16227/files/test1.pdf";
+            prms["FileUploadHandler"] =
+                "https://api.lihanet.com/FileUploadHandler.aspx";
+            prms["SessionId"] = "";
+            prms["FileName"] = urlFile; //"http://localhost:16227/files/test1.pdf";
 
-    var json_prms = JSON.stringify(prms);
-    vgca_sign_approved(json_prms, SignFileCallBack1);
-}
-///Ký số công văn đến
-function exc_sign_income() {
-    var prms = {};
-    var scv = [{ Key: "abc", Value: "abc" }];
+            var json_prms = JSON.stringify(prms);
+            vgca_sign_approved(json_prms, SignFileCallBack1);
+        }
+        ///Ký số công văn đến
+    function exc_sign_income() {
+        var prms = {};
+        var scv = [{
+            Key: "abc",
+            Value: "abc"
+        }];
 
-    prms["FileUploadHandler"] =
-        "https://api.lihanet.com/FileUploadHandler.aspx";
-    prms["SessionId"] = "";
-    prms["FileName"] = urlFile;
-    prms["MetaData"] = scv;
+        prms["FileUploadHandler"] =
+            "https://api.lihanet.com/FileUploadHandler.aspx";
+        prms["SessionId"] = "";
+        prms["FileName"] = urlFile;
+        prms["MetaData"] = scv;
 
-    var json_prms = JSON.stringify(prms);
-    vgca_sign_income(json_prms, SignFileCallBack1);
-}
-function exc_appendix(url) {
-    var prms = {};
-    var scv = [{ Key: "abc", Value: "abc" }];
+        var json_prms = JSON.stringify(prms);
+        vgca_sign_income(json_prms, SignFileCallBack1);
+    }
 
-    prms["FileUploadHandler"] =
-        "https://api.lihanet.com/FileUploadHandler.aspx";
-    prms["SessionId"] = "";
-    prms["FileName"] = url;
-    prms["DocNumber"] = "123/BCY-CTSBMTT";
-    prms["MetaData"] = scv;
+    function exc_appendix(url) {
+        var prms = {};
+        var scv = [{
+            Key: "abc",
+            Value: "abc"
+        }];
 
-    var json_prms = JSON.stringify(prms);
-    vgca_sign_appendix(json_prms, SignFileCallBack1);
-}
+        prms["FileUploadHandler"] =
+            "https://api.lihanet.com/FileUploadHandler.aspx";
+        prms["SessionId"] = "";
+        prms["FileName"] = url;
+        prms["DocNumber"] = "123/BCY-CTSBMTT";
+        prms["MetaData"] = scv;
 
-function exc_sign_copy(url) {
-    var prms = {};
-    var scv = [{ Key: "abc", Value: "abc" }];
+        var json_prms = JSON.stringify(prms);
+        vgca_sign_appendix(json_prms, SignFileCallBack1);
+    }
 
-    prms["FileUploadHandler"] =
-        "https://api.lihanet.com/FileUploadHandler.aspx";
-    prms["SessionId"] = "";
-    prms["FileName"] = url;
-    prms["DocNumber"] = "123/BCY-CTSBMTT";
-    prms["MetaData"] = scv;
+    function exc_sign_copy(url) {
+        var prms = {};
+        var scv = [{
+            Key: "abc",
+            Value: "abc"
+        }];
 
-    var json_prms = JSON.stringify(prms);
-    vgca_sign_copy(json_prms, SignFileCallBack1);
-}
+        prms["FileUploadHandler"] =
+            "https://api.lihanet.com/FileUploadHandler.aspx";
+        prms["SessionId"] = "";
+        prms["FileName"] = url;
+        prms["DocNumber"] = "123/BCY-CTSBMTT";
+        prms["MetaData"] = scv;
+
+        var json_prms = JSON.stringify(prms);
+        vgca_sign_copy(json_prms, SignFileCallBack1);
+    }
+
+
+
+    // ----------------------------------------------------
+    // load danh sách có thời khoá biểu 
+
+    function loaddanhsachcothoikhoabieu() {
+        axios.get("gettkbtruong").then(restkbtruong => {
+            let layDataTkbTruong = restkbtruong.data;
+
+            let tableDsCoTKBTruong = $('#tableDsCoTKBTruong').DataTable();
+
+            tableDsCoTKBTruong.destroy();
+
+            $('#bodyDSCoTKBTruong').empty();
+            //
+            let sttTruong = 0;
+
+            //ds thời gian có tkb trường
+
+            layDataTkbTruong.forEach(function(iTem) {
+                let truongItem = iTem.matruong;
+                let dataNam = iTem.dsnam;
+                dataNam.forEach(function(iTem1) {
+                    let namItem1 = iTem1.nam;
+                    let dataThang = iTem1.dsthang;
+                    dataThang.forEach(function(iTem2) {
+                        let thangItem2 = iTem2.thang;
+                        let dataTuan = iTem2.dstuan;
+                        dataTuan.forEach(function(iTem3) {
+
+                            let noidungbang = "";
+
+                            sttTruong++;
+
+                            noidungbang += "<tr>" + "<td>" + sttTruong + "</td>" + "<td>" + "Tuần " + iTem3.tuan + "- Tháng " + thangItem2 + "- Năm " + namItem1 + "</td>" + "<td><button type='button' class='btn btn-primary btn-sm classButtonTruong' data-tuan= " + iTem3.tuan + " data-thang= " + thangItem2 + " data-nam=" + namItem1 + "><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>" + "</tr>";
+
+                            $("tbody#bodyDSCoTKBTruong").append(noidungbang);
+                        });
+                    });
+                });
+            });
+
+            $('#tableDsCoTKBTruong').DataTable({
+                "bLengthChange": false,
+                "oLanguage": {
+                    "sProcessing": "Đang xử lý...",
+                    "sLengthMenu": "Xem _MENU_ mục",
+                    "sZeroRecords": "Không tìm thấy dòng nào phù hợp",
+                    "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                    "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+                    "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Tìm:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Đầu",
+                        "sPrevious": "Trước",
+                        "sNext": "Tiếp",
+                        "sLast": "Cuối"
+                    }
+                }
+            });
+
+        });
+
+
+    }
+
+    //button hiển thị ds có tkb
+
+	$('#btnDSCoTKBTruong').on('click',function(){
+		let tbodyDsCoTKBTruong = $("#tableDsCoTKBTruong tbody");
+
+		if (tbodyDsCoTKBTruong.children().length == 0) {
+		    Swal.fire(
+			  'Thông báo',
+			  'Không có thời gian nào có thời khoá biểu',
+			  'info'
+			);
+			return false;
+		} else{
+			$('#modalDsCoTKBTruong').modal('show');
+		}
+	});
+
+	//xử lý click thời gian có tkb trường
+
+	$("#tableDsCoTKBTruong tbody").on("click", ".classButtonTruong", function() {
+	    let tuan = $(this).data('tuan');
+	    let thang = $(this).data('thang');
+	    let nam = $(this).data('nam');
+	    let thangNam = thang+"/"+nam;
+	    $('#selectmonth').val(thangNam).trigger('change');
+	    $('#selectweek').val(tuan).trigger('change');
+	    $('#modalDsCoTKBTruong').modal('hide');
+	});
+
 </script>
+
 <script src="js/vgcaplugin.js"></script>
 <script type="module" src="js/xuattkb/xuattkb.js"></script>
 <script type="text/javascript" src='dx/js/jszip/dist/xlsx.full.min.js'></script>

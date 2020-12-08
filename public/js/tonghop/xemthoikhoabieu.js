@@ -1884,8 +1884,6 @@ function loaddanhsachphong(datadsphong,matruong) {
 //bảng màu ds giáo viên
 
 function loadbanggiaovien(matruong){
-	let table = $('#tablemaugiaovien').DataTable();
-	table.destroy();
 
 	$('#banggiaovien').empty();
 	var idtruong = matruong;
@@ -1919,6 +1917,7 @@ function loadbanggiaovien(matruong){
 
 	        	tr.cells[0].appendChild(document.createTextNode('' +(j+1)));
 		        tr.cells[1].appendChild(document.createTextNode(' ' + dsgv[j].bidanh));
+		        tr.cells[1].setAttribute('class','tdBidanh');
 		       	tr.cells[2].appendChild(button); 
 
 		        banggiaovien.appendChild(tr); 
@@ -1926,29 +1925,6 @@ function loadbanggiaovien(matruong){
 
 		}
 	}
-	$('#tablemaugiaovien').DataTable({
-		"dom": '<lf<t>ip>',
-		"bLengthChange" : false,
-		"info": false,
-		"paging": false,
-		"oLanguage": {
-		  	"sProcessing":   "Đang xử lý...",
-			"sLengthMenu":   "Xem _MENU_ mục",
-			"sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
-			"sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-			"sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
-			"sInfoFiltered": "(được lọc từ _MAX_ mục)",
-			"sInfoPostFix":  "",
-			"sSearch":       "Tìm:",
-			"sUrl":          "",
-			"oPaginate": {
-				"sFirst":    "Đầu",
-				"sPrevious": "Trước",
-				"sNext":     "Tiếp",
-				"sLast":     "Cuối"
-			}
-		}	
-	});
 	
 }
 
@@ -2230,6 +2206,21 @@ function loaddanhsachcothoikhoabieu(matruong) {
 	});
 	
 
+}
+
+//tìm kiếm giáo viên bí danh
+
+function Search(tdClass, searchTxt) {
+    let td = document.getElementsByClassName(tdClass);
+    let textSearch = searchTxt.value.toUpperCase();
+    for (const item of td) {
+        let tdValue = item.textContent || item.innerText;
+        if (tdValue.toUpperCase().indexOf(textSearch) > -1) {
+            item.parentElement.style.display = "";
+        } else {
+            item.parentElement.style.display = "none";
+        }
+    }
 }
 
 
@@ -2648,6 +2639,13 @@ window.onload = function() {
 	    
 	    $('#modalDsCoTKBPhong').modal('hide');
 	});
+
+	//tìm kiếm giáo viên bí danh
+	var timkiemBidanh = document.getElementById("timkiemBidanh");
+
+	timkiemBidanh.oninput = function (e) {
+        Search("tdBidanh", timkiemBidanh);
+    };
 
 }
 

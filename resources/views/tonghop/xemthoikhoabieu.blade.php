@@ -141,9 +141,12 @@
 														<table id="tablemaugiaovien" class="table table-striped table-bordered dataex-key-basic table-responsive display nowrap" style="overflow-y: auto; height: 300px;width: 100%;">
 															<thead class="thead-inverse">
 																<tr>
-																	<th>STT</th>
+																	<th rowspan="2">STT</th>
 																	<th>Tên GV</th>
-																	<th>Màu</th>
+																	<th rowspan="2">Màu</th>
+																</tr>
+																<tr>
+																	<th><input id="timkiemBidanh" class="input-sm form-control" type="text" /></th>
 																</tr>
 															</thead>
 															<tbody id="banggiaovien"></tbody>	
