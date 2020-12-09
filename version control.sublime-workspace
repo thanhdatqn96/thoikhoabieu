@@ -541,7 +541,7 @@
 			"file": "public/js/xemtkb/xemtkb.js",
 			"settings":
 			{
-				"buffer_size": 75488,
+				"buffer_size": 75538,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -550,7 +550,7 @@
 			"file": "public/js/tonghop/xemthoikhoabieu.js",
 			"settings":
 			{
-				"buffer_size": 90323,
+				"buffer_size": 90302,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -559,7 +559,7 @@
 			"file": "resources/views/xemtkb/index.blade.php",
 			"settings":
 			{
-				"buffer_size": 39042,
+				"buffer_size": 39206,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -568,7 +568,7 @@
 			"file": "resources/views/tonghop/xemthoikhoabieu.blade.php",
 			"settings":
 			{
-				"buffer_size": 35545,
+				"buffer_size": 35709,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -769,7 +769,7 @@
 	],
 	"find":
 	{
-		"height": 41.0
+		"height": 29.0
 	},
 	"find_in_files":
 	{
@@ -1002,15 +1002,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 75488,
+						"buffer_size": 75538,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								45441,
-								45441
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1031,15 +1031,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 90323,
+						"buffer_size": 90302,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								67111,
-								67111
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1059,15 +1059,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 39042,
+						"buffer_size": 39206,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4780,
-								4780
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1089,15 +1089,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 35545,
+						"buffer_size": 35709,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5434,
-								5434
+								0,
+								0
 							]
 						],
 						"settings":

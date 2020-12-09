@@ -20,9 +20,9 @@ class exportkbController extends Controller
 {
 	public function index()
 	{
-		\Assets::addScripts(['js-macdinh','js-custom','js-dev'])->addStyles(['style-macdinh','style-dev'])->removeStyles(['style-datatable'])->removeScripts(['js-datatable']);
+		\Assets::addScripts(['js-macdinh','js-custom','js-dev','js-datatable'])->addStyles(['style-macdinh','style-dev','style-datatable']);
 		
-				$matruong = Session::get('matruong');
+		$matruong = Session::get('matruong');
 		$thongbao = thongbao::where('truong_id',$matruong)->get();
 		$thongbaocount = thongbao::where('trangthai',0)->where('truong_id',$matruong)->count();
 		return view('exportkb.index',compact('thongbao', 'thongbaocount'));

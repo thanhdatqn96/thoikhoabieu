@@ -62,10 +62,9 @@
 													lòng chờ</div>
 											</div>
 										</div>
-										<br>
 										<button type="button" class="btn btn-info btn-sm" id="btnDSCoTKBTruong">DS thời gian có TKB</button>	
 										<br>
-										<br>	
+										<br>
 										<div class="form-group">
 											<label>Thời gian</label>
 											<div style="z-index: 300">
@@ -95,6 +94,18 @@
 													Xuất thời khóa biểu trường
 												</label>
 												<section class="hidden" id="kieu">
+													<label>
+														<input type="radio" name="radBuoi" value="" id="sang">
+														Buổi sáng
+													</label>
+													<label>
+														<input type="radio" name="radBuoi" value="" id="chieu">
+														Buổi chiều
+													</label>
+													<label>
+														<input type="radio" name="radBuoi" value="" id="cahai">
+														Cả sáng và chiều
+													</label>
 													<label>
 														<input type="radio" name="typeRadio" value="" id="tendaydu">
 														Tên đầy đủ
@@ -137,6 +148,14 @@
 													Xuất thời khóa biểu theo điểm trường
 												</label>
 											</fieldset>
+
+											<fieldset class="radio" style="padding-right: 10px;">
+												<label>
+													<input type="radio" name="radio" value="" id="xuatgiaoviennghi">
+													Xuất giáo viên nghỉ
+												</label>
+											</fieldset>
+
 											<hr>
 											<div style="height: 300px; margin-bottom:3px; overflow: scroll;"
 												id="tableList" class="hidden">
@@ -1330,6 +1349,7 @@
 
         });
 
+  
     });
 
 
@@ -1381,7 +1401,7 @@
             var json_prms = JSON.stringify(prms);
             vgca_sign_issued(json_prms, SignFileCallBack1);
         }
-        // Ham ky phe duyet
+    // Ham ky phe duyet
     function exc_sign_approved() {
             var prms = {};
 
@@ -1393,7 +1413,7 @@
             var json_prms = JSON.stringify(prms);
             vgca_sign_approved(json_prms, SignFileCallBack1);
         }
-        ///Ký số công văn đến
+    ///Ký số công văn đến
     function exc_sign_income() {
         var prms = {};
         var scv = [{
@@ -1450,10 +1470,12 @@
 
 
     // ----------------------------------------------------
-    // load danh sách có thời khoá biểu 
 
-    function loaddanhsachcothoikhoabieu() {
-        axios.get("gettkbtruong").then(restkbtruong => {
+    $(document).ready(function() {
+    	
+	    // load danh sách có thời khoá biểu 
+
+	    axios.get("gettkbtruong").then(restkbtruong => {
             let layDataTkbTruong = restkbtruong.data;
 
             let tableDsCoTKBTruong = $('#tableDsCoTKBTruong').DataTable();
@@ -1512,37 +1534,38 @@
 
         });
 
+	    //button hiển thị ds có tkb
 
-    }
+		$('#btnDSCoTKBTruong').on('click',function(){
 
-    //button hiển thị ds có tkb
+			let tbodyDsCoTKBTruong = $("#tableDsCoTKBTruong tbody");
 
-	$('#btnDSCoTKBTruong').on('click',function(){
-		let tbodyDsCoTKBTruong = $("#tableDsCoTKBTruong tbody");
+			if (tbodyDsCoTKBTruong.children().length == 1) {
+			    Swal.fire(
+				  'Thông báo',
+				  'Không có thời gian nào có thời khoá biểu',
+				  'info'
+				);
+				return false;
+			} else{
+				$('#modalDsCoTKBTruong').modal('show');
+			}
+		});
 
-		if (tbodyDsCoTKBTruong.children().length == 0) {
-		    Swal.fire(
-			  'Thông báo',
-			  'Không có thời gian nào có thời khoá biểu',
-			  'info'
-			);
-			return false;
-		} else{
-			$('#modalDsCoTKBTruong').modal('show');
-		}
-	});
+		//xử lý click thời gian có tkb trường
 
-	//xử lý click thời gian có tkb trường
+		$("#tableDsCoTKBTruong tbody").on("click", ".classButtonTruong", function() {
+		    let tuan = $(this).data('tuan');
+		    let thang = $(this).data('thang');
+		    let nam = $(this).data('nam');
+		    let thangNam = thang+"/"+nam;
+		    $('#selectmonth').val(thangNam).trigger('change');
+		    $('#selectweek').val(tuan).trigger('change');
+		    $('#modalDsCoTKBTruong').modal('hide');
+		});
 
-	$("#tableDsCoTKBTruong tbody").on("click", ".classButtonTruong", function() {
-	    let tuan = $(this).data('tuan');
-	    let thang = $(this).data('thang');
-	    let nam = $(this).data('nam');
-	    let thangNam = thang+"/"+nam;
-	    $('#selectmonth').val(thangNam).trigger('change');
-	    $('#selectweek').val(tuan).trigger('change');
-	    $('#modalDsCoTKBTruong').modal('hide');
-	});
+    });
+
 
 </script>
 

@@ -21,6 +21,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpParser\Node\Expr\FuncCall;
 use stdClass;
 use ZipArchive;
+use DB;
 
 class exportExcelController extends Controller
 {
@@ -140,6 +141,15 @@ class exportExcelController extends Controller
             return  response()->json(['msg' => 'ok', 'data' => $file], Response::HTTP_OK);
         }
 
+        //giáo viên nghỉ
+
+        if ($param->gvNghi == 1) {
+            $sheet = $this->loadSheetExcel('maugiaoviennghi.xlsx');
+            $sheet->setActiveSheetIndex(0);
+            $sheetGvNghi = $sheet->getActiveSheet();
+            $this->exportGvNghi($sheetGvNghi, $sheet, $startMonth, $endMonth, $week);
+        }
+
         return response()->json(Response::HTTP_OK);
     }
     private function autoSiezColumn($sheet)
@@ -227,7 +237,7 @@ class exportExcelController extends Controller
                     $item->session = $tiet;
                     $item->time = 1;
                     if ($table != null) {
-                        $item->assign = $table->hovaten . '-' . $table->tenlop;
+                        $item->assign = $table->tenmonhoc . '-' . $table->hovaten . '-' . $table->tenlop;
                     } else {
                         $item->assign = null;
                     }
@@ -258,7 +268,7 @@ class exportExcelController extends Controller
                     $item->session = $tiet;
                     $item->time = 1;
                     if ($table != null) {
-                        $item->assign = $table->hovaten . '-' . $table->tenlop;
+                        $item->assign = $table->tenmonhoc . '-' . $table->hovaten . '-' . $table->tenlop;
                     } else {
                         $item->assign = "";
                     }
@@ -1424,22 +1434,6 @@ class exportExcelController extends Controller
         $titleLenght = count($listClassRoom);
         $indexcolum = 3;
 
-
-        // Data synthesis for tabletime
-        // day of week
-        /***
-         * 1 - monday
-         * 2 - tuesday
-         * 3 - Wednesday
-         * 4 - Thursday
-         * 5 - Friday
-         * 6 - Saturday
-         * 
-         * session of the day
-         * 1-5: morning
-         * 6-10: afternoon
-         */
-
         $tableTime = array();
         for ($day = Day::$MONDAY; $day < Day::$SUNDAY; $day++) {
             for ($session = Day::$MORNING; $session < Day::$AFTERNOON; $session++) {
@@ -1560,7 +1554,6 @@ class exportExcelController extends Controller
             $ss = 1;
             for ($session = Day::$MORNING; $session < Day::$MIDDAY; $session++) {
 
-
                 foreach ($listClassRoom as $class) {
 
                     // get table time of morning
@@ -1591,13 +1584,13 @@ class exportExcelController extends Controller
         }
 
         // Render content tabletime
-        $totalRow = 36;
+        $totalRow = 37;
         $indexTable = 0;
         $lastColumn = 0;
         for ($indexRowbody = 7; $indexRowbody < $totalRow; $indexRowbody++) {
             $indexcolum = 3;
             while ($indexcolum < $titleLenght) {
-                // if indexTable == titleLenght/2 then new row and indexcolum == 24 indexRowbody + 1
+
                 $tableItem = $tableTime[$indexTable];
                 if ($tableItem != null) {
                     $sheetTKBSchool->setCellValueByColumnAndRow($indexcolum, $indexRowbody, $tableItem->getSubject());
@@ -1605,9 +1598,9 @@ class exportExcelController extends Controller
                     $sheetTKBSchool->setCellValueByColumnAndRow($indexcolum, $indexRowbody, $tableItem->getName());
                     $indexcolum++;
                 } else {
-                    $sheetTKBSchool->setCellValueByColumnAndRow($indexcolum, $indexRowbody, "");
+                    $sheetTKBSchool->setCellValueByColumnAndRow($indexcolum, $indexRowbody, "-");
                     $indexcolum++;
-                    $sheetTKBSchool->setCellValueByColumnAndRow($indexcolum, $indexRowbody, "");
+                    $sheetTKBSchool->setCellValueByColumnAndRow($indexcolum, $indexRowbody, "-");
                     $indexcolum++;
                 }
                 $lastColumn = $indexcolum;
@@ -1641,7 +1634,7 @@ class exportExcelController extends Controller
             $sheetTKBSchool->setCellValueByColumnAndRow($lastColumn, $rowTeacher, $restItem);
             $rowTeacher = $rowTeacher + 5;
         }
-        $lastCellAddress = $sheetTKBSchool->getCellByColumnAndRow($lastColumn, $totalRow)->getCoordinate();
+        $lastCellAddress = $sheetTKBSchool->getCellByColumnAndRow($lastColumn, 36)->getCoordinate();
 
         $this->sign($sheetTKBSchool, $lastColumn, $totalRow + 6);
 
@@ -1739,13 +1732,13 @@ class exportExcelController extends Controller
         }
 
         // Render content tabletime
-        $totalRow = 36;
+        $totalRow = 37;
         $indexTable = 0;
         $lastColumn = 0;
         for ($indexRowbody = 7; $indexRowbody < $totalRow; $indexRowbody++) {
             $indexcolum = 3;
             while ($indexcolum < $titleLenght) {
-                // if indexTable == titleLenght/2 then new row and indexcolum == 24 indexRowbody + 1
+
                 $tableItem = $tableTime[$indexTable];
                 if ($tableItem != null) {
                     $sheetTKBSchool->setCellValueByColumnAndRow($indexcolum, $indexRowbody, $tableItem->getSubject());
@@ -1759,9 +1752,10 @@ class exportExcelController extends Controller
                     $indexcolum++;
                 }
                 $lastColumn = $indexcolum;
-                if ($indexTable < count($tableTime) - 1) {
-                    $indexTable++;
-                }
+                // if ($indexTable < count($tableTime) - 1) {
+                //     $indexTable++;
+                // }
+                $indexTable++;
             }
         }
 
@@ -1789,7 +1783,7 @@ class exportExcelController extends Controller
             $sheetTKBSchool->setCellValueByColumnAndRow($lastColumn, $rowTeacher, $restItem);
             $rowTeacher = $rowTeacher + 5;
         }
-        $lastCellAddress = $sheetTKBSchool->getCellByColumnAndRow($lastColumn, $totalRow)->getCoordinate();
+        $lastCellAddress = $sheetTKBSchool->getCellByColumnAndRow($lastColumn, 36)->getCoordinate();
 
         $this->sign($sheetTKBSchool, $lastColumn, $totalRow + 6);
 
@@ -2131,7 +2125,7 @@ class exportExcelController extends Controller
             $tableMorning = $item->getTableTimeMorning();
             foreach ($tableMorning as $key => $table) {
                 if ($table != null) {
-                    $sheetTKBClass->setCellValueByColumnAndRow($columnTableTime, $rowTableBody, $table->tenmonhoc . "-" . $table->hovaten);
+                    $sheetTKBClass->setCellValueByColumnAndRow($columnTableTime, $rowTableBody, $table->tenmonhoc . "-" . $table->hovaten . "-" . $table->tenlop);
                 } else {
                     $sheetTKBClass->setCellValueByColumnAndRow($columnTableTime, $rowTableBody, "");
                 }
@@ -2148,7 +2142,7 @@ class exportExcelController extends Controller
 
             foreach ($tableAfterNoon as $key => $table) {
                 if ($table != null) {
-                    $sheetTKBClass->setCellValueByColumnAndRow($columnTableTime, $rowTableBody, $table->tenmonhoc . "-" . $table->hovaten);
+                    $sheetTKBClass->setCellValueByColumnAndRow($columnTableTime, $rowTableBody, $table->tenmonhoc . "-" . $table->hovaten . "-" . $table->tenlop);
                 } else {
                     $sheetTKBClass->setCellValueByColumnAndRow($columnTableTime, $rowTableBody, "");
                 }
@@ -2971,5 +2965,235 @@ class exportExcelController extends Controller
             }
         }
         return response()->json(['msg' => "OK", 'fail' => $arrFail]);
+    }
+
+    //giáo viên nghỉ
+    private function exportGvNghi($sheetGvNghi, $sheet, $startMonth, $endMonth, $week)
+    {
+        $date = explode("/", $endMonth);
+        $year = $date[0];
+        $month = $date[1];
+
+        $matruong = $this->sessionInfo->getSchoolId();
+        $thoikhoabieu = DB::table('thoikhoabieu')
+        ->join('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
+        ->select('danhsachgv.bidanh','danhsachgv.hovaten','thoikhoabieu.magiaovien','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
+        ->where('thoikhoabieu.matruong',$matruong)
+        ->where('thoikhoabieu.tuan',$week)
+        ->whereBetween('thoikhoabieu.created_at', [$startMonth, $endMonth])
+        ->orderBy('thoikhoabieu.tuan','ASC')
+        ->orderBy('thoikhoabieu.buoi','ASC')
+        ->orderBy('thoikhoabieu.tiet','ASC')
+        ->orderBy('thoikhoabieu.thu','ASC')
+        ->get();
+
+        $buoi = array(
+            array(
+                'idbuoi'=>0,
+                "tenbuoi"=>"Sáng"
+            ),
+            array(
+                'idbuoi'=>1,
+                "tenbuoi"=>"Chiều"
+            )
+        );
+
+        $thu = array(
+            array(
+                'idthu'=>2,
+                "tenthu"=>"Thứ 2"
+            ),
+            array(
+                'idthu'=>3,
+                "tenthu"=>"Thứ 3"
+            ),
+            array(
+                'idthu'=>4,
+                "tenthu"=>"Thứ 4"
+            ),
+            array(
+                'idthu'=>5,
+                "tenthu"=>"Thứ 5"
+            ),
+            array(
+                'idthu'=>6,
+                "tenthu"=>"Thứ 6"
+            ),
+            array(
+                'idthu'=>7,
+                "tenthu"=>"Thứ 7"
+            ),
+        );
+
+        $databt= array();
+        foreach($buoi as $b){
+            foreach($thu as $k){
+                foreach($thoikhoabieu as $t){
+                    if($t->buoi != $b['idbuoi'] && $t->thu != $k['idthu'] ){
+                        $datetime = date_parse_from_format('Y-m-d', $t->created_at);
+                        $thang = $datetime['month'];
+                        $nam = $datetime['year'];
+                        array_push($databt,array('matruong'=>$t->matruong,'magiaovien'=>$t->magiaovien,'mabuoi'=>$b['idbuoi'],'mathu'=>$k['idthu'],'bidanh'=>$t->bidanh,'hovaten'=>$t->hovaten,'tenbuoi'=>$b['tenbuoi'],'tenthu'=>$k['tenthu'],'nam'=>$nam,'thang'=>$thang,'tuan'=>$t->tuan,'created_at'=>$t->created_at));
+                    }
+                }
+                
+            }
+        }
+
+        foreach($thoikhoabieu as $t){
+            foreach($databt as $k => $d){
+                if($t->matruong == $d['matruong'] && $t->magiaovien == $d['magiaovien'] && $t->buoi == $d['mabuoi'] && $t->thu == $d['mathu'] && $t->tuan == $d['tuan'] && $t->created_at == $d['created_at']){
+                    unset($databt[$k]);
+                }
+            }
+        }
+
+        $databt = array_values($databt);
+
+        $grouped = [];
+
+        foreach($databt as $d){
+            $mabuoi = $d['mabuoi'];
+            $mathu = $d['mathu'];
+            $magiaovien = $d['magiaovien'];
+            $grouped[$mabuoi][$mathu][$magiaovien][] = $d;
+        }
+        
+        $new_data_giaoviennghi = [];
+
+        foreach($grouped as $k=>$v){
+            $datathu = [];
+            $tenbuoi;
+            foreach ($v as $k1 => $v1) {
+                $datagv = [];
+                $tenthu;
+                foreach($v1 as $k2=>$v2){
+                    $tenbuoi = $v2[0]['tenbuoi'];
+                    $tenthu = $v2[0]['tenthu'];
+                    $hovaten = $v2[0]['hovaten'];
+                    $bidanh = $v2[0]['bidanh'];
+                    array_push($datagv,array('magiaovien'=>$k2,'hovaten'=> $hovaten, 'bidanh'=>$bidanh));
+                }
+                array_push($datathu,array('mathu'=>$k1,'tenthu'=> $tenthu,'dsgiaovien'=>$datagv));
+            }
+            $new_data_giaoviennghi[] = array('mabuoi' => $k,'tenbuoi'=>$tenbuoi ,'dsthu'=> $datathu);
+        }
+
+        $styleBorderParent = array(
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                    'borderSize' => 1,
+                ],
+                'inside' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'], 'borderSize' => 1,
+                ],
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+            ],
+            'font' => [
+                'bold' => true,
+            ],
+        );
+
+        $styleBorderChild = array(
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                    'borderSize' => 1,
+                ],
+                'inside' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'], 'borderSize' => 1,
+                ],
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+        );
+
+        $i = 3;
+        $sheetGvNghi->setCellValue('G'.$i,'(Tháng: '.$month.'/'.$year.' - Tuần: '.$week.')');
+        $sheetGvNghi->mergeCells("G".$i.':I'.$i);
+        $sheetGvNghi->getStyle("G".$i.':I'.$i)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        $i = 6 ;
+        $j = 6 ;
+        $k = 6 ;
+        $l = 6 ;
+        $m = 6 ;
+        $x = 6 ;
+
+        foreach ($new_data_giaoviennghi as $n) {
+            
+            $demDsGvThu2 = count($n['dsthu'][0]['dsgiaovien']);
+            $demDsGvThu3 = count($n['dsthu'][1]['dsgiaovien']);
+            $demDsGvThu4 = count($n['dsthu'][2]['dsgiaovien']);
+            $demDsGvThu5 = count($n['dsthu'][3]['dsgiaovien']);
+            $demDsGvThu6 = count($n['dsthu'][4]['dsgiaovien']);
+            $demDsGvThu7 = count($n['dsthu'][5]['dsgiaovien']);
+            
+            $maxDem = max($demDsGvThu2,$demDsGvThu3,$demDsGvThu4,$demDsGvThu5,$demDsGvThu6,$demDsGvThu7);
+            $numBer = $i+$maxDem;
+            $sheetGvNghi->setCellValue('B'.$i,$n['tenbuoi']);
+            $sheetGvNghi->mergeCells("B".$i);
+            $sheetGvNghi->getStyle("B".$i)->applyFromArray($styleBorderParent);
+            foreach($n['dsthu'][0]['dsgiaovien'] as $d){
+                $sheetGvNghi->setCellValue('C'.$i,$d['hovaten']);
+                $sheetGvNghi->mergeCells("C".$i.':D'.$i);
+                $sheetGvNghi->getStyle("C".$i.':D'.$i)->applyFromArray($styleBorderChild);
+                $i++;
+                
+            }
+
+            foreach($n['dsthu'][1]['dsgiaovien'] as $d1){
+                $sheetGvNghi->setCellValue('E'.$j,$d1['hovaten']);
+                $sheetGvNghi->mergeCells("E".$j.':F'.$j);
+                $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
+                $j++;
+                
+            }
+
+            foreach($n['dsthu'][2]['dsgiaovien'] as $d2){
+                $sheetGvNghi->setCellValue('G'.$k,$d2['hovaten']);
+                $sheetGvNghi->mergeCells("G".$k.':H'.$k);
+                $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
+                $k++;
+                
+            }
+
+            foreach($n['dsthu'][3]['dsgiaovien'] as $d3){
+                $sheetGvNghi->setCellValue('I'.$l,$d3['hovaten']);
+                $sheetGvNghi->mergeCells("I".$l.':J'.$l);
+                $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
+                $l++;
+                
+            }
+
+            foreach($n['dsthu'][4]['dsgiaovien'] as $d4){
+                $sheetGvNghi->setCellValue('K'.$m,$d4['hovaten']);
+                $sheetGvNghi->mergeCells("K".$m.':L'.$m);
+                $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
+                $m++;
+                
+            }
+
+            foreach($n['dsthu'][5]['dsgiaovien'] as $d5){
+                $sheetGvNghi->setCellValue('M'.$x,$d5['hovaten']);
+                $sheetGvNghi->mergeCells("M".$x.':N'.$x);
+                $sheetGvNghi->getStyle("M".$x.':N'.$x)->applyFromArray($styleBorderChild);
+                $x++;
+                
+            }
+            
+
+        }
+
+        $this->saveExcel($sheet, 'dsgiaoviennghi');
+
     }
 }

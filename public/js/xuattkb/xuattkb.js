@@ -24,12 +24,17 @@ var listTeacherBody,
     kieu,
     tendaydu,
     tenviettat,
-    selectweek;
+    selectweek,
+    xuattkbtruongtheobuoi,
+    sang,
+    chieu,
+    cahai,
+    xuatgiaoviennghi;
 
 var arrFile = [];
 var arrFileAttack = null;
 
-window.onload = function () {
+window.onload = function() {
     initControl();
     initData();
     initEvent();
@@ -57,13 +62,19 @@ function initControl() {
     tendaydu = document.getElementById("tendaydu");
     tenviettat = document.getElementById("tenviettat");
     selectweek = document.getElementById("selectweek");
+    xuattkbtruongtheobuoi = document.getElementById("xuattkbtruongtheobuoi");
+    sang = document.getElementById("sang");
+    chieu = document.getElementById("chieu");
+    cahai = document.getElementById("cahai");
+    //giáo viên nghỉ
+    xuatgiaoviennghi = document.getElementById("xuatgiaoviennghi");
 
     const now = new Date();
     $("#dateprocess").dxDateBox({
         type: "date",
         max: now,
         min: new Date(1900, 0, 1),
-        value: now,
+        value: now
     });
     sendEmail = document.getElementById("sendEmail");
 
@@ -73,7 +84,7 @@ function initControl() {
         viewMode: "months",
         minViewMode: "months",
         autoclose: true,
-        language: "vi",
+        language: "vi"
     });
 }
 
@@ -83,12 +94,12 @@ async function initListTeacher() {
         dataSource: listTeacher,
         selection: {
             mode: "multiple",
-            allowSelectAll: true,
+            allowSelectAll: true
         },
         columns: [
             { dataField: "hovaten", caption: "Tên giáo viên" },
-            { dataField: "email", caption: "email" },
-        ],
+            { dataField: "email", caption: "email" }
+        ]
     });
 }
 
@@ -125,7 +136,7 @@ async function loadClass() {
 
 function showTable(data) {
     let html = "";
-    data.forEach((item) => {
+    data.forEach(item => {
         html += `<tr>
         <td><input type="checkbox" class="chkSelect" value="${item.id}" data-name="${item.name}" /></td>
         <td>${item.name}</td>
@@ -138,48 +149,51 @@ function reset() {
     kieu.classList.add("hidden");
     tendaydu.checked = false;
     tenviettat.checked = false;
+    sang.checked = false;
+    chieu.checked = false;
+    cahai.checked = false;
 }
 
 function initEvent() {
-    selectAll.onclick = function () {
+    selectAll.onclick = function() {
         let chk = document.getElementsByClassName("chkSelect");
         for (const chkSelect of chk) {
             chkSelect.checked = selectAll.checked;
         }
     };
 
-    xuattkbgiaovien.onclick = function (e) {
+    xuattkbgiaovien.onclick = function(e) {
         reset();
 
         tableList.classList.remove("hidden");
         titleColumn.textContent = "Tên giáo viên";
         loadTeacher();
     };
-    xuattkblop.onclick = function () {
+    xuattkblop.onclick = function() {
         reset();
         tableList.classList.remove("hidden");
         titleColumn.textContent = "Lớp";
         loadClass();
     };
-    xuattkbphong.onclick = function () {
+    xuattkbphong.onclick = function() {
         reset();
         loadRoom();
         tableList.classList.remove("hidden");
     };
-    xuattkbtongquat.onclick = function () {
+    xuattkbtongquat.onclick = function() {
         kieu.classList.remove("hidden");
         tableList.classList.add("hidden");
     };
-    xuattkbphancongcm.onclick = function () {
+    xuattkbphancongcm.onclick = function() {
         reset();
         tableList.classList.add("hidden");
     };
-    xuattkbdiemtruong.onclick = function () {
+    xuattkbdiemtruong.onclick = function() {
         reset();
         loadLocation();
         tableList.classList.remove("hidden");
     };
-    fileInput.onchange = function (e) {
+    fileInput.onchange = function(e) {
         let file = fileInput.files;
         for (const f of file) {
             let li = document.createElement("li");
@@ -187,23 +201,28 @@ function initEvent() {
             listFileAttach.appendChild(li);
         }
     };
-
-    btnAttachFile.onclick = function (e) {
+    btnAttachFile.onclick = function(e) {
         fileInput.click();
     };
 
-    sendEmail.onclick = function (e) {
+    sendEmail.onclick = function(e) {
         let emailSelect = $("#dsgiaovienguimails")
             .dxDataGrid("instance")
             .getSelectedRowsData();
-        let email = emailSelect.map((e) => {
+        let email = emailSelect.map(e => {
             return e.email;
         });
         sendMail(email);
         // console.log(email);
     };
-    xuattkb.onclick = function (e) {
+    xuattkb.onclick = function(e) {
         downLoadTKBEvent();
+    };
+
+    //giáo viên nghi
+    xuatgiaoviennghi.onclick = function() {
+        reset();
+        tableList.classList.add("hidden");
     };
 }
 
@@ -246,11 +265,24 @@ async function exportExcel() {
         tkbphong = 0,
         tkbdiemtruong = 0,
         tkbphancongcm = 0,
-        idTruong = 0;
+        buoi = 0,
+        idTruong = 0,
+        gvNghi = 0;
 
     if (xuattkbtongquat.checked == true) {
         tkbtruong = 1;
-        arrFile.push("thoikhoabieutruong");
+        if (sang.checked) {
+            buoi = 1;
+            arrFile.push("thoikhoabieutruongbuoisang");
+        }
+        if (chieu.checked) {
+            buoi = 2;
+            arrFile.push("thoikhoabieutruongbuoichieu");
+        }
+        if (cahai.checked) {
+            buoi = 3;
+            arrFile.push("thoikhoabieutruong");
+        }
     }
     if (xuattkblop.checked) {
         tkblop = 1;
@@ -270,6 +302,10 @@ async function exportExcel() {
     if (xuattkbdiemtruong.checked) {
         tkbdiemtruong = 1;
     }
+    if (xuatgiaoviennghi.checked) {
+        gvNghi = 1;
+    }
+
     try {
         progressExport.classList.remove("hidden");
         let arrSelect = [];
@@ -330,7 +366,9 @@ async function exportExcel() {
                     startMonth: firstDay,
                     endMonth: lastDay,
                     week: selectweek.value,
+                    buoi: buoi,
                     idTruong: idTruong,
+                    gvNghi: gvNghi
                 })
             );
 
@@ -340,8 +378,8 @@ async function exportExcel() {
             ) {
                 arrFile.length = 0;
 
-                result.data.forEach((item) => {
-                    let isset = arrFile.findIndex((x) => x == item);
+                result.data.forEach(item => {
+                    let isset = arrFile.findIndex(x => x == item);
                     if (isset == -1) {
                         arrFile.push(item);
                     }
@@ -359,7 +397,7 @@ async function exportExcel() {
 }
 
 function downloadTkb() {
-    arrFile.forEach((file) => {
+    arrFile.forEach(file => {
         window.open(`${baseURl}xuattkb/export/${file}.xlsx`);
     });
     arrFile.length = 0;

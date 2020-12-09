@@ -706,9 +706,9 @@ class xemtkbController extends Controller
 	 	);
 
 	 	$databt= array();
-		foreach($thoikhoabieu as $t){
-			foreach($buoi as $b){
-				foreach($thu as $k){
+	 	foreach($buoi as $b){
+	 		foreach($thu as $k){
+				foreach($thoikhoabieu as $t){
 					if($t->buoi != $b['idbuoi'] && $t->thu != $k['idthu'] ){
 						$datetime = date_parse_from_format('Y-m-d', $t->created_at);
 						$thang = $datetime['month'];

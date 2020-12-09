@@ -1998,7 +1998,7 @@ window.onload = function() {
 	$('#btnDSCoTKBTruong').on('click',function(){
 		let tbodyDsCoTKBTruong = $("#tableDsCoTKBTruong tbody");
 
-		if (tbodyDsCoTKBTruong.children().length == 0) {
+		if (tbodyDsCoTKBTruong.children().length == 1) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',
@@ -2013,7 +2013,7 @@ window.onload = function() {
 	$('#btnDSCoTKBGv').on('click',function(){
 		let tbodyDsCoTKBGv = $("#tableDsCoTKBGv tbody");
 
-		if (tbodyDsCoTKBGv.children().length == 0) {
+		if (tbodyDsCoTKBGv.children().length == 1) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',
@@ -2028,7 +2028,7 @@ window.onload = function() {
 	$('#btnDSCoTKBLop').on('click',function(){
 		let tbodyDsCoTKBLop = $("#tableDsCoTKBLop tbody");
 
-		if (tbodyDsCoTKBLop.children().length == 0) {
+		if (tbodyDsCoTKBLop.children().length == 1) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',
@@ -2043,7 +2043,7 @@ window.onload = function() {
 	$('#btnDSCoTKBPhong').on('click',function(){
 		let tbodyDsCoTKBPhong = $("#tableDsCoTKBPhong tbody");
 
-		if (tbodyDsCoTKBPhong.children().length == 0) {
+		if (tbodyDsCoTKBPhong.children().length == 1) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',
@@ -2058,7 +2058,7 @@ window.onload = function() {
 	$('#btnDSCoGvNghi').on('click',function(){
 		let tbodyDsCoGvNghi = $("#tableDsCoGvNghi tbody");
 
-		if (tbodyDsCoGvNghi.children().length == 0) {
+		if (tbodyDsCoGvNghi.children().length == 1) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có giáo viên nghỉ',
