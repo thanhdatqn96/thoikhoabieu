@@ -1537,10 +1537,11 @@
 	    //button hiển thị ds có tkb
 
 		$('#btnDSCoTKBTruong').on('click',function(){
+			let tableDsCoTKBTruong = $('#tableDsCoTKBTruong').dataTable();
+	        
+	        let dataDsCoTKBTKBTruong = tableDsCoTKBTruong.fnGetData();
 
-			let tbodyDsCoTKBTruong = $("#tableDsCoTKBTruong tbody");
-
-			if (tbodyDsCoTKBTruong.children().length == 1) {
+			if (dataDsCoTKBTKBTruong.length == 0) {
 			    Swal.fire(
 				  'Thông báo',
 				  'Không có thời gian nào có thời khoá biểu',

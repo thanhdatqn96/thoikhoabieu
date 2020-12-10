@@ -123,42 +123,45 @@
 												<input type="radio" name="radio" value="" id="iddatetimenam" style=" margin-left: 30px;"> Năm</input>
 											</div>
 											<br>
+											<!-- tuần -->
 											<div id="divtuan" style="display: none;">
-											<!-- <div class="input-daterange input-group" style="width: 50%;" id="datepickertuantuden">
-												<span class="input-group-addon">Từ</span>
-												<input type="text" class="form-control-sm form-control" name="start" value="" id="datepickertuantu" placeholder="Chọn từ ngày">
-												<span class="input-group-addon">Đến</span>
-												<input type="text" class="form-control-sm form-control" name="end" value="" id="datepickertuanden" placeholder="Chọn đến ngày">
-											</div> -->
-											<div class="input-daterange input-group" style="width: 50%;">
-												<span class="input-group-addon">Tháng</span>
-												<input type="text" class="form-control-sm form-control" name="start" value="" id="datepickerthangtuan" placeholder="Chọn tháng">
-												<span class="input-group-addon">Tuần</span>
-												<select id="selecttuan" name="interested" class="form-control">
-				                                    <option value="none" selected="" disabled="">--Chọn tuần--
-				                                    </option><option value="1">Tuần 1
-				                                    </option><option value="2">Tuần 2
-				                                    </option><option value="3">Tuần 3
-				                                    </option><option value="4">Tuần 4
-				                                    </option>
-				                            	</select>
-											</div>
+												<div class="input-daterange input-group" style="width: 50%;">
+													<span class="input-group-addon">Tháng</span>
+													<input type="text" class="form-control-sm form-control" name="start" value="" id="datepickerthangtuan" placeholder="Chọn tháng">
+													<span class="input-group-addon">Tuần</span>
+													<select id="selecttuan" name="interested" class="form-control">
+					                                    <option value="none" selected="" disabled="">--Chọn tuần--
+					                                    </option><option value="1">Tuần 1
+					                                    </option><option value="2">Tuần 2
+					                                    </option><option value="3">Tuần 3
+					                                    </option><option value="4">Tuần 4
+					                                    </option>
+					                            	</select>
+												</div>
+												<br>
+												<button type="button" class="btn btn-success btn-sm" id="btnDSCoTKBGvTuan">DS thời gian có TKB</button>	
 									    	</div>
+									    	<!-- tháng -->
 											<div id="divthang" style="display: none;">
-											<div class="input-group date" data-provide="datepicker" id="datepickerthang" style="width: 50%;">
-									            <input type="text" class="form-control-sm form-control" placeholder="Chọn tháng">
-									            <div class="input-group-addon">
-									                <i class="fa fa-calendar"></i>
-									            </div>
-									        </div>
+												<div class="input-group date" data-provide="datepicker" id="datepickerthang" style="width: 50%;">
+										            <input type="text" class="form-control-sm form-control" placeholder="Chọn tháng">
+										            <div class="input-group-addon">
+										                <i class="fa fa-calendar"></i>
+										            </div>
+										        </div>
+										        <br>
+												<button type="button" class="btn btn-success btn-sm" id="btnDSCoTKBGvThang">DS thời gian có TKB</button>
 									    	</div>
+									    	<!-- năm -->
 									        <div id="divnam" style="display: none;">
-											<div class="input-group date" data-provide="datepicker" id="datepickernam" style="width: 50%;">
-									            <input type="text" class="form-control-sm form-control" placeholder="Chọn năm">
-									            <div class="input-group-addon">
-									                <i class="fa fa-calendar"></i>
-									            </div>
-									        </div>
+												<div class="input-group date" data-provide="datepicker" id="datepickernam" style="width: 50%;">
+										            <input type="text" class="form-control-sm form-control" placeholder="Chọn năm">
+										            <div class="input-group-addon">
+										                <i class="fa fa-calendar"></i>
+										            </div>
+										        </div>
+										        <br>
+												<button type="button" class="btn btn-success btn-sm" id="btnDSCoTKBGvNam">DS thời gian có TKB</button>
 									    	</div>
 										</div>
 									</section>
@@ -199,36 +202,45 @@
 												<input type="radio" name="radio" value="" id="iddatetimenamlop" style=" margin-left: 30px;"> Năm</input>
 											</div>
 											<br>
+											<!-- tuần -->
 											<div id="divtuanlop" style="display: none;">
-											<div class="input-daterange input-group" style="width: 50%;">
-												<span class="input-group-addon">Tháng</span>
-												<input type="text" class="form-control-sm form-control" name="start" value="" id="datepickerthangtuanlop" placeholder="Chọn tháng">
-												<span class="input-group-addon">Tuần</span>
-												<select id="selecttuanlop" name="interested" class="form-control">
-				                                    <option value="none" selected="" disabled="">--Chọn tuần--
-				                                    </option><option value="1">Tuần 1
-				                                    </option><option value="2">Tuần 2
-				                                    </option><option value="3">Tuần 3
-				                                    </option><option value="4">Tuần 4
-				                                    </option>
-				                            	</select>
+												<div class="input-daterange input-group" style="width: 50%;">
+													<span class="input-group-addon">Tháng</span>
+													<input type="text" class="form-control-sm form-control" name="start" value="" id="datepickerthangtuanlop" placeholder="Chọn tháng">
+													<span class="input-group-addon">Tuần</span>
+													<select id="selecttuanlop" name="interested" class="form-control">
+					                                    <option value="none" selected="" disabled="">--Chọn tuần--
+					                                    </option><option value="1">Tuần 1
+					                                    </option><option value="2">Tuần 2
+					                                    </option><option value="3">Tuần 3
+					                                    </option><option value="4">Tuần 4
+					                                    </option>
+					                            	</select>
+												</div>
+												<br>
+												<button type="button" class="btn btn-success btn-sm" id="btnDSCoTKBLopTuan">DS thời gian có TKB</button>
 											</div>
-											</div>
+											<!-- tháng -->
 											<div id="divthanglop" style="display: none;">
-											<div class="input-group date" data-provide="datepicker" id="datepickerthanglop" style="width: 50%;">
-									            <input type="text" class="form-control-sm form-control" placeholder="Chọn tháng">
-									            <div class="input-group-addon">
-									                <i class="fa fa-calendar"></i>
-									            </div>
-									        </div>
+												<div class="input-group date" data-provide="datepicker" id="datepickerthanglop" style="width: 50%;">
+										            <input type="text" class="form-control-sm form-control" placeholder="Chọn tháng">
+										            <div class="input-group-addon">
+										                <i class="fa fa-calendar"></i>
+										            </div>
+										        </div>
+										        <br>
+												<button type="button" class="btn btn-success btn-sm" id="btnDSCoTKBLopThang">DS thời gian có TKB</button>
 									    	</div>
+									    	<!-- năm -->
 									        <div id="divnamlop" style="display: none;">
-											<div class="input-group date" data-provide="datepicker" id="datepickernamlop" style="width: 50%;">
-									            <input type="text" class="form-control-sm form-control" placeholder="Chọn năm">
-									            <div class="input-group-addon">
-									                <i class="fa fa-calendar"></i>
-									            </div>
-									        </div>
+												<div class="input-group date" data-provide="datepicker" id="datepickernamlop" style="width: 50%;">
+										            <input type="text" class="form-control-sm form-control" placeholder="Chọn năm">
+										            <div class="input-group-addon">
+										                <i class="fa fa-calendar"></i>
+										            </div>
+										        </div>
+										        <br>
+												<button type="button" class="btn btn-success btn-sm" id="btnDSCoTKBLopNam">DS thời gian có TKB</button>
 									    	</div>
 										</div>
 									</section>
@@ -330,6 +342,216 @@
 		</div>
 	</dir>	
 </dir>
+
+<!-- modal danh sách thời gian có thời khoá biểu giáo viên theo tuần-->
+<div class="modal fade text-left" id="modalDsCoTKBGvTuan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBGvTuan">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBGvTuan" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBGvTuan">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có thời khoá biểu giáo viên theo tháng-->
+<div class="modal fade text-left" id="modalDsCoTKBGvThang" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBGvThang">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBGvThang" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBGvThang">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có thời khoá biểu giáo viên theo năm-->
+<div class="modal fade text-left" id="modalDsCoTKBGvNam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBGvNam">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBGvNam" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBGvNam">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có thời khoá biểu lớp theo tuần-->
+<div class="modal fade text-left" id="modalDsCoTKBLopTuan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBLopTuan">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBLopTuan" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBLopTuan">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có thời khoá biểu lớp theo tháng-->
+<div class="modal fade text-left" id="modalDsCoTKBLopThang" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBLopThang">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBLopThang" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBLopThang">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal danh sách thời gian có thời khoá biểu lớp theo năm-->
+<div class="modal fade text-left" id="modalDsCoTKBLopNam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel15" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document" style="min-width: auto;max-width: fit-content;">
+		<div class="modal-content">
+			<div class="modal-header bg-success white">
+				<h4 class="modal-title white" id="myModalLabel15">Thời gian có thời khoá biểu</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseModalDSCoTKBLopNam">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 col-lg-12" style="overflow: auto; height: 500px; width: 1000px;">
+								<table id="tableDsCoTKBLopNam" class="table table-striped table-bordered" style="border-collapse: separate;">
+									<thead>
+										<tr>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">STT</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;">Thời gian</th>
+											<th style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;"></th>
+										</tr>
+									</thead>
+									<tbody id="bodyDSCoTKBLopNam">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
 	setTimeout(function() {

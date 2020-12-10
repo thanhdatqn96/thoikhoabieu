@@ -2511,9 +2511,11 @@ window.onload = function() {
 	//button hiển thị ds có tkb
 
 	$('#btnDSCoTKBTruong').on('click',function(){
-		let tbodyDsCoTKBTruong = $("#tableDsCoTKBTruong tbody");
+		let tableDsCoTKBTruong = $('#tableDsCoTKBTruong').dataTable();
+        
+        let dataDsCoTKBTKBTruong = tableDsCoTKBTruong.fnGetData();
 
-		if (tbodyDsCoTKBTruong.children().length == 1) {
+		if (dataDsCoTKBTKBTruong.length == 0) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',
@@ -2526,9 +2528,11 @@ window.onload = function() {
 	});
 
 	$('#btnDSCoTKBGv').on('click',function(){
-		let tbodyDsCoTKBGv = $("#tableDsCoTKBGv tbody");
+		let tableDsCoTKBGv = $('#tableDsCoTKBGv').dataTable();
+        
+        let dataDsCoTKBGv = tableDsCoTKBGv.fnGetData();
 
-		if (tbodyDsCoTKBGv.children().length == 1) {
+		if (dataDsCoTKBGv.length == 0) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',
@@ -2541,9 +2545,11 @@ window.onload = function() {
 	});
 
 	$('#btnDSCoTKBLop').on('click',function(){
-		let tbodyDsCoTKBLop = $("#tableDsCoTKBLop tbody");
+		let tableDsCoTKBLop = $('#tableDsCoTKBLop').dataTable();
+        
+        let dataDsCoTKBLop = tableDsCoTKBLop.fnGetData();
 
-		if (tbodyDsCoTKBLop.children().length == 1) {
+		if (dataDsCoTKBLop.length == 0) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',
@@ -2556,9 +2562,11 @@ window.onload = function() {
 	});
 
 	$('#btnDSCoTKBPhong').on('click',function(){
-		let tbodyDsCoTKBPhong = $("#tableDsCoTKBPhong tbody");
+		let tableDsCoTKBPhong = $('#tableDsCoTKBPhong').dataTable();
+        
+        let dataDsCoTKBPhong = tableDsCoTKBPhong.fnGetData();
 
-		if (tbodyDsCoTKBPhong.children().length == 1) {
+		if (dataDsCoTKBPhong.length == 0) {
 		    Swal.fire(
 			  'Thông báo',
 			  'Không có thời gian nào có thời khoá biểu',

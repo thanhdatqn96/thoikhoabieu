@@ -3092,7 +3092,8 @@ class exportExcelController extends Controller
                 ],
             ],
             'alignment' => [
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
             ],
             'font' => [
                 'bold' => true,
@@ -3122,76 +3123,215 @@ class exportExcelController extends Controller
         $sheetGvNghi->getStyle("G".$i.':I'.$i)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         $i = 6 ;
+        $h = 6 ;
         $j = 6 ;
         $k = 6 ;
         $l = 6 ;
         $m = 6 ;
         $x = 6 ;
 
-        foreach ($new_data_giaoviennghi as $n) {
-            
-            $demDsGvThu2 = count($n['dsthu'][0]['dsgiaovien']);
-            $demDsGvThu3 = count($n['dsthu'][1]['dsgiaovien']);
-            $demDsGvThu4 = count($n['dsthu'][2]['dsgiaovien']);
-            $demDsGvThu5 = count($n['dsthu'][3]['dsgiaovien']);
-            $demDsGvThu6 = count($n['dsthu'][4]['dsgiaovien']);
-            $demDsGvThu7 = count($n['dsthu'][5]['dsgiaovien']);
-            
-            $maxDem = max($demDsGvThu2,$demDsGvThu3,$demDsGvThu4,$demDsGvThu5,$demDsGvThu6,$demDsGvThu7);
-            $numBer = $i+$maxDem;
-            $sheetGvNghi->setCellValue('B'.$i,$n['tenbuoi']);
-            $sheetGvNghi->mergeCells("B".$i);
-            $sheetGvNghi->getStyle("B".$i)->applyFromArray($styleBorderParent);
-            foreach($n['dsthu'][0]['dsgiaovien'] as $d){
-                $sheetGvNghi->setCellValue('C'.$i,$d['hovaten']);
-                $sheetGvNghi->mergeCells("C".$i.':D'.$i);
-                $sheetGvNghi->getStyle("C".$i.':D'.$i)->applyFromArray($styleBorderChild);
-                $i++;
-                
-            }
+        //sáng
 
-            foreach($n['dsthu'][1]['dsgiaovien'] as $d1){
-                $sheetGvNghi->setCellValue('E'.$j,$d1['hovaten']);
-                $sheetGvNghi->mergeCells("E".$j.':F'.$j);
-                $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
-                $j++;
-                
-            }
+        $demDSGVSangT2 = count($new_data_giaoviennghi[0]['dsthu'][0]['dsgiaovien']);
+        $demDSGVSangT3 = count($new_data_giaoviennghi[0]['dsthu'][1]['dsgiaovien']);
+        $demDSGVSangT4 = count($new_data_giaoviennghi[0]['dsthu'][2]['dsgiaovien']);
+        $demDSGVSangT5 = count($new_data_giaoviennghi[0]['dsthu'][3]['dsgiaovien']);
+        $demDSGVSangT6 = count($new_data_giaoviennghi[0]['dsthu'][4]['dsgiaovien']);
+        $demDSGVSangT7 = count($new_data_giaoviennghi[0]['dsthu'][5]['dsgiaovien']);
 
-            foreach($n['dsthu'][2]['dsgiaovien'] as $d2){
-                $sheetGvNghi->setCellValue('G'.$k,$d2['hovaten']);
-                $sheetGvNghi->mergeCells("G".$k.':H'.$k);
-                $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
-                $k++;
-                
-            }
+        $demMaxSang = max($demDSGVSangT2,$demDSGVSangT3,$demDSGVSangT4,$demDSGVSangT5,$demDSGVSangT6,$demDSGVSangT7);
 
-            foreach($n['dsthu'][3]['dsgiaovien'] as $d3){
-                $sheetGvNghi->setCellValue('I'.$l,$d3['hovaten']);
-                $sheetGvNghi->mergeCells("I".$l.':J'.$l);
-                $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
-                $l++;
-                
-            }
+        $merCellLastSang = ($i + $demMaxSang) - 1;
 
-            foreach($n['dsthu'][4]['dsgiaovien'] as $d4){
-                $sheetGvNghi->setCellValue('K'.$m,$d4['hovaten']);
-                $sheetGvNghi->mergeCells("K".$m.':L'.$m);
-                $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
-                $m++;
-                
-            }
+        $sheetGvNghi->setCellValue('B'.$i,$new_data_giaoviennghi[0]['tenbuoi']);
+        $sheetGvNghi->mergeCells("B".$i.':B'.$merCellLastSang);
+        $sheetGvNghi->getStyle("B".$i.':B'.$merCellLastSang)->applyFromArray($styleBorderParent);
 
-            foreach($n['dsthu'][5]['dsgiaovien'] as $d5){
-                $sheetGvNghi->setCellValue('M'.$x,$d5['hovaten']);
-                $sheetGvNghi->mergeCells("M".$x.':N'.$x);
-                $sheetGvNghi->getStyle("M".$x.':N'.$x)->applyFromArray($styleBorderChild);
-                $x++;
-                
-            }
-            
+        foreach($new_data_giaoviennghi[0]['dsthu'][0]['dsgiaovien'] as $d){
+            $sheetGvNghi->setCellValue('C'.$h,$d['hovaten']);
+            $sheetGvNghi->mergeCells("C".$h.':D'.$h);
+            $sheetGvNghi->getStyle("C".$h.':D'.$h)->applyFromArray($styleBorderChild);
+            $h++;
+        }
+
+        //cột thứ 2 giá trị rỗng
+        for($h = $h;$h<$merCellLastSang+1;$h++){
+            $sheetGvNghi->mergeCells("C".$h.':D'.$h);
+            $sheetGvNghi->getStyle("C".$h.':D'.$h)->applyFromArray($styleBorderChild);
+        }
+
+        foreach($new_data_giaoviennghi[0]['dsthu'][1]['dsgiaovien'] as $d1){
+            $sheetGvNghi->setCellValue('E'.$j,$d1['hovaten']);
+            $sheetGvNghi->mergeCells("E".$j.':F'.$j);
+            $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
+            $j++;
 
         }
+
+        //cột thứ 3 giá trị rỗng
+        for($j = $j;$j<$merCellLastSang+1;$j++){
+            $sheetGvNghi->mergeCells("E".$j.':F'.$j);
+            $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
+        }
+
+        foreach($new_data_giaoviennghi[0]['dsthu'][2]['dsgiaovien'] as $d2){
+            $sheetGvNghi->setCellValue('G'.$k,$d2['hovaten']);
+            $sheetGvNghi->mergeCells("G".$k.':H'.$k);
+            $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
+            $k++;
+
+        }
+
+        //cột thứ 4 giá trị rỗng
+        for($k = $k;$k<$merCellLastSang+1;$k++){
+            $sheetGvNghi->mergeCells("G".$k.':H'.$k);
+            $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
+        }
+
+        foreach($new_data_giaoviennghi[0]['dsthu'][3]['dsgiaovien'] as $d3){
+            $sheetGvNghi->setCellValue('I'.$l,$d3['hovaten']);
+            $sheetGvNghi->mergeCells("I".$l.':J'.$l);
+            $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
+            $l++;
+
+        }
+
+        //cột thứ 5 giá trị rỗng
+        for($l = $l;$l<$merCellLastSang+1;$l++){
+            $sheetGvNghi->mergeCells("I".$l.':J'.$l);
+            $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
+        }
+
+        foreach($new_data_giaoviennghi[0]['dsthu'][4]['dsgiaovien'] as $d4){
+            $sheetGvNghi->setCellValue('K'.$m,$d4['hovaten']);
+            $sheetGvNghi->mergeCells("K".$m.':L'.$m);
+            $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
+            $m++;
+
+        }
+
+        //cột thứ 6 giá trị rỗng
+        for($m = $m;$m<$merCellLastSang+1;$m++){
+            $sheetGvNghi->mergeCells("K".$m.':L'.$m);
+            $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
+        }
+
+        foreach($new_data_giaoviennghi[0]['dsthu'][5]['dsgiaovien'] as $d5){
+            $sheetGvNghi->setCellValue('M'.$x,$d5['hovaten']);
+            $sheetGvNghi->mergeCells("M".$x.':N'.$x);
+            $sheetGvNghi->getStyle("M".$x.':N'.$x)->applyFromArray($styleBorderChild);
+            $x++;
+
+        }
+
+        //cột thứ 7 giá trị rỗng
+        for($x = $x;$x<$merCellLastSang+1;$x++){
+            $sheetGvNghi->mergeCells("M".$x.':N'.$x);
+            $sheetGvNghi->getStyle("M".$x.':N'.$x)->applyFromArray($styleBorderChild);
+        }
+
+        $iNew = $i + $demMaxSang;
+
+        //chiều
+
+        $demDSGVChieuT2 = count($new_data_giaoviennghi[1]['dsthu'][0]['dsgiaovien']);
+        $demDSGVChieuT3 = count($new_data_giaoviennghi[1]['dsthu'][1]['dsgiaovien']);
+        $demDSGVChieuT4 = count($new_data_giaoviennghi[1]['dsthu'][2]['dsgiaovien']);
+        $demDSGVChieuT5 = count($new_data_giaoviennghi[1]['dsthu'][3]['dsgiaovien']);
+        $demDSGVChieuT6 = count($new_data_giaoviennghi[1]['dsthu'][4]['dsgiaovien']);
+        $demDSGVChieuT7 = count($new_data_giaoviennghi[1]['dsthu'][5]['dsgiaovien']);
+
+        $demMaxChieu = max($demDSGVChieuT2,$demDSGVChieuT3,$demDSGVChieuT4,$demDSGVChieuT5,$demDSGVChieuT6,$demDSGVChieuT7);
+
+        $merCellLastChieu = ($iNew + $demMaxChieu) - 1;
+
+        $sheetGvNghi->setCellValue('B'.$iNew,$new_data_giaoviennghi[1]['tenbuoi']);
+        $sheetGvNghi->mergeCells("B".$iNew.':B'.$merCellLastChieu);
+        $sheetGvNghi->getStyle("B".$iNew.':B'.$merCellLastChieu)->applyFromArray($styleBorderParent);
+
+        foreach($new_data_giaoviennghi[1]['dsthu'][0]['dsgiaovien'] as $d){
+            $sheetGvNghi->setCellValue('C'.$h,$d['hovaten']);
+            $sheetGvNghi->mergeCells("C".$h.':D'.$h);
+            $sheetGvNghi->getStyle("C".$h.':D'.$h)->applyFromArray($styleBorderChild);
+            $h++;
+        }
+
+        //cột thứ 2 giá trị rỗng
+        for($h = $h;$h<$merCellLastChieu+1;$h++){
+            $sheetGvNghi->mergeCells("C".$h.':D'.$h);
+            $sheetGvNghi->getStyle("C".$h.':D'.$h)->applyFromArray($styleBorderChild);
+        }
+
+        foreach($new_data_giaoviennghi[1]['dsthu'][1]['dsgiaovien'] as $d1){
+            $sheetGvNghi->setCellValue('E'.$j,$d1['hovaten']);
+            $sheetGvNghi->mergeCells("E".$j.':F'.$j);
+            $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
+            $j++;
+
+        }
+
+        //cột thứ 3 giá trị rỗng
+        for($j = $j;$j<$merCellLastChieu+1;$j++){
+            $sheetGvNghi->mergeCells("E".$j.':F'.$j);
+            $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
+        }
+
+        foreach($new_data_giaoviennghi[1]['dsthu'][2]['dsgiaovien'] as $d2){
+            $sheetGvNghi->setCellValue('G'.$k,$d2['hovaten']);
+            $sheetGvNghi->mergeCells("G".$k.':H'.$k);
+            $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
+            $k++;
+
+        }
+
+        //cột thứ 4 giá trị rỗng
+        for($k = $k;$k<$merCellLastChieu+1;$k++){
+            $sheetGvNghi->mergeCells("G".$k.':H'.$k);
+            $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
+        }
+
+        foreach($new_data_giaoviennghi[1]['dsthu'][3]['dsgiaovien'] as $d3){
+            $sheetGvNghi->setCellValue('I'.$l,$d3['hovaten']);
+            $sheetGvNghi->mergeCells("I".$l.':J'.$l);
+            $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
+            $l++;
+
+        }
+
+        //cột thứ 5 giá trị rỗng
+        for($l = $l;$l<$merCellLastChieu+1;$l++){
+            $sheetGvNghi->mergeCells("I".$l.':J'.$l);
+            $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
+        }
+
+        foreach($new_data_giaoviennghi[1]['dsthu'][4]['dsgiaovien'] as $d4){
+            $sheetGvNghi->setCellValue('K'.$m,$d4['hovaten']);
+            $sheetGvNghi->mergeCells("K".$m.':L'.$m);
+            $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
+            $m++;
+
+        }
+
+        //cột thứ 6 giá trị rỗng
+        for($m = $m;$m<$merCellLastChieu+1;$m++){
+            $sheetGvNghi->mergeCells("K".$m.':L'.$m);
+            $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
+        }
+
+        foreach($new_data_giaoviennghi[1]['dsthu'][5]['dsgiaovien'] as $d5){
+            $sheetGvNghi->setCellValue('M'.$x,$d5['hovaten']);
+            $sheetGvNghi->mergeCells("M".$x.':N'.$x);
+            $sheetGvNghi->getStyle("M".$x.':N'.$x)->applyFromArray($styleBorderChild);
+            $x++;
+
+        }
+
+        //cột thứ 7 giá trị rỗng
+        for($x = $x;$x<$merCellLastChieu+1;$x++){
+            $sheetGvNghi->mergeCells("M".$x.':N'.$x);
+            $sheetGvNghi->getStyle("M".$x.':N'.$x)->applyFromArray($styleBorderChild);
+        }
+
 
         $this->saveExcel($sheet, 'dsgiaoviennghi');
 

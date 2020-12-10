@@ -304,6 +304,7 @@ async function exportExcel() {
     }
     if (xuatgiaoviennghi.checked) {
         gvNghi = 1;
+        arrFile.push("dsgiaoviennghi");
     }
 
     try {

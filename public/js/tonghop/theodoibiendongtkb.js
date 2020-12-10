@@ -113,6 +113,7 @@ async function loaddanhsachtruong() {
                             loaddanhsachkhoilop(datadskhoi, datadslop);
                             loaddatatkbgv(matruong);
                             loaddatatkblop(matruong);
+                            loaddanhsachcothoikhoabieu(matruong);
                             document.getElementById("formxemtkb").style.display = "block";
                         },
                     })
@@ -139,7 +140,14 @@ function loaddanhsachgv(datadsgv) {
     });
 
     $('#idselectgv').on('change',function(){
-        //đếm bảng tồn tại trong div
+        var sel = document.getElementById("idselectgv");
+        var text= sel.options[sel.selectedIndex].text;
+        var idgv = sel.options[sel.selectedIndex].value;
+        $('#idgv').val(idgv);
+        // var idtruonggv = $('#idtruonggv').val();
+        $('#idtengv').text(text);
+
+        // đếm bảng tồn tại trong div
         var dembang = $('#divResults').children('div').length;
         for(let m=0;m<dembang;m++){
             $('#divResults').children('div').remove();
@@ -147,16 +155,29 @@ function loaddanhsachgv(datadsgv) {
         if($('#divResults').children('div').length == 0){
             document.getElementById("cardxeptkbgiaovien").style.display = "none";
         }
-        $('#datepickerthangtuan').val('');
-        $('#selecttuan').val('none');
-        $('#datepickerthang input').val('');
-        $('#datepickernam input').val('');
-        var sel = document.getElementById("idselectgv");
-        var text= sel.options[sel.selectedIndex].text;
-        var idgv = sel.options[sel.selectedIndex].value;
-        $('#idgv').val(idgv);
-        // var idtruonggv = $('#idtruonggv').val();
-        $('#idtengv').text(text);
+        
+        // tuần
+        let timeGvThangNamTuan = $('#datepickerthangtuan').val();
+        let timeGvTuan = $('#selecttuan').val();
+        if(timeGvThangNamTuan != '' && timeGvTuan != null){
+            $('#selecttuan').trigger('change');
+        }
+        //tháng
+        let timeGvThangNamThang = $('#datepickerthang input').val();
+        if(timeGvThangNamThang != ''){
+            $('#datepickerthang input').trigger('change');
+        }
+        //năm
+        let timeGvNam = $('#datepickernam input').val();
+        if(timeGvNam != ''){
+            $('#datepickernam input').trigger('change');
+        }
+
+        // $('#datepickerthangtuan').val('');
+        // $('#selecttuan').val('none');
+        // $('#datepickerthang input').val('');
+        // $('#datepickernam input').val('');
+        
     });
 
 }
@@ -179,10 +200,10 @@ function loaddanhsachkhoilop(datadskhoi, datadslop) {
     $('#idselectkhoi').on('change', function() {
         document.getElementById("cardxeptkblop").style.display = "none";
         $('#idselectlop').find('option').remove();
-        $('#datepickerthangtuanlop').val('');
-        $('#datepickerthanglop input').val('');
-        $('#datepickernamlop input').val('');
-        $('#selecttuanlop').val('none');
+        // $('#datepickerthangtuanlop').val('');
+        // $('#datepickerthanglop input').val('');
+        // $('#datepickernamlop input').val('');
+        // $('#selecttuanlop').val('none');
         $('#idselectlop').append("<option></option>");
         var datakhoi = $(this).val();
         for (var j = 0; j < datadslop.length; j++) {
@@ -194,6 +215,29 @@ function loaddanhsachkhoilop(datadskhoi, datadslop) {
                 selectListLop.appendChild(optionLop);
             }
         }
+        // tuần
+        let timeLopThangNamTuan = $('#datepickerthangtuanlop').val();
+        let timeLopTuan = $('#selecttuanlop').val();
+        if(timeLopThangNamTuan != '' && timeLopTuan != null){
+            
+        }else{
+            $('#datepickerthangtuanlop').val('');
+            $('#selecttuanlop').val('none');
+        }
+        //tháng
+        let timeLopThangNamThang = $('#datepickerthanglop input').val();
+        if(timeLopThangNamThang != ''){
+            
+        }else{
+            $('#datepickerthanglop input').val('');
+        }
+        //năm
+        let timeLopNam = $('#datepickernamlop input').val();
+        if(timeLopNam != ''){
+            
+        }else{
+            $('#datepickernamlop input').val('');
+        }
     });
     $('#idselectkhoi').select2({
         width: '50%'
@@ -203,6 +247,14 @@ function loaddanhsachkhoilop(datadskhoi, datadslop) {
     });
 
     $('#idselectlop').on('change',function(){
+
+        var sel = document.getElementById("idselectlop");
+        var text= sel.options[sel.selectedIndex].text;
+        var idlop = sel.options[sel.selectedIndex].value;
+        var idtruonglop = $('#idtruonglop').val();
+        $('#idlop').val(idlop);
+        $('#idtenlop').text(text);
+
         //đếm bảng tồn tại trong div
         var dembang = $('#divResultsLop').children('div').length;
         for(let m=0;m<dembang;m++){
@@ -211,16 +263,28 @@ function loaddanhsachkhoilop(datadskhoi, datadslop) {
         if($('#divResultsLop').children('div').length == 0){
             document.getElementById("cardxeptkblop").style.display = "none";
         }
-        $('#datepickerthanglop input').val('');
-        $('#datepickernamlop input').val('');
-        $('#datepickerthangtuanlop').val('');
-        $('#selecttuanlop').val('none');
-        var sel = document.getElementById("idselectlop");
-        var text= sel.options[sel.selectedIndex].text;
-        var idlop = sel.options[sel.selectedIndex].value;
-        var idtruonglop = $('#idtruonglop').val();
-        $('#idlop').val(idlop);
-        $('#idtenlop').text(text);
+
+        // tuần
+        let timeLopThangNamTuan = $('#datepickerthangtuanlop').val();
+        let timeLopTuan = $('#selecttuanlop').val();
+        if(timeLopThangNamTuan != '' && timeLopTuan != null){
+            $('#selecttuanlop').trigger('change');
+        }
+        //tháng
+        let timeLopThangNamThang = $('#datepickerthanglop input').val();
+        if(timeLopThangNamThang != ''){
+            $('#datepickerthanglop input').trigger('change');
+        }
+        //năm
+        let timeLopNam = $('#datepickernamlop input').val();
+        if(timeLopNam != ''){
+            $('#datepickernamlop input').trigger('change');
+        }
+
+        // $('#datepickerthanglop input').val('');
+        // $('#datepickernamlop input').val('');
+        // $('#datepickerthangtuanlop').val('');
+        // $('#selecttuanlop').val('none');
 
     });
 
@@ -286,6 +350,331 @@ function phantranglop(){
     });
 }
 
+// load danh sách có thời khoá biểu 
+
+function loaddanhsachcothoikhoabieu(matruong) {
+    axios.get(`getthoikhoabieutruong/${matruong}`).then(restkbtruong => {
+        let layDataTkbTruong = restkbtruong.data;
+
+        // giáo viên
+        let tableDsCoTKBGvTuan = $('#tableDsCoTKBGvTuan').DataTable();
+        let tableDsCoTKBGvThang = $('#tableDsCoTKBGvThang').DataTable();
+        let tableDsCoTKBGvNam = $('#tableDsCoTKBGvNam').DataTable();
+
+        tableDsCoTKBGvTuan.destroy();
+        tableDsCoTKBGvThang.destroy();
+        tableDsCoTKBGvNam.destroy();
+
+        $('#bodyDSCoTKBGvTuan').empty();
+        $('#bodyDSCoTKBGvThang').empty();
+        $('#bodyDSCoTKBGvNam').empty();
+
+        // lớp
+        let tableDsCoTKBLopTuan = $('#tableDsCoTKBLopTuan').DataTable();
+        let tableDsCoTKBLopThang = $('#tableDsCoTKBLopThang').DataTable();
+        let tableDsCoTKBLopNam = $('#tableDsCoTKBLopNam').DataTable();
+
+        tableDsCoTKBLopTuan.destroy();
+        tableDsCoTKBLopThang.destroy();
+        tableDsCoTKBLopNam.destroy();
+
+        $('#bodyDSCoTKBLopTuan').empty();
+        $('#bodyDSCoTKBLopThang').empty();
+        $('#bodyDSCoTKBLopNam').empty();
+
+        //giáo viên
+        let sttGvTuan = 0;
+        let sttGvThang = 0;
+        let sttGvNam = 0;
+
+        //lớp
+        let sttLopTuan = 0;
+        let sttLopThang = 0;
+        let sttLopNam = 0;
+
+        //ds thời gian có tkb giáo viên theo tuần
+
+        layDataTkbTruong.forEach(function(iTem){
+            let truongItem = iTem.matruong;
+            let dataNam = iTem.dsnam;
+            dataNam.forEach(function(iTem1){
+                let namItem1 = iTem1.nam;
+                let dataThang = iTem1.dsthang;
+                dataThang.forEach(function(iTem2){
+                    let thangItem2 = iTem2.thang;
+                    let dataTuan = iTem2.dstuan;
+                    dataTuan.forEach(function(iTem3){
+
+                        let noidungbang = "";
+
+                        sttGvTuan++;
+
+                        noidungbang += "<tr>"
+                        +"<td>"+ sttGvTuan + "</td>"
+                        +"<td>"+ "Tuần "+iTem3.tuan+ "- Tháng "+thangItem2+ "- Năm "+namItem1 + "</td>"
+                        +"<td><button type='button' class='btn btn-primary btn-sm classButtonGvTuan' data-tuan= "+iTem3.tuan+" data-thang= "+thangItem2+" data-nam="+namItem1+"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
+                        +"</tr>";
+
+                        $("tbody#bodyDSCoTKBGvTuan").append(noidungbang);
+                    });
+                });
+            });
+        });
+
+        $('#tableDsCoTKBGvTuan').DataTable({
+            "bLengthChange" : false,
+            "oLanguage": {
+                "sProcessing":   "Đang xử lý...",
+                "sLengthMenu":   "Xem _MENU_ mục",
+                "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+                "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                "sInfoPostFix":  "",
+                "sSearch":       "Tìm:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Đầu",
+                    "sPrevious": "Trước",
+                    "sNext":     "Tiếp",
+                    "sLast":     "Cuối"
+                }
+            }   
+        });
+
+        //ds thời gian có tkb giáo viên theo tháng
+
+        layDataTkbTruong.forEach(function(iTem){
+            let truongItem = iTem.matruong;
+            let dataNam = iTem.dsnam;
+            dataNam.forEach(function(iTem1){
+                let namItem1 = iTem1.nam;
+                let dataThang = iTem1.dsthang;
+                dataThang.forEach(function(iTem2){
+
+                    let noidungbang = "";
+
+                    sttGvThang++;
+
+                    noidungbang += "<tr>"
+                    +"<td>"+ sttGvThang + "</td>"
+                    +"<td>"+ "Tháng "+iTem2.thang+ "- Năm "+namItem1 + "</td>"
+                    +"<td><button type='button' class='btn btn-primary btn-sm classButtonGvThang' data-thang= "+iTem2.thang+" data-nam="+namItem1+"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
+                    +"</tr>";
+
+                    $("tbody#bodyDSCoTKBGvThang").append(noidungbang);
+                });
+            });
+        });
+
+        $('#tableDsCoTKBGvThang').DataTable({
+            "bLengthChange" : false,
+            "oLanguage": {
+                "sProcessing":   "Đang xử lý...",
+                "sLengthMenu":   "Xem _MENU_ mục",
+                "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+                "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                "sInfoPostFix":  "",
+                "sSearch":       "Tìm:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Đầu",
+                    "sPrevious": "Trước",
+                    "sNext":     "Tiếp",
+                    "sLast":     "Cuối"
+                }
+            }   
+        });
+
+        //ds thời gian có tkb giáo viên theo năm
+
+        layDataTkbTruong.forEach(function(iTem){
+            let truongItem = iTem.matruong;
+            let dataNam = iTem.dsnam;
+            dataNam.forEach(function(iTem1){
+
+                let noidungbang = "";
+
+                sttGvNam++;
+
+                noidungbang += "<tr>"
+                +"<td>"+ sttGvNam + "</td>"
+                +"<td>"+ "Năm "+iTem1.nam + "</td>"
+                +"<td><button type='button' class='btn btn-primary btn-sm classButtonGvNam' data-nam="+iTem1.nam+"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
+                +"</tr>";
+
+                $("tbody#bodyDSCoTKBGvNam").append(noidungbang);
+            });
+        });
+
+        $('#tableDsCoTKBGvNam').DataTable({
+            "bLengthChange" : false,
+            "oLanguage": {
+                "sProcessing":   "Đang xử lý...",
+                "sLengthMenu":   "Xem _MENU_ mục",
+                "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+                "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                "sInfoPostFix":  "",
+                "sSearch":       "Tìm:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Đầu",
+                    "sPrevious": "Trước",
+                    "sNext":     "Tiếp",
+                    "sLast":     "Cuối"
+                }
+            }   
+        });
+
+        //ds thời gian có tkb lớp theo tuần
+
+        layDataTkbTruong.forEach(function(iTem){
+            let truongItem = iTem.matruong;
+            let dataNam = iTem.dsnam;
+            dataNam.forEach(function(iTem1){
+                let namItem1 = iTem1.nam;
+                let dataThang = iTem1.dsthang;
+                dataThang.forEach(function(iTem2){
+                    let thangItem2 = iTem2.thang;
+                    let dataTuan = iTem2.dstuan;
+                    dataTuan.forEach(function(iTem3){
+
+                        let noidungbang = "";
+
+                        sttLopTuan++;
+
+                        noidungbang += "<tr>"
+                        +"<td>"+ sttLopTuan + "</td>"
+                        +"<td>"+ "Tuần "+iTem3.tuan+ "- Tháng "+thangItem2+ "- Năm "+namItem1 + "</td>"
+                        +"<td><button type='button' class='btn btn-primary btn-sm classButtonLopTuan' data-tuan= "+iTem3.tuan+" data-thang= "+thangItem2+" data-nam="+namItem1+"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
+                        +"</tr>";
+
+                        $("tbody#bodyDSCoTKBLopTuan").append(noidungbang);
+                    });
+                });
+            });
+        });
+
+        $('#tableDsCoTKBLopTuan').DataTable({
+            "bLengthChange" : false,
+            "oLanguage": {
+                "sProcessing":   "Đang xử lý...",
+                "sLengthMenu":   "Xem _MENU_ mục",
+                "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+                "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                "sInfoPostFix":  "",
+                "sSearch":       "Tìm:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Đầu",
+                    "sPrevious": "Trước",
+                    "sNext":     "Tiếp",
+                    "sLast":     "Cuối"
+                }
+            }   
+        });
+
+        //ds thời gian có tkb lớp theo tháng
+
+        layDataTkbTruong.forEach(function(iTem){
+            let truongItem = iTem.matruong;
+            let dataNam = iTem.dsnam;
+            dataNam.forEach(function(iTem1){
+                let namItem1 = iTem1.nam;
+                let dataThang = iTem1.dsthang;
+                dataThang.forEach(function(iTem2){
+
+                    let noidungbang = "";
+
+                    sttLopThang++;
+
+                    noidungbang += "<tr>"
+                    +"<td>"+ sttLopThang + "</td>"
+                    +"<td>"+ "Tháng "+iTem2.thang+ "- Năm "+namItem1 + "</td>"
+                    +"<td><button type='button' class='btn btn-primary btn-sm classButtonLopThang' data-thang= "+iTem2.thang+" data-nam="+namItem1+"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
+                    +"</tr>";
+
+                    $("tbody#bodyDSCoTKBLopThang").append(noidungbang);
+                });
+            });
+        });
+
+        $('#tableDsCoTKBLopThang').DataTable({
+            "bLengthChange" : false,
+            "oLanguage": {
+                "sProcessing":   "Đang xử lý...",
+                "sLengthMenu":   "Xem _MENU_ mục",
+                "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+                "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                "sInfoPostFix":  "",
+                "sSearch":       "Tìm:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Đầu",
+                    "sPrevious": "Trước",
+                    "sNext":     "Tiếp",
+                    "sLast":     "Cuối"
+                }
+            }   
+        });
+
+        //ds thời gian có tkb lớp theo năm
+
+        layDataTkbTruong.forEach(function(iTem){
+            let truongItem = iTem.matruong;
+            let dataNam = iTem.dsnam;
+            dataNam.forEach(function(iTem1){
+
+                let noidungbang = "";
+
+                sttLopNam++;
+
+                noidungbang += "<tr>"
+                +"<td>"+ sttLopNam + "</td>"
+                +"<td>"+ "Năm "+iTem1.nam + "</td>"
+                +"<td><button type='button' class='btn btn-primary btn-sm classButtonLopNam' data-nam="+iTem1.nam+"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
+                +"</tr>";
+
+                $("tbody#bodyDSCoTKBLopNam").append(noidungbang);
+            });
+        });
+
+        $('#tableDsCoTKBLopNam').DataTable({
+            "bLengthChange" : false,
+            "oLanguage": {
+                "sProcessing":   "Đang xử lý...",
+                "sLengthMenu":   "Xem _MENU_ mục",
+                "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+                "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                "sInfoPostFix":  "",
+                "sSearch":       "Tìm:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Đầu",
+                    "sPrevious": "Trước",
+                    "sNext":     "Tiếp",
+                    "sLast":     "Cuối"
+                }
+            }   
+        });
+
+        
+
+    });
+    
+
+}
+
 window.onload = function() {
 
     loaddanhsachtruong();
@@ -346,12 +735,12 @@ window.onload = function() {
 
     $('#datepickerthangtuan').on('change',function(){
         $('#selecttuan').val('none');
-        let valSelectgv = $('#idselectgv').val();
-        if(valSelectgv == null){
-            alert('Vui lòng chọn giáo viên');
-            $(this).val('');
-            return;
-        }
+        // let valSelectgv = $('#idselectgv').val();
+        // if(valSelectgv == null){
+        //     alert('Vui lòng chọn giáo viên');
+        //     $(this).val('');
+        //     return;
+        // }
     });
 
     $("#datepickerthang").datepicker({
@@ -1058,18 +1447,18 @@ window.onload = function() {
 
     $('#datepickerthangtuanlop').on('change',function(){
         $('#selecttuanlop').val('none');
-        let valSelectkhoi = $('#idselectkhoi').val();
-        let valSelectlop = $('#idselectlop').val();
-        if(valSelectkhoi == null){
-            alert('Vui lòng chọn khối');
-            $(this).val('');
-            return;
-        }
-        if(valSelectlop == ''){
-            alert('Vui lòng chọn lớp');
-            $(this).val('');
-            return;
-        }
+        // let valSelectkhoi = $('#idselectkhoi').val();
+        // let valSelectlop = $('#idselectlop').val();
+        // if(valSelectkhoi == null){
+        //     alert('Vui lòng chọn khối');
+        //     $(this).val('');
+        //     return;
+        // }
+        // if(valSelectlop == ''){
+        //     alert('Vui lòng chọn lớp');
+        //     $(this).val('');
+        //     return;
+        // }
     });
 
     $("#datepickerthanglop").datepicker({
@@ -1892,6 +2281,215 @@ window.onload = function() {
         document.getElementById("divtuanlop").style.display = "none";
         document.getElementById("divthanglop").style.display = "none";
         document.getElementById("divnamlop").style.display = "none";
+    });
+
+    //button hiển thị ds có tkb
+
+    //giáo viên
+
+    $('#btnDSCoTKBGvTuan').on('click',function(){
+        let tableDsCoTKBGvTuan = $('#tableDsCoTKBGvTuan').dataTable();
+        
+        let dataDsCoTKBGvTuan = tableDsCoTKBGvTuan.fnGetData();
+
+        if (dataDsCoTKBGvTuan.length == 0) {
+            Swal.fire(
+              'Thông báo',
+              'Không có thời gian nào có thời khoá biểu',
+              'info'
+            );
+            return false;
+        } else{
+            $('#modalDsCoTKBGvTuan').modal('show');
+        }
+    });
+
+    $('#btnDSCoTKBGvThang').on('click',function(){
+        let tableDsCoTKBGvThang = $('#tableDsCoTKBGvThang').dataTable();
+        
+        let dataDsCoTKBGvThang = tableDsCoTKBGvThang.fnGetData();
+
+        if (dataDsCoTKBGvThang.length == 0) {
+            Swal.fire(
+              'Thông báo',
+              'Không có thời gian nào có thời khoá biểu',
+              'info'
+            );
+            return false;
+        } else{
+            $('#modalDsCoTKBGvThang').modal('show');
+        }
+    });
+
+    $('#btnDSCoTKBGvNam').on('click',function(){
+        let tableDsCoTKBGvNam = $('#tableDsCoTKBGvNam').dataTable();
+        
+        let dataDsCoTKBGvNam = tableDsCoTKBGvNam.fnGetData();
+
+        if (dataDsCoTKBGvNam.length == 0) {
+            Swal.fire(
+              'Thông báo',
+              'Không có thời gian nào có thời khoá biểu',
+              'info'
+            );
+            return false;
+        } else{
+            $('#modalDsCoTKBGvNam').modal('show');
+        }
+    });
+
+    //lớp
+
+    $('#btnDSCoTKBLopTuan').on('click',function(){
+        let tableDsCoTKBLopTuan = $('#tableDsCoTKBLopTuan').dataTable();
+        
+        let dataDsCoTKBLopTuan = tableDsCoTKBLopTuan.fnGetData();
+
+        if (dataDsCoTKBLopTuan.length == 0) {
+            Swal.fire(
+              'Thông báo',
+              'Không có thời gian nào có thời khoá biểu',
+              'info'
+            );
+            return false;
+        } else{
+            $('#modalDsCoTKBLopTuan').modal('show');
+        }
+    });
+
+    $('#btnDSCoTKBLopThang').on('click',function(){
+        let tableDsCoTKBLopThang = $('#tableDsCoTKBLopThang').dataTable();
+        
+        let dataDsCoTKBLopThang = tableDsCoTKBLopThang.fnGetData();
+
+        if (dataDsCoTKBLopThang.length == 0) {
+            Swal.fire(
+              'Thông báo',
+              'Không có thời gian nào có thời khoá biểu',
+              'info'
+            );
+            return false;
+        } else{
+            $('#modalDsCoTKBLopThang').modal('show');
+        }
+    });
+
+    $('#btnDSCoTKBLopNam').on('click',function(){
+        let tableDsCoTKBLopNam = $('#tableDsCoTKBLopNam').dataTable();
+        
+        let dataDsCoTKBLopNam = tableDsCoTKBLopNam.fnGetData();
+
+        if (dataDsCoTKBLopNam.length == 0) {
+            Swal.fire(
+              'Thông báo',
+              'Không có thời gian nào có thời khoá biểu',
+              'info'
+            );
+            return false;
+        } else{
+            $('#modalDsCoTKBLopNam').modal('show');
+        }
+    });
+
+    //xử lý click thời gian có tkb gv theo tuần
+
+    $("#tableDsCoTKBGvTuan tbody").on("click", ".classButtonGvTuan", function() {
+        let tuan = $(this).data('tuan');
+        let thang = $(this).data('thang');
+        let nam = $(this).data('nam');
+        let thangNam = thang+"/"+nam;
+        let selectGv = $('#idselectgv').val();
+        if(selectGv != null){
+            $('#datepickerthangtuan').val(thangNam).trigger('change');
+            $('#selecttuan').val(tuan).trigger('change');
+        }else{
+            $('#datepickerthangtuan').val(thangNam).trigger('change');
+            $('#selecttuan').val(tuan);
+        }
+        
+        $('#modalDsCoTKBGvTuan').modal('hide');
+    });
+
+    //xử lý click thời gian có tkb gv theo tháng
+
+    $("#tableDsCoTKBGvThang tbody").on("click", ".classButtonGvThang", function() {
+        let thang = $(this).data('thang');
+        let nam = $(this).data('nam');
+        let thangNam = thang+"/"+nam;
+        let selectGv = $('#idselectgv').val();
+        if(selectGv != null){
+            $('#datepickerthang input').val(thangNam).trigger('change');
+        }else{
+            $('#datepickerthang input').val(thangNam);
+        }
+        
+        $('#modalDsCoTKBGvThang').modal('hide');
+    });
+
+    //xử lý click thời gian có tkb gv theo năm
+
+    $("#tableDsCoTKBGvNam tbody").on("click", ".classButtonGvNam", function() {
+        let nam = $(this).data('nam');
+        let selectGv = $('#idselectgv').val();
+        if(selectGv != null){
+            $('#datepickernam input').val(nam).trigger('change');
+        }else{
+            $('#datepickernam input').val(nam);
+        }
+        
+        $('#modalDsCoTKBGvNam').modal('hide');
+    });
+
+    //xử lý click thời gian có tkb lớp theo tuần
+
+    $("#tableDsCoTKBLopTuan tbody").on("click", ".classButtonLopTuan", function() {
+        let tuan = $(this).data('tuan');
+        let thang = $(this).data('thang');
+        let nam = $(this).data('nam');
+        let thangNam = thang+"/"+nam;
+        let selectKhoi = $('#idselectkhoi').val();
+        let selectLop = $('#idselectlop').val();
+        if(selectKhoi != null && selectLop != null){
+            $('#datepickerthangtuanlop').val(thangNam).trigger('change');
+            $('#selecttuanlop').val(tuan).trigger('change');
+        }else{
+            $('#datepickerthangtuanlop').val(thangNam).trigger('change');
+            $('#selecttuanlop').val(tuan);
+        }
+        
+        $('#modalDsCoTKBLopTuan').modal('hide');
+    });
+
+    //xử lý click thời gian có tkb lớp theo tháng
+
+    $("#tableDsCoTKBLopThang tbody").on("click", ".classButtonLopThang", function() {
+        let thang = $(this).data('thang');
+        let nam = $(this).data('nam');
+        let thangNam = thang+"/"+nam;
+        let selectKhoi = $('#idselectkhoi').val();
+        let selectLop = $('#idselectlop').val();
+        if(selectKhoi != null && selectLop != null){
+            $('#datepickerthanglop input').val(thangNam).trigger('change');
+        }else{
+            $('#datepickerthanglop input').val(thangNam);
+        }
+        
+        $('#modalDsCoTKBLopThang').modal('hide');
+    });
+
+    //xử lý click thời gian có tkb lớp theo năm
+
+    $("#tableDsCoTKBLopNam tbody").on("click", ".classButtonLopNam", function() {
+        let nam = $(this).data('nam');
+        let selectKhoi = $('#idselectkhoi').val();
+        let selectLop = $('#idselectlop').val();
+        if(selectKhoi != null && selectLop != null){
+            $('#datepickernamlop input').val(nam).trigger('change');
+        }else{
+            $('#datepickernamlop input').val(nam);
+        }
+        
+        $('#modalDsCoTKBLopNam').modal('hide');
     });
 
 }
