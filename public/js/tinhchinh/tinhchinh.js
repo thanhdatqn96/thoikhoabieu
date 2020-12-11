@@ -1502,9 +1502,14 @@ function initEvent () {
 		if(valType == 1){
 			document.getElementById('divExportToanTruong').style.display = "block";
 			document.getElementById('divExportToChuyenMon').style.display = "none";
+			document.getElementById('cardXemExportKetQuaDanhGiaGv').style.display = "none";
+			$('#selectToChuyenMonExport').val('none').trigger('change');
+            $('#selectNamToChuyenMonExport').val('');
 		}else{
 			document.getElementById('divExportToChuyenMon').style.display = "block";
 			document.getElementById('divExportToanTruong').style.display = "none";
+			document.getElementById('cardXemExportKetQuaDanhGiaGv').style.display = "none";
+			$('#selectNamToanTruongExport').val('');
 		}
 	});
 
@@ -1592,6 +1597,134 @@ function initEvent () {
 
 	$('#selectToChuyenMonExport').on('change',function(){
 		$('#selectNamToChuyenMonExport').val('');
+		document.getElementById('cardXemExportKetQuaDanhGiaGv').style.display = "none";
+	});
+
+	//xem xuất kết quả đánh giá giáo viên toàn trường
+	$('#selectNamToanTruongExport').on('change',function(){
+		$('#modalLoading').modal('show');
+		let valNamXemTr = $(this).val();
+		axios.get(`getXemExportDGGVToanTruong/${valNamXemTr}`).then(res => {
+			let layDataDGGVToanTruong = res.data;
+			if(layDataDGGVToanTruong == '') {
+				$('#modalLoading').modal('hide');
+				Swal.fire(
+                  'Thông báo',
+                  'Không có kết quả đánh giá giáo viên',
+                  'info'
+                );
+                document.getElementById('cardXemExportKetQuaDanhGiaGv').style.display = "none";
+				return false;
+			}else{
+				$('#tieuDeThoiGian').text("(Năm: "+valNamXemTr+")");
+
+				$('#bodyXemExportKetQuaDanhGiaGv').empty();
+
+				let noidungbang = '';
+
+				for(let i=0;i<layDataDGGVToanTruong.length;i++){
+					let noidungbangChild = '';
+					let demDSGV = layDataDGGVToanTruong[i].dsgiaovien.length;
+					for(let j=0;j<demDSGV;j++){
+						let dataGV = layDataDGGVToanTruong[i].dsgiaovien[j];
+						noidungbangChild += "<tr>"
+						+"<td style='width: 100px;position: sticky;z-index: 5;left: 0px;background-color: #FAFAD2; min-width: 100px;max-width: 100px;'>"+ dataGV.stt + "</td>"
+						+"<td style='width: 100px;position: sticky;z-index: 5;left: 100px;background-color: #FAFAD2; min-width: 100px;max-width: 100px;'>"+ dataGV.hovaten + "</td>"
+						+"<td>"+ dataGV.tc1 + "</td>"
+						+"<td>"+ dataGV.tc2 + "</td>"
+						+"<td>"+ dataGV.tc3 + "</td>"
+						+"<td>"+ dataGV.tc4 + "</td>"
+						+"<td>"+ dataGV.tc5 + "</td>"
+						+"<td>"+ dataGV.tc6 + "</td>"
+						+"<td>"+ dataGV.tc7 + "</td>"
+						+"<td>"+ dataGV.tc8 + "</td>"
+						+"<td>"+ dataGV.tc9 + "</td>"
+						+"<td>"+ dataGV.tc10 + "</td>"
+						+"<td>"+ dataGV.tc11 + "</td>"
+						+"<td>"+ dataGV.tc12 + "</td>"
+						+"<td>"+ dataGV.tc13 + "</td>"
+						+"<td>"+ dataGV.tc14 + "</td>"
+						+"<td>"+ dataGV.tc15 + "</td>"
+						+"<td>"+ dataGV.xeploai + "</td>"
+	                    +"</tr>";
+					}
+					noidungbang += "<tr>"
+                    +"<td colspan='2' style='position: sticky;z-index: 5;left: -2px;background-color: #FFFAFA;'><b>"+ layDataDGGVToanTruong[i].tentochuyenmon + "</b></td>"
+                    +"<td colspan='16'></td>"
+                    +noidungbangChild
+                    +"</tr>";
+				}
+
+				$("tbody#bodyXemExportKetQuaDanhGiaGv").append(noidungbang);
+				$('#modalLoading').modal('hide');
+				document.getElementById("cardXemExportKetQuaDanhGiaGv").style.display = "block";
+			}
+		});
+
+	});
+
+	//xem xuất kết quả đánh giá giáo viên tổ chuyên môn
+	$('#selectNamToChuyenMonExport').on('change',function(){
+		$('#modalLoading').modal('show');
+		let valTCMXuat = $('#selectToChuyenMonExport').val();
+		let valNamXuat = $(this).val();
+		axios.get(`getXemExportDGGVToChuyenMon/${valTCMXuat}/${valNamXuat}`).then(res => {
+			let layDataDGGVTCM = res.data;
+			if(layDataDGGVTCM == '') {
+				$('#modalLoading').modal('hide');
+				Swal.fire(
+                  'Thông báo',
+                  'Không có kết quả đánh giá giáo viên',
+                  'info'
+                );
+                document.getElementById('cardXemExportKetQuaDanhGiaGv').style.display = "none";
+				return false;
+			}else{
+				$('#tieuDeThoiGian').text("(Năm: "+valNamXuat+")");
+
+				$('#bodyXemExportKetQuaDanhGiaGv').empty();
+
+				let noidungbang = '';
+
+				for(let i=0;i<layDataDGGVTCM.length;i++){
+					let noidungbangChild = '';
+					let demDSGV = layDataDGGVTCM[i].dsgiaovien.length;
+					for(let j=0;j<demDSGV;j++){
+						let dataGV = layDataDGGVTCM[i].dsgiaovien[j];
+						noidungbangChild += "<tr>"
+						+"<td style='width: 100px;position: sticky;z-index: 5;left: 0px;background-color: #FAFAD2; min-width: 100px;max-width: 100px;'>"+ dataGV.stt + "</td>"
+						+"<td style='width: 100px;position: sticky;z-index: 5;left: 100px;background-color: #FAFAD2; min-width: 100px;max-width: 100px;'>"+ dataGV.hovaten + "</td>"
+						+"<td>"+ dataGV.tc1 + "</td>"
+						+"<td>"+ dataGV.tc2 + "</td>"
+						+"<td>"+ dataGV.tc3 + "</td>"
+						+"<td>"+ dataGV.tc4 + "</td>"
+						+"<td>"+ dataGV.tc5 + "</td>"
+						+"<td>"+ dataGV.tc6 + "</td>"
+						+"<td>"+ dataGV.tc7 + "</td>"
+						+"<td>"+ dataGV.tc8 + "</td>"
+						+"<td>"+ dataGV.tc9 + "</td>"
+						+"<td>"+ dataGV.tc10 + "</td>"
+						+"<td>"+ dataGV.tc11 + "</td>"
+						+"<td>"+ dataGV.tc12 + "</td>"
+						+"<td>"+ dataGV.tc13 + "</td>"
+						+"<td>"+ dataGV.tc14 + "</td>"
+						+"<td>"+ dataGV.tc15 + "</td>"
+						+"<td>"+ dataGV.xeploai + "</td>"
+	                    +"</tr>";
+					}
+					noidungbang += "<tr>"
+                    +"<td colspan='2' style='position: sticky;z-index: 5;left: -2px;background-color: #FFFAFA;'><b>"+ layDataDGGVTCM[i].tentochuyenmon + "</b></td>"
+                    +"<td colspan='16'></td>"
+                    +noidungbangChild
+                    +"</tr>";
+				}
+
+				$("tbody#bodyXemExportKetQuaDanhGiaGv").append(noidungbang);
+				$('#modalLoading').modal('hide');
+				document.getElementById("cardXemExportKetQuaDanhGiaGv").style.display = "block";
+			}
+		});
+
 	});
 
 }

@@ -21,7 +21,10 @@ use Auth;
 use DB;
 use stdClass;
 use Carbon;
-use Session; 
+use Session;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator; 
 
 class xemtkbController extends Controller
 {
@@ -199,7 +202,7 @@ class xemtkbController extends Controller
 			}
 			$new_data_tkb[] = array('matruong' => $k, 'dsnam'=> $datanam);
 		}
-
+		
 		return json_encode($new_data_tkb, JSON_UNESCAPED_UNICODE);
 	}
 

@@ -82,14 +82,28 @@ async function loaddanhsachtruong() {
             caption: "Số giáo viên",
             dataField: "demdsgv"
         }, 
-        // {
-        //     caption: "Số học sinh",
-        //     dataField: "demdsgv"
-        // }, 
+        {
+            caption:"Thời khoá biểu",
+            dataField: "tkb",
+            alignment: "center", 
+            cellTemplate: function(element, info) {
+                let dulieuTKB= info.value;
+                if(dulieuTKB == 1){
+                    $(
+                        "<button type='button' class='btn btn-success btn-sm'><i class='fa fa-check' aria-hidden='true'></i></button>"
+                    ).appendTo(element);
+                }else{
+                    $(
+                        "<button type='button' class='btn btn-warning btn-sm'><i class='fa fa-times' aria-hidden='true'></i></button>"
+                    ).appendTo(element);
+                }   
+            },
+            width: 110,
+        }, 
         {
             fixed: true,
             fixedPosition: "right",
-            caption: "",
+            caption: "Xem",
             cellTemplate: function(container, options) {
                 container.addClass("center");
                 $("<div>")

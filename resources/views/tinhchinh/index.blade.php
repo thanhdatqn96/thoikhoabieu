@@ -85,8 +85,8 @@
 						<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
 						<div class="heading-elements">
 							<ul class="list-inline mb-0">
-								<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-								<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+								<!-- <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+								<li><a data-action="expand"><i class="ft-maximize"></i></a></li> -->
 							</ul>
 						</div>
 					</div>
@@ -263,8 +263,8 @@
 						<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
 						<div class="heading-elements" style="top: 10px">
 							<ul class="list-inline mb-0">
-								<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-								<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+								<!-- <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+								<li><a data-action="expand"><i class="ft-maximize"></i></a></li> -->
 							</ul>
 						</div>						
 					</div>
@@ -325,6 +325,63 @@
 							    	<div class="col-md-3">
 							    		<button type="button" class="btn btn-success btn-sm" id="btnXuatToChuyenMon"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất</button>
 							    	</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<!-- Xem xuất kết quả đánh giá giáo viên -->
+				<div class="card" id="cardXemExportKetQuaDanhGiaGv" style="display: none;">
+					<div class="card-header" style="padding: 10px">
+						<h4 style="text-align: center;color: blue;" class="card-title"><b>BẢNG TỔNG HỢP KẾT QUẢ ĐÁNH GIÁ GIÁO VIÊN CỦA CƠ SỞ GIÁO DỤC</b></h4>
+						<br>
+						<h5 style="text-align: center;font-size: 15px;color: red;"><i><span id="tieuDeThoiGian"></span></i></h5>
+						<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+						<div class="heading-elements" style="top: 10px">
+							<ul class="list-inline mb-0">
+								<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+								<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+							</ul>
+						</div>						
+					</div>
+					<div class="card-content collpase show">
+						<div class="card-body">
+							<form class="form">
+								<div class="form-body">
+									<div class="row">
+										<div class="container">
+											<table id="tableXemExportKetQuaDanhGiaGv" class="table table-striped table-bordered dataex-key-basic table-responsive display nowrap" style="border-collapse: separate;overflow: auto; height: 500px; width: 100%;">
+												<thead>
+													<tr>
+														<th rowspan="2" class='stickyThu' style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 0px;">STT</th>
+														<th rowspan="2" class='stickyTiet' style="background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 10;width: 100px;min-width: 100px;max-width: 100px;left: 100px;">Họ và tên</th>
+														<th colspan="15" style="text-align: center;background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;" ><span>Kết quả đánh giá của tiêu chí</span><br><span>Chưa đạt (CĐ) ; Đạt (Đ) ; Khá (Kh) ; Tốt ( T)</span></th>
+														<th rowspan="2" style="text-align: center;background-color: #4682B4;color: white;position: sticky;top: 0;z-index: 1;" >Xếp loại</th>
+													</tr>
+													<tr>
+														<th id="1" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">1</th>
+														<th id="2" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">2</th>
+														<th id="3" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">3</th>
+														<th id="4" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">4</th>
+														<th id="5" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">5</th>
+														<th id="6" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">6</th>
+														<th id="7" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">7</th>
+														<th id="8" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">8</th>
+														<th id="9" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">9</th>
+														<th id="10" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">10</th>
+														<th id="11" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">11</th>
+														<th id="12" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">12</th>
+														<th id="13" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">13</th>
+														<th id="14" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">14</th>
+														<th id="15" class="classTieuChiXemExportKetQuaDanhGiaGv" style="background-color: #4682B4;color: white;position: sticky;top: 58px;z-index: 1;">15</th>
+													</tr>
+												</thead>
+												<tbody id="bodyXemExportKetQuaDanhGiaGv">
+												</tbody>
+											</table>
+										</div>
+									</div>
 								</div>
 							</form>
 						</div>
@@ -538,6 +595,7 @@
 		document.getElementById("cardKetQuaDanhGiaGv").style.display = "none";
 		document.getElementById("cardDanhGiaGv").style.display = "none";
 		document.getElementById("cardExportKetQuaDanhGiaGv").style.display = "none";
+		document.getElementById("cardXemExportKetQuaDanhGiaGv").style.display = "none";
 		//select
 		document.getElementById("cardSelectTCMNam").style.display = "none";
 		document.getElementById("cardSelectTCMNamXem").style.display = "none";
@@ -556,6 +614,7 @@
 		document.getElementById("cardImportExcel").style.display = "none";
 		document.getElementById("cardKetQuaDanhGiaGv").style.display = "none";
 		document.getElementById("cardExportKetQuaDanhGiaGv").style.display = "none";
+		document.getElementById("cardXemExportKetQuaDanhGiaGv").style.display = "none";
 		//select
 		document.getElementById("cardSelectTCMNam").style.display = "block";
 		document.getElementById("cardSelectTCMNamXem").style.display = "none";
@@ -572,6 +631,7 @@
 		document.getElementById("cardImportExcel").style.display = "none";
 		document.getElementById("cardDanhGiaGv").style.display = "none";
 		document.getElementById("cardExportKetQuaDanhGiaGv").style.display = "none";
+		document.getElementById("cardXemExportKetQuaDanhGiaGv").style.display = "none";
 		//select
 		document.getElementById("cardSelectTCMNam").style.display = "none";
 		document.getElementById("cardSelectTCMNamXem").style.display = "block";

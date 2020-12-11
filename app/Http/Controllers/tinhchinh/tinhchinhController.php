@@ -1256,4 +1256,425 @@ class tinhchinhController extends Controller
         return json_encode($success);
 	}
 
+	//xem xuất kết quả đánh giá giáo viên toàn trường
+	public function getXemExportDGGVToanTruong ($namdanhgia) {
+		$matruong = Session::get('matruong');
+		$truong = truong::where('matruong',$matruong)->get();
+		$datakqdggv = ketquadanhgiagv::where('matruong',$matruong)->where('namdanhgia',$namdanhgia)->get();
+		$datadggv = DB::table('danhgiagv')
+		->leftjoin('tochuyenmon','tochuyenmon.id','=','danhgiagv.matochuyenmon')
+		->leftjoin('danhsachgv','danhsachgv.id','=','danhgiagv.magiaovien')
+		->where('danhgiagv.matruong',$matruong)
+		->where('danhgiagv.namdanhgia',$namdanhgia)
+		->where('danhgiagv.trangthai',2)
+		->select('danhsachgv.hovaten','tochuyenmon.tentocm','danhgiagv.*')
+		->get();
+		
+		$fillData = [];
+		foreach($datakqdggv as $d){
+			foreach($datadggv as $d1){
+				if($d->matochuyenmon == $d1->matochuyenmon && $d->magiaovien == $d1->magiaovien){
+					array_push($fillData,array('matochuyenmon'=>$d1->matochuyenmon,'magiaovien'=>$d1->magiaovien,'matieuchuan'=>$d1->matieuchuan,'matieuchi'=>$d1->matieuchi,'xeploaidanhgia'=>$d1->maxeploai,'ketquaxeploai'=>$d->maxeploai,'tentochuyenmon'=>$d1->tentocm,'hovaten'=>$d1->hovaten));
+				}
+			}
+		}
+
+		$grouped = [];
+		foreach($fillData as $f){
+			$matochuyenmon = $f['matochuyenmon'];
+			$magiaovien = $f['magiaovien'];
+			$grouped[$matochuyenmon][$magiaovien][] = $f;
+		}
+		
+		$data = [];
+		$stt = 0;
+		foreach($grouped as $k=>$v){
+			$dataGV = [];
+			$tentochuyenmon;
+			foreach($v as $k1=>$v1){
+				$stt++;
+				$tentochuyenmon = $v1[0]['tentochuyenmon'];
+				$hovaten = $v1[0]['hovaten'];
+				//xếp loại
+				if($v1[0]['ketquaxeploai'] == 1){
+					$xeploai = 'CĐ';
+				} elseif($v1[0]['ketquaxeploai'] == 2){
+					$xeploai = 'Đ';
+				} elseif ($v1[0]['ketquaxeploai'] == 3) {
+					$xeploai = 'Kh';
+				} else{
+					$xeploai = 'T';
+				}
+				//tc1
+				if($v1[0]['xeploaidanhgia'] == 1){
+					$tc1 = 'CĐ';
+				} elseif($v1[0]['xeploaidanhgia'] == 2){
+					$tc1 = 'Đ';
+				} elseif ($v1[0]['xeploaidanhgia'] == 3) {
+					$tc1 = 'Kh';
+				} else{
+					$tc1 = 'T';
+				}
+				//tc2
+				if($v1[1]['xeploaidanhgia'] == 1){
+					$tc2 = 'CĐ';
+				} elseif($v1[1]['xeploaidanhgia'] == 2){
+					$tc2 = 'Đ';
+				} elseif ($v1[1]['xeploaidanhgia'] == 3) {
+					$tc2 = 'Kh';
+				} else{
+					$tc2 = 'T';
+				}
+				//tc3
+				if($v1[2]['xeploaidanhgia'] == 1){
+					$tc3 = 'CĐ';
+				} elseif($v1[2]['xeploaidanhgia'] == 2){
+					$tc3 = 'Đ';
+				} elseif ($v1[2]['xeploaidanhgia'] == 3) {
+					$tc3 = 'Kh';
+				} else{
+					$tc3 = 'T';
+				}
+				//tc4
+				if($v1[3]['xeploaidanhgia'] == 1){
+					$tc4 = 'CĐ';
+				} elseif($v1[3]['xeploaidanhgia'] == 2){
+					$tc4 = 'Đ';
+				} elseif ($v1[3]['xeploaidanhgia'] == 3) {
+					$tc4 = 'Kh';
+				} else{
+					$tc4 = 'T';
+				}
+				//tc5
+				if($v1[4]['xeploaidanhgia'] == 1){
+					$tc5 = 'CĐ';
+				} elseif($v1[4]['xeploaidanhgia'] == 2){
+					$tc5 = 'Đ';
+				} elseif ($v1[4]['xeploaidanhgia'] == 3) {
+					$tc5 = 'Kh';
+				} else{
+					$tc5 = 'T';
+				}
+				//tc6
+				if($v1[5]['xeploaidanhgia'] == 1){
+					$tc6 = 'CĐ';
+				} elseif($v1[5]['xeploaidanhgia'] == 2){
+					$tc6 = 'Đ';
+				} elseif ($v1[5]['xeploaidanhgia'] == 3) {
+					$tc6 = 'Kh';
+				} else{
+					$tc6 = 'T';
+				}
+				//tc7
+				if($v1[6]['xeploaidanhgia'] == 1){
+					$tc7 = 'CĐ';
+				} elseif($v1[6]['xeploaidanhgia'] == 2){
+					$tc7 = 'Đ';
+				} elseif ($v1[6]['xeploaidanhgia'] == 3) {
+					$tc7 = 'Kh';
+				} else{
+					$tc7 = 'T';
+				}
+				//tc8
+				if($v1[7]['xeploaidanhgia'] == 1){
+					$tc8 = 'CĐ';
+				} elseif($v1[7]['xeploaidanhgia'] == 2){
+					$tc8 = 'Đ';
+				} elseif ($v1[7]['xeploaidanhgia'] == 3) {
+					$tc8 = 'Kh';
+				} else{
+					$tc8 = 'T';
+				}
+				//tc9
+				if($v1[8]['xeploaidanhgia'] == 1){
+					$tc9 = 'CĐ';
+				} elseif($v1[8]['xeploaidanhgia'] == 2){
+					$tc9 = 'Đ';
+				} elseif ($v1[8]['xeploaidanhgia'] == 3) {
+					$tc9 = 'Kh';
+				} else{
+					$tc9 = 'T';
+				}
+				//tc10
+				if($v1[9]['xeploaidanhgia'] == 1){
+					$tc10 = 'CĐ';
+				} elseif($v1[9]['xeploaidanhgia'] == 2){
+					$tc10 = 'Đ';
+				} elseif ($v1[9]['xeploaidanhgia'] == 3) {
+					$tc10 = 'Kh';
+				} else{
+					$tc10 = 'T';
+				}
+				//tc11
+				if($v1[10]['xeploaidanhgia'] == 1){
+					$tc11 = 'CĐ';
+				} elseif($v1[10]['xeploaidanhgia'] == 2){
+					$tc11 = 'Đ';
+				} elseif ($v1[10]['xeploaidanhgia'] == 3) {
+					$tc11 = 'Kh';
+				} else{
+					$tc11 = 'T';
+				}
+				//tc12
+				if($v1[11]['xeploaidanhgia'] == 1){
+					$tc12 = 'CĐ';
+				} elseif($v1[11]['xeploaidanhgia'] == 2){
+					$tc12 = 'Đ';
+				} elseif ($v1[11]['xeploaidanhgia'] == 3) {
+					$tc12 = 'Kh';
+				} else{
+					$tc12 = 'T';
+				}
+				//tc13
+				if($v1[12]['xeploaidanhgia'] == 1){
+					$tc13 = 'CĐ';
+				} elseif($v1[12]['xeploaidanhgia'] == 2){
+					$tc13 = 'Đ';
+				} elseif ($v1[12]['xeploaidanhgia'] == 3) {
+					$tc13 = 'Kh';
+				} else{
+					$tc13 = 'T';
+				}
+				//tc14
+				if($v1[13]['xeploaidanhgia'] == 1){
+					$tc14 = 'CĐ';
+				} elseif($v1[13]['xeploaidanhgia'] == 2){
+					$tc14 = 'Đ';
+				} elseif ($v1[13]['xeploaidanhgia'] == 3) {
+					$tc14 = 'Kh';
+				} else{
+					$tc14 = 'T';
+				}
+				//tc15
+				if($v1[14]['xeploaidanhgia'] == 1){
+					$tc15 = 'CĐ';
+				} elseif($v1[14]['xeploaidanhgia'] == 2){
+					$tc15 = 'Đ';
+				} elseif ($v1[14]['xeploaidanhgia'] == 3) {
+					$tc15 = 'Kh';
+				} else{
+					$tc15 = 'T';
+				}
+				//
+				
+				array_push($dataGV,array('stt'=>$stt,'magiaovien'=>$k1,'hovaten'=>$hovaten,'tc1'=>$tc1,'tc2'=>$tc2,'tc3'=>$tc3,'tc4'=>$tc4,'tc5'=>$tc5,'tc6'=>$tc6,'tc7'=>$tc7,'tc8'=>$tc8,'tc9'=>$tc9,'tc10'=>$tc10,'tc11'=>$tc11,'tc12'=>$tc12,'tc13'=>$tc13,'tc14'=>$tc14,'tc15'=>$tc15,'xeploai'=>$xeploai));
+			}
+			$data[] = array('matochuyenmon' => $k, 'tentochuyenmon'=>$tentochuyenmon , 'dsgiaovien'=> $dataGV);
+		}
+		
+		return json_encode($data, JSON_UNESCAPED_UNICODE);	
+
+	}
+
+	//xem xuất kết quả đánh giá giáo viên tổ chuyên môn
+	public function getXemExportDGGVToChuyenMon ($matochuyenmon,$namdanhgia) {
+		$matruong = Session::get('matruong');
+		$truong = truong::where('matruong',$matruong)->get();
+		$datakqdggv = ketquadanhgiagv::where('matruong',$matruong)->where('matochuyenmon',$matochuyenmon)->where('namdanhgia',$namdanhgia)->get();
+		$datadggv = DB::table('danhgiagv')
+		->leftjoin('tochuyenmon','tochuyenmon.id','=','danhgiagv.matochuyenmon')
+		->leftjoin('danhsachgv','danhsachgv.id','=','danhgiagv.magiaovien')
+		->where('danhgiagv.matruong',$matruong)
+		->where('danhgiagv.matochuyenmon',$matochuyenmon)
+		->where('danhgiagv.namdanhgia',$namdanhgia)
+		->where('danhgiagv.trangthai',2)
+		->select('danhsachgv.hovaten','tochuyenmon.tentocm','danhgiagv.*')
+		->get();
+		
+		$fillData = [];
+		foreach($datakqdggv as $d){
+			foreach($datadggv as $d1){
+				if($d->matochuyenmon == $d1->matochuyenmon && $d->magiaovien == $d1->magiaovien){
+					array_push($fillData,array('matochuyenmon'=>$d1->matochuyenmon,'magiaovien'=>$d1->magiaovien,'matieuchuan'=>$d1->matieuchuan,'matieuchi'=>$d1->matieuchi,'xeploaidanhgia'=>$d1->maxeploai,'ketquaxeploai'=>$d->maxeploai,'tentochuyenmon'=>$d1->tentocm,'hovaten'=>$d1->hovaten));
+				}
+			}
+		}
+
+		$grouped = [];
+		foreach($fillData as $f){
+			$matochuyenmon = $f['matochuyenmon'];
+			$magiaovien = $f['magiaovien'];
+			$grouped[$matochuyenmon][$magiaovien][] = $f;
+		}
+		
+		$data = [];
+		$stt = 0;
+		foreach($grouped as $k=>$v){
+			$dataGV = [];
+			$tentochuyenmon;
+			foreach($v as $k1=>$v1){
+				$stt++;
+				$tentochuyenmon = $v1[0]['tentochuyenmon'];
+				$hovaten = $v1[0]['hovaten'];
+				//xếp loại
+				if($v1[0]['ketquaxeploai'] == 1){
+					$xeploai = 'CĐ';
+				} elseif($v1[0]['ketquaxeploai'] == 2){
+					$xeploai = 'Đ';
+				} elseif ($v1[0]['ketquaxeploai'] == 3) {
+					$xeploai = 'Kh';
+				} else{
+					$xeploai = 'T';
+				}
+				//tc1
+				if($v1[0]['xeploaidanhgia'] == 1){
+					$tc1 = 'CĐ';
+				} elseif($v1[0]['xeploaidanhgia'] == 2){
+					$tc1 = 'Đ';
+				} elseif ($v1[0]['xeploaidanhgia'] == 3) {
+					$tc1 = 'Kh';
+				} else{
+					$tc1 = 'T';
+				}
+				//tc2
+				if($v1[1]['xeploaidanhgia'] == 1){
+					$tc2 = 'CĐ';
+				} elseif($v1[1]['xeploaidanhgia'] == 2){
+					$tc2 = 'Đ';
+				} elseif ($v1[1]['xeploaidanhgia'] == 3) {
+					$tc2 = 'Kh';
+				} else{
+					$tc2 = 'T';
+				}
+				//tc3
+				if($v1[2]['xeploaidanhgia'] == 1){
+					$tc3 = 'CĐ';
+				} elseif($v1[2]['xeploaidanhgia'] == 2){
+					$tc3 = 'Đ';
+				} elseif ($v1[2]['xeploaidanhgia'] == 3) {
+					$tc3 = 'Kh';
+				} else{
+					$tc3 = 'T';
+				}
+				//tc4
+				if($v1[3]['xeploaidanhgia'] == 1){
+					$tc4 = 'CĐ';
+				} elseif($v1[3]['xeploaidanhgia'] == 2){
+					$tc4 = 'Đ';
+				} elseif ($v1[3]['xeploaidanhgia'] == 3) {
+					$tc4 = 'Kh';
+				} else{
+					$tc4 = 'T';
+				}
+				//tc5
+				if($v1[4]['xeploaidanhgia'] == 1){
+					$tc5 = 'CĐ';
+				} elseif($v1[4]['xeploaidanhgia'] == 2){
+					$tc5 = 'Đ';
+				} elseif ($v1[4]['xeploaidanhgia'] == 3) {
+					$tc5 = 'Kh';
+				} else{
+					$tc5 = 'T';
+				}
+				//tc6
+				if($v1[5]['xeploaidanhgia'] == 1){
+					$tc6 = 'CĐ';
+				} elseif($v1[5]['xeploaidanhgia'] == 2){
+					$tc6 = 'Đ';
+				} elseif ($v1[5]['xeploaidanhgia'] == 3) {
+					$tc6 = 'Kh';
+				} else{
+					$tc6 = 'T';
+				}
+				//tc7
+				if($v1[6]['xeploaidanhgia'] == 1){
+					$tc7 = 'CĐ';
+				} elseif($v1[6]['xeploaidanhgia'] == 2){
+					$tc7 = 'Đ';
+				} elseif ($v1[6]['xeploaidanhgia'] == 3) {
+					$tc7 = 'Kh';
+				} else{
+					$tc7 = 'T';
+				}
+				//tc8
+				if($v1[7]['xeploaidanhgia'] == 1){
+					$tc8 = 'CĐ';
+				} elseif($v1[7]['xeploaidanhgia'] == 2){
+					$tc8 = 'Đ';
+				} elseif ($v1[7]['xeploaidanhgia'] == 3) {
+					$tc8 = 'Kh';
+				} else{
+					$tc8 = 'T';
+				}
+				//tc9
+				if($v1[8]['xeploaidanhgia'] == 1){
+					$tc9 = 'CĐ';
+				} elseif($v1[8]['xeploaidanhgia'] == 2){
+					$tc9 = 'Đ';
+				} elseif ($v1[8]['xeploaidanhgia'] == 3) {
+					$tc9 = 'Kh';
+				} else{
+					$tc9 = 'T';
+				}
+				//tc10
+				if($v1[9]['xeploaidanhgia'] == 1){
+					$tc10 = 'CĐ';
+				} elseif($v1[9]['xeploaidanhgia'] == 2){
+					$tc10 = 'Đ';
+				} elseif ($v1[9]['xeploaidanhgia'] == 3) {
+					$tc10 = 'Kh';
+				} else{
+					$tc10 = 'T';
+				}
+				//tc11
+				if($v1[10]['xeploaidanhgia'] == 1){
+					$tc11 = 'CĐ';
+				} elseif($v1[10]['xeploaidanhgia'] == 2){
+					$tc11 = 'Đ';
+				} elseif ($v1[10]['xeploaidanhgia'] == 3) {
+					$tc11 = 'Kh';
+				} else{
+					$tc11 = 'T';
+				}
+				//tc12
+				if($v1[11]['xeploaidanhgia'] == 1){
+					$tc12 = 'CĐ';
+				} elseif($v1[11]['xeploaidanhgia'] == 2){
+					$tc12 = 'Đ';
+				} elseif ($v1[11]['xeploaidanhgia'] == 3) {
+					$tc12 = 'Kh';
+				} else{
+					$tc12 = 'T';
+				}
+				//tc13
+				if($v1[12]['xeploaidanhgia'] == 1){
+					$tc13 = 'CĐ';
+				} elseif($v1[12]['xeploaidanhgia'] == 2){
+					$tc13 = 'Đ';
+				} elseif ($v1[12]['xeploaidanhgia'] == 3) {
+					$tc13 = 'Kh';
+				} else{
+					$tc13 = 'T';
+				}
+				//tc14
+				if($v1[13]['xeploaidanhgia'] == 1){
+					$tc14 = 'CĐ';
+				} elseif($v1[13]['xeploaidanhgia'] == 2){
+					$tc14 = 'Đ';
+				} elseif ($v1[13]['xeploaidanhgia'] == 3) {
+					$tc14 = 'Kh';
+				} else{
+					$tc14 = 'T';
+				}
+				//tc15
+				if($v1[14]['xeploaidanhgia'] == 1){
+					$tc15 = 'CĐ';
+				} elseif($v1[14]['xeploaidanhgia'] == 2){
+					$tc15 = 'Đ';
+				} elseif ($v1[14]['xeploaidanhgia'] == 3) {
+					$tc15 = 'Kh';
+				} else{
+					$tc15 = 'T';
+				}
+				//
+				
+				array_push($dataGV,array('stt'=>$stt,'magiaovien'=>$k1,'hovaten'=>$hovaten,'tc1'=>$tc1,'tc2'=>$tc2,'tc3'=>$tc3,'tc4'=>$tc4,'tc5'=>$tc5,'tc6'=>$tc6,'tc7'=>$tc7,'tc8'=>$tc8,'tc9'=>$tc9,'tc10'=>$tc10,'tc11'=>$tc11,'tc12'=>$tc12,'tc13'=>$tc13,'tc14'=>$tc14,'tc15'=>$tc15,'xeploai'=>$xeploai));
+			}
+			$data[] = array('matochuyenmon' => $k, 'tentochuyenmon'=>$tentochuyenmon , 'dsgiaovien'=> $dataGV);
+		}
+		
+		return json_encode($data, JSON_UNESCAPED_UNICODE);	
+
+	}
+
 }

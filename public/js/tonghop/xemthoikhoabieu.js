@@ -96,7 +96,8 @@ async function exportExcel() {
         tkbdiemtruong = 0,
         tkbphancongcm = 0,
         buoi = 0,
-        idTruong=0;
+        idTruong = 0,
+        gvNghi = 0;
 
     if (xuatTKBTruong.checked == true && xuatTKBTruongSC.prop("checked")) {
 
@@ -195,8 +196,9 @@ async function exportExcel() {
 	                    startMonth: firstDay,
 	                    endMonth: lastDay,
 	                    week: weekSelect,
-	                    idTruong: idTruong,
-	                    buoi: buoi
+	                    buoi: buoi,
+                    	idTruong: idTruong,
+                    	gvNghi: gvNghi
 	                })
 	            );
 	            progressExportTruongSC.setAttribute("aria-valuenow", "100");
@@ -261,8 +263,9 @@ async function exportExcel() {
 	                    startMonth: firstDay,
 	                    endMonth: lastDay,
 	                    week: weekSelect,
-	                    idTruong: idTruong,
-	                    buoi: buoi
+	                    buoi: buoi,
+                    	idTruong: idTruong,
+                    	gvNghi: gvNghi
 	                })
 	            );
 	            progressExportTruongS.setAttribute("aria-valuenow", "100");
@@ -326,8 +329,9 @@ async function exportExcel() {
 	                    startMonth: firstDay,
 	                    endMonth: lastDay,
 	                    week: weekSelect,
-	                    idTruong: idTruong,
-	                    buoi: buoi
+	                    buoi: buoi,
+                    	idTruong: idTruong,
+                    	gvNghi: gvNghi
 	                })
 	            );
 	            progressExportTruongC.setAttribute("aria-valuenow", "100");
@@ -393,8 +397,9 @@ async function exportExcel() {
 	                    startMonth: firstDay,
 	                    endMonth: lastDay,
 	                    week: weekSelect,
-	                    idTruong: idTruong,
-	                    buoi: buoi
+	                    buoi: buoi,
+                    	idTruong: idTruong,
+                    	gvNghi: gvNghi
 	                })
 	            );
 	            progressExportGV.setAttribute("aria-valuenow", "100");
@@ -461,8 +466,9 @@ async function exportExcel() {
 	                    startMonth: firstDay,
 	                    endMonth: lastDay,
 	                    week: weekSelect,
-	                    idTruong: idTruong,
-	                    buoi: buoi
+	                    buoi: buoi,
+                    	idTruong: idTruong,
+                    	gvNghi: gvNghi
 	                })
 	            );
 	            progressExportLop.setAttribute("aria-valuenow", "100");
@@ -529,7 +535,9 @@ async function exportExcel() {
 	                    startMonth: firstDay,
 	                    endMonth: lastDay,
 	                    week: weekSelect,
-	                    idTruong: idTruong,
+	                    buoi: buoi,
+                    	idTruong: idTruong,
+                    	gvNghi: gvNghi
 	                })
 	            );
 	            if (xuatTKBPhong.checked == true) {
@@ -652,14 +660,28 @@ async function loaddanhsachtruong() {
 			caption:"Số giáo viên",
 			dataField: "demdsgv"
 		},
-		// {
-		// 	caption:"Số học sinh",
-		// 	dataField: "demdsgv"
-		// },	
+		{
+			caption:"Thời khoá biểu",
+			dataField: "tkb",
+			alignment: "center", 
+			cellTemplate: function(element, info) {
+				let dulieuTKB= info.value;
+				if(dulieuTKB == 1){
+					$(
+                        "<button type='button' class='btn btn-success btn-sm'><i class='fa fa-check' aria-hidden='true'></i></button>"
+                    ).appendTo(element);
+				}else{
+					$(
+                       	"<button type='button' class='btn btn-warning btn-sm'><i class='fa fa-times' aria-hidden='true'></i></button>"
+                    ).appendTo(element);
+				}	
+			},
+			width: 110,
+		},	
 		{
 	        fixed: true,
 	        fixedPosition: "right",
-	        caption: "",
+	        caption: "Xem",
 	        cellTemplate: function(container, options) {
 	            container.addClass("center");
 	            $("<div>")

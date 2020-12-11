@@ -94,6 +94,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('getFileMauExcelDGGVToanTruong','tinhchinh\tinhchinhController@getFileMauExcelDGGVToanTruong');
 	Route::get('getExportDGGVToanTruong/{namdanhgia}','tinhchinh\tinhchinhController@getExportDGGVToanTruong');
 	Route::get('getExportDGGVToChuyenMon/{matochuyenmon}/{namdanhgia}','tinhchinh\tinhchinhController@getExportDGGVToChuyenMon');
+	Route::get('getXemExportDGGVToanTruong/{namdanhgia}','tinhchinh\tinhchinhController@getXemExportDGGVToanTruong');
+	Route::get('getXemExportDGGVToChuyenMon/{matochuyenmon}/{namdanhgia}','tinhchinh\tinhchinhController@getXemExportDGGVToChuyenMon');
 
 
 
@@ -368,6 +370,8 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::get('getKetQuaDanhGiaGvTH/{matruong}','tonghop\tonghopController@getKetQuaDanhGiaGvTH');
 		Route::get('getDataDanhGiaGvTH/{matruong}','tonghop\tonghopController@getDataDanhGiaGvTH');
 		Route::get('getExportDGGVToanTruongTH/{matruong}/{namdanhgia}','tonghop\tonghopController@getExportDGGVToanTruongTH');
-		Route::get('getExportDGGVToChuyenMonTH/{matruong}/{matochuyenmon}/{namdanhgia}','tonghop\tonghopController@getExportDGGVToChuyenMonTH');	
+		Route::get('getExportDGGVToChuyenMonTH/{matruong}/{matochuyenmon}/{namdanhgia}','tonghop\tonghopController@getExportDGGVToChuyenMonTH');
+		Route::get('getXemExportDGGVToanTruongTH/{matruong}/{namdanhgia}','tonghop\tonghopController@getXemExportDGGVToanTruongTH');
+		Route::get('getXemExportDGGVToChuyenMonTH/{matruong}/{matochuyenmon}/{namdanhgia}','tonghop\tonghopController@getXemExportDGGVToChuyenMonTH');	
 });
 
