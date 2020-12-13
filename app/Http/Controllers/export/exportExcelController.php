@@ -3132,12 +3132,39 @@ class exportExcelController extends Controller
 
         //sáng
 
-        $demDSGVSangT2 = count($new_data_giaoviennghi[0]['dsthu'][0]['dsgiaovien']);
-        $demDSGVSangT3 = count($new_data_giaoviennghi[0]['dsthu'][1]['dsgiaovien']);
-        $demDSGVSangT4 = count($new_data_giaoviennghi[0]['dsthu'][2]['dsgiaovien']);
-        $demDSGVSangT5 = count($new_data_giaoviennghi[0]['dsthu'][3]['dsgiaovien']);
-        $demDSGVSangT6 = count($new_data_giaoviennghi[0]['dsthu'][4]['dsgiaovien']);
-        $demDSGVSangT7 = count($new_data_giaoviennghi[0]['dsthu'][5]['dsgiaovien']);
+        $demDSGVSangT2 = 0;
+        $demDSGVSangT3 = 0;
+        $demDSGVSangT4 = 0;
+        $demDSGVSangT5 = 0;
+        $demDSGVSangT6 = 0;
+        $demDSGVSangT7 = 0;
+
+        for($keyS=0;$keyS<count($new_data_giaoviennghi[0]['dsthu']);$keyS++) {
+            if($new_data_giaoviennghi[0]['dsthu'][$keyS]['mathu'] == 2){
+                $demDSGVSangT2 = count($new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien']);
+                $mangGVSangT2 = $new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien'];
+            }
+            if($new_data_giaoviennghi[0]['dsthu'][$keyS]['mathu'] == 3){
+                $demDSGVSangT3 = count($new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien']);
+                $mangGVSangT3 = $new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien'];
+            }
+            if($new_data_giaoviennghi[0]['dsthu'][$keyS]['mathu'] == 4){
+                $demDSGVSangT4 = count($new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien']);
+                $mangGVSangT4 = $new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien'];
+            }
+            if($new_data_giaoviennghi[0]['dsthu'][$keyS]['mathu'] == 5){
+                $demDSGVSangT5 = count($new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien']);
+                $mangGVSangT5 = $new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien'];
+            }
+            if($new_data_giaoviennghi[0]['dsthu'][$keyS]['mathu'] == 6){
+                $demDSGVSangT6 = count($new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien']);
+                $mangGVSangT6 = $new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien'];
+            }
+            if($new_data_giaoviennghi[0]['dsthu'][$keyS]['mathu'] == 7){
+                $demDSGVSangT7 = count($new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien']);
+                $mangGVSangT7 = $new_data_giaoviennghi[0]['dsthu'][$keyS]['dsgiaovien'];
+            }
+        }
 
         $demMaxSang = max($demDSGVSangT2,$demDSGVSangT3,$demDSGVSangT4,$demDSGVSangT5,$demDSGVSangT6,$demDSGVSangT7);
 
@@ -3147,99 +3174,140 @@ class exportExcelController extends Controller
         $sheetGvNghi->mergeCells("B".$i.':B'.$merCellLastSang);
         $sheetGvNghi->getStyle("B".$i.':B'.$merCellLastSang)->applyFromArray($styleBorderParent);
 
-        foreach($new_data_giaoviennghi[0]['dsthu'][0]['dsgiaovien'] as $d){
-            $sheetGvNghi->setCellValue('C'.$h,$d['hovaten']);
-            $sheetGvNghi->mergeCells("C".$h.':D'.$h);
-            $sheetGvNghi->getStyle("C".$h.':D'.$h)->applyFromArray($styleBorderChild);
-            $h++;
+        if($demDSGVSangT2 != 0) {
+            foreach($mangGVSangT2 as $d){
+                $sheetGvNghi->setCellValue('C'.$h,$d['hovaten']);
+                $sheetGvNghi->mergeCells("C".$h.':D'.$h);
+                $sheetGvNghi->getStyle("C".$h.':D'.$h)->applyFromArray($styleBorderChild);
+                $h++;
+            }
+            
         }
-
+        
         //cột thứ 2 giá trị rỗng
         for($h = $h;$h<$merCellLastSang+1;$h++){
             $sheetGvNghi->mergeCells("C".$h.':D'.$h);
             $sheetGvNghi->getStyle("C".$h.':D'.$h)->applyFromArray($styleBorderChild);
         }
 
-        foreach($new_data_giaoviennghi[0]['dsthu'][1]['dsgiaovien'] as $d1){
-            $sheetGvNghi->setCellValue('E'.$j,$d1['hovaten']);
-            $sheetGvNghi->mergeCells("E".$j.':F'.$j);
-            $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
-            $j++;
+        if($demDSGVSangT3 != 0) {
+            foreach($mangGVSangT3 as $d1){
+                $sheetGvNghi->setCellValue('E'.$j,$d1['hovaten']);
+                $sheetGvNghi->mergeCells("E".$j.':F'.$j);
+                $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
+                $j++;
 
+            }
         }
-
+        
         //cột thứ 3 giá trị rỗng
         for($j = $j;$j<$merCellLastSang+1;$j++){
             $sheetGvNghi->mergeCells("E".$j.':F'.$j);
             $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
         }
 
-        foreach($new_data_giaoviennghi[0]['dsthu'][2]['dsgiaovien'] as $d2){
-            $sheetGvNghi->setCellValue('G'.$k,$d2['hovaten']);
-            $sheetGvNghi->mergeCells("G".$k.':H'.$k);
-            $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
-            $k++;
+        if($demDSGVSangT4 != 0) {
+            foreach($mangGVSangT4 as $d2){
+                $sheetGvNghi->setCellValue('G'.$k,$d2['hovaten']);
+                $sheetGvNghi->mergeCells("G".$k.':H'.$k);
+                $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
+                $k++;
 
+            }
         }
-
+        
         //cột thứ 4 giá trị rỗng
         for($k = $k;$k<$merCellLastSang+1;$k++){
             $sheetGvNghi->mergeCells("G".$k.':H'.$k);
             $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
         }
 
-        foreach($new_data_giaoviennghi[0]['dsthu'][3]['dsgiaovien'] as $d3){
-            $sheetGvNghi->setCellValue('I'.$l,$d3['hovaten']);
-            $sheetGvNghi->mergeCells("I".$l.':J'.$l);
-            $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
-            $l++;
+        if($demDSGVSangT5 != 0) {
+            foreach($mangGVSangT5 as $d3){
+                $sheetGvNghi->setCellValue('I'.$l,$d3['hovaten']);
+                $sheetGvNghi->mergeCells("I".$l.':J'.$l);
+                $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
+                $l++;
 
+            }
         }
-
+        
         //cột thứ 5 giá trị rỗng
         for($l = $l;$l<$merCellLastSang+1;$l++){
             $sheetGvNghi->mergeCells("I".$l.':J'.$l);
             $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
         }
 
-        foreach($new_data_giaoviennghi[0]['dsthu'][4]['dsgiaovien'] as $d4){
-            $sheetGvNghi->setCellValue('K'.$m,$d4['hovaten']);
-            $sheetGvNghi->mergeCells("K".$m.':L'.$m);
-            $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
-            $m++;
+        if($demDSGVSangT6 != 0) {
+            foreach($mangGVSangT6 as $d4){
+                $sheetGvNghi->setCellValue('K'.$m,$d4['hovaten']);
+                $sheetGvNghi->mergeCells("K".$m.':L'.$m);
+                $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
+                $m++;
 
+            }
         }
-
+        
         //cột thứ 6 giá trị rỗng
         for($m = $m;$m<$merCellLastSang+1;$m++){
             $sheetGvNghi->mergeCells("K".$m.':L'.$m);
             $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
         }
 
-        foreach($new_data_giaoviennghi[0]['dsthu'][5]['dsgiaovien'] as $d5){
-            $sheetGvNghi->setCellValue('M'.$x,$d5['hovaten']);
-            $sheetGvNghi->mergeCells("M".$x.':N'.$x);
-            $sheetGvNghi->getStyle("M".$x.':N'.$x)->applyFromArray($styleBorderChild);
-            $x++;
+        if($demDSGVSangT7 != 0) {
+            foreach($mangGVSangT7 as $d5){
+                $sheetGvNghi->setCellValue('M'.$x,$d5['hovaten']);
+                $sheetGvNghi->mergeCells("M".$x.':N'.$x);
+                $sheetGvNghi->getStyle("M".$x.':N'.$x)->applyFromArray($styleBorderChild);
+                $x++;
 
+            }
         }
-
+        
         //cột thứ 7 giá trị rỗng
         for($x = $x;$x<$merCellLastSang+1;$x++){
             $sheetGvNghi->mergeCells("M".$x.':N'.$x);
             $sheetGvNghi->getStyle("M".$x.':N'.$x)->applyFromArray($styleBorderChild);
         }
+        
 
         $iNew = $i + $demMaxSang;
 
         //chiều
 
-        $demDSGVChieuT2 = count($new_data_giaoviennghi[1]['dsthu'][0]['dsgiaovien']);
-        $demDSGVChieuT3 = count($new_data_giaoviennghi[1]['dsthu'][1]['dsgiaovien']);
-        $demDSGVChieuT4 = count($new_data_giaoviennghi[1]['dsthu'][2]['dsgiaovien']);
-        $demDSGVChieuT5 = count($new_data_giaoviennghi[1]['dsthu'][3]['dsgiaovien']);
-        $demDSGVChieuT6 = count($new_data_giaoviennghi[1]['dsthu'][4]['dsgiaovien']);
-        $demDSGVChieuT7 = count($new_data_giaoviennghi[1]['dsthu'][5]['dsgiaovien']);
+        $demDSGVChieuT2 = 0;
+        $demDSGVChieuT3 = 0;
+        $demDSGVChieuT4 = 0;
+        $demDSGVChieuT5 = 0;
+        $demDSGVChieuT6 = 0;
+        $demDSGVChieuT7 = 0;
+
+        for($keyC=0;$keyC<count($new_data_giaoviennghi[1]['dsthu']);$keyC++) {
+            if($new_data_giaoviennghi[1]['dsthu'][$keyC]['mathu'] == 2){
+                $demDSGVChieuT2 = count($new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien']);
+                $mangGVChieuT2 = $new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien'];
+            }
+            if($new_data_giaoviennghi[1]['dsthu'][$keyC]['mathu'] == 3){
+                $demDSGVChieuT3 = count($new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien']);
+                $mangGVChieuT3 = $new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien'];
+            }
+            if($new_data_giaoviennghi[1]['dsthu'][$keyC]['mathu'] == 4){
+                $demDSGVChieuT4 = count($new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien']);
+                $mangGVChieuT4 = $new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien'];
+            }
+            if($new_data_giaoviennghi[1]['dsthu'][$keyC]['mathu'] == 5){
+                $demDSGVChieuT5 = count($new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien']);
+                $mangGVChieuT5 = $new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien'];
+            }
+            if($new_data_giaoviennghi[1]['dsthu'][$keyC]['mathu'] == 6){
+                $demDSGVChieuT6 = count($new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien']);
+                $mangGVChieuT6 = $new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien'];
+            }
+            if($new_data_giaoviennghi[1]['dsthu'][$keyC]['mathu'] == 7){
+                $demDSGVChieuT7 = count($new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien']);
+                $mangGVChieuT7 = $new_data_giaoviennghi[1]['dsthu'][$keyC]['dsgiaovien'];
+            }
+        }
 
         $demMaxChieu = max($demDSGVChieuT2,$demDSGVChieuT3,$demDSGVChieuT4,$demDSGVChieuT5,$demDSGVChieuT6,$demDSGVChieuT7);
 
@@ -3249,83 +3317,95 @@ class exportExcelController extends Controller
         $sheetGvNghi->mergeCells("B".$iNew.':B'.$merCellLastChieu);
         $sheetGvNghi->getStyle("B".$iNew.':B'.$merCellLastChieu)->applyFromArray($styleBorderParent);
 
-        foreach($new_data_giaoviennghi[1]['dsthu'][0]['dsgiaovien'] as $d){
-            $sheetGvNghi->setCellValue('C'.$h,$d['hovaten']);
-            $sheetGvNghi->mergeCells("C".$h.':D'.$h);
-            $sheetGvNghi->getStyle("C".$h.':D'.$h)->applyFromArray($styleBorderChild);
-            $h++;
+        if($demDSGVChieuT2 != 0) {
+            foreach($mangGVChieuT2 as $d){
+                $sheetGvNghi->setCellValue('C'.$h,$d['hovaten']);
+                $sheetGvNghi->mergeCells("C".$h.':D'.$h);
+                $sheetGvNghi->getStyle("C".$h.':D'.$h)->applyFromArray($styleBorderChild);
+                $h++;
+            }
         }
-
+        
         //cột thứ 2 giá trị rỗng
         for($h = $h;$h<$merCellLastChieu+1;$h++){
             $sheetGvNghi->mergeCells("C".$h.':D'.$h);
             $sheetGvNghi->getStyle("C".$h.':D'.$h)->applyFromArray($styleBorderChild);
         }
 
-        foreach($new_data_giaoviennghi[1]['dsthu'][1]['dsgiaovien'] as $d1){
-            $sheetGvNghi->setCellValue('E'.$j,$d1['hovaten']);
-            $sheetGvNghi->mergeCells("E".$j.':F'.$j);
-            $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
-            $j++;
+        if($demDSGVChieuT3 != 0) {
+            foreach($mangGVChieuT3  as $d1){
+                $sheetGvNghi->setCellValue('E'.$j,$d1['hovaten']);
+                $sheetGvNghi->mergeCells("E".$j.':F'.$j);
+                $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
+                $j++;
 
+            }
         }
-
+        
         //cột thứ 3 giá trị rỗng
         for($j = $j;$j<$merCellLastChieu+1;$j++){
             $sheetGvNghi->mergeCells("E".$j.':F'.$j);
             $sheetGvNghi->getStyle("E".$j.':F'.$j)->applyFromArray($styleBorderChild);
         }
 
-        foreach($new_data_giaoviennghi[1]['dsthu'][2]['dsgiaovien'] as $d2){
-            $sheetGvNghi->setCellValue('G'.$k,$d2['hovaten']);
-            $sheetGvNghi->mergeCells("G".$k.':H'.$k);
-            $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
-            $k++;
+        if($demDSGVChieuT4 != 0) {
+            foreach($mangGVChieuT4 as $d2){
+                $sheetGvNghi->setCellValue('G'.$k,$d2['hovaten']);
+                $sheetGvNghi->mergeCells("G".$k.':H'.$k);
+                $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
+                $k++;
 
+            }
         }
-
+        
         //cột thứ 4 giá trị rỗng
         for($k = $k;$k<$merCellLastChieu+1;$k++){
             $sheetGvNghi->mergeCells("G".$k.':H'.$k);
             $sheetGvNghi->getStyle("G".$k.':H'.$k)->applyFromArray($styleBorderChild);
         }
 
-        foreach($new_data_giaoviennghi[1]['dsthu'][3]['dsgiaovien'] as $d3){
-            $sheetGvNghi->setCellValue('I'.$l,$d3['hovaten']);
-            $sheetGvNghi->mergeCells("I".$l.':J'.$l);
-            $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
-            $l++;
+        if($demDSGVChieuT5 != 0) {
+            foreach($mangGVChieuT5 as $d3){
+                $sheetGvNghi->setCellValue('I'.$l,$d3['hovaten']);
+                $sheetGvNghi->mergeCells("I".$l.':J'.$l);
+                $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
+                $l++;
 
+            }
         }
-
+        
         //cột thứ 5 giá trị rỗng
         for($l = $l;$l<$merCellLastChieu+1;$l++){
             $sheetGvNghi->mergeCells("I".$l.':J'.$l);
             $sheetGvNghi->getStyle("I".$l.':J'.$l)->applyFromArray($styleBorderChild);
         }
 
-        foreach($new_data_giaoviennghi[1]['dsthu'][4]['dsgiaovien'] as $d4){
-            $sheetGvNghi->setCellValue('K'.$m,$d4['hovaten']);
-            $sheetGvNghi->mergeCells("K".$m.':L'.$m);
-            $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
-            $m++;
+        if($demDSGVChieuT6 != 0) {
+            foreach($mangGVChieuT6 as $d4){
+                $sheetGvNghi->setCellValue('K'.$m,$d4['hovaten']);
+                $sheetGvNghi->mergeCells("K".$m.':L'.$m);
+                $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
+                $m++;
 
+            }
         }
-
+        
         //cột thứ 6 giá trị rỗng
         for($m = $m;$m<$merCellLastChieu+1;$m++){
             $sheetGvNghi->mergeCells("K".$m.':L'.$m);
             $sheetGvNghi->getStyle("K".$m.':L'.$m)->applyFromArray($styleBorderChild);
         }
 
-        foreach($new_data_giaoviennghi[1]['dsthu'][5]['dsgiaovien'] as $d5){
-            $sheetGvNghi->setCellValue('M'.$x,$d5['hovaten']);
-            $sheetGvNghi->mergeCells("M".$x.':N'.$x);
-            $sheetGvNghi->getStyle("M".$x.':N'.$x)->applyFromArray($styleBorderChild);
-            $x++;
+        if($demDSGVChieuT7 != 0) {
+            foreach($mangGVChieuT7 as $d5){
+                $sheetGvNghi->setCellValue('M'.$x,$d5['hovaten']);
+                $sheetGvNghi->mergeCells("M".$x.':N'.$x);
+                $sheetGvNghi->getStyle("M".$x.':N'.$x)->applyFromArray($styleBorderChild);
+                $x++;
 
+            }
         }
-
+        
         //cột thứ 7 giá trị rỗng
         for($x = $x;$x<$merCellLastChieu+1;$x++){
             $sheetGvNghi->mergeCells("M".$x.':N'.$x);
