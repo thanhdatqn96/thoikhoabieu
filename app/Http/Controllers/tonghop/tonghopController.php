@@ -91,12 +91,24 @@ class tonghopController extends Controller
             $gv = danhsachgv::where('matruong','=', $t->matruong)->select('id','hovaten','bidanh','dienthoai','email')->get();
             $khoi = khoihoc::where('matruong','=', $t->matruong)->select('id','tenkhoi')->orderBy('tenkhoi', 'ASC')->get();
             $phonghoc = phonghoc::where('matruong','=', $t->matruong)->select('id','tenphong')->orderBy('tenphong', 'ASC')->get();
-            $thoikhoabieu = thoikhoabieu::where('matruong','=', $t->matruong)->select('id')->get();
-            $demlop = count($lop);
-            $demgv = count($gv);
+            $thoikhoabieu = thoikhoabieu::where('matruong','=',$t->matruong)->select('id','magiaovien','malop')->get();
+            $mangGV = [];
+            $mangLop = [];
+            foreach($gv as $g){
+            	array_push($mangGV,$g->id);
+            }
+            foreach($lop as $l){
+            	array_push($mangLop,$l->id);
+            }
+            $demgv = count($mangGV);
+            $demlop = count($mangLop);
             $tkb = 0;
-            if(!$thoikhoabieu->isEmpty()){
-            	$tkb = 1;
+            if($demlop != 0 && $demgv != 0){
+            	foreach($thoikhoabieu as $t){
+            		if( in_array($t->magiaovien,$mangGV ) && in_array($t->malop,$mangLop )){
+				     	$tkb = 1;
+					}
+            	}
             }
             $dstruong->demdslop = $demlop;
             $dstruong->demdsgv = $demgv;
@@ -331,7 +343,7 @@ class tonghopController extends Controller
 	}
 
 	//get thời khoá biểu trường theo thời gian
-	public function getthoikhoabieutruong($matruong){
+	public function getthoikhoabieutruong($matruong,$tuan,$thang,$nam){
 
 		$mahuyen = Auth::user()->mahuyen;
 
@@ -345,6 +357,9 @@ class tonghopController extends Controller
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.tuan','thoikhoabieu.created_at')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->where('thoikhoabieu.tuan',$tuan)
+	 	->whereMonth('thoikhoabieu.created_at',$thang)
+	 	->whereYear('thoikhoabieu.created_at',$nam)
 	 	->orderBy('thoikhoabieu.tuan','ASC')
 	 	->orderBy('thoikhoabieu.buoi','ASC')
 	 	->orderBy('thoikhoabieu.tiet','ASC')
@@ -566,7 +581,7 @@ class tonghopController extends Controller
 	}
 
 	//get thời khoá phòng học
-	public function getthoikhoabieuphong($matruong){
+	public function getthoikhoabieuphong($matruong,$tuan,$thang,$nam,$maphong){
 
 		$mahuyen = Auth::user()->mahuyen;
 
@@ -581,6 +596,10 @@ class tonghopController extends Controller
 	 	->leftjoin('phonghoc','phonghoc.id','thoikhoabieu.maphong')
 	 	->where('thoikhoabieu.maphong','!=',0)
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->where('thoikhoabieu.tuan',$tuan)
+	 	->whereMonth('thoikhoabieu.created_at',$thang)
+	 	->whereYear('thoikhoabieu.created_at',$nam)
+	 	->where('thoikhoabieu.maphong',$maphong)
 	 	->select('danhsachgv.bidanh','monhoc.tenmonhoc','phonghoc.tenphong','thoikhoabieu.magiaovien','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan','thoikhoabieu.malop','danhsachlophoc.tenlop')
 	 	->orderBy('thoikhoabieu.tuan','ASC')
 	 	->orderBy('thoikhoabieu.buoi','ASC')
@@ -743,7 +762,7 @@ class tonghopController extends Controller
 	}
 
 	//lấy thời khoá biểu giáo viên theo thời gian
-	public function getthoikhoabieugvtime($matruong){
+	public function getthoikhoabieugv($matruong,$tuan,$thang,$nam,$magiaovien){
 
 		$mahuyen = Auth::user()->mahuyen;
 
@@ -751,18 +770,57 @@ class tonghopController extends Controller
 		->where('mahuyen',$mahuyen)
 		->get();
 
-	 	$thoikhoabieu = DB::table('thoikhoabieu')
-	 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
-	 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
-	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
-	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
-	 	->where('thoikhoabieu.matruong',$matruong)
-	 	->orderBy('thoikhoabieu.tuan','ASC')
-	 	->orderBy('thoikhoabieu.buoi','ASC')
-	 	->orderBy('thoikhoabieu.tiet','ASC')
-	 	->orderBy('thoikhoabieu.thu','ASC')
-	 	->get();
+		if($matruong != 0 && $tuan != 0 && $thang != 0 && $nam != 0 && $magiaovien != 0){
+			$thoikhoabieu = DB::table('thoikhoabieu')
+		 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
+		 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
+		 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
+		 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
+		 	->where('thoikhoabieu.matruong',$matruong)
+		 	->where('thoikhoabieu.tuan',$tuan)
+		 	->whereMonth('thoikhoabieu.created_at',$thang)
+		 	->whereYear('thoikhoabieu.created_at',$nam)
+		 	->where('thoikhoabieu.magiaovien',$magiaovien)
+		 	->orderBy('thoikhoabieu.tuan','ASC')
+		 	->orderBy('thoikhoabieu.buoi','ASC')
+		 	->orderBy('thoikhoabieu.tiet','ASC')
+		 	->orderBy('thoikhoabieu.thu','ASC')
+		 	->get();
+		}
 
+		if($matruong != 0 && $tuan == 0 && $thang != 0 && $nam != 0 && $magiaovien != 0){
+			$thoikhoabieu = DB::table('thoikhoabieu')
+		 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
+		 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
+		 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
+		 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
+		 	->where('thoikhoabieu.matruong',$matruong)
+		 	->whereMonth('thoikhoabieu.created_at',$thang)
+		 	->whereYear('thoikhoabieu.created_at',$nam)
+		 	->where('thoikhoabieu.magiaovien',$magiaovien)
+		 	->orderBy('thoikhoabieu.tuan','ASC')
+		 	->orderBy('thoikhoabieu.buoi','ASC')
+		 	->orderBy('thoikhoabieu.tiet','ASC')
+		 	->orderBy('thoikhoabieu.thu','ASC')
+		 	->get();
+		}
+
+		if($matruong != 0 && $tuan == 0 && $thang == 0 && $nam != 0 && $magiaovien != 0){
+			$thoikhoabieu = DB::table('thoikhoabieu')
+		 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
+		 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
+		 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
+		 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
+		 	->where('thoikhoabieu.matruong',$matruong)
+		 	->whereYear('thoikhoabieu.created_at',$nam)
+		 	->where('thoikhoabieu.magiaovien',$magiaovien)
+		 	->orderBy('thoikhoabieu.tuan','ASC')
+		 	->orderBy('thoikhoabieu.buoi','ASC')
+		 	->orderBy('thoikhoabieu.tiet','ASC')
+		 	->orderBy('thoikhoabieu.thu','ASC')
+		 	->get();
+		}
+	 	
 	 	$dataLoc = [];
 
 	 	foreach($truong as $t){
@@ -912,7 +970,7 @@ class tonghopController extends Controller
 	}
 
 	//lấy thời khoá biểu lớp theo thời gian
-	public function getthoikhoabieuloptime($matruong){
+	public function getthoikhoabieulop($matruong,$tuan,$thang,$nam,$malop){
 
 		$mahuyen = Auth::user()->mahuyen;
 
@@ -920,17 +978,56 @@ class tonghopController extends Controller
 		->where('mahuyen',$mahuyen)
 		->get();
 
-	 	$thoikhoabieu = DB::table('thoikhoabieu')
-	 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
-	 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
-	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
-	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
-	 	->where('thoikhoabieu.matruong',$matruong)
-	 	->orderBy('thoikhoabieu.tuan','ASC')
-	 	->orderBy('thoikhoabieu.buoi','ASC')
-	 	->orderBy('thoikhoabieu.tiet','ASC')
-	 	->orderBy('thoikhoabieu.thu','ASC')
-	 	->get();
+		if($matruong != 0 && $tuan != 0 && $thang != 0 && $nam != 0 && $malop != 0){
+			$thoikhoabieu = DB::table('thoikhoabieu')
+		 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
+		 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
+		 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
+		 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
+		 	->where('thoikhoabieu.matruong',$matruong)
+		 	->where('thoikhoabieu.tuan',$tuan)
+		 	->whereMonth('thoikhoabieu.created_at',$thang)
+		 	->whereYear('thoikhoabieu.created_at',$nam)
+		 	->where('thoikhoabieu.malop',$malop)
+		 	->orderBy('thoikhoabieu.tuan','ASC')
+		 	->orderBy('thoikhoabieu.buoi','ASC')
+		 	->orderBy('thoikhoabieu.tiet','ASC')
+		 	->orderBy('thoikhoabieu.thu','ASC')
+		 	->get();
+		}
+	 	
+		if($matruong != 0 && $tuan == 0 && $thang != 0 && $nam != 0 && $malop != 0){
+			$thoikhoabieu = DB::table('thoikhoabieu')
+		 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
+		 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
+		 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
+		 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
+		 	->where('thoikhoabieu.matruong',$matruong)
+		 	->whereMonth('thoikhoabieu.created_at',$thang)
+		 	->whereYear('thoikhoabieu.created_at',$nam)
+		 	->where('thoikhoabieu.malop',$malop)
+		 	->orderBy('thoikhoabieu.tuan','ASC')
+		 	->orderBy('thoikhoabieu.buoi','ASC')
+		 	->orderBy('thoikhoabieu.tiet','ASC')
+		 	->orderBy('thoikhoabieu.thu','ASC')
+		 	->get();
+		}
+
+		if($matruong != 0 && $tuan == 0 && $thang == 0 && $nam != 0 && $malop != 0){
+			$thoikhoabieu = DB::table('thoikhoabieu')
+		 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
+		 	->leftjoin('danhsachlophoc','danhsachlophoc.id','thoikhoabieu.malop')
+		 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
+		 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
+		 	->where('thoikhoabieu.matruong',$matruong)
+		 	->whereYear('thoikhoabieu.created_at',$nam)
+		 	->where('thoikhoabieu.malop',$malop)
+		 	->orderBy('thoikhoabieu.tuan','ASC')
+		 	->orderBy('thoikhoabieu.buoi','ASC')
+		 	->orderBy('thoikhoabieu.tiet','ASC')
+		 	->orderBy('thoikhoabieu.thu','ASC')
+		 	->get();
+		}
 
 	 	$dataLoc = [];
 
@@ -2271,5 +2368,68 @@ class tonghopController extends Controller
 		
 		return json_encode($data, JSON_UNESCAPED_UNICODE);	
 
+	}
+
+	//get thời gian có thời khóa biểu
+	public function getthoigiancotkbTH($matruong){
+		
+		$lop = danhsachlophoc::where('matruong', '=',  $matruong)->select('id','tenlop','khoi')->orderBy('tenlop', 'ASC')->get();
+        $gv = danhsachgv::where('matruong','=', $matruong)->select('id','hovaten','bidanh','dienthoai','email')->get();
+
+        $thoikhoabieu = thoikhoabieu::where('matruong','=',$matruong)->select('thoikhoabieu.tuan','thoikhoabieu.created_at','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.id')
+	 	->orderBy('thoikhoabieu.tuan','ASC')
+	 	->orderBy('thoikhoabieu.created_at','ASC')
+	 	->get();
+
+        $mangGV = [];
+        $mangLop = [];
+        
+        foreach($gv as $g){
+        	array_push($mangGV,$g->id);
+        }
+        foreach($lop as $l){
+        	array_push($mangLop,$l->id);
+        }
+
+        $demgv = count($mangGV);
+        $demlop = count($mangLop);
+
+        $thoikhoabieuLoc = [];
+
+        if($demgv != 0 && $demlop != 0) {
+        	foreach($thoikhoabieu as $t){
+        		if( in_array($t->magiaovien,$mangGV ) && in_array($t->malop,$mangLop )){
+			     	array_push($thoikhoabieuLoc,$t);
+				}
+        	}
+        }
+
+		$grouped = [];
+
+		foreach($thoikhoabieuLoc as $tLoc){
+
+			$datetime = date_parse_from_format('Y-m-d', $tLoc['created_at']);
+			$tuan = $tLoc['tuan'];
+			$thang = $datetime['month'];
+			$nam = $datetime['year'];
+
+			$grouped[$nam][$thang][$tuan][] = $t;
+		}
+
+		$new_data_thoigian = [];
+
+		foreach($grouped as $k=>$v){
+			$datathang = [];
+			foreach($v as $k1=>$v1){
+				$datatuan = [];
+				foreach($v1 as $k2=>$v2){
+					array_push($datatuan,array('tuan'=>$k2));
+				}
+				array_push($datathang,array('thang'=>$k1,'dstuan'=>$datatuan));
+			}
+			$new_data_thoigian[] = array('nam' => $k, 'dsthang'=> $datathang);
+		}
+		
+		return json_encode($new_data_thoigian, JSON_UNESCAPED_UNICODE);
 	}
 }

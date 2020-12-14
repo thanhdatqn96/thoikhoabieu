@@ -1475,8 +1475,9 @@
     	
 	    // load danh sách có thời khoá biểu 
 
-	    axios.get("gettkbtruong").then(restkbtruong => {
-            let layDataTkbTruong = restkbtruong.data;
+	    axios.get("getthoigiancotkb").then(res => {
+	    	
+            let layData= res.data;
 
             let tableDsCoTKBTruong = $('#tableDsCoTKBTruong').DataTable();
 
@@ -1488,28 +1489,26 @@
 
             //ds thời gian có tkb trường
 
-            layDataTkbTruong.forEach(function(iTem) {
-                let truongItem = iTem.matruong;
-                let dataNam = iTem.dsnam;
-                dataNam.forEach(function(iTem1) {
-                    let namItem1 = iTem1.nam;
-                    let dataThang = iTem1.dsthang;
-                    dataThang.forEach(function(iTem2) {
-                        let thangItem2 = iTem2.thang;
-                        let dataTuan = iTem2.dstuan;
-                        dataTuan.forEach(function(iTem3) {
+			layData.forEach(function(iTem1){
+				let dataThang = iTem1.dsthang;
+				dataThang.forEach(function(iTem2){
+					let dataTuan = iTem2.dstuan;
+					dataTuan.forEach(function(iTem3){
 
-                            let noidungbang = "";
+						let noidungbang = "";
 
-                            sttTruong++;
+						sttTruong++;
 
-                            noidungbang += "<tr>" + "<td>" + sttTruong + "</td>" + "<td>" + "Tuần " + iTem3.tuan + "- Tháng " + thangItem2 + "- Năm " + namItem1 + "</td>" + "<td><button type='button' class='btn btn-primary btn-sm classButtonTruong' data-tuan= " + iTem3.tuan + " data-thang= " + thangItem2 + " data-nam=" + namItem1 + "><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>" + "</tr>";
+						noidungbang += "<tr>"
+						+"<td>"+ sttTruong + "</td>"
+						+"<td>"+ "Tuần "+iTem3.tuan+ "- Tháng "+iTem2.thang+ "- Năm "+iTem1.nam + "</td>"
+						+"<td><button type='button' class='btn btn-primary btn-sm classButtonTruong' data-tuan= "+iTem3.tuan+" data-thang= "+iTem2.thang+" data-nam="+iTem1.nam +"><i class='fa fa-check-circle-o' aria-hidden='true'></i></button></td>"
+						+"</tr>";
 
-                            $("tbody#bodyDSCoTKBTruong").append(noidungbang);
-                        });
-                    });
-                });
-            });
+						$("tbody#bodyDSCoTKBTruong").append(noidungbang);
+					});
+				});
+			});
 
             $('#tableDsCoTKBTruong').DataTable({
                 "bLengthChange": false,

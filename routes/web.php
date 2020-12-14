@@ -104,19 +104,21 @@ Route::group(['middleware' => 'auth'], function(){
 	//lấy danh sách khối,gv,lớp
 	Route::get('getdskhoigvlop','xemtkb\xemtkbController@getdskhoigvlop');
 	//lấy thời khoá biểu trường
-	Route::get('gettkbtruong','xemtkb\xemtkbController@gettkbtruong');
+	Route::get('gettkbtruong/{tuan}/{thang}/{nam}','xemtkb\xemtkbController@gettkbtruong');
 	//lây danh sách lớp từ trường
 	Route::get('getdslt','xemtkb\xemtkbController@getdslt');
 	//lấy danh sách tkb giáo viên
-	Route::get('gettkbgv','xemtkb\xemtkbController@gettkbgv');
+	Route::get('gettkbgv/{tuan}/{thang}/{nam}/{magiaovien}','xemtkb\xemtkbController@gettkbgv');
 	//lấy danh sách tkb lớp
-	Route::get('gettkblop','xemtkb\xemtkbController@gettkblop');
+	Route::get('gettkblop/{tuan}/{thang}/{nam}/{malop}','xemtkb\xemtkbController@gettkblop');
 	//lấy danh sách tkb phòng học
-	Route::get('gettkbphong','xemtkb\xemtkbController@gettkbphong');
+	Route::get('gettkbphong/{tuan}/{thang}/{nam}/{maphong}','xemtkb\xemtkbController@gettkbphong');
 	//lấy list phòng học
 	Route::get('getlistphong','xemtkb\xemtkbController@getlistphong');
 	//lấy danh sách giáo viên nghỉ
-	Route::get('getgiaoviennghi','xemtkb\xemtkbController@getgiaoviennghi');
+	Route::get('getgiaoviennghi/{tuan}/{thang}/{nam}','xemtkb\xemtkbController@getgiaoviennghi');
+	//lấy danh sách thời gian có tkb
+	Route::get('getthoigiancotkb','xemtkb\xemtkbController@getthoigiancotkb');
 
 //tro giup
 	Route::get('exportkb','exportkb\exportkbController@index');
@@ -322,15 +324,17 @@ Route::group(['middleware' => 'auth'], function(){
 		// lấy ds trường
 		Route::get('getdstruong','tonghop\tonghopController@getdstruong');
 		//lấy thời khoá biểu trường theo thời gian
-		Route::get('getthoikhoabieutruong/{matruong}','tonghop\tonghopController@getthoikhoabieutruong');
+		Route::get('getthoikhoabieutruong/{matruong}/{tuan}/{thang}/{nam}','tonghop\tonghopController@getthoikhoabieutruong');
 		//lây danh sách lớp từ trường
 		Route::get('getdsloptruong/{matruong}','tonghop\tonghopController@getdsloptruong');
 		//lấy danh sách thời khoá biểu giáo viên theo thời gian
-		Route::get('getthoikhoabieugvtime/{matruong}','tonghop\tonghopController@getthoikhoabieugvtime');
+		Route::get('getthoikhoabieugv/{matruong}/{tuan}/{thang}/{nam}/{magiaovien}','tonghop\tonghopController@getthoikhoabieugv');
 		//lấy danh sách thời khoá biểu lớp theo thời gian
-		Route::get('getthoikhoabieuloptime/{matruong}','tonghop\tonghopController@getthoikhoabieuloptime');
+		Route::get('getthoikhoabieulop/{matruong}/{tuan}/{thang}/{nam}/{malop}','tonghop\tonghopController@getthoikhoabieulop');
 		//lấy danh sách tkb phòng học
-		Route::get('getthoikhoabieuphong/{matruong}','tonghop\tonghopController@getthoikhoabieuphong');
+		Route::get('getthoikhoabieuphong/{matruong}/{tuan}/{thang}/{nam}/{maphong}','tonghop\tonghopController@getthoikhoabieuphong');
+		//lấy danh sách có tkb
+		Route::get('getthoigiancotkbTH/{matruong}','tonghop\tonghopController@getthoigiancotkbTH');
 
 	//thống kê
 		Route::get('thongke','tonghop\tonghopController@thongke');

@@ -50,7 +50,7 @@ class xemtkbController extends Controller
 	}
 
 	//get thời khoá biểu trường
-	public function gettkbtruong(){
+	public function gettkbtruong($tuan,$thang,$nam){
 		$matruong = Session::get('matruong');
 	 	$thoikhoabieu = DB::table('thoikhoabieu')
 	 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
@@ -58,6 +58,9 @@ class xemtkbController extends Controller
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.tuan','thoikhoabieu.created_at')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->where('thoikhoabieu.tuan',$tuan)
+	 	->whereMonth('thoikhoabieu.created_at',$thang)
+	 	->whereYear('thoikhoabieu.created_at',$nam)
 	 	->orderBy('thoikhoabieu.tuan','ASC')
 	 	->orderBy('thoikhoabieu.buoi','ASC')
 	 	->orderBy('thoikhoabieu.tiet','ASC')
@@ -230,7 +233,7 @@ class xemtkbController extends Controller
 	}
 
 	//get thời khoá biểu giáo viên
-	public function gettkbgv(){
+	public function gettkbgv($tuan,$thang,$nam,$magiaovien){
 		$matruong = Session::get('matruong');
 	 	$thoikhoabieu = DB::table('thoikhoabieu')
 	 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
@@ -238,6 +241,10 @@ class xemtkbController extends Controller
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->where('thoikhoabieu.tuan',$tuan)
+	 	->whereMonth('thoikhoabieu.created_at',$thang)
+	 	->whereYear('thoikhoabieu.created_at',$nam)
+	 	->where('thoikhoabieu.magiaovien',$magiaovien)
 	 	->orderBy('thoikhoabieu.tuan','ASC')
 	 	->orderBy('thoikhoabieu.buoi','ASC')
 	 	->orderBy('thoikhoabieu.tiet','ASC')
@@ -367,7 +374,7 @@ class xemtkbController extends Controller
 	}
 
 	//get thời khoá biểu lớp
-	public function gettkblop(){
+	public function gettkblop($tuan,$thang,$nam,$malop){
 		$matruong = Session::get('matruong');
 	 	$thoikhoabieu = DB::table('thoikhoabieu')
 	 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
@@ -375,6 +382,10 @@ class xemtkbController extends Controller
 	 	->leftjoin('monhoc','monhoc.id','thoikhoabieu.mamonhoc')
 	 	->select('danhsachgv.bidanh','danhsachlophoc.tenlop','monhoc.tenmonhoc','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->where('thoikhoabieu.tuan',$tuan)
+	 	->whereMonth('thoikhoabieu.created_at',$thang)
+	 	->whereYear('thoikhoabieu.created_at',$nam)
+	 	->where('thoikhoabieu.malop',$malop)
 	 	->orderBy('thoikhoabieu.tuan','ASC')
 	 	->orderBy('thoikhoabieu.buoi','ASC')
 	 	->orderBy('thoikhoabieu.tiet','ASC')
@@ -505,7 +516,7 @@ class xemtkbController extends Controller
 	}
 
 	//get thời khoá phòng học
-	public function gettkbphong(){
+	public function gettkbphong($tuan,$thang,$nam,$maphong){
 		$matruong = Session::get('matruong');
 	 	$thoikhoabieu = DB::table('thoikhoabieu')
 	 	->leftjoin('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
@@ -515,6 +526,10 @@ class xemtkbController extends Controller
 	 	->where('thoikhoabieu.maphong','!=',0)
 	 	->select('danhsachgv.bidanh','monhoc.tenmonhoc','phonghoc.tenphong','thoikhoabieu.magiaovien','thoikhoabieu.mamonhoc','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.tiet','thoikhoabieu.maphong','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan','thoikhoabieu.malop','danhsachlophoc.tenlop')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->where('thoikhoabieu.tuan',$tuan)
+	 	->whereMonth('thoikhoabieu.created_at',$thang)
+	 	->whereYear('thoikhoabieu.created_at',$nam)
+	 	->where('thoikhoabieu.maphong',$maphong)
 	 	->orderBy('thoikhoabieu.tuan','ASC')
 	 	->orderBy('thoikhoabieu.buoi','ASC')
 	 	->orderBy('thoikhoabieu.tiet','ASC')
@@ -658,12 +673,15 @@ class xemtkbController extends Controller
 	}
 
 	//get ds giáo viên nghỉ
-	public function getgiaoviennghi(){
+	public function getgiaoviennghi($tuan,$thang,$nam){
 		$matruong = Session::get('matruong');
 	 	$thoikhoabieu = DB::table('thoikhoabieu')
 	 	->join('danhsachgv','danhsachgv.id','thoikhoabieu.magiaovien')
 	 	->select('danhsachgv.bidanh','danhsachgv.hovaten','thoikhoabieu.magiaovien','thoikhoabieu.buoi','thoikhoabieu.thu','thoikhoabieu.matruong','thoikhoabieu.created_at','thoikhoabieu.tuan')
 	 	->where('thoikhoabieu.matruong',$matruong)
+	 	->where('thoikhoabieu.tuan',$tuan)
+	 	->whereMonth('thoikhoabieu.created_at',$thang)
+	 	->whereYear('thoikhoabieu.created_at',$nam)
 	 	->orderBy('thoikhoabieu.tuan','ASC')
 	 	->orderBy('thoikhoabieu.buoi','ASC')
 	 	->orderBy('thoikhoabieu.tiet','ASC')
@@ -722,7 +740,13 @@ class xemtkbController extends Controller
 				
 			}
 		}
-
+		$temp = [];
+		foreach($databt as $d){
+			if($d['magiaovien'] == 29262){
+				array_push($temp,$d);
+			}
+		}
+		dd($temp);
 		foreach($thoikhoabieu as $t){
 			foreach($databt as $k => $d){
 				if($t->matruong == $d['matruong'] && $t->magiaovien == $d['magiaovien'] && $t->buoi == $d['mabuoi'] && $t->thu == $d['mathu'] && $t->tuan == $d['tuan'] && $t->created_at == $d['created_at']){
@@ -784,6 +808,71 @@ class xemtkbController extends Controller
 		}
 
 		return json_encode($new_data_giaoviennghi, JSON_UNESCAPED_UNICODE);
+	}
+
+	//get thời gian có thời khóa biểu
+	public function getthoigiancotkb(){
+
+		$matruong = Session::get('matruong');
+
+		$lop = danhsachlophoc::where('matruong', '=',  $matruong)->select('id','tenlop','khoi')->orderBy('tenlop', 'ASC')->get();
+        $gv = danhsachgv::where('matruong','=', $matruong)->select('id','hovaten','bidanh','dienthoai','email')->get();
+
+        $thoikhoabieu = thoikhoabieu::where('matruong','=',$matruong)->select('thoikhoabieu.tuan','thoikhoabieu.created_at','thoikhoabieu.magiaovien','thoikhoabieu.malop','thoikhoabieu.id')
+	 	->orderBy('thoikhoabieu.tuan','ASC')
+	 	->orderBy('thoikhoabieu.created_at','ASC')
+	 	->get();
+
+        $mangGV = [];
+        $mangLop = [];
+
+        foreach($gv as $g){
+        	array_push($mangGV,$g->id);
+        }
+        foreach($lop as $l){
+        	array_push($mangLop,$l->id);
+        }
+
+        $demgv = count($mangGV);
+        $demlop = count($mangLop);
+
+        $thoikhoabieuLoc = [];
+
+        if($demgv != 0 && $demlop != 0) {
+        	foreach($thoikhoabieu as $t){
+        		if( in_array($t->magiaovien,$mangGV ) && in_array($t->malop,$mangLop )){
+			     	array_push($thoikhoabieuLoc,$t);
+				}
+        	}
+        }
+
+		$grouped = [];
+
+		foreach($thoikhoabieuLoc as $tLoc){
+
+			$datetime = date_parse_from_format('Y-m-d', $tLoc['created_at']);
+			$tuan = $tLoc['tuan'];
+			$thang = $datetime['month'];
+			$nam = $datetime['year'];
+
+			$grouped[$nam][$thang][$tuan][] = $t;
+		}
+
+		$new_data_thoigian = [];
+
+		foreach($grouped as $k=>$v){
+			$datathang = [];
+			foreach($v as $k1=>$v1){
+				$datatuan = [];
+				foreach($v1 as $k2=>$v2){
+					array_push($datatuan,array('tuan'=>$k2));
+				}
+				array_push($datathang,array('thang'=>$k1,'dstuan'=>$datatuan));
+			}
+			$new_data_thoigian[] = array('nam' => $k, 'dsthang'=> $datathang);
+		}
+		
+		return json_encode($new_data_thoigian, JSON_UNESCAPED_UNICODE);
 	}
 
 }

@@ -102,6 +102,7 @@
 				<div class="card" id="cardselectgv" style="display: none;">
 					<div class="card-header" style="padding: 10px">
 						<h4 class="card-title" id="titletkbgv">Trường: <b><span id="idtentruonggv" style="color: blue;"></span></b></h4>
+						<input type="hidden" id="idtruonggv">
 						<input type="hidden" id="idgv">
 						<p id="iddatatungay" style="display: none;"></p>
 					</div>
@@ -176,6 +177,7 @@
 				<div class="card" id="cardselectlop" style="display: none;">
 					<div class="card-header" style="padding: 10px">
 						<h4 class="card-title" id="titletkbgv">Trường: <b><span id="idtentruonglop" style="color: blue;"></span></b></h4>
+						<input type="hidden" id="idtruonglop">
 						<input type="hidden" id="idlop">
 						<p id="iddatatungaylop" style="display: none;"></p>
 					</div>
